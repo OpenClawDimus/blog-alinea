@@ -21,6 +21,8 @@ const posts = defineCollection({
       canonicalURL: z.string().optional(),
       hideEditPost: z.boolean().optional(),
       timezone: z.string().optional(),
+      // AEO/GEO: FAQPage schema (3.2x AI Overviews). Cada item vira pergunta citável.
+      faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
     }),
 });
 
