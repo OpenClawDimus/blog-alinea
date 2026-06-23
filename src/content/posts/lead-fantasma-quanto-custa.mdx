@@ -1,0 +1,79 @@
+---
+title: "Lead barato, carro caro: por que medir custo por lead engana o dono de revenda"
+pubDatetime: 2026-06-23T15:00:00-03:00
+description: "Custo por lead é a métrica que o portal adora e o caixa ignora. O número que importa é custo por carro vendido. Veja a diferença, calcule o seu e pare de pagar por volume que não vira venda."
+author: "Dimus"
+featured: true
+tags: ["atribuicao", "lead-fantasma", "cac", "metricas", "gestao"]
+faq:
+  - q: "Qual a diferença entre custo por lead e custo por carro vendido?"
+    a: "Custo por lead é o investimento dividido pelo número de contatos gerados. Custo por carro vendido é o investimento dividido pelos carros efetivamente vendidos daqueles contatos. O primeiro mede volume; o segundo mede resultado. Um lead pode custar R$50 e cada carro vendido custar R$1.250 se a conversão for baixa."
+  - q: "O que é lead-fantasma?"
+    a: "É o contato que entra na conta de marketing como 'lead', mas nunca vira atendimento real nem venda: número errado, curioso, pessoa fora do perfil ou duplicado. Você paga por ele, ele infla a métrica de volume e some — sem chegar ao caixa."
+  - q: "Como saber se estou pagando por lead ou por venda?"
+    a: "Divida o investimento de mídia do mês pelo número de carros vendidos vindos daquele investimento. Se esse número for muito maior que o seu custo por lead, você está pagando por volume, não por venda — e a conversão lead→carro é onde está o vazamento."
+---
+
+import AnswerCapsule from "@/components/blog/AnswerCapsule.astro";
+import CompareTable from "@/components/blog/CompareTable.astro";
+import CalculatorCAC from "@/components/blog/CalculatorCAC.astro";
+import DimusHelp from "@/components/blog/DimusHelp.astro";
+import LeadForm from "@/components/blog/LeadForm.astro";
+
+<AnswerCapsule q="Por que medir custo por lead engana o dono de revenda?">
+
+Porque **lead barato não paga conta — carro vendido paga**. Um lead pode custar R$50 e parecer ótimo, mas se só 4 de cada 100 viram venda, cada **carro vendido custou R$1.250**. A métrica de volume esconde o vazamento que está entre o lead e a chave na mão do cliente.
+
+</AnswerCapsule>
+
+Todo mundo no setor mede custo por lead. É a métrica que o portal mostra no painel, que a agência coloca no relatório e que faz o investimento parecer eficiente. O problema: **o caixa não recebe lead. Recebe carro vendido.** E entre um e outro tem um buraco que ninguém mede.
+
+## A métrica que engana
+
+Imagine duas lojas com o mesmo investimento de R$5.000/mês:
+
+<CompareTable
+  headers={["Métrica", "Loja A (mede lead)", "Loja B (mede venda)"]}
+  rows={[
+    ["Leads no mês", "200 leads", "100 leads"],
+    ["Custo por lead", "R$25 (parece ótimo)", "R$50 (parece caro)"],
+    ["Carros vendidos", "4 carros", "8 carros"],
+    ["Custo por carro vendido", "R$1.250", "R$625"],
+  ]}
+  caption="Loja A tem lead mais barato e vende metade. Quem olha só o custo por lead escolhe errado."
+/>
+
+A Loja A ganha no slide de "custo por lead". A Loja B ganha no banco. A diferença não está no preço do lead — está na **conversão de lead em carro**, que é exatamente o que a métrica de volume esconde.
+
+## Calcule o seu custo por carro vendido
+
+Coloque o seu investimento, seus leads e os carros que vieram deles. O número da direita é o que o seu caixa sente:
+
+<CalculatorCAC postSlug="lead-fantasma-quanto-custa" cluster="atribuicao" />
+
+## Onde o lead vira fantasma
+
+O lead-fantasma é o contato que entra na conta de marketing e nunca chega ao atendimento real: número errado, curioso, fora de perfil, duplicado. Você paga por ele, ele engorda o volume e some. Os três pontos onde ele aparece:
+
+- **Origem sem qualificação** — tráfego amplo que traz curioso, não comprador daquele carro.
+- **Demora no atendimento** — o lead bom esfria em minutos; quem responde em horas só fala com fantasma.
+- **Falta de atribuição** — sem rastrear o lead até a venda, você não sabe qual origem traz carro e qual traz volume.
+
+<DimusHelp postSlug="lead-fantasma-quanto-custa" cluster="atribuicao" variant="atribuicao" />
+
+## Pare de pagar por volume
+
+Medir custo por carro vendido muda a decisão: você corta a origem que traz lead barato e fantasma, reforça a que traz venda, e responde rápido o lead bom. Não é sobre gastar menos — é sobre **cada real virar carro, não relatório**.
+
+Se quiser, a gente lê a sua conta de aquisição com os seus números:
+
+<LeadForm
+  idTag="POST-LEAD-FANTASMA"
+  postSlug="lead-fantasma-quanto-custa"
+  cluster="atribuicao"
+  intent="Quero parar de pagar por lead-fantasma e medir meu custo por carro vendido."
+  eyebrow="Cansou de pagar por lead que não vira carro?"
+  title="Leitura da sua conta de aquisição"
+  sub="Manda seu contato. A gente mostra qual origem traz carro vendido e qual só traz volume — e o que cortar primeiro."
+  cta="Quero a leitura no WhatsApp →"
+/>

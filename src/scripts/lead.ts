@@ -1,14 +1,22 @@
 /**
  * Lead capture — form-first → WhatsApp (padrão validado no mockup blog/v2.2.0).
  * Delegado: 1 listener para todos os <form data-lead> da página.
- * Dispara GA4 generate_lead + Meta Pixel Lead (eventID = lead_ref), depois abre o WhatsApp com [ID:ref].
- * Produção (Sprint 2): navigator.sendBeacon('/tracker', …) para D1 + Meta CAPI + forward Supabase.
+ * Dispara GA4 generate_lead + Meta Pixel Lead (eventID = lead_ref), POST /tracker
+ * (sendBeacon → D1 + Meta CAPI + forward Supabase blueprint), depois abre o WhatsApp com [ID:ref].
  */
 const WA_NUMBER = "5567991992882"; // receptor de leads (padrão tracking Dimus)
 
 const fmtBR = (n: number) => "R$ " + Math.round(n).toLocaleString("pt-BR");
 
-type CalcState = { valor: number; dias: number; dia: number; acc: number };
+// summary = frase pronta p/ o WhatsApp (cada calculadora monta a sua).
+// Campos da calculadora de carro parado mantidos p/ retrocompat (fallback).
+type CalcState = {
+  summary?: string;
+  valor?: number;
+  dias?: number;
+  dia?: number;
+  acc?: number;
+};
 
 function handleSubmit(form: HTMLFormElement) {
   const data = new FormData(form);
@@ -46,7 +54,7 @@ function handleSubmit(form: HTMLFormElement) {
     lead_ref: ref,
   });
 
-  // Meta Pixel (mesmo eventID para dedupe com CAPI no Sprint 2)
+  // Meta Pixel (mesmo eventID para dedupe com CAPI server-side)
   try {
     const fbq = (window as unknown as { fbq?: (...a: unknown[]) => void }).fbq;
     if (fbq) fbq("track", "Lead", { content_name: "blog_lead" }, { eventID: ref });
@@ -54,10 +62,49 @@ function handleSubmit(form: HTMLFormElement) {
     /* noop */
   }
 
+  // Server-side tracking (KROB): D1 + Meta CAPI + forward Supabase blueprint.
+  // sendBeacon = fire-and-forget, sobrevive ao window.open do WhatsApp.
+  // event_id = ref → dedup com o pixel acima. Same-origin: sem CORS/preflight.
+  try {
+    const payload = {
+      event_name: "Lead",
+      event_id: ref,
+      event_source_url: location.href,
+      lead_ref: ref,
+      source: "blog",
+      nome,
+      whatsapp: wa,
+      post_slug: form.dataset.postSlug || "",
+      cluster: form.dataset.cluster || "",
+      magnet_slug: magnet || "",
+      page_url: location.href,
+    };
+    const data = JSON.stringify(payload);
+    const sent =
+      typeof navigator.sendBeacon === "function" &&
+      navigator.sendBeacon("/tracker", new Blob([data], { type: "text/plain" }));
+    if (!sent) {
+      void fetch("/tracker", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: data,
+        keepalive: true,
+      }).catch(() => {});
+    }
+  } catch {
+    /* noop */
+  }
+
   const extra = calc
-    ? ` Meu carro de ${fmtBR(calc.valor)} parado há ${calc.dias} dias já custou ${fmtBR(calc.acc)} (${fmtBR(calc.dia)}/dia).`
+    ? calc.summary
+      ? ` ${calc.summary}`
+      : calc.valor != null
+        ? ` Meu carro de ${fmtBR(calc.valor)} parado há ${calc.dias} dias já custou ${fmtBR(calc.acc!)} (${fmtBR(calc.dia!)}/dia).`
+        : ""
     : "";
-  const msg = `Olá! Sou ${nome}. Quero o diagnóstico de giro do meu estoque.${extra} [ID:${ref}]`;
+  const intent =
+    form.dataset.intent || "Quero o diagnóstico de giro do meu estoque.";
+  const msg = `Olá! Sou ${nome}. ${intent}${extra} [ID:${ref}]`;
   window.open(
     "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg),
     "_blank",

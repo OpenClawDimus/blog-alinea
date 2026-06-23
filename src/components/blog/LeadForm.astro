@@ -9,6 +9,7 @@ interface Props {
   cluster: string;
   withCalc?: boolean; // anexa números da calculadora à mensagem
   magnet?: string; // magnet_slug (opcional)
+  intent?: string; // frase de abertura na mensagem do WhatsApp
   eyebrow?: string;
   title?: string;
   sub?: string;
@@ -20,6 +21,7 @@ const {
   cluster,
   withCalc = false,
   magnet,
+  intent,
   eyebrow = "Pronto para resolver?",
   title = "Receba um diagnóstico de giro do seu estoque",
   sub = "A gente mostra, com os seus números, quanto cada carro parado custa e o que destrava o giro — sem queimar preço.",
@@ -38,6 +40,7 @@ const {
     data-post-slug={postSlug}
     data-cluster={cluster}
     data-magnet={magnet}
+    {...intent ? { "data-intent": intent } : {}}
     {...withCalc ? { "data-withcalc": "" } : {}}
   >
     <input name="nome" placeholder="Seu nome" autocomplete="name" required />

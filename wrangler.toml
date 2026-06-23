@@ -1,0 +1,21 @@
+name = "blog-dimus"
+compatibility_date = "2026-06-23"
+pages_build_output_dir = "dist"
+
+# D1 — blog-tracking (KROB). Criado 2026-06-23, region ENAM.
+[[d1_databases]]
+binding = "DB"
+database_name = "blog-tracking"
+database_id = "71f19cdf-555b-46f3-9b13-b81eb1238e96"
+
+# Secrets de runtime (setar via:
+#   node ./node_modules/wrangler/bin/wrangler.js pages secret put <NAME> --project-name blog-dimus):
+#   META_PIXEL_ID           = <pixel do blog / dataset reaproveitado>
+#   META_ACCESS_TOKEN       = <CAPI system-user token válido (EAA…)>
+#   META_TEST_EVENT_CODE    = <opcional, Events Manager>
+#   DASH_KEY                = <chave admin /admin (Sprint 3)>
+#   BLUEPRINT_SUPABASE_URL  = https://tllelzquwdfcjjlsurai.supabase.co
+#   BLUEPRINT_SUPABASE_KEY  = <service_role p/ forward de leads tag blog>
+#   GA4_MEASUREMENT_ID      = G-Q6KH427C70
+# Lembrete (insight #17 dimus-usa): CF Pages só binda secret em NOVO deploy
+# (não efetiva runtime como Workers) → após secret put, rebuild + redeploy.

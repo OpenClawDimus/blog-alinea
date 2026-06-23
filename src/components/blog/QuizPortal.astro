@@ -1,0 +1,278 @@
+---
+/**
+ * Diagnóstico "Refém do Portal?" (B3) — lead magnet do cluster dependência-de-portal.
+ * 6 perguntas Sim/Não → score 0-6 → veredito (baixa/média/alta dependência).
+ * Cada botão carrega data-a = pontos de "refém" daquela resposta (perguntas
+ * invertidas pontuam ao contrário). Escreve window.__calc.summary p/ o WhatsApp.
+ */
+import LeadForm from "./LeadForm.astro";
+
+interface Props {
+  postSlug: string;
+  cluster?: string;
+}
+const { postSlug, cluster = "portal" } = Astro.props;
+
+// data-a = pontos de dependência da resposta [Sim, Não]
+const questions: { t: string; sim: number; nao: number }[] = [
+  { t: "Mais de 60% dos seus leads vêm de portal (Webmotors, OLX, iCarros…)?", sim: 1, nao: 0 },
+  { t: "Você paga mensalidade de portal mesmo nos meses em que vende pouco?", sim: 1, nao: 0 },
+  { t: "Se cortasse o portal amanhã, seu volume de leads cairia mais da metade?", sim: 1, nao: 0 },
+  { t: "Você disputa o mesmo carro e o mesmo preço com várias lojas dentro do portal?", sim: 1, nao: 0 },
+  { t: "Você tem um canal próprio (site/social/lista) que gera lead sem portal?", sim: 0, nao: 1 },
+  { t: "Você sabe quantos carros vendidos cada real de portal te traz?", sim: 0, nao: 1 },
+];
+---
+
+<section class="quiz not-prose" aria-label="Diagnóstico de dependência de portal">
+  <header class="quiz-head">
+    <p class="quiz-eyebrow">Diagnóstico · 6 perguntas</p>
+    <h3 class="quiz-title">Você é dono da loja ou refém do portal?</h3>
+    <p class="quiz-sub">
+      Responda honesto. Não é sobre largar o portal — é sobre saber o quanto ele
+      te controla, e quanto da sua margem some nessa dependência.
+    </p>
+  </header>
+
+  <div class="quiz-qs" id="quiz-qs">
+    {
+      questions.map((q, i) => (
+        <div class="q" data-q>
+          <p class="q-text">
+            <span class="q-n">{i + 1}.</span> {q.t}
+          </p>
+          <div class="q-opts" role="group">
+            <button type="button" class="q-opt" data-a={q.sim}>
+              Sim
+            </button>
+            <button type="button" class="q-opt" data-a={q.nao}>
+              Não
+            </button>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="quiz-result" id="quiz-result" hidden>
+    <div class="quiz-score">
+      <span class="quiz-score-k">Sua pontuação</span>
+      <strong id="quiz-score-v" class="quiz-score-v">0/6</strong>
+    </div>
+    <p id="quiz-badge" class="quiz-badge">●</p>
+    <p id="quiz-verdict" class="quiz-verdict"></p>
+  </div>
+
+  <LeadForm
+    idTag="QUIZ-PORTAL"
+    postSlug={postSlug}
+    cluster={cluster}
+    withCalc
+    magnet="quiz-refem-portal"
+    intent="Fiz o diagnóstico Refém do Portal e quero montar um canal próprio de aquisição."
+    eyebrow="Cansou de depender de portal?"
+    title="Recebe o plano de saída da dependência de portal"
+    sub="Manda seu contato. A gente mostra como construir um canal próprio que traz lead sem leiloar sua margem — passo a passo, com os seus números."
+    cta="Quero o plano no WhatsApp →"
+  />
+</section>
+
+<style>
+  .quiz {
+    margin: 2.5rem 0;
+    padding: 1.6rem 1.5rem;
+    border: 1px solid var(--hair);
+    border-radius: 18px;
+    background: var(--surface-2);
+    box-shadow: var(--shadow-card);
+  }
+  .quiz-eyebrow {
+    margin: 0 0 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+  .quiz-title {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.12;
+    color: var(--ink);
+  }
+  .quiz-sub {
+    margin: 0 0 1.4rem;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .quiz-qs {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.3rem;
+  }
+  .q {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--hair);
+  }
+  .q:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .q-text {
+    flex: 1 1 260px;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .q-n {
+    color: var(--magenta);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+  .q-opts {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .q-opt {
+    padding: 0.45rem 1.05rem;
+    border: 1px solid var(--hair-strong);
+    border-radius: 999px;
+    background: var(--bg-2);
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition:
+      border-color 0.16s var(--ease-s),
+      color 0.16s var(--ease-s),
+      background 0.16s var(--ease-s);
+  }
+  .q-opt:hover {
+    border-color: var(--magenta);
+  }
+  .q-opt[aria-pressed="true"] {
+    border-color: var(--magenta);
+    background: var(--magenta);
+    color: #fff;
+  }
+  .quiz-result {
+    margin-bottom: 1.2rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--hair-strong);
+    border-radius: 14px;
+    background: var(--bg-2);
+  }
+  .quiz-score-k {
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .quiz-score-v {
+    display: block;
+    margin-top: 0.15rem;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .quiz-badge {
+    margin: 0.7rem 0 0.4rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--magenta);
+  }
+  .quiz-verdict {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+</style>
+
+<script>
+  function initQuiz() {
+    const root = document.getElementById("quiz-qs");
+    if (!root) return;
+    const result = document.getElementById("quiz-result") as HTMLElement;
+    const scoreV = document.getElementById("quiz-score-v")!;
+    const badge = document.getElementById("quiz-badge")!;
+    const verdict = document.getElementById("quiz-verdict")!;
+    const qs = Array.from(root.querySelectorAll<HTMLElement>("[data-q]"));
+
+    function recompute() {
+      let answered = 0;
+      let score = 0;
+      for (const q of qs) {
+        const sel = q.querySelector<HTMLButtonElement>(
+          '.q-opt[aria-pressed="true"]'
+        );
+        if (sel) {
+          answered++;
+          score += +(sel.dataset.a || 0);
+        }
+      }
+      if (answered === 0) {
+        result.hidden = true;
+        return;
+      }
+      result.hidden = false;
+      scoreV.textContent = score + "/" + qs.length;
+
+      let label, col, txt;
+      if (answered < qs.length) {
+        label = "● Responda todas para o veredito";
+        col = "#E1B33A";
+        txt = `Faltam ${qs.length - answered} respostas.`;
+      } else if (score <= 2) {
+        label = "● Baixa dependência — você é dono do jogo";
+        col = "#1faf54";
+        txt =
+          "Você tem fôlego fora do portal. Dá para usar o portal como alavanca, não como muleta — e proteger a margem.";
+      } else if (score <= 4) {
+        label = "● Dependência média — exposto";
+        col = "#E1B33A";
+        txt =
+          "O portal ainda dita seu volume. Um canal próprio começa a virar a chave do caixa antes que o reajuste chegue.";
+      } else {
+        label = "● Alta dependência — refém do portal";
+        col = "#E1379E";
+        txt =
+          "Hoje o portal controla seu fluxo e sua margem. Construir aquisição própria deixa de ser opção e vira urgência.";
+      }
+      badge.textContent = label;
+      badge.style.color = col;
+      verdict.textContent = txt;
+
+      const summary =
+        answered === qs.length
+          ? `Fiz o diagnóstico Refém do Portal: pontuei ${score}/${qs.length} — dependência ${score <= 2 ? "baixa" : score <= 4 ? "média" : "alta"} de portal.`
+          : "";
+      (window as unknown as { __calc: unknown }).__calc = { summary };
+    }
+
+    for (const q of qs) {
+      const opts = Array.from(q.querySelectorAll<HTMLButtonElement>(".q-opt"));
+      for (const opt of opts) {
+        opt.setAttribute("aria-pressed", "false");
+        opt.addEventListener("click", () => {
+          for (const o of opts) o.setAttribute("aria-pressed", "false");
+          opt.setAttribute("aria-pressed", "true");
+          recompute();
+        });
+      }
+    }
+  }
+  initQuiz();
+  document.addEventListener("astro:after-swap", initQuiz);
+</script>
