@@ -1,0 +1,245 @@
+---
+/**
+ * Calculadora de Custo do Carro Parado (V7) — lead magnet âncora.
+ * Fórmula validada (mockup blog/v2.2.0): capital(Selic 15%) + depreciação(0,8%/mês) + pátio.
+ * R$60k / 60 dias → ~R$47/dia. Badge saudável<30 / atenção≤60 / crítico>60.
+ * Escreve window.__calc → o LeadForm (withCalc) leva os números pro WhatsApp.
+ */
+import LeadForm from "./LeadForm.astro";
+
+interface Props {
+  postSlug: string;
+  cluster?: string;
+}
+const { postSlug, cluster = "estoque-giro" } = Astro.props;
+---
+
+<section class="calc not-prose" aria-label="Calculadora de custo do carro parado">
+  <header class="calc-head">
+    <p class="calc-eyebrow">Calculadora · grátis</p>
+    <h3 class="calc-title">Quanto seu carro parado custa por dia?</h3>
+    <p class="calc-sub">
+      Capital parado (Selic), depreciação e pátio. Os mesmos números que o caixa
+      cobra de você — sem achismo.
+    </p>
+  </header>
+
+  <div class="calc-grid">
+    <label class="calc-field">
+      <span>Valor do veículo</span>
+      <input id="c-valor" type="number" min="0" step="1000" value="60000" />
+    </label>
+    <label class="calc-field">
+      <span>Dias no pátio: <b id="c-diasv">60 dias</b></span>
+      <input id="c-dias" type="range" min="0" max="180" step="1" value="60" />
+    </label>
+  </div>
+
+  <div class="calc-out">
+    <div class="calc-stat">
+      <span class="calc-stat-k">Custo por dia</span>
+      <strong id="c-dia" class="calc-stat-v">R$ 47</strong>
+    </div>
+    <div class="calc-stat">
+      <span class="calc-stat-k">Acumulado no período</span>
+      <strong id="c-acc" class="calc-stat-v">R$ 2.836</strong>
+    </div>
+  </div>
+
+  <p id="c-badge" class="calc-badge">● Atenção — hora de reprecificar</p>
+
+  <details class="calc-premissas">
+    <summary>Premissas da conta</summary>
+    <ul>
+      <li>Custo de capital: Selic 15% a.a. sobre o valor do veículo.</li>
+      <li>Depreciação: 0,8% ao mês.</li>
+      <li>Pátio/estrutura: ~R$ 6/dia (vaga, seguro, limpeza).</li>
+    </ul>
+  </details>
+
+  <LeadForm
+    idTag="CALC-CARRO"
+    postSlug={postSlug}
+    cluster={cluster}
+    withCalc
+    magnet="calc-carro-parado"
+    eyebrow="Quer parar de pagar por carro parado?"
+    title="Recebe o diagnóstico de giro com os seus números"
+    sub="Manda seu contato. A gente devolve onde está travando o caixa e o que destrava — sem queimar margem."
+    cta="Quero o diagnóstico no WhatsApp →"
+  />
+</section>
+
+<style>
+  .calc {
+    margin: 2.5rem 0;
+    padding: 1.6rem 1.5rem;
+    border: 1px solid var(--hair);
+    border-radius: 18px;
+    background: var(--surface-2);
+    box-shadow: var(--shadow-card);
+  }
+  .calc-eyebrow {
+    margin: 0 0 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+  .calc-title {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.12;
+    color: var(--ink);
+  }
+  .calc-sub {
+    margin: 0 0 1.3rem;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .calc-grid {
+    display: grid;
+    gap: 1.1rem;
+    margin-bottom: 1.3rem;
+  }
+  @media (min-width: 560px) {
+    .calc-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .calc-field span {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+  .calc-field b {
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  #c-valor {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: var(--bg-2);
+    color: var(--ink);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+  #c-valor:focus {
+    outline: none;
+    border-color: var(--magenta);
+  }
+  #c-dias {
+    width: 100%;
+    accent-color: var(--magenta);
+  }
+  .calc-out {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .calc-stat {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    background: var(--bg-2);
+  }
+  .calc-stat-k {
+    display: block;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .calc-stat-v {
+    display: block;
+    margin-top: 0.2rem;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .calc-badge {
+    margin: 0 0 1rem;
+    padding: 0.5rem 0.8rem;
+    display: inline-block;
+    border: 1px solid var(--magenta);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--magenta);
+  }
+  .calc-premissas {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+  .calc-premissas summary {
+    cursor: pointer;
+    color: var(--dim);
+  }
+  .calc-premissas ul {
+    margin: 0.6rem 0 0;
+    padding-left: 1.1rem;
+    line-height: 1.6;
+  }
+</style>
+
+<script>
+  function fmt(n: number) {
+    return "R$ " + Math.round(n).toLocaleString("pt-BR");
+  }
+  function initCalc() {
+    const valor = document.getElementById("c-valor") as HTMLInputElement | null;
+    if (!valor) return;
+    const dias = document.getElementById("c-dias") as HTMLInputElement;
+    const diasv = document.getElementById("c-diasv")!;
+    const elDia = document.getElementById("c-dia")!;
+    const elAcc = document.getElementById("c-acc")!;
+    const badge = document.getElementById("c-badge")!;
+
+    function calc() {
+      const v = Math.max(0, +valor!.value || 0);
+      const d = +dias.value || 0;
+      // capital(Selic 15% a.a.) + depreciação(0,8%/mês) + pátio
+      const dia = (v * 0.15) / 365 + (v * 0.008) / 30 + v * 0.0001;
+      const acc = dia * d;
+      diasv.textContent = d + " dias";
+      elDia.textContent = fmt(dia);
+      elAcc.textContent = fmt(acc);
+      let txt, col;
+      if (d < 30) {
+        txt = "● Saudável (menos de 30 dias)";
+        col = "#1faf54";
+      } else if (d <= 60) {
+        txt = "● Atenção — hora de reprecificar";
+        col = "#E1B33A";
+      } else {
+        txt = "● Crítico — comendo sua margem";
+        col = "#E1379E";
+      }
+      badge.textContent = txt;
+      badge.style.color = col;
+      badge.style.borderColor = col;
+      (window as unknown as { __calc: unknown }).__calc = {
+        valor: v,
+        dias: d,
+        dia: Math.round(dia),
+        acc: Math.round(acc),
+      };
+    }
+    valor.addEventListener("input", calc);
+    dias.addEventListener("input", calc);
+    calc();
+  }
+  initCalc();
+  document.addEventListener("astro:after-swap", initCalc);
+</script>

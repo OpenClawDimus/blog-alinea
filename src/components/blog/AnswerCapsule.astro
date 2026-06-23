@@ -1,0 +1,45 @@
+---
+/**
+ * AnswerCapsule — resposta direta de 40-60 palavras (AEO/GEO).
+ * Capsula citável por IA logo no topo do post. Use 1 por pergunta-âncora.
+ */
+interface Props {
+  q?: string; // pergunta (opcional, vira eyebrow)
+}
+const { q } = Astro.props;
+---
+
+<div class="answer-capsule not-prose" role="note">
+  {q && <p class="ac-q">{q}</p>}
+  <div class="ac-body"><slot /></div>
+</div>
+
+<style>
+  .answer-capsule {
+    margin: 1.75rem 0;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    background: var(--surface);
+    border-left: 3px solid var(--ink-2);
+  }
+  .ac-q {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .ac-body {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .ac-body :global(p) {
+    margin: 0;
+  }
+  .ac-body :global(strong) {
+    color: var(--ink);
+  }
+</style>

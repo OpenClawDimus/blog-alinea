@@ -1,0 +1,83 @@
+---
+/**
+ * CompareTable — tabela comparativa citável (AEO). Ex.: "estoque parado vs. girado".
+ * rows: [rótulo, colA, colB]. headers: [rótulo-col, A, B].
+ */
+interface Props {
+  headers: [string, string, string];
+  rows: [string, string, string][];
+  caption?: string;
+}
+const { headers, rows, caption } = Astro.props;
+---
+
+<figure class="compare not-prose">
+  <table>
+    <thead>
+      <tr>
+        <th>{headers[0]}</th>
+        <th>{headers[1]}</th>
+        <th class="hi">{headers[2]}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map(r => (
+          <tr>
+            <th scope="row">{r[0]}</th>
+            <td>{r[1]}</td>
+            <td class="hi">{r[2]}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .compare {
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  thead th {
+    padding: 0.7rem 0.85rem;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--dim);
+    border-bottom: 1px solid var(--hair);
+  }
+  thead th.hi {
+    color: var(--magenta);
+  }
+  tbody th {
+    padding: 0.75rem 0.85rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--hair);
+  }
+  tbody td {
+    padding: 0.75rem 0.85rem;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--hair);
+    vertical-align: top;
+  }
+  tbody td.hi {
+    color: var(--ink);
+    background: var(--hair-mag);
+  }
+  figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: var(--dim);
+  }
+</style>

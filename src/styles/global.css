@@ -11,6 +11,17 @@
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
+  /* Revista Showroom — display serif (Fraunces) nos títulos */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.012em;
+  }
+  body {
+    font-family: var(--font-body);
+  }
   a,
   button {
     @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;

@@ -1,0 +1,104 @@
+---
+/**
+ * DimusHelp — GATE obrigatório. Todo post insere este bloco: o que a Dimus faz + como ajuda,
+ * traduzido para a dor do ICP (carro vendido, não lead). CTA → WhatsApp.
+ */
+interface Props {
+  postSlug: string;
+  cluster?: string;
+  variant?: "estoque" | "atribuicao" | "portal" | "atendimento" | "default";
+}
+const { postSlug, cluster = "", variant = "default" } = Astro.props;
+
+const copy = {
+  estoque: {
+    title: "Como a Dimus destrava o giro do seu estoque",
+    body: "A gente identifica a unidade que está travando seu caixa e dispara campanha dedicada por veículo — tráfego hiperlocal por modelo + atendimento instantâneo no WhatsApp. O foco não é gerar lead: é girar o carro certo antes do 60º dia, pelo preço certo, não pelo mais baixo.",
+  },
+  atribuicao: {
+    title: "Como a Dimus mede o carro vendido (não o lead)",
+    body: "Rastreamos cada real de mídia até a chave na mão do cliente: Pixel + CAPI + atribuição ponta-a-ponta num painel que mostra custo-por-carro-vendido por canal e criativo. Você para de pagar relatório de CTR e passa a ver o que vende.",
+  },
+  portal: {
+    title: "Como a Dimus tira você da prateleira do portal",
+    body: "Montamos seu canal de aquisição próprio (criativo + tráfego hiperlocal + rastreio) para você parar de comprar o mesmo lead que a loja do lado e de pagar por lead-fantasma. Neutro de fornecedor: não vendemos portal nem CRM, então falamos a verdade.",
+  },
+  atendimento: {
+    title: "Como a Dimus mata o lead que esfria dentro da loja",
+    body: "Acoplamos um loop de WhatsApp + IA que faz o primeiro contato em segundos e cadencia o follow-up (D+1, D+3) automático. A métrica que cobramos é tempo-até-1º-contato e lead→visita→venda — não volume de contato.",
+  },
+  default: {
+    title: "Como a Dimus ajuda sua revenda",
+    body: "Marketing que mede carro vendido, não lead. Montamos seu canal próprio, rastreamos cada real até a venda e acoplamos atendimento por WhatsApp + IA — para você girar estoque e parar de depender do portal. Neutro de fornecedor: não vendemos portal nem CRM.",
+  },
+}[variant];
+
+const ref = "GATE-" + postSlug.toUpperCase().replace(/[^A-Z0-9]+/g, "-").slice(0, 18);
+const waMsg = `Olá! Vim do blog (${postSlug}). Quero entender como a Dimus pode ajudar minha revenda. [ID:${ref}]`;
+const waHref =
+  "https://wa.me/5567991992882?text=" + encodeURIComponent(waMsg);
+---
+
+<aside class="dimus-help not-prose" data-cluster={cluster}>
+  <p class="dh-eyebrow">Dimus · marketing que mede carro vendido</p>
+  <h3 class="dh-title">{copy.title}</h3>
+  <p class="dh-body">{copy.body}</p>
+  <a class="dh-cta" href={waHref} target="_blank" rel="noopener">
+    Falar com a Dimus no WhatsApp →
+  </a>
+</aside>
+
+<style>
+  .dimus-help {
+    margin: 2.75rem 0;
+    padding: 1.6rem 1.5rem;
+    border: 1px solid var(--hair-mag);
+    border-left: 3px solid var(--magenta);
+    border-radius: 14px;
+    background: linear-gradient(
+      180deg,
+      var(--surface),
+      var(--bg-2)
+    );
+  }
+  .dh-eyebrow {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+  .dh-title {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .dh-body {
+    margin: 0 0 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .dh-cta {
+    display: inline-block;
+    padding: 0.6rem 1.05rem;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid var(--magenta);
+    color: var(--magenta);
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition:
+      background 0.18s var(--ease-s),
+      color 0.18s var(--ease-s);
+  }
+  .dh-cta:hover {
+    background: var(--magenta);
+    color: #fff;
+  }
+</style>

@@ -1,0 +1,150 @@
+---
+/**
+ * LeadForm — captura form-first → WhatsApp. Sempre presente quando o leitor está pronto p/ solução.
+ * GA4 generate_lead + Pixel Lead + [ID] disparam no submit (src/scripts/lead.ts).
+ */
+interface Props {
+  idTag: string; // prefixo do lead_ref (ex.: CALC-CARRO, POST-CARRO-PARADO)
+  postSlug: string;
+  cluster: string;
+  withCalc?: boolean; // anexa números da calculadora à mensagem
+  magnet?: string; // magnet_slug (opcional)
+  eyebrow?: string;
+  title?: string;
+  sub?: string;
+  cta?: string;
+}
+const {
+  idTag,
+  postSlug,
+  cluster,
+  withCalc = false,
+  magnet,
+  eyebrow = "Pronto para resolver?",
+  title = "Receba um diagnóstico de giro do seu estoque",
+  sub = "A gente mostra, com os seus números, quanto cada carro parado custa e o que destrava o giro — sem queimar preço.",
+  cta = "Quero o diagnóstico →",
+} = Astro.props;
+---
+
+<aside class="lead-card not-prose">
+  <p class="lead-eyebrow">{eyebrow}</p>
+  <h3 class="lead-title">{title}</h3>
+  <p class="lead-sub">{sub}</p>
+  <form
+    class="lead-form"
+    data-lead
+    data-idtag={idTag}
+    data-post-slug={postSlug}
+    data-cluster={cluster}
+    data-magnet={magnet}
+    {...withCalc ? { "data-withcalc": "" } : {}}
+  >
+    <input name="nome" placeholder="Seu nome" autocomplete="name" required />
+    <input
+      name="whatsapp"
+      type="tel"
+      inputmode="tel"
+      placeholder="WhatsApp com DDD"
+      autocomplete="tel"
+      required
+    />
+    <button type="submit" class="btn-wa">{cta}</button>
+  </form>
+  <p class="lead-fine">
+    Validamos seu contato no WhatsApp. Sem spam, sem robô — fala com gente de
+    verdade.
+  </p>
+</aside>
+
+<style>
+  .lead-card {
+    margin: 2.5rem 0;
+    padding: 1.6rem 1.5rem;
+    border: 1px solid var(--hair-strong);
+    border-radius: 16px;
+    background:
+      radial-gradient(120% 140% at 100% 0%, var(--hair-mag), transparent 60%),
+      var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  .lead-eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+  .lead-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .lead-sub {
+    margin: 0 0 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .lead-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .lead-form input {
+    flex: 1 1 180px;
+    min-width: 0;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: var(--bg-2);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.18s var(--ease-s);
+  }
+  .lead-form input::placeholder {
+    color: var(--dim);
+  }
+  .lead-form input:focus {
+    outline: none;
+    border-color: var(--magenta);
+  }
+  .btn-wa {
+    flex: 1 1 100%;
+    padding: 0.75rem 1.1rem;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--magenta), var(--magenta-deep));
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition:
+      transform 0.18s var(--ease-s),
+      filter 0.18s var(--ease-s);
+  }
+  .btn-wa:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+  }
+  .lead-fine {
+    margin: 0.9rem 0 0;
+    font-size: 0.78rem;
+    color: var(--dim);
+  }
+  @media (min-width: 480px) {
+    .btn-wa {
+      flex: 0 0 auto;
+    }
+  }
+</style>
+
+<script>
+  import "@/scripts/lead";
+</script>
