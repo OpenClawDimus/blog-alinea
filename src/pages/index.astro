@@ -34,13 +34,16 @@ const homePath = getRelativeLocaleUrl(locale, "");
     class="app-layout"
   >
     <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
+      <p class="text-accent mb-3 font-mono text-xs tracking-[0.14em] uppercase">
+        Varejo automotivo · sem enrolação
+      </p>
+      <h1 class="my-3 inline-block text-4xl font-semibold sm:my-5 sm:text-5xl">
+        Marketing que mede carro vendido, não lead.
       </h1>
       <a
         target="_blank"
         href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
+        class="ms-2 inline-block align-middle"
         aria-label="RSS Feed"
         title="RSS Feed"
       >
@@ -52,20 +55,11 @@ const homePath = getRelativeLocaleUrl(locale, "");
         <span class="sr-only">RSS Feed</span>
       </a>
 
-      <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
-      </p>
-      <p class="mt-2">
-        Read the blog posts or check
-        <LinkButton
-          class="hover:text-accent underline decoration-dashed underline-offset-4"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
+      <p class="text-foreground/80 mt-2 max-w-2xl">
+        Conteúdo neutro de fornecedor para quem vive de girar estoque: dono e
+        gerente de revenda, seminovos e concessionária. A gente não vende portal
+        nem CRM — então pode falar a verdade sobre reduzir dependência de portal,
+        matar o lead-fantasma e medir cada real até a chave na mão do cliente.
       </p>
       {
         socials.length > 0 && (

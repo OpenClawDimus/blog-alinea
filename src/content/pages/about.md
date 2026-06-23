@@ -1,37 +1,24 @@
 ---
-title: "About"
-description: "A bit about me and this blog."
+title: "Sobre o Blog Dimus"
+description: "Conteúdo de marketing automotivo orientado a carro vendido, não a lead — feito pela Dimus para donos e gerentes de revenda."
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+Este é o blog da **Dimus**: marketing automotivo que mede **carro vendido, não lead**.
 
-![Astro Paper](@/assets/images/astropaper-og.jpg)
+A maior parte do conteúdo do setor é feita por quem ganha com lead (portal) ou com cadastro (CRM). Nós não vendemos nenhum dos dois — então podemos falar a verdade que ninguém fala: como reduzir a dependência do portal, parar de pagar por lead-fantasma e rastrear cada real de mídia até a chave na mão do cliente.
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+## Para quem é
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+- **Dono de revenda e seminovos** que sente o caixa antes de ver o relatório.
+- **Gerente comercial** que cansou de lead que não atende.
+- **Gerente de marketing** que precisa provar venda, não CTR.
 
-## Features
+## O que você encontra aqui
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+- A conta real do que cada decisão custa: carro parado, lead-fantasma, CAC por carro vendido.
+- Calculadoras que falam a língua do caixa.
+- O caminho para um canal de aquisição próprio, sem queimar margem.
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+Quer aplicar isso na sua loja? Em todo post tem um caminho direto para falar com a gente no WhatsApp.
 
-and so much more.
-
-## Show your support
-
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+— Equipe Dimus · [dimus.com.br](https://dimus.com.br)
