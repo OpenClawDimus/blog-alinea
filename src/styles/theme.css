@@ -1,0 +1,68 @@
+/* ============================================================
+   Revista Showroom — design tokens (blog.dimus.com.br)
+   Dark-first. Magenta é evento, não ambiente (<5% da tela).
+   Portado do mockup validado blog/v2.2.0.
+   ============================================================ */
+@theme inline {
+  /* AstroPaper canonical tokens (mapeados p/ Showroom) */
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-accent: var(--magenta);
+  --color-accent-foreground: #ffffff;
+  --color-muted: var(--surface-2);
+  --color-muted-foreground: var(--muted);
+  --color-border: var(--hair);
+
+  /* Paleta estendida Showroom */
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink-2: var(--ink-2);
+  --color-dim: var(--dim);
+  --color-magenta: var(--magenta);
+  --color-magenta-deep: var(--magenta-deep);
+  --color-pink: var(--pink);
+  --color-hair-mag: var(--hair-mag);
+  --color-hair-strong: var(--hair-strong);
+
+  /* Fontes */
+  --font-app: var(--font-hanken-grotesk);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-hanken-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+/* Dark-first: valores iguais em :root e [data-theme=dark].
+   lightAndDarkMode está OFF — o blog é sempre escuro (design validado). */
+:root,
+[data-theme="light"],
+[data-theme="dark"] {
+  --bg: #0b0a0d;
+  --bg-2: #0e0c11;
+  --surface: #131017;
+  --surface-2: #181420;
+
+  --hair: rgba(255, 255, 255, 0.07);
+  --hair-mag: rgba(225, 55, 158, 0.16);
+  --hair-strong: rgba(225, 55, 158, 0.3);
+
+  --ink: #f4f1f5;
+  --ink-2: #cbc4d2;
+  --muted: #9a8fa3;
+  --dim: #6e6678;
+
+  --magenta: #e1379e;
+  --magenta-deep: #b21e97;
+  --pink: #ff53c8;
+
+  /* Movimento */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-s: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Layout */
+  --rail-w: 288px;
+  --measure: 760px;
+
+  --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.35),
+    0 22px 60px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+}
