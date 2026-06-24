@@ -87,9 +87,32 @@ export async function onRequest(context) {
   const cfTimezone   = cf.timezone   || '';
   const cfAsn        = cf.asn ? String(cf.asn) : '';
 
-  // ── Persiste sessão em D1 (first-touch lock-in) ──────────────────────────
+  // ── Persiste sessão + page_view em D1 ────────────────────────────────────
   if (env.DB) {
     const nowSec = Math.floor(now / 1000);
+
+    // post_slug derivado de /posts/<slug>/ (vazio p/ não-post); device do UA
+    const ua = request.headers.get('user-agent') || '';
+    const postMatch = url.pathname.match(/^\/posts\/([^/]+)\/?$/);
+    const postSlug = postMatch ? postMatch[1] : '';
+    const deviceType = /Mobi|Android|iPhone|iPad|iPod/i.test(ua)
+      ? (/iPad|Tablet/i.test(ua) ? 'tablet' : 'mobile')
+      : 'desktop';
+    const isHtml = (response.headers.get('content-type') || '').includes('text/html');
+    if (isHtml) {
+      context.waitUntil(
+        env.DB.prepare(`
+          INSERT INTO page_views (
+            session_id, post_slug, path, referrer, device_type, country, created_at
+          ) VALUES (?,?,?,?,?,?,?)
+        `).bind(
+          sessionId, postSlug, url.pathname,
+          request.headers.get('referer') || '',
+          deviceType, cfCountry, nowSec
+        ).run()
+      );
+    }
+
     context.waitUntil(
       env.DB.prepare(`
         INSERT INTO sessions (
