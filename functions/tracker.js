@@ -209,6 +209,7 @@ export async function onRequestPost(context) {
           device_type, browser, os, country, city,
           created_at
         ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        ON CONFLICT(event_id) DO NOTHING
       `).bind(
         sessionId, lead_ref || event_id, event_id, et, event_name,
         nome || '', whatsapp || '', waPhone,
@@ -230,6 +231,7 @@ export async function onRequestPost(context) {
         env.DB.prepare(`
           INSERT INTO magnet_downloads (lead_ref, magnet_slug, post_slug, cluster, session_id, wa_phone, created_at)
           VALUES (?,?,?,?,?,?,?)
+          ON CONFLICT(lead_ref) DO NOTHING
         `).bind(lead_ref || event_id, magnet_slug, post_slug, cluster, sessionId, waPhone, nowSec)
           .run().catch((e) => console.error('[d1-magnet]', magnet_slug, e && e.message))
       );

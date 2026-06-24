@@ -28,6 +28,15 @@ const rssHref = getRelativeLocaleUrl(
   Astro.currentLocale ?? config.site.lang,
   "rss.xml"
 );
+
+// Meta Pixel ID — PÚBLICO (client-side, pode ser commitado). Setar no build CF
+// Pages como var PUBLIC_META_PIXEL_ID. Vazio = não injeta (sem pixel quebrado).
+// HTML montado no frontmatter + injetado via <Fragment set:html> p/ o esbuild
+// não tentar compilar o snippet do pixel como módulo (interpolação quebra).
+const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID ?? "";
+const metaPixelHtml = metaPixelId
+  ? `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');</script><noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1"/></noscript>`
+  : "";
 ---
 
 <!doctype html>
@@ -69,6 +78,9 @@ const rssHref = getRelativeLocaleUrl(
       gtag("js", new Date());
       gtag("config", "G-Q6KH427C70");
     </script>
+
+    {/* Meta Pixel base — injeta só se PUBLIC_META_PIXEL_ID estiver setado. */}
+    {metaPixelHtml && <Fragment set:html={metaPixelHtml} />}
 
     <!-- Primary meta -->
     <title>{title}</title>

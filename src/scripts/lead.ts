@@ -63,20 +63,23 @@ function handleSubmit(form: HTMLFormElement) {
     : null;
   const magnet = form.dataset.magnet || (withCalc ? "calc-carro-parado" : null);
 
-  // GA4 (recommended event)
-  (
-    (window as unknown as { dataLayer: unknown[] }).dataLayer =
-      (window as unknown as { dataLayer?: unknown[] }).dataLayer || []
-  ).push({
-    event: "generate_lead",
-    lead_source: "blog",
-    lead_origin: origin, // origem canônica legível (ex.: blog-calc-estoque)
-    method: "form-first-whatsapp",
-    post_slug: form.dataset.postSlug || "",
-    cluster: form.dataset.cluster || "",
-    magnet_slug: magnet,
-    lead_ref: ref,
-  });
+  // GA4 (recommended event) — gtag.js PURO (não GTM): o evento vai por
+  // gtag('event',…). dataLayer.push({event:…}) é formato GTM e o gtag.js IGNORA.
+  try {
+    const gtag = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag;
+    if (gtag)
+      gtag("event", "generate_lead", {
+        lead_source: "blog",
+        lead_origin: origin, // origem canônica legível (ex.: blog-calc-estoque)
+        method: "form-first-whatsapp",
+        post_slug: form.dataset.postSlug || "",
+        cluster: form.dataset.cluster || "",
+        magnet_slug: magnet,
+        lead_ref: ref,
+      });
+  } catch {
+    /* noop */
+  }
 
   // Meta Pixel (mesmo eventID para dedupe com CAPI server-side)
   // content_name = origem canônica (idêntica ao CAPI → sem divergência de relatório)
