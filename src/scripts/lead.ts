@@ -8,6 +8,29 @@ const WA_NUMBER = "5567991992882"; // receptor de leads (padrão tracking Dimus)
 
 const fmtBR = (n: number) => "R$ " + Math.round(n).toLocaleString("pt-BR");
 
+/**
+ * CONVENÇÃO DE NOMENCLATURA DE ORIGEM (lê o nome → sabe de onde veio):
+ *   <propriedade>-<superfície>-<cluster>   ex.: blog-calc-estoque
+ *     propriedade: blog (vs usa, blueprint, infofast)
+ *     superfície : calc | quiz | post  (onde na página o lead nasceu)
+ *     cluster    : estoque | atribuicao | portal
+ *   lead_ref = <origem>-<base36(tempo)>-<rand>  → prefixo legível + sufixo único.
+ * O `origem` (idTag) é o MESMO valor em lead_ref, content_name (Pixel+CAPI) e
+ * param GA4 lead_origin. Eventos de plataforma seguem padrão (Meta Lead / GA4
+ * generate_lead) p/ não perder otimização — a origem vive nos rótulos.
+ */
+function makeRef(origin: string): string {
+  let rand = "";
+  try {
+    const a = new Uint8Array(4);
+    (self.crypto || window.crypto).getRandomValues(a);
+    rand = Array.from(a, b => b.toString(36)).join("").slice(0, 6);
+  } catch {
+    rand = Math.random().toString(36).slice(2, 8);
+  }
+  return `${origin}-${Date.now().toString(36)}-${rand}`;
+}
+
 // summary = frase pronta p/ o WhatsApp (cada calculadora monta a sua).
 // Campos da calculadora de carro parado mantidos p/ retrocompat (fallback).
 type CalcState = {
@@ -31,8 +54,8 @@ function handleSubmit(form: HTMLFormElement) {
     return;
   }
 
-  const idTag = form.dataset.idtag || "BLOG-LEAD";
-  const ref = idTag + "-" + String(Date.now()).slice(-5); // lead_ref / event_id
+  const origin = form.dataset.idtag || "blog-lead"; // origem canônica (ver makeRef)
+  const ref = makeRef(origin); // lead_ref / event_id — prefixo legível + sufixo único
 
   const withCalc = form.dataset.withcalc !== undefined;
   const calc = withCalc
@@ -47,6 +70,7 @@ function handleSubmit(form: HTMLFormElement) {
   ).push({
     event: "generate_lead",
     lead_source: "blog",
+    lead_origin: origin, // origem canônica legível (ex.: blog-calc-estoque)
     method: "form-first-whatsapp",
     post_slug: form.dataset.postSlug || "",
     cluster: form.dataset.cluster || "",
@@ -55,9 +79,10 @@ function handleSubmit(form: HTMLFormElement) {
   });
 
   // Meta Pixel (mesmo eventID para dedupe com CAPI server-side)
+  // content_name = origem canônica (idêntica ao CAPI → sem divergência de relatório)
   try {
     const fbq = (window as unknown as { fbq?: (...a: unknown[]) => void }).fbq;
-    if (fbq) fbq("track", "Lead", { content_name: "blog_lead" }, { eventID: ref });
+    if (fbq) fbq("track", "Lead", { content_name: origin }, { eventID: ref });
   } catch {
     /* noop */
   }
@@ -72,6 +97,7 @@ function handleSubmit(form: HTMLFormElement) {
       event_source_url: location.href,
       lead_ref: ref,
       source: "blog",
+      lead_origin: origin, // origem canônica → content_name no CAPI (server)
       nome,
       whatsapp: wa,
       post_slug: form.dataset.postSlug || "",

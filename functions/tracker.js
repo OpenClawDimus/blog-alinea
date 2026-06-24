@@ -46,6 +46,7 @@ export async function onRequestPost(context) {
     user_data = {},
     lead_ref = '',
     source = 'blog',
+    lead_origin = '', // origem canônica (ex.: blog-calc-estoque) → content_name
     nome = '', email = '', whatsapp = '',
     post_slug = '', cluster = '', magnet_slug = '',
     page_url = '',
@@ -154,9 +155,10 @@ export async function onRequestPost(context) {
     action_source: 'website',
     user_data: metaUserData,
   };
-  // custom_data: simetria com o pixel + dimensões editoriais p/ segmentação
+  // custom_data: simetria com o pixel + dimensões editoriais p/ segmentação.
+  // content_name = origem canônica (igual ao Pixel) → relatório/audience sem divergência.
   metaEvent.custom_data = {
-    content_name: source || 'blog',
+    content_name: lead_origin || source || 'blog',
     content_category: cluster || '',
     content_ids: magnet_slug ? [magnet_slug] : undefined,
   };

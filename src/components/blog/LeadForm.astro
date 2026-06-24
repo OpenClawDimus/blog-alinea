@@ -4,7 +4,7 @@
  * GA4 generate_lead + Pixel Lead + [ID] disparam no submit (src/scripts/lead.ts).
  */
 interface Props {
-  idTag: string; // prefixo do lead_ref (ex.: CALC-CARRO, POST-CARRO-PARADO)
+  idTag: string; // origem canônica = prefixo do lead_ref. blog-<calc|quiz|post>-<estoque|atribuicao|portal>. Ex.: blog-calc-estoque
   postSlug: string;
   cluster: string;
   withCalc?: boolean; // anexa números da calculadora à mensagem
