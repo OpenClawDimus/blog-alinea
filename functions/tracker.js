@@ -196,11 +196,14 @@ export async function onRequestPost(context) {
     metaBody = 'skipped: missing META creds or PageView';
   }
 
-  // ── Forward GHL/Avantto (CRM source of truth) — captura contact.id REAL ──
+  // ── Forward GHL/Avantto (CRM source of truth) — captura contact.id + opportunity REAIS ──
   // GHL é a fonte de verdade onde se fala com o lead. Upsert de contato síncrono
-  // (precisamos do id p/ cruzar em D1 + Supabase). Gated por GHL_TOKEN: smoke
-  // local sem token não toca o CRM. Falha em GHL NÃO bloqueia D1/Supabase/CAPI.
+  // (precisamos do id p/ cruzar em D1 + Supabase). Depois cria opportunity no
+  // pipeline BluePrint [Content] (GHL_PIPELINE_ID), 1º stage = Novo Lead (Nurturing).
+  // Gated por GHL_TOKEN: smoke local sem token não toca o CRM.
+  // Falha em GHL NÃO bloqueia D1/Supabase/CAPI.
   let ghlContactId = '';
+  let ghlOpportunityId = '';
   if (env.GHL_TOKEN && env.GHL_LOCATION_ID && event_name !== 'PageView' && (nome || whatsapp)) {
     const nameParts = (nome || '').trim().split(/\s+/).filter(Boolean);
     const realEmail = (email || user_data.em || '').trim();
@@ -246,6 +249,41 @@ export async function onRequestPost(context) {
     } catch (e) {
       console.error('[ghl-upsert] err', e && e.message);
     }
+
+    // Cria opportunity no pipeline BluePrint [Content] após obter contactId.
+    // Estágio inicial: Novo Lead (Nurturing) — 1019a23c-4b2d-430d-83bd-2caebcb02aa4.
+    if (ghlContactId && env.GHL_PIPELINE_ID) {
+      try {
+        const oppResp = await fetch('https://services.leadconnectorhq.com/opportunities/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + env.GHL_TOKEN,
+            Version: '2021-07-28',
+          },
+          body: JSON.stringify({
+            pipelineId: env.GHL_PIPELINE_ID,
+            pipelineStageId: '1019a23c-4b2d-430d-83bd-2caebcb02aa4',
+            contactId: ghlContactId,
+            locationId: env.GHL_LOCATION_ID,
+            name: (nome || 'Lead Blog').trim(),
+            status: 'open',
+            monetaryValue: 0,
+            source: source || 'blog',
+          }),
+        });
+        if (oppResp.ok) {
+          const oppJson = await oppResp.json().catch(() => ({}));
+          ghlOpportunityId = oppJson?.opportunity?.id || oppJson?.id || '';
+        } else {
+          const t = await oppResp.text().catch(() => '');
+          console.error('[ghl-opportunity]', oppResp.status, t.slice(0, 200));
+        }
+      } catch (e) {
+        console.error('[ghl-opportunity] err', e && e.message);
+      }
+    }
   }
 
   // ── Grava lead em D1 ─────────────────────────────────────────────────────
@@ -262,9 +300,9 @@ export async function onRequestPost(context) {
           campaign_id, adset_id, ad_id, placement,
           page_url, meta_status_code, meta_response_ok, meta_response_body, meta_payload_sent,
           device_type, browser, os, country, city,
-          ghl_contact_id,
+          ghl_contact_id, ghl_opportunity_id,
           created_at
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(event_id) DO NOTHING
       `).bind(
         sessionId, lead_ref || event_id, event_id, et, event_name,
@@ -277,7 +315,7 @@ export async function onRequestPost(context) {
         event_source_url || '',
         metaStatus, metaOk, metaBody.slice(0, 1000), metaPayloadSent.slice(0, 2000),
         deviceType, browserName, osName, cfCountry, cfCity,
-        ghlContactId,
+        ghlContactId, ghlOpportunityId,
         nowSec
       ).run().catch((e) => console.error('[d1-lead]', event_id, e && e.message))
     );
@@ -329,6 +367,7 @@ export async function onRequestPost(context) {
         lead_ref: lead_ref || '',
         market: 'blog',
         ghl_contact_id: ghlContactId || '',
+        ghl_opportunity_id: ghlOpportunityId || '',
       },
     };
     const fwdUrl = `${env.BLUEPRINT_SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/leads?on_conflict=email`;
