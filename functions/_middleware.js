@@ -109,7 +109,7 @@ export async function onRequest(context) {
           sessionId, postSlug, url.pathname,
           request.headers.get('referer') || '',
           deviceType, cfCountry, nowSec
-        ).run()
+        ).run().catch((e) => console.error('[d1-pageview]', url.pathname, e && e.message))
       );
     }
 
@@ -148,7 +148,7 @@ export async function onRequest(context) {
         campaignId, adsetId, adId, placement,
         cfCountry, cfRegion, cfCity, cfPostalCode, cfTimezone, cfAsn,
         nowSec, nowSec
-      ).run()
+      ).run().catch((e) => console.error('[d1-session]', e && e.message))
     );
   }
 

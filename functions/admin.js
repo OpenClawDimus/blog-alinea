@@ -51,20 +51,48 @@ export async function onRequest(context) {
   }
 
   // ── Auth gate ──────────────────────────────────────────────────────────
+  // O cookie guarda um TOKEN HMAC opaco (exp.sig), NUNCA a DASH_KEY bruta.
+  // Login via POST (corpo), nunca ?key= na URL (não vaza em log/Referer).
   const cookie = request.headers.get('cookie') || '';
-  const cookieKey = (cookie.match(/(?:^|;)\s*_dash=([^;]*)/) || [])[1];
-  const queryKey = url.searchParams.get('key');
-  const provided = queryKey ?? (cookieKey ? decodeURIComponent(cookieKey) : null);
+  const getCk = (n) => {
+    const m = cookie.match(new RegExp('(?:^|;)\\s*' + n + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
+  };
+  const clearCookie = '_dash=; Path=/admin; Max-Age=0; HttpOnly; SameSite=Strict; Secure';
 
-  // Comparação em tempo ~constante
-  const ok = provided != null && provided.length === env.DASH_KEY.length &&
-    timingSafeEqual(provided, env.DASH_KEY);
+  // POST = tentativa de login (chave no corpo form ou JSON)
+  if (request.method === 'POST') {
+    let key = '';
+    try {
+      const ct = request.headers.get('content-type') || '';
+      if (ct.includes('application/json')) key = String((await request.json()).key || '');
+      else key = String((await request.formData()).get('key') || '');
+    } catch { /* corpo inválido → key vazia */ }
+    const good = key.length === env.DASH_KEY.length && timingSafeEqual(key, env.DASH_KEY);
+    const h = new Headers({ 'cache-control': 'no-store' });
+    if (good) {
+      h.append('set-cookie', `_dash=${await issueToken(env.DASH_KEY)}; Path=/admin; Max-Age=43200; HttpOnly; SameSite=Strict; Secure`);
+      h.set('location', '/admin');
+      return new Response(null, { status: 303, headers: h }); // PRG → some o segredo da request
+    }
+    h.set('content-type', 'text/html; charset=utf-8');
+    h.append('set-cookie', clearCookie);
+    return new Response(loginHTML(true), { status: 401, headers: h });
+  }
 
+  // Logout explícito
+  if (url.searchParams.get('logout') != null) {
+    const h = new Headers({ 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
+    h.append('set-cookie', clearCookie);
+    return new Response(loginHTML(false), { status: 200, headers: h });
+  }
+
+  // GET = valida o token de sessão (HMAC), nunca a chave bruta
+  const ok = await verifyToken(env.DASH_KEY, getCk('_dash'));
   if (!ok) {
     const h = new Headers({ 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
-    // Logout explícito (?key=) ou chave errada → expira o cookie de sessão
-    h.append('set-cookie', '_dash=; Path=/admin; Max-Age=0; HttpOnly; SameSite=Strict; Secure');
-    return new Response(loginHTML(provided != null && provided !== ''), { status: 401, headers: h });
+    if (getCk('_dash')) h.append('set-cookie', clearCookie); // token expirado/inválido → limpa
+    return new Response(loginHTML(false), { status: 401, headers: h });
   }
 
   // ── Queries ────────────────────────────────────────────────────────────
@@ -111,16 +139,10 @@ export async function onRequest(context) {
   `);
 
   const html = dashboardHTML({ totals, magnets, posts, origins, recent });
-  const headers = new Headers({
-    'content-type': 'text/html; charset=utf-8',
-    'cache-control': 'no-store',
+  return new Response(html, {
+    status: 200,
+    headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' },
   });
-  // Renova cookie de sessão admin (12h) quando autenticou via ?key
-  if (queryKey != null) {
-    headers.append('set-cookie',
-      `_dash=${encodeURIComponent(env.DASH_KEY)}; Path=/admin; Max-Age=43200; HttpOnly; SameSite=Strict; Secure`);
-  }
-  return new Response(html, { status: 200, headers });
 }
 
 function timingSafeEqual(a, b) {
@@ -128,6 +150,29 @@ function timingSafeEqual(a, b) {
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return diff === 0;
+}
+
+// ── Sessão: token HMAC opaco (exp.sig) derivado da DASH_KEY ────────────────────
+// O cookie carrega ESTE token, nunca a chave-mestra. Revogável trocando DASH_KEY.
+async function hmacHex(secret, msg) {
+  const enc = new TextEncoder();
+  const k = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', k, enc.encode(msg));
+  return Array.from(new Uint8Array(sig)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+async function issueToken(secret) {
+  const exp = Math.floor(Date.now() / 1000) + 43200; // 12h
+  return exp + '.' + (await hmacHex(secret, 'admin.v1.' + exp));
+}
+async function verifyToken(secret, token) {
+  if (!token) return false;
+  const dot = token.indexOf('.');
+  if (dot < 1) return false;
+  const exp = parseInt(token.slice(0, dot), 10);
+  const sig = token.slice(dot + 1);
+  if (!exp || exp < Math.floor(Date.now() / 1000)) return false;
+  const expected = await hmacHex(secret, 'admin.v1.' + exp);
+  return sig.length === expected.length && timingSafeEqual(sig, expected);
 }
 
 // ── Views ────────────────────────────────────────────────────────────────────
@@ -173,7 +218,7 @@ const SHELL = (title, body) => `<!doctype html>
 
 function loginHTML(failed) {
   return SHELL('Admin', `
-    <form class="login" method="get" action="/admin">
+    <form class="login" method="post" action="/admin">
       <h1>Blog Dimus · Admin</h1>
       <p class="sub">Acesso restrito.</p>
       ${failed ? '<p class="err">Chave inválida.</p>' : ''}
@@ -237,7 +282,7 @@ function dashboardHTML({ totals, magnets, posts, origins, recent }) {
   return SHELL('Admin', `
     <div class="top">
       <div><h1>Blog Dimus · Admin</h1><p class="sub">Catálogo finito de magnets · analytics de conversão · leads</p></div>
-      <a class="logout" href="/admin?key=">sair</a>
+      <a class="logout" href="/admin?logout=1">sair</a>
     </div>
     ${cards}
     <section><h2>Downloads por magnet (catálogo finito)</h2>${magnetsTbl}</section>

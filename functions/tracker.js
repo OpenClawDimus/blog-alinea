@@ -64,6 +64,17 @@ export async function onRequestPost(context) {
 
   const { deviceType, browserName, osName } = parseUA(ua);
 
+  // ── Validação server-side (não confiar no client; anti-flood do CRM) ──────
+  // Espelha src/scripts/lead.ts. Bloqueia ANTES de CAPI/D1/forward.
+  if (event_name !== 'PageView') {
+    const nomeOk = String(nome || user_data.fn || '').trim().length >= 2;
+    const phoneDigits = String(whatsapp || user_data.ph || '').replace(/\D/g, '');
+    const phoneOk = phoneDigits.length >= 10 && phoneDigits.length <= 13;
+    if (!nomeOk || !phoneOk) {
+      return json({ error: 'invalid lead', nome: nomeOk, whatsapp: phoneOk }, 422);
+    }
+  }
+
   // ── Geo edge CF ──────────────────────────────────────────────────────────
   const cf = request.cf || {};
   const cfCountry = cf.country || '';
@@ -208,7 +219,7 @@ export async function onRequestPost(context) {
         metaStatus, metaOk, metaBody.slice(0, 1000), metaPayloadSent.slice(0, 2000),
         deviceType, browserName, osName, cfCountry, cfCity,
         nowSec
-      ).run()
+      ).run().catch((e) => console.error('[d1-lead]', event_id, e && e.message))
     );
 
     // ── Biblioteca finita: 1 download por submit com magnet_slug ───────────
@@ -217,7 +228,8 @@ export async function onRequestPost(context) {
         env.DB.prepare(`
           INSERT INTO magnet_downloads (lead_ref, magnet_slug, post_slug, cluster, session_id, wa_phone, created_at)
           VALUES (?,?,?,?,?,?,?)
-        `).bind(lead_ref || event_id, magnet_slug, post_slug, cluster, sessionId, waPhone, nowSec).run()
+        `).bind(lead_ref || event_id, magnet_slug, post_slug, cluster, sessionId, waPhone, nowSec)
+          .run().catch((e) => console.error('[d1-magnet]', magnet_slug, e && e.message))
       );
     }
   }
@@ -318,7 +330,9 @@ function normalizePhone(ph) {
   // Mercado BR: o form coleta dígitos locais (DDD+9+8 = 10-11 dígitos).
   // Meta CAPI espera E.164 com DDI → prefixa 55 quando local e sem DDI.
   let d = ph.replace(/\D/g, '').replace(/^0+/, '');
-  if ((d.length === 10 || d.length === 11) && !d.startsWith('55')) d = '55' + d;
+  // 10-11 díg = número local (DDD+fone) → prefixa DDI 55. Checa por LENGTH, não
+  // prefixo: DDD 55 (RS/Santa Maria) tem 11 díg e começaria com '55' por engano.
+  if (d.length === 10 || d.length === 11) d = '55' + d;
   return d;
 }
 
