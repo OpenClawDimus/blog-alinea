@@ -19,5 +19,6 @@ database_id = "71f19cdf-555b-46f3-9b13-b81eb1238e96"
 #   GHL_LOCATION_ID         = 5t9LTZfC12mnSsesCuoD  (location "Guilherme Ribeiro")
 #   GHL_PIPELINE_ID         = zTeBzW1qD2UxnqB8aBQ6  (pipeline "BluePrint [Content]"; reservado p/ opportunities futuras)
 #   GA4_MEASUREMENT_ID      = G-Q6KH427C70
+#   WA_WEBHOOK_SECRET       = <token aleatório seguro — mesmo token usado na URL do webhook Evolution>
 # Build var (público, no ambiente de build CF Pages): PUBLIC_META_PIXEL_ID = 998136448049534
 # Lembrete (insight #17 dimus-usa): CF Pages só binda secret em NOVO deploy → após secret put, rebuild + redeploy.
