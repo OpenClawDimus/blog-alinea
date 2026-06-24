@@ -2,8 +2,10 @@
  * blog.dimus.com.br — /tracker endpoint
  * POST: recebe evento de conversão do browser (form-first→WhatsApp), enriquece
  * com a sessão D1, hasheia PII e dispara para Meta CAPI (Graph v25.0).
- * Grava lead em D1 + magnet_download (biblioteca finita) e faz forward
- * fire-and-forget para o Supabase do blueprint (CRM compartilhado).
+ * Grava lead em D1 + magnet_download (biblioteca finita), faz upsert no GHL/Avantto
+ * (CRM source of truth, captura contact.id REAL) e forward fire-and-forget para o
+ * Supabase do blueprint (camada de dados). IDs cruzados: D1.ghl_contact_id +
+ * Supabase custom_fields.ghl_contact_id. GHL gated por GHL_TOKEN (smoke não toca CRM).
  *
  * Método KROB (herdado do dimus-usa, live-verified): event_id/event_time
  * passthrough do browser (dedup pixel↔CAPI), fbp/fbc/ip/ua raw, PII SHA-256,
@@ -194,6 +196,58 @@ export async function onRequestPost(context) {
     metaBody = 'skipped: missing META creds or PageView';
   }
 
+  // ── Forward GHL/Avantto (CRM source of truth) — captura contact.id REAL ──
+  // GHL é a fonte de verdade onde se fala com o lead. Upsert de contato síncrono
+  // (precisamos do id p/ cruzar em D1 + Supabase). Gated por GHL_TOKEN: smoke
+  // local sem token não toca o CRM. Falha em GHL NÃO bloqueia D1/Supabase/CAPI.
+  let ghlContactId = '';
+  if (env.GHL_TOKEN && env.GHL_LOCATION_ID && event_name !== 'PageView' && (nome || whatsapp)) {
+    const nameParts = (nome || '').trim().split(/\s+/).filter(Boolean);
+    const realEmail = (email || user_data.em || '').trim();
+    const ghlBody = {
+      locationId: env.GHL_LOCATION_ID,
+      firstName: nameParts.shift() || '',
+      lastName: nameParts.join(' '),
+      name: (nome || '').trim(),
+      email: realEmail || undefined,
+      phone: waPhone ? '+' + waPhone : (whatsapp || undefined),
+      source: source || 'blog',
+      tags: ['blog'],
+      customFields: [
+        { key: 'lead_ref', field_value: lead_ref || event_id },
+        { key: 'post_slug', field_value: post_slug || '' },
+        { key: 'cluster', field_value: cluster || '' },
+        { key: 'magnet_slug', field_value: magnet_slug || '' },
+        { key: 'utm_source', field_value: utmSource || '' },
+        { key: 'utm_medium', field_value: utmMedium || '' },
+        { key: 'utm_campaign', field_value: utmCampaign || '' },
+        { key: 'utm_content', field_value: utmContent || '' },
+        { key: 'utm_term', field_value: utmTerm || '' },
+      ],
+    };
+    try {
+      const ghlResp = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + env.GHL_TOKEN,
+          Version: '2021-07-28',
+        },
+        body: JSON.stringify(ghlBody),
+      });
+      if (ghlResp.ok) {
+        const ghlJson = await ghlResp.json().catch(() => ({}));
+        ghlContactId = ghlJson?.contact?.id || ghlJson?.id || '';
+      } else {
+        const t = await ghlResp.text().catch(() => '');
+        console.error('[ghl-upsert]', ghlResp.status, t.slice(0, 200));
+      }
+    } catch (e) {
+      console.error('[ghl-upsert] err', e && e.message);
+    }
+  }
+
   // ── Grava lead em D1 ─────────────────────────────────────────────────────
   const nowSec = Math.floor(Date.now() / 1000);
   if (env.DB && event_name !== 'PageView') {
@@ -208,8 +262,9 @@ export async function onRequestPost(context) {
           campaign_id, adset_id, ad_id, placement,
           page_url, meta_status_code, meta_response_ok, meta_response_body, meta_payload_sent,
           device_type, browser, os, country, city,
+          ghl_contact_id,
           created_at
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(event_id) DO NOTHING
       `).bind(
         sessionId, lead_ref || event_id, event_id, et, event_name,
@@ -222,6 +277,7 @@ export async function onRequestPost(context) {
         event_source_url || '',
         metaStatus, metaOk, metaBody.slice(0, 1000), metaPayloadSent.slice(0, 2000),
         deviceType, browserName, osName, cfCountry, cfCity,
+        ghlContactId,
         nowSec
       ).run().catch((e) => console.error('[d1-lead]', event_id, e && e.message))
     );
@@ -272,6 +328,7 @@ export async function onRequestPost(context) {
         whatsapp: whatsapp || '',
         lead_ref: lead_ref || '',
         market: 'blog',
+        ghl_contact_id: ghlContactId || '',
       },
     };
     const fwdUrl = `${env.BLUEPRINT_SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/leads?on_conflict=email`;

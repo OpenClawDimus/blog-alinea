@@ -15,6 +15,9 @@ database_id = "71f19cdf-555b-46f3-9b13-b81eb1238e96"
 #   DASH_KEY                = <chave admin /admin>
 #   BLUEPRINT_SUPABASE_URL  = https://tllelzquwdfcjjlsurai.supabase.co  (central de leads = blueprint.dimus.com.br/admin)
 #   BLUEPRINT_SUPABASE_KEY  = <service_role p/ forward de leads (ig_data_source=form_submitted, tags=[blog])>
+#   GHL_TOKEN               = gsm-get dimus-ghl-pit-token  (PIT da location Guilherme Ribeiro; CRM source of truth)
+#   GHL_LOCATION_ID         = 5t9LTZfC12mnSsesCuoD  (location "Guilherme Ribeiro")
+#   GHL_PIPELINE_ID         = zTeBzW1qD2UxnqB8aBQ6  (pipeline "BluePrint [Content]"; reservado p/ opportunities futuras)
 #   GA4_MEASUREMENT_ID      = G-Q6KH427C70
 # Build var (público, no ambiente de build CF Pages): PUBLIC_META_PIXEL_ID = 998136448049534
 # Lembrete (insight #17 dimus-usa): CF Pages só binda secret em NOVO deploy → após secret put, rebuild + redeploy.
