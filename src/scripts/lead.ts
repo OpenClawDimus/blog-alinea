@@ -46,6 +46,7 @@ function handleSubmit(form: HTMLFormElement) {
   const nome = String(data.get("nome") ?? "").trim();
   const email = String(data.get("email") ?? "").trim();
   const wa = String(data.get("whatsapp") ?? "").replace(/\D/g, "");
+  const website = String(data.get("website") ?? "").trim(); // honeypot
   if (nome.length < 2) {
     (form.querySelector('[name="nome"]') as HTMLInputElement)?.focus();
     return;
@@ -113,6 +114,7 @@ function handleSubmit(form: HTMLFormElement) {
       cluster: form.dataset.cluster || "",
       magnet_slug: magnet || "",
       page_url: location.href,
+      website, // honeypot — preenchido = bot → tracker.js descarta
     };
     const data = JSON.stringify(payload);
     const sent =

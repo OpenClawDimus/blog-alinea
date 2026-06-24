@@ -41,6 +41,10 @@ export async function onRequestPost(context) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'invalid json' }, 400); }
 
+  // ── Honeypot anti-bot ────────────────────────────────────────────────────
+  // Campo oculto no form (display:none via CSS absoluto). Bots preenchem; humanos não.
+  if (body.website) return json({ ok: true });
+
   const {
     event_name: rawEventName,
     event_id: rawEventId, event_time,
