@@ -69,10 +69,11 @@ export async function onRequestPost(context) {
   // Espelha src/scripts/lead.ts. Bloqueia ANTES de CAPI/D1/forward.
   if (event_name !== 'PageView') {
     const nomeOk = String(nome || user_data.fn || '').trim().length >= 2;
+    const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(email || user_data.em || '').trim());
     const phoneDigits = String(whatsapp || user_data.ph || '').replace(/\D/g, '');
     const phoneOk = phoneDigits.length >= 10 && phoneDigits.length <= 13;
-    if (!nomeOk || !phoneOk) {
-      return json({ error: 'invalid lead', nome: nomeOk, whatsapp: phoneOk }, 422);
+    if (!nomeOk || !emailOk || !phoneOk) {
+      return json({ error: 'invalid lead', nome: nomeOk, email: emailOk, whatsapp: phoneOk }, 422);
     }
   }
 

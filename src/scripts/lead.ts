@@ -44,9 +44,14 @@ type CalcState = {
 function handleSubmit(form: HTMLFormElement) {
   const data = new FormData(form);
   const nome = String(data.get("nome") ?? "").trim();
+  const email = String(data.get("email") ?? "").trim();
   const wa = String(data.get("whatsapp") ?? "").replace(/\D/g, "");
   if (nome.length < 2) {
     (form.querySelector('[name="nome"]') as HTMLInputElement)?.focus();
+    return;
+  }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    (form.querySelector('[name="email"]') as HTMLInputElement)?.focus();
     return;
   }
   if (wa.length < 10) {
@@ -102,6 +107,7 @@ function handleSubmit(form: HTMLFormElement) {
       source: "blog",
       lead_origin: origin, // origem canônica → content_name no CAPI (server)
       nome,
+      email,
       whatsapp: wa,
       post_slug: form.dataset.postSlug || "",
       cluster: form.dataset.cluster || "",

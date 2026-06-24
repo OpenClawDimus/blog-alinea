@@ -8,14 +8,13 @@ binding = "DB"
 database_name = "blog-tracking"
 database_id = "71f19cdf-555b-46f3-9b13-b81eb1238e96"
 
-# Secrets de runtime (setar via:
-#   node ./node_modules/wrangler/bin/wrangler.js pages secret put <NAME> --project-name blog-dimus):
-#   META_PIXEL_ID           = <pixel do blog / dataset reaproveitado>
-#   META_ACCESS_TOKEN       = <CAPI system-user token válido (EAA…)>
-#   META_TEST_EVENT_CODE    = <opcional, Events Manager>
-#   DASH_KEY                = <chave admin /admin (Sprint 3)>
-#   BLUEPRINT_SUPABASE_URL  = https://tllelzquwdfcjjlsurai.supabase.co
-#   BLUEPRINT_SUPABASE_KEY  = <service_role p/ forward de leads tag blog>
+# Secrets/vars de runtime (setar via `wrangler pages secret put <NAME> --project-name blog-dimus`):
+#   META_PIXEL_ID           = 998136448049534  (dataset Dimus / BM_MotherShip 127525879630526; público, pode ser var)
+#   META_ACCESS_TOKEN       = gsm-get dimus-blog-meta-capi-token  (system-user EAA…, NUNCA commitar)
+#   META_TEST_EVENT_CODE    = <opcional, Events Manager — smoke do 1º lead>
+#   DASH_KEY                = <chave admin /admin>
+#   BLUEPRINT_SUPABASE_URL  = https://tllelzquwdfcjjlsurai.supabase.co  (central de leads = blueprint.dimus.com.br/admin)
+#   BLUEPRINT_SUPABASE_KEY  = <service_role p/ forward de leads (ig_data_source=form_submitted, tags=[blog])>
 #   GA4_MEASUREMENT_ID      = G-Q6KH427C70
-# Lembrete (insight #17 dimus-usa): CF Pages só binda secret em NOVO deploy
-# (não efetiva runtime como Workers) → após secret put, rebuild + redeploy.
+# Build var (público, no ambiente de build CF Pages): PUBLIC_META_PIXEL_ID = 998136448049534
+# Lembrete (insight #17 dimus-usa): CF Pages só binda secret em NOVO deploy → após secret put, rebuild + redeploy.

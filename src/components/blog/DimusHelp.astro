@@ -33,27 +33,53 @@ const copy = {
   },
 }[variant];
 
-// Convenção de origem: blog-gate-<cluster>-<post>. Lê o nome → sabe que é o
-// gate de um post do cluster X. (Ver event-origins.json / docs/EVENT-NAMING.md.)
+// Origem canônica (idTag) do gate: blog-gate-<cluster>. O lead.ts monta o
+// lead_ref completo (blog-gate-<cluster>-<tempo>-<rand>) e o [ID] no WhatsApp.
+// NUNCA WhatsApp direto: mini-form (nome+email+telefone) → CAPI server-side →
+// redirect WhatsApp. (Ver event-origins.json / docs/EVENT-NAMING.md.)
 const gateCluster = variant === "default" ? "geral" : variant;
-const ref =
-  "blog-gate-" +
-  gateCluster +
-  "-" +
-  postSlug.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 16);
-const waMsg = `Olá! Vim do blog (${postSlug}). Quero entender como a Dimus pode ajudar minha revenda. [ID:${ref}]`;
-const waHref =
-  "https://wa.me/5567991992882?text=" + encodeURIComponent(waMsg);
+const gateOrigin = "blog-gate-" + gateCluster;
+const intent =
+  "Vim do blog e quero entender como a Dimus pode ajudar minha revenda a vender mais carro.";
 ---
 
 <aside class="dimus-help not-prose" data-cluster={cluster}>
   <p class="dh-eyebrow">Dimus · marketing que mede carro vendido</p>
   <h3 class="dh-title">{copy.title}</h3>
   <p class="dh-body">{copy.body}</p>
-  <a class="dh-cta" href={waHref} target="_blank" rel="noopener">
-    Falar com a Dimus no WhatsApp →
-  </a>
+  <form
+    class="dh-form"
+    data-lead
+    data-idtag={gateOrigin}
+    data-post-slug={postSlug}
+    data-cluster={cluster || variant}
+    data-intent={intent}
+  >
+    <input name="nome" placeholder="Seu nome" autocomplete="name" required />
+    <input
+      name="email"
+      type="email"
+      inputmode="email"
+      placeholder="Seu melhor e-mail"
+      autocomplete="email"
+      required
+    />
+    <input
+      name="whatsapp"
+      type="tel"
+      inputmode="tel"
+      placeholder="WhatsApp com DDD"
+      autocomplete="tel"
+      required
+    />
+    <button type="submit" class="dh-cta">Falar com a Dimus →</button>
+  </form>
+  <p class="dh-fine">Deixe seu contato — retornamos no WhatsApp. Sem robô.</p>
 </aside>
+
+<script>
+  import "@/scripts/lead";
+</script>
 
 <style>
   .dimus-help {
@@ -90,22 +116,52 @@ const waHref =
     line-height: 1.6;
     color: var(--ink-2);
   }
-  .dh-cta {
-    display: inline-block;
-    padding: 0.6rem 1.05rem;
-    border-radius: 999px;
-    background: transparent;
-    border: 1px solid var(--magenta);
-    color: var(--magenta);
-    font-weight: 600;
+  .dh-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .dh-form input {
+    flex: 1 1 160px;
+    min-width: 0;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: var(--bg-2);
+    color: var(--ink);
+    font: inherit;
     font-size: 0.92rem;
-    text-decoration: none;
+    transition: border-color 0.18s var(--ease-s);
+  }
+  .dh-form input::placeholder {
+    color: var(--dim);
+  }
+  .dh-form input:focus {
+    outline: none;
+    border-color: var(--magenta);
+  }
+  .dh-cta {
+    flex: 1 1 100%;
+    padding: 0.7rem 1.1rem;
+    border-radius: 999px;
+    background: var(--magenta);
+    border: 1px solid var(--magenta);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.94rem;
+    cursor: pointer;
     transition:
-      background 0.18s var(--ease-s),
-      color 0.18s var(--ease-s);
+      transform 0.18s var(--ease-s),
+      filter 0.18s var(--ease-s);
   }
   .dh-cta:hover {
-    background: var(--magenta);
-    color: #fff;
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+  }
+  .dh-fine {
+    margin: 0.8rem 0 0;
+    font-size: 0.76rem;
+    color: var(--dim);
   }
 </style>
