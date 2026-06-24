@@ -17,11 +17,29 @@ import {
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
+import { execFileSync } from "node:child_process";
 import config from "./astro-paper.config";
 
 export default defineConfig({
   site: config.site.url,
   integrations: [
+    // GATE OBRIGATÓRIO de nomenclatura de origem — bloqueia o build (e portanto
+    // o deploy) se algum evento/idTag fugir da convenção. Ver event-origins.json.
+    {
+      name: "event-naming-gate",
+      hooks: {
+        "astro:build:start": ({ logger }) => {
+          try {
+            const out = execFileSync("node", ["scripts/gate-event-naming.mjs"]);
+            logger.info(out.toString().trim());
+          } catch (e) {
+            if (e.stdout) logger.error(e.stdout.toString());
+            if (e.stderr) logger.error(e.stderr.toString());
+            throw new Error("Gate de nomenclatura de eventos FALHOU — build bloqueado.");
+          }
+        },
+      },
+    },
     mdx(),
     sitemap({
       filter: page =>

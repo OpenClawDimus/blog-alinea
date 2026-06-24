@@ -60,3 +60,19 @@ ex.: blog-calc-estoque-lxab12-7f3a9k
 2. Novo placement → novo `idTag` seguindo `<propriedade>-<superfície>-<cluster>` + linha nesta tabela.
 3. `content_name` (Pixel) === `content_name` (CAPI) === `idTag`. Sempre.
 4. Cluster do `content_category` usa o slug editorial completo; o `idTag` usa a forma curta (`estoque`).
+
+## Superfícies e clusters (atualizado)
+
+- **superfícies**: `calc` · `quiz` · `post` · `gate` (bloco DimusHelp) · `lead` (fallback `blog-lead`)
+- **clusters**: `estoque` · `atribuicao` · `portal` · `atendimento` · `geral`
+- Origem do gate DimusHelp: `blog-gate-<cluster>` (ex.: `blog-gate-estoque`); `lead_ref` = `blog-gate-<cluster>-<post>`.
+
+## GATE OBRIGATÓRIO (enforcement, não-opcional)
+
+A convenção é **enforçada**, não confiada à disciplina:
+
+- **Fonte de verdade**: `event-origins.json` (regex + superfícies + clusters + tokens proibidos).
+- **Gate**: `scripts/gate-event-naming.mjs` — valida todo `idTag="…"`, o prefixo do ref do DimusHelp, e proíbe tokens legados (`CALC-`/`GATE-`/…). `npm run gate:naming`.
+- **Hook de build**: integração `event-naming-gate` no `astro.config.ts` roda o gate em `astro:build:start` → **build (e deploy) BLOQUEADO** se qualquer origem fugir da convenção. Provado: build exit 1 em violação, exit 0 limpo.
+
+Novo placement ⇒ `idTag` na convenção + (se novo cluster/superfície) atualizar `event-origins.json`. Sem isso, não buildа.

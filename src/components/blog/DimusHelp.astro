@@ -33,7 +33,14 @@ const copy = {
   },
 }[variant];
 
-const ref = "GATE-" + postSlug.toUpperCase().replace(/[^A-Z0-9]+/g, "-").slice(0, 18);
+// Convenção de origem: blog-gate-<cluster>-<post>. Lê o nome → sabe que é o
+// gate de um post do cluster X. (Ver event-origins.json / docs/EVENT-NAMING.md.)
+const gateCluster = variant === "default" ? "geral" : variant;
+const ref =
+  "blog-gate-" +
+  gateCluster +
+  "-" +
+  postSlug.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 16);
 const waMsg = `Olá! Vim do blog (${postSlug}). Quero entender como a Dimus pode ajudar minha revenda. [ID:${ref}]`;
 const waHref =
   "https://wa.me/5567991992882?text=" + encodeURIComponent(waMsg);

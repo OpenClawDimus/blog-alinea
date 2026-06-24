@@ -13,7 +13,8 @@
     "astro": "astro",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "gate:naming": "node scripts/gate-event-naming.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.1",

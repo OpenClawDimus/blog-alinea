@@ -1,0 +1,9 @@
+{
+  "_doc": "Fonte de verdade da convenção de nomenclatura de ORIGEM de eventos. Lê o nome → sabe de onde veio. Enforçada pelo gate scripts/gate-event-naming.mjs (roda no astro:build:start → build/deploy bloqueado se violar). Ver docs/EVENT-NAMING.md.",
+  "property": "blog",
+  "surfaces": ["calc", "quiz", "post", "gate", "lead"],
+  "clusters": ["estoque", "atribuicao", "portal", "atendimento", "geral"],
+  "singletons": ["blog-lead"],
+  "regex": "^blog-(calc|quiz|post|gate)-(estoque|atribuicao|portal|atendimento|geral)$",
+  "forbidden": ["CALC-", "QUIZ-", "POST-", "GATE-", "LEAD-", "BLOG-LEAD"]
+}
