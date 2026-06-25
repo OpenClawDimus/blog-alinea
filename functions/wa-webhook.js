@@ -32,13 +32,20 @@
  * lead_ref como external_id). event_id = "cr-" + lead_ref (cross-referenciável).
  */
 
+function timingSafeEqual(a, b) {
+  const la = a.length, lb = b.length;
+  let d = 0;
+  for (let i = 0; i < Math.max(la, lb); i++) d |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
+  return d === 0 && la === lb;
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
   // ── Validação do token de segurança ─────────────────────────────────────
   const url = new URL(request.url);
   const token = url.searchParams.get('token') || '';
-  if (!env.WA_WEBHOOK_SECRET || token !== env.WA_WEBHOOK_SECRET) {
+  if (!env.WA_WEBHOOK_SECRET || !timingSafeEqual(token, env.WA_WEBHOOK_SECRET || '')) {
     // Retorna 200 silencioso para não revelar existência do endpoint
     return new Response('ok', { status: 200 });
   }
@@ -100,8 +107,9 @@ export async function onRequestPost(context) {
   // ── Verifica que quem enviou é o mesmo telefone registrado ───────────────
   // Impede que qualquer número que conheça um lead_ref confirme por outra pessoa.
   const senderPhone = (key.remoteJid || '').split('@')[0].replace(/\D/g, '');
-  if (lead.wa_phone && senderPhone && !lead.wa_phone.endsWith(senderPhone.slice(-8))) {
-    console.error('[wa-webhook] phone mismatch', leadRef, 'sender:', senderPhone.slice(-4), 'reg:', String(lead.wa_phone).slice(-4));
+  const leadNormalized = String(lead.wa_phone || '').replace(/\D/g, '');
+  if (leadNormalized && senderPhone && senderPhone !== leadNormalized) {
+    console.error('[wa-webhook] phone mismatch', leadRef, 'sender:', senderPhone.slice(-4), 'reg:', leadNormalized.slice(-4));
     return new Response('ok', { status: 200 });
   }
 
@@ -112,14 +120,6 @@ export async function onRequestPost(context) {
   }
 
   const nowSec = Math.floor(Date.now() / 1000);
-
-  // ── UPDATE confirmed_at no D1 ─────────────────────────────────────────────
-  context.waitUntil(
-    env.DB.prepare('UPDATE leads SET confirmed_at = ? WHERE lead_ref = ?')
-      .bind(nowSec, leadRef)
-      .run()
-      .catch(e => console.error('[wa-webhook] d1-update', e && e.message))
-  );
 
   // ── CAPI CompleteRegistration ─────────────────────────────────────────────
   if (env.META_PIXEL_ID && env.META_ACCESS_TOKEN) {
@@ -172,15 +172,31 @@ export async function onRequestPost(context) {
         .then(async (r) => {
           const text = await r.text().catch(() => '');
           if (r.ok) {
-            // UPDATE capi_confirmed_at
-            return env.DB.prepare('UPDATE leads SET capi_confirmed_at = ? WHERE lead_ref = ?')
-              .bind(nowSec, leadRef)
-              .run();
+            // Atomic UPDATE: set confirmed_at and capi_confirmed_at together so
+            // they can never permanently diverge on a D1 transient error.
+            // COALESCE preserves a confirmed_at already set by a prior attempt.
+            try {
+              await env.DB.prepare(
+                'UPDATE leads SET confirmed_at = COALESCE(confirmed_at, ?), capi_confirmed_at = ? WHERE lead_ref = ? AND confirmed_at IS NULL'
+              )
+                .bind(nowSec, nowSec, leadRef)
+                .run();
+            } catch (e) {
+              console.error('[wa-webhook] capi-db-update', e && e.message);
+            }
           } else {
             console.error('[wa-webhook] capi', r.status, text.slice(0, 200));
           }
         })
         .catch(e => console.error('[wa-webhook] capi-err', e && e.message))
+    );
+  } else {
+    // No CAPI configured — update confirmed_at only
+    context.waitUntil(
+      env.DB.prepare('UPDATE leads SET confirmed_at = ? WHERE lead_ref = ? AND confirmed_at IS NULL')
+        .bind(nowSec, leadRef)
+        .run()
+        .catch(e => console.error('[wa-webhook] d1-update', e && e.message))
     );
   }
 
@@ -193,7 +209,7 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const url = new URL(request.url);
   const token = url.searchParams.get('token') || '';
-  if (!env.WA_WEBHOOK_SECRET || token !== env.WA_WEBHOOK_SECRET) {
+  if (!env.WA_WEBHOOK_SECRET || !timingSafeEqual(token, env.WA_WEBHOOK_SECRET || '')) {
     return new Response('ok', { status: 200 });
   }
   return new Response('ok', { status: 200 });

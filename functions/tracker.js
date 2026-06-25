@@ -32,6 +32,12 @@ const ALLOW = [
 export async function onRequestPost(context) {
   const { request, env } = context;
   const reqOrigin = request.headers.get('origin') || '';
+  if (reqOrigin && !ALLOW.includes(reqOrigin)) {
+    return new Response(JSON.stringify({ error: 'forbidden' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
   const acao = ALLOW.includes(reqOrigin) ? reqOrigin : ALLOW[0];
   const json = (data, status = 200) => new Response(JSON.stringify(data), {
     status,
@@ -61,7 +67,9 @@ export async function onRequestPost(context) {
     utm_content = '', utm_term = '', ctwa_clid = '',
   } = body;
 
+  const ALLOWED_META_EVENTS = new Set(['Lead', 'LeadForm', 'LeadMiniForm', 'CompleteRegistration', 'PageView']);
   const event_name = rawEventName || 'Lead';
+  if (!ALLOWED_META_EVENTS.has(event_name)) return json({ error: 'invalid event_name' }, 422);
   const event_id = rawEventId || lead_ref || crypto.randomUUID();
   const event_source_url = rawSourceUrl || page_url || request.headers.get('referer') || '';
 
@@ -71,13 +79,59 @@ export async function onRequestPost(context) {
 
   const { deviceType, browserName, osName } = parseUA(ua);
 
+  // ── Per-IP rate limit (D1-backed) ────────────────────────────────────────
+  // Bloqueia flood de unique event_ids antes de CAPI/CRM/D1 lead. Lead events
+  // só: PageView não conta contra o limite.
+  // Limite: 10 leads por IP por janela de 60 s.
+  const RATE_LIMIT_MAX    = 10;
+  const RATE_LIMIT_WINDOW = 60; // segundos
+  if (env.DB && event_name !== 'PageView') {
+    const rateIp  = request.headers.get('cf-connecting-ip') || request.headers.get('x-real-ip') || 'unknown';
+    const rateNow = Math.floor(Date.now() / 1000);
+    const rateWindow = rateNow - RATE_LIMIT_WINDOW;
+    try {
+      // Cria tabela caso ainda não exista (idempotente, custo ínfimo quando já existe)
+      await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS rate_limit_ip (
+          ip      TEXT NOT NULL,
+          ts      INTEGER NOT NULL
+        )
+      `).run();
+      // Conta hits do IP na janela
+      const countRow = await env.DB.prepare(
+        `SELECT COUNT(*) AS cnt FROM rate_limit_ip WHERE ip = ? AND ts > ?`
+      ).bind(rateIp, rateWindow).first();
+      if ((countRow?.cnt ?? 0) >= RATE_LIMIT_MAX) {
+        return new Response(JSON.stringify({ error: 'rate_limit_exceeded' }), {
+          status: 429,
+          headers: {
+            'Content-Type': 'application/json',
+            'Retry-After': String(RATE_LIMIT_WINDOW),
+            'Access-Control-Allow-Origin': acao,
+          },
+        });
+      }
+      // Registra hit atual e limpa entradas antigas em background
+      context.waitUntil(
+        env.DB.prepare(`INSERT INTO rate_limit_ip (ip, ts) VALUES (?, ?)`)
+          .bind(rateIp, rateNow).run()
+          .then(() => env.DB.prepare(`DELETE FROM rate_limit_ip WHERE ts <= ?`)
+            .bind(rateWindow).run())
+          .catch((e) => console.error('[rate-limit]', e && e.message))
+      );
+    } catch (e) {
+      // Falha silenciosa: não bloquear tráfego legítimo se D1 estiver instável
+      console.error('[rate-limit-setup]', e && e.message);
+    }
+  }
+
   // ── Validação server-side (não confiar no client; anti-flood do CRM) ──────
   // Espelha src/scripts/lead.ts. Bloqueia ANTES de CAPI/D1/forward.
   if (event_name !== 'PageView') {
     const nomeOk = String(nome || user_data.fn || '').trim().length >= 2;
     const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(email || user_data.em || '').trim());
     const phoneDigits = String(whatsapp || user_data.ph || '').replace(/\D/g, '');
-    const phoneOk = phoneDigits.length >= 10 && phoneDigits.length <= 13;
+    const phoneOk = [10, 11, 13].includes(phoneDigits.length);
     if (!nomeOk || !emailOk || !phoneOk) {
       return json({ error: 'invalid lead', nome: nomeOk, email: emailOk, whatsapp: phoneOk }, 422);
     }
@@ -283,6 +337,7 @@ export async function onRequestPost(context) {
         } else {
           const t = await oppResp.text().catch(() => '');
           console.error('[ghl-opportunity]', oppResp.status, t.slice(0, 200));
+          try { const errData = JSON.parse(t); ghlOpportunityId = errData?.meta?.existingId || ''; } catch {}
         }
       } catch (e) {
         console.error('[ghl-opportunity] err', e && e.message);
@@ -304,9 +359,9 @@ export async function onRequestPost(context) {
           campaign_id, adset_id, ad_id, placement,
           page_url, meta_status_code, meta_response_ok, meta_response_body, meta_payload_sent,
           device_type, browser, os, country, city,
-          ghl_contact_id, ghl_opportunity_id,
+          ghl_contact_id, ghl_opportunity_id, ghl_sync_pending,
           created_at
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(event_id) DO NOTHING
       `).bind(
         sessionId, lead_ref || event_id, event_id, et, event_name,
@@ -319,7 +374,7 @@ export async function onRequestPost(context) {
         event_source_url || '',
         metaStatus, metaOk, metaBody.slice(0, 1000), metaPayloadSent.slice(0, 2000),
         deviceType, browserName, osName, cfCountry, cfCity,
-        ghlContactId, ghlOpportunityId,
+        ghlContactId, ghlOpportunityId, ghlContactId ? 0 : 1,
         nowSec
       ).run().catch((e) => console.error('[d1-lead]', event_id, e && e.message))
     );
@@ -396,13 +451,10 @@ export async function onRequestPost(context) {
     );
   }
 
+  console.log('[capi]', event_id, 'status', metaStatus, 'ok', metaOk, metaBody.slice(0, 200));
   return json({
     ok: true,
-    event_name,
     event_id,
-    meta_status: metaStatus,
-    meta_ok: metaOk === 1,
-    meta_response: metaBody.slice(0, 200),
   });
 }
 
@@ -438,6 +490,11 @@ function normalizePhone(ph) {
   // 10-11 díg = número local (DDD+fone) → prefixa DDI 55. Checa por LENGTH, não
   // prefixo: DDD 55 (RS/Santa Maria) tem 11 díg e começaria com '55' por engano.
   if (d.length === 10 || d.length === 11) d = '55' + d;
+  // 12 díg = já tem DDI 55 + DDD + fone 8-dig (e.g. 55 + 11 + 9XXXXXXX sem o 9).
+  // 13 díg = E.164 completo (55 + DDD + 9-dig). Ambos retornam como estão.
+  // Nota: 12 dígitos é rejeitado na validação server-side ([10,11,13]) portanto
+  // esta branch serve apenas como guarda defensiva para chamadas diretas.
+  if ((d.length === 12 || d.length === 13) && d.startsWith('55')) return d;
   return d;
 }
 

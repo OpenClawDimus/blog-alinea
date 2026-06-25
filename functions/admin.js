@@ -62,37 +62,64 @@ export async function onRequest(context) {
 
   // POST = tentativa de login (chave no corpo form ou JSON)
   if (request.method === 'POST') {
-    let key = '';
+    let key = '', submittedCsrf = '';
     try {
       const ct = request.headers.get('content-type') || '';
-      if (ct.includes('application/json')) key = String((await request.json()).key || '');
-      else key = String((await request.formData()).get('key') || '');
-    } catch { /* corpo inválido → key vazia */ }
-    const good = key.length === env.DASH_KEY.length && timingSafeEqual(key, env.DASH_KEY);
+      if (ct.includes('application/json')) {
+        const body = await request.json();
+        key = String(body.key || '');
+        submittedCsrf = String(body._csrf || '');
+      } else {
+        const fd = await request.formData();
+        key = String(fd.get('key') || '');
+        submittedCsrf = String(fd.get('_csrf') || '');
+      }
+    } catch { /* corpo inválido → key e csrf vazios */ }
+
+    // CSRF check: nonce submetido deve bater com o cookie _csrf (SameSite=Strict
+    // já bloqueia ações autenticadas, mas o login em si precisa de proteção extra).
+    const csrfCookie = getCk('_csrf');
+    const csrfOk = submittedCsrf.length > 0 && csrfCookie.length > 0 &&
+      timingSafeEqual(submittedCsrf.padEnd(64, '\0'), csrfCookie.padEnd(64, '\0'));
+
+    const good = csrfOk && timingSafeEqual(key.padEnd(128, '\0'), env.DASH_KEY.padEnd(128, '\0'));
     const h = new Headers({ 'cache-control': 'no-store' });
+    // Consumir o nonce CSRF (Max-Age=0) após o POST, independente do resultado
+    h.append('set-cookie', '_csrf=; Path=/admin; Max-Age=0; HttpOnly; SameSite=Strict; Secure');
     if (good) {
       h.append('set-cookie', `_dash=${await issueToken(env.DASH_KEY)}; Path=/admin; Max-Age=43200; HttpOnly; SameSite=Strict; Secure`);
       h.set('location', '/admin');
       return new Response(null, { status: 303, headers: h }); // PRG → some o segredo da request
     }
+    // Falha de login: gerar novo nonce para o próximo attempt
+    const newCsrfNonce = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+      .map((b) => b.toString(16).padStart(2, '0')).join('');
     h.set('content-type', 'text/html; charset=utf-8');
     h.append('set-cookie', clearCookie);
-    return new Response(loginHTML(true), { status: 401, headers: h });
+    h.append('set-cookie', `_csrf=${newCsrfNonce}; Path=/admin; Max-Age=600; HttpOnly; SameSite=Strict; Secure`);
+    return new Response(loginHTML(newCsrfNonce, true), { status: 401, headers: h });
   }
 
   // Logout explícito
   if (url.searchParams.get('logout') != null) {
+    const csrfNonce = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+      .map((b) => b.toString(16).padStart(2, '0')).join('');
     const h = new Headers({ 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
     h.append('set-cookie', clearCookie);
-    return new Response(loginHTML(false), { status: 200, headers: h });
+    h.append('set-cookie', `_csrf=${csrfNonce}; Path=/admin; Max-Age=600; HttpOnly; SameSite=Strict; Secure`);
+    return new Response(loginHTML(csrfNonce, false), { status: 200, headers: h });
   }
 
   // GET = valida o token de sessão (HMAC), nunca a chave bruta
   const ok = await verifyToken(env.DASH_KEY, getCk('_dash'));
   if (!ok) {
+    // Gera um nonce CSRF de uso único para o formulário de login
+    const csrfNonce = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+      .map((b) => b.toString(16).padStart(2, '0')).join('');
     const h = new Headers({ 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
     if (getCk('_dash')) h.append('set-cookie', clearCookie); // token expirado/inválido → limpa
-    return new Response(loginHTML(false), { status: 401, headers: h });
+    h.append('set-cookie', `_csrf=${csrfNonce}; Path=/admin; Max-Age=600; HttpOnly; SameSite=Strict; Secure`);
+    return new Response(loginHTML(csrfNonce, false), { status: 401, headers: h });
   }
 
   // ── Queries ────────────────────────────────────────────────────────────
@@ -146,9 +173,10 @@ export async function onRequest(context) {
 }
 
 function timingSafeEqual(a, b) {
-  if (a.length !== b.length) return false;
+  // Callers must ensure a.length === b.length before calling (pad to fixed length).
+  const len = Math.max(a.length, b.length);
   let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  for (let i = 0; i < len; i++) diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
   return diff === 0;
 }
 
@@ -216,12 +244,15 @@ const SHELL = (title, body) => `<!doctype html>
 </head>
 <body><div class="wrap">${body}</div></body></html>`;
 
-function loginHTML(failed) {
+function loginHTML(csrfNonce, failed) {
+  // csrfNonce é embutido como campo hidden e validado no POST contra o cookie _csrf.
+  // Isso previne login-CSRF: um form cross-origin não terá o nonce correto.
   return SHELL('Admin', `
     <form class="login" method="post" action="/admin">
       <h1>Blog Dimus · Admin</h1>
       <p class="sub">Acesso restrito.</p>
       ${failed ? '<p class="err">Chave inválida.</p>' : ''}
+      <input type="hidden" name="_csrf" value="${esc(csrfNonce)}">
       <input type="password" name="key" placeholder="Chave de acesso" autofocus autocomplete="off">
       <button type="submit">Entrar</button>
     </form>`);

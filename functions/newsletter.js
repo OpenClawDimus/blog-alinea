@@ -36,6 +36,16 @@ export async function onRequestPost(context) {
     headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': acao },
   });
 
+  // ── CORS enforcement ─────────────────────────────────────────────────────
+  if (reqOrigin && !ALLOW.includes(reqOrigin)) return json({ error: 'forbidden' }, 403);
+
+  // ── Per-IP rate limit: 3 req/min (requires CF Pro; no-ops on Free) ────────
+  if (env.RATE_LIMITER_NEWSLETTER) {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const { success } = await env.RATE_LIMITER_NEWSLETTER.limit({ key: ip });
+    if (!success) return json({ error: 'too many requests' }, 429);
+  }
+
   let body;
   try { body = await request.json(); } catch { return json({ error: 'invalid json' }, 400); }
 
@@ -54,20 +64,48 @@ export async function onRequestPost(context) {
   const firstName = nameParts[0] || '';
   const lastName = nameParts.slice(1).join(' ');
 
-  // ── Mautic OAuth2 token ────────────────────────────────────────────────────
-  let mauticContactId = '';
-  if (env.MAUTIC_URL && env.MAUTIC_CLIENT_ID && env.MAUTIC_CLIENT_SECRET) {
+  // ── D1 dedup: insert subscriber; bail out if already exists ──────────────
+  let isNewSubscriber = true;
+  if (env.DB) {
     try {
-      const tokenResp = await fetch(`${env.MAUTIC_URL}/oauth/v2/token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `grant_type=client_credentials&client_id=${encodeURIComponent(env.MAUTIC_CLIENT_ID)}&client_secret=${encodeURIComponent(env.MAUTIC_CLIENT_SECRET)}`,
-      });
-      if (tokenResp.ok) {
-        const { access_token: mToken } = await tokenResp.json().catch(() => ({}));
-        if (mToken) {
+      const result = await env.DB.prepare(
+        `INSERT INTO newsletter_subscribers (email, nome, created_at)
+         VALUES (?, ?, ?)
+         ON CONFLICT(email) DO NOTHING`
+      ).bind(emailTrimmed, nomeTrimmed, Math.floor(Date.now() / 1000)).run();
+      if (result.meta?.changes === 0) {
+        isNewSubscriber = false;
+      }
+    } catch (e) {
+      console.error('[newsletter-d1-dedup]', e && e.message);
+    }
+    if (!isNewSubscriber) return json({ ok: true, subscribed: true });
+  }
+
+  let mauticContactId = ''; // capturado no waitUntil, mas Supabase já não depende do ID
+
+  // ── Mautic OAuth2 token (deferred — does not block response) ─────────────
+  // Moved into context.waitUntil so the subscriber receives {ok:true} without
+  // waiting for up to 4 sequential round-trips to mkt.dimus.com.br.
+  if (env.MAUTIC_URL && env.MAUTIC_CLIENT_ID && env.MAUTIC_CLIENT_SECRET) {
+    context.waitUntil(
+      (async () => {
+        try {
+          const tokenResp = await fetch(`${env.MAUTIC_URL}/oauth/v2/token`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `grant_type=client_credentials&client_id=${encodeURIComponent(env.MAUTIC_CLIENT_ID)}&client_secret=${encodeURIComponent(env.MAUTIC_CLIENT_SECRET)}`,
+          });
+          if (!tokenResp.ok) {
+            console.error('[mautic-newsletter] token fetch failed', tokenResp.status);
+            return;
+          }
+          const { access_token: mToken } = await tokenResp.json().catch(() => ({}));
+          if (!mToken) { console.error('[mautic-newsletter] no access_token'); return; }
+
           // Search-before-create: Mautic /api/contacts/new cria duplicatas.
           // Busca por email primeiro; só cria se não encontrar.
+          let mauticContactId = '';
           const searchResp = await fetch(
             `${env.MAUTIC_URL}/api/contacts?search=${encodeURIComponent('email:' + emailTrimmed)}&minimal=1&limit=1`,
             { headers: { Authorization: 'Bearer ' + mToken } }
@@ -87,22 +125,26 @@ export async function onRequestPost(context) {
             if (mContactResp.ok) {
               const mData = await mContactResp.json().catch(() => ({}));
               mauticContactId = String(mData?.contact?.id || '');
+            } else {
+              console.error('[mautic-newsletter] contacts/new failed', mContactResp.status);
             }
           }
 
-          // Adiciona ao segmento blog-newsletter (ID 12) — API exige {ids:[n]}
+          // Adiciona ao segmento blog-newsletter (ID 12) — fire-and-forget (result discarded)
           if (mauticContactId) {
-            await fetch(`${env.MAUTIC_URL}/api/segments/${MAUTIC_NEWSLETTER_SEGMENT_ID}/contacts/add`, {
+            fetch(`${env.MAUTIC_URL}/api/segments/${MAUTIC_NEWSLETTER_SEGMENT_ID}/contacts/add`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + mToken },
               body: JSON.stringify({ ids: [Number(mauticContactId)] }),
-            }).catch(() => {});
+            }).catch((e) => console.error('[mautic-newsletter] segment add failed', e && e.message));
+          } else {
+            console.error('[mautic-newsletter] no contact id — segment 12 not updated for', emailTrimmed);
           }
+        } catch (e) {
+          console.error('[mautic-newsletter]', e && e.message);
         }
-      }
-    } catch (e) {
-      console.error('[mautic-newsletter]', e && e.message);
-    }
+      })()
+    );
   }
 
   // ── Resend welcome email ──────────────────────────────────────────────────
@@ -162,7 +204,7 @@ export async function onRequestPost(context) {
   // ── Supabase forward (dados SoT) ─────────────────────────────────────────
   if (env.BLUEPRINT_SUPABASE_URL && env.BLUEPRINT_SUPABASE_KEY) {
     context.waitUntil(
-      fetch(`${env.BLUEPRINT_SUPABASE_URL}/rest/v1/leads`, {
+      fetch(`${env.BLUEPRINT_SUPABASE_URL}/rest/v1/leads?on_conflict=email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
