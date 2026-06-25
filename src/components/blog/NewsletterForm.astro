@@ -1,0 +1,160 @@
+---
+/**
+ * NewsletterForm — inscrição de newsletter (nome + email, sem WhatsApp obrigatório).
+ * Origem canônica: blog-newsletter-geral. Forward: GHL + Mautic + Resend + Supabase.
+ */
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  sub?: string;
+  cta?: string;
+}
+const {
+  eyebrow = "Sem algoritmo no meio",
+  title = "Receba direto no e-mail",
+  sub = "Marketing automotivo que mede carro vendido. Sem AI-slop, sem guru. Toda semana, direto para você.",
+  cta = "Quero receber →",
+} = Astro.props;
+---
+
+<aside class="nl-card not-prose">
+  <p class="nl-eyebrow">{eyebrow}</p>
+  <h3 class="nl-title">{title}</h3>
+  <p class="nl-sub">{sub}</p>
+  <form class="nl-form" data-newsletter>
+    <!-- honeypot: invisível para humanos -->
+    <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;opacity:0;height:0;width:0;pointer-events:none;z-index:-1;" />
+    <input name="nome" placeholder="Seu nome" autocomplete="name" required />
+    <input name="email" type="email" inputmode="email" placeholder="Seu melhor e-mail" autocomplete="email" required />
+    <button type="submit" class="btn-nl">{cta}</button>
+  </form>
+  <p class="nl-fine" id="nl-msg" aria-live="polite"></p>
+</aside>
+
+<style>
+  .nl-card {
+    margin: 2.5rem 0;
+    padding: 1.6rem 1.5rem;
+    border: 1px solid var(--hair-strong);
+    border-radius: 16px;
+    background:
+      radial-gradient(120% 140% at 0% 100%, var(--hair-mag), transparent 55%),
+      var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  .nl-eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+  .nl-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .nl-sub {
+    margin: 0 0 1.1rem;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .nl-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    position: relative;
+  }
+  .nl-form input[name="nome"],
+  .nl-form input[name="email"] {
+    flex: 1 1 180px;
+    min-width: 0;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: var(--bg-2);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.18s var(--ease-s);
+  }
+  .nl-form input::placeholder { color: var(--dim); }
+  .nl-form input:focus { outline: none; border-color: var(--magenta); }
+  .btn-nl {
+    flex: 1 1 100%;
+    padding: 0.75rem 1.1rem;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--magenta), var(--magenta-deep));
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition: transform 0.18s var(--ease-s), filter 0.18s var(--ease-s);
+  }
+  .btn-nl:hover { transform: translateY(-1px); filter: brightness(1.06); }
+  .btn-nl:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .nl-fine {
+    margin: 0.9rem 0 0;
+    font-size: 0.78rem;
+    color: var(--dim);
+    min-height: 1.2em;
+  }
+  .nl-fine.success { color: var(--magenta); }
+  .nl-fine.error   { color: #e55; }
+  @media (min-width: 480px) { .btn-nl { flex: 0 0 auto; } }
+</style>
+
+<script>
+  function initNewsletter() {
+    document.querySelectorAll<HTMLFormElement>("form[data-newsletter]").forEach(form => {
+      if (form.dataset.nlBound) return;
+      form.dataset.nlBound = "1";
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const msg = document.getElementById("nl-msg");
+        const btn = form.querySelector<HTMLButtonElement>("button[type=submit]");
+        const data = new FormData(form);
+        const nome = String(data.get("nome") ?? "").trim();
+        const email = String(data.get("email") ?? "").trim();
+        const website = String(data.get("website") ?? "").trim(); // honeypot
+
+        if (nome.length < 2) {
+          (form.querySelector('[name="nome"]') as HTMLInputElement)?.focus(); return;
+        }
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+          (form.querySelector('[name="email"]') as HTMLInputElement)?.focus(); return;
+        }
+
+        if (btn) { btn.disabled = true; btn.textContent = "Inscrevendo…"; }
+        try {
+          const resp = await fetch("/newsletter", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email, website }),
+          });
+          const result = await resp.json().catch(() => ({}));
+          if (resp.ok && result.ok) {
+            form.reset();
+            if (msg) { msg.textContent = "✓ Confirmado! Verifique seu e-mail."; msg.className = "nl-fine success"; }
+            if (btn) btn.remove();
+          } else {
+            if (msg) { msg.textContent = result.error || "Tente novamente em instantes."; msg.className = "nl-fine error"; }
+            if (btn) { btn.disabled = false; btn.textContent = "Quero receber →"; }
+          }
+        } catch {
+          if (msg) { msg.textContent = "Erro de rede. Tente novamente."; msg.className = "nl-fine error"; }
+          if (btn) { btn.disabled = false; btn.textContent = "Quero receber →"; }
+        }
+      });
+    });
+  }
+  initNewsletter();
+  document.addEventListener("astro:after-swap", initNewsletter);
+</script>

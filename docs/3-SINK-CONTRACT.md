@@ -133,5 +133,5 @@ Falha não bloqueia nenhum sink.
 | Calculadora carro parado | `blog-calc-estoque` | ✅ ativo |
 | Calculadora CAC | `blog-calc-cac` | ✅ ativo |
 | Quiz Refém do Portal | `blog-quiz-portal` | ✅ ativo |
-| Newsletter (M4) | `blog-newsletter-geral` | 🔜 próximo |
+| Newsletter (M4) | `blog-newsletter-geral` | ✅ ativo |
 | Posts (LeadForm inline) | `blog-post-<cluster>` | ✅ ativo |
