@@ -21,6 +21,12 @@ const ALLOW = [
 
 const MAUTIC_NEWSLETTER_SEGMENT_ID = 12; // blog-newsletter (criado 2026-06-25)
 
+async function sha256nl(value) {
+  if (!value) return '';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value.toLowerCase().trim()));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   const reqOrigin = request.headers.get('origin') || '';
@@ -60,21 +66,30 @@ export async function onRequestPost(context) {
       if (tokenResp.ok) {
         const { access_token: mToken } = await tokenResp.json().catch(() => ({}));
         if (mToken) {
-          // Upsert contato no Mautic
-          const mContactResp = await fetch(`${env.MAUTIC_URL}/api/contacts/new`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + mToken },
-            body: JSON.stringify({
-              firstname: firstName,
-              lastname: lastName,
-              email: emailTrimmed,
-              tags: ['blog-newsletter'],
-            }),
-          });
-          if (mContactResp.ok) {
-            const mData = await mContactResp.json().catch(() => ({}));
-            mauticContactId = String(mData?.contact?.id || '');
+          // Search-before-create: Mautic /api/contacts/new cria duplicatas.
+          // Busca por email primeiro; só cria se não encontrar.
+          const searchResp = await fetch(
+            `${env.MAUTIC_URL}/api/contacts?search=${encodeURIComponent('email:' + emailTrimmed)}&minimal=1&limit=1`,
+            { headers: { Authorization: 'Bearer ' + mToken } }
+          ).catch(() => null);
+          if (searchResp?.ok) {
+            const sData = await searchResp.json().catch(() => ({}));
+            const existing = Object.values(sData?.contacts || {})[0];
+            if (existing) mauticContactId = String(existing.id);
           }
+
+          if (!mauticContactId) {
+            const mContactResp = await fetch(`${env.MAUTIC_URL}/api/contacts/new`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + mToken },
+              body: JSON.stringify({ firstname: firstName, lastname: lastName, email: emailTrimmed, tags: ['blog-newsletter'] }),
+            });
+            if (mContactResp.ok) {
+              const mData = await mContactResp.json().catch(() => ({}));
+              mauticContactId = String(mData?.contact?.id || '');
+            }
+          }
+
           // Adiciona ao segmento blog-newsletter (ID 12) — API exige {ids:[n]}
           if (mauticContactId) {
             await fetch(`${env.MAUTIC_URL}/api/segments/${MAUTIC_NEWSLETTER_SEGMENT_ID}/contacts/add`, {
@@ -172,6 +187,53 @@ export async function onRequestPost(context) {
           },
         }),
       }).catch((e) => console.error('[supabase-newsletter]', e && e.message))
+    );
+  }
+
+  // ── Meta CAPI Lead (newsletter) ───────────────────────────────────────────
+  // Newsletter não tem telefone → só email + nome como PII. Sem dedup pixel
+  // (não há pixel client-side no /newsletter), event_id derivado do email+tempo.
+  if (env.META_PIXEL_ID && env.META_ACCESS_TOKEN) {
+    context.waitUntil(
+      (async () => {
+        const [hashedEm, hashedFn] = await Promise.all([
+          sha256nl(emailTrimmed),
+          sha256nl(firstName),
+        ]);
+        const capiPayload = {
+          data: [{
+            event_name: 'Lead',
+            event_time: Math.floor(Date.now() / 1000),
+            event_id: 'nl-' + emailTrimmed + '-' + Date.now().toString(36),
+            action_source: 'website',
+            event_source_url: 'https://blog.dimus.com.br',
+            user_data: { em: [hashedEm], fn: [hashedFn] },
+            custom_data: { content_name: 'blog-newsletter-geral', status: 'newsletter_subscribed' },
+          }],
+        };
+        return fetch(`https://graph.facebook.com/v25.0/${env.META_PIXEL_ID}/events`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + env.META_ACCESS_TOKEN },
+          body: JSON.stringify(capiPayload),
+        });
+      })().catch(e => console.error('[newsletter-capi]', e && e.message))
+    );
+  }
+
+  // ── D1 write (mirror local — subscribers visíveis no /admin) ─────────────
+  if (env.DB) {
+    const nlRef = 'nl-' + Date.now().toString(36) + '-' + emailTrimmed.slice(0, 4);
+    const nowSec = Math.floor(Date.now() / 1000);
+    context.waitUntil(
+      env.DB.prepare(`
+        INSERT INTO leads (lead_ref, event_id, event_time, event_name, lead_name, lead_phone, wa_phone,
+          page_url, ghl_contact_id, created_at)
+        VALUES (?,?,?,?,?,?,?,?,?,?)
+        ON CONFLICT(event_id) DO NOTHING
+      `).bind(
+        nlRef, 'nl-' + emailTrimmed, nowSec, 'Newsletter',
+        nomeTrimmed, '', '', 'https://blog.dimus.com.br', ghlContactId, nowSec
+      ).run().catch(e => console.error('[newsletter-d1]', e && e.message))
     );
   }
 

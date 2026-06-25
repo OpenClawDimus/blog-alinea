@@ -43,10 +43,14 @@ export async function onRequestPost(context) {
     return new Response('ok', { status: 200 });
   }
 
-  let body;
-  try { body = await request.json(); } catch {
+  let rawBody;
+  try { rawBody = await request.json(); } catch {
     return new Response('ok', { status: 200 });
   }
+
+  // ── Evolution pode enviar array [{event,...}] ou objeto {event,...} ────────
+  const bodies = Array.isArray(rawBody) ? rawBody : [rawBody];
+  const body = bodies.find(b => b?.event === 'messages.upsert') || bodies[0];
 
   // ── Apenas messages.upsert de mensagens recebidas (fromMe: false) ─────────
   const evt = body?.event || '';
@@ -90,6 +94,14 @@ export async function onRequestPost(context) {
 
   if (!lead) {
     console.error('[wa-webhook] lead not found', leadRef);
+    return new Response('ok', { status: 200 });
+  }
+
+  // ── Verifica que quem enviou é o mesmo telefone registrado ───────────────
+  // Impede que qualquer número que conheça um lead_ref confirme por outra pessoa.
+  const senderPhone = (key.remoteJid || '').split('@')[0].replace(/\D/g, '');
+  if (lead.wa_phone && senderPhone && !lead.wa_phone.endsWith(senderPhone.slice(-8))) {
+    console.error('[wa-webhook] phone mismatch', leadRef, 'sender:', senderPhone.slice(-4), 'reg:', String(lead.wa_phone).slice(-4));
     return new Response('ok', { status: 200 });
   }
 
