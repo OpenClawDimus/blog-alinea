@@ -640,13 +640,12 @@ body::after {
 /* ── Article grid: prose + TOC ──────────────────────────────── */
 .sr-article {
   display: grid;
-  grid-template-columns: minmax(0, 760px) 220px;
-  gap: 96px;
-  justify-content: space-between;
+  grid-template-columns: 1fr 240px;
+  gap: 56px;
   padding: 40px 0 0;
   align-items: start;
 }
-.sr-prose { min-width: 0; max-width: var(--measure); }
+.sr-prose { min-width: 0; }
 
 /* ── Prose styles ───────────────────────────────────────────── */
 .sr-dek-lead {

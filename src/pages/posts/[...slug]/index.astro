@@ -123,13 +123,24 @@ const fmtDate = (d: Date) =>
     </a>
   </nav>
 
-  <!-- ── Cover (gradient, sem stock photo) ── -->
+  <!-- ── Cover ── -->
   <div class="sr-post-cover">
-    <div
-      style={`position:absolute;inset:0;background:${gradient};width:100%;height:120%`}
-      aria-hidden="true"
-    ></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,.1) 0%,rgba(11,10,13,.42) 50%,var(--bg) 100%)" aria-hidden="true"></div>
+    {typeof initOgImage === "string" ? (
+      <img
+        src={ogImageUrl}
+        alt=""
+        aria-hidden="true"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top"
+        loading="eager"
+        decoding="async"
+      />
+    ) : (
+      <div
+        style={`position:absolute;inset:0;background:${gradient};width:100%;height:120%`}
+        aria-hidden="true"
+      ></div>
+    )}
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,.15) 0%,rgba(11,10,13,.6) 55%,var(--bg) 100%)" aria-hidden="true"></div>
     <div class="sr-cover-cap">
       <div class="inner">
         <nav class="sr-crumb" aria-label="Breadcrumb">
