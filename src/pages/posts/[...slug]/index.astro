@@ -53,6 +53,7 @@ const {
   title,
   description,
   ogImage: initOgImage,
+  imageCaption,
   canonicalURL,
   pubDatetime,
   modDatetime,
@@ -158,6 +159,11 @@ const fmtDate = (d: Date) =>
       </div>
     </div>
   </div>
+  {imageCaption && (
+    <div class="sr-cover-credit">
+      <span class="sr-cover-credit-inner">{imageCaption}</span>
+    </div>
+  )}
 
   <!-- ── Post body ── -->
   <div class="sr-post-shell">

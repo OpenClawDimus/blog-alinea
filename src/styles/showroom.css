@@ -561,6 +561,22 @@ body::after {
 }
 .sr-cover-cap .inner { max-width: 1120px; margin-inline: auto; }
 
+/* ── Cover image caption / context ─────────────────────────── */
+.sr-cover-credit {
+  display: flex;
+  justify-content: flex-end;
+  padding: 7px 48px 0;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.sr-cover-credit-inner {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  color: var(--muted);
+  opacity: .7;
+}
+
 /* ── Breadcrumb ─────────────────────────────────────────────── */
 .sr-crumb {
   font-family: var(--font-mono);
