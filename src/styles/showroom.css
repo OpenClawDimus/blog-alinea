@@ -593,7 +593,7 @@ body::after {
 
 /* ── Post shell ─────────────────────────────────────────────── */
 .sr-post-shell {
-  max-width: 1120px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 40px;
 }
@@ -640,8 +640,8 @@ body::after {
 /* ── Article grid: prose + TOC ──────────────────────────────── */
 .sr-article {
   display: grid;
-  grid-template-columns: 1fr 240px;
-  gap: 56px;
+  grid-template-columns: 1fr 200px;
+  gap: 48px;
   padding: 40px 0 0;
   align-items: start;
 }
@@ -657,7 +657,6 @@ body::after {
   color: var(--ink-2);
   font-style: italic;
   margin-bottom: 30px;
-  max-width: 32ch;
 }
 
 .sr-tldr {
