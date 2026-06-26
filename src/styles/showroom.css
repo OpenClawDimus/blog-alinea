@@ -902,6 +902,10 @@ body::after {
   opacity: 1;
   transform: translateY(0);
 }
+/* Reduced motion: revelar imediatamente, sem movimento */
+@media (prefers-reduced-motion: reduce) {
+  .sr-reveal { opacity: 1 !important; transform: none !important; }
+}
 
 /* ── Adjacent post nav ──────────────────────────────────────── */
 .sr-adj-nav {
