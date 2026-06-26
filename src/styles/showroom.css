@@ -378,10 +378,10 @@ body::after {
 /* ── Cards ──────────────────────────────────────────────────── */
 .sr-card {
   position: relative;
-  border: 1px solid var(--hair);
+  border: 1px solid rgba(255,255,255,0.11);
   border-radius: 16px;
   overflow: hidden;
-  background: var(--surface);
+  background: #18141f;
   box-shadow: var(--shadow-card);
   cursor: pointer;
   text-decoration: none;
@@ -662,6 +662,35 @@ body::after {
   align-items: start;
 }
 .sr-prose { min-width: 0; }
+
+/* C1 — prose body guarantee (Hanken Grotesk, legível, WCAG AA) */
+.sr-prose .app-prose p,
+.sr-prose .app-prose li {
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: rgb(203, 196, 210);
+}
+
+/* C2 — heading hierarchy: H2 ≠ H3 */
+.sr-prose .app-prose h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+  margin: 44px 0 14px;
+  color: var(--ink);
+}
+.sr-prose .app-prose h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -.015em;
+  margin: 28px 0 10px;
+  color: var(--ink-2);
+}
 
 /* ── Prose styles ───────────────────────────────────────────── */
 .sr-dek-lead {
