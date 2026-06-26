@@ -67,18 +67,18 @@ const metaPixelHtml = metaPixelId
     />
     <Font cssVariable="--font-jetbrains-mono" />
 
-    <!-- Google Analytics 4 — Dimus Blog (G-Q6KH427C70) -->
+    <!-- Google Analytics 4 — Dimus Blog (G-Y7PSFTCZJL) — property 543369220 conta [Ativo] Dimus -->
     <script
       is:inline
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-Q6KH427C70"></script>
+      src="https://www.googletagmanager.com/gtag/js?id=G-Y7PSFTCZJL"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-      gtag("config", "G-Q6KH427C70");
+      gtag("config", "G-Y7PSFTCZJL");
     </script>
 
     {/* Meta Pixel base — injeta só se PUBLIC_META_PIXEL_ID estiver setado. */}
@@ -147,11 +147,175 @@ const metaPixelHtml = metaPixelId
     <ClientRouter />
   </head>
   <body
-    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
+    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground"
+    style="overflow-x:hidden"
   >
-    <slot />
+    <!-- Orb ambiente (profundidade, não decoração) -->
+    <div class="orb" aria-hidden="true"></div>
+
+    <!-- Leitura progress bar (atualizado por showroom-motion.js) -->
+    <div class="sr-progress" id="sr-progress" aria-hidden="true"></div>
+
+    <!-- Shell: rail (esquerda sticky) + main (conteúdo) -->
+    <div class="sr-shell">
+      <!-- ── Rail ── -->
+      <aside class="sr-rail" aria-label="Navegação do blog">
+        <a href="/" class="sr-brand">
+          <div class="mark" aria-hidden="true">D</div>
+          <span class="name">Blog Dimus</span>
+        </a>
+
+        <nav aria-label="Clusters editoriais">
+          <p class="sr-rail-label" style="margin-bottom:10px">Clusters</p>
+          <ul class="sr-clusters" id="sr-clusters">
+            <li><a href="/tags/giro-de-estoque"><span>Giro de Estoque</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/seminovos"><span>Seminovos</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/gestao"><span>Gestão</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/aquisicao"><span>Aquisição</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/atribuicao"><span>Atribuição</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/metricas"><span>Métricas</span><span class="ct">→</span></a></li>
+            <li><a href="/posts"><span>Todos os posts</span><span class="ct">→</span></a></li>
+          </ul>
+        </nav>
+
+        <!-- Newsletter widget no rail -->
+        <div class="sr-rail-bottom">
+          <h4>Sem enrolação, toda semana</h4>
+          <p>Marketing que mede carro vendido. Sem portal, sem CRM, sem bullshit.</p>
+          <form id="rail-nl-form" onsubmit="submitRailNewsletter(event)">
+            <div class="sr-field">
+              <input type="text" name="nome" placeholder="Seu nome" autocomplete="given-name" required />
+            </div>
+            <div class="sr-field">
+              <input type="email" name="email" placeholder="Seu e-mail" autocomplete="email" required />
+              <button type="submit" class="sr-btn-mini" aria-label="Inscrever">→</button>
+            </div>
+            <p id="rail-nl-msg" style="font-size:11.5px;color:var(--magenta);display:none;margin:4px 0 0;font-family:var(--font-mono)">
+              ✓ Inscrito!
+            </p>
+          </form>
+        </div>
+      </aside>
+
+      <!-- ── Main ── -->
+      <div class="sr-main">
+        <slot />
+      </div>
+    </div>
+
     <script>
       import "@/scripts/theme";
+    </script>
+
+    <!-- Showroom motion: progress bar, reveals, TOC scroll-spy -->
+    <script>
+      import gsap from "gsap";
+      import ScrollTrigger from "gsap/ScrollTrigger";
+      gsap.registerPlugin(ScrollTrigger);
+
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // ── Reading progress bar ───────────────────────────────────
+      const prog = document.getElementById("sr-progress");
+      if (prog) {
+        const upd = () => {
+          const h = document.documentElement;
+          const max = h.scrollHeight - h.clientHeight;
+          prog.style.width = (max > 0 ? (scrollY / max * 100) : 0) + "%";
+        };
+        addEventListener("scroll", upd, { passive: true });
+        upd();
+      }
+
+      // ── Active rail link ───────────────────────────────────────
+      document.querySelectorAll("#sr-clusters a").forEach(a => {
+        if (location.pathname.startsWith((a as HTMLAnchorElement).getAttribute("href") || "___")) {
+          a.setAttribute("data-active", "");
+        }
+      });
+
+      // ── Card reveal on scroll (Emil: purposeful, não decorativo) ──
+      if (!reduce) {
+        const reveals = document.querySelectorAll(".sr-reveal");
+        reveals.forEach((el, i) => {
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top 88%",
+            onEnter: () => {
+              gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 0.65,
+                delay: (i % 3) * 0.08,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
+              (el as HTMLElement).classList.add("sr-visible");
+            },
+            once: true,
+          });
+        });
+
+        // ── Cover parallax (post view) ─────────────────────────
+        const coverImg = document.querySelector(".sr-post-cover img") as HTMLElement;
+        if (coverImg) {
+          gsap.to(coverImg, {
+            yPercent: 16,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".sr-post-cover",
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
+
+        // ── TOC scroll-spy ─────────────────────────────────────
+        const heads = [...document.querySelectorAll(".sr-prose h2")];
+        const tocLinks = [...document.querySelectorAll(".sr-toc a")];
+        if (heads.length && tocLinks.length) {
+          heads.forEach((h, i) => {
+            ScrollTrigger.create({
+              trigger: h,
+              start: "top 30%",
+              end: "bottom 30%",
+              onToggle: s => {
+                if (s.isActive) {
+                  tocLinks.forEach(l => l.classList.remove("active"));
+                  if (tocLinks[i]) tocLinks[i].classList.add("active");
+                }
+              },
+            });
+          });
+          tocLinks.forEach((a, i) => {
+            a.addEventListener("click", e => {
+              e.preventDefault();
+              heads[i]?.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+          });
+        }
+      }
+
+      // ── Rail newsletter submit ─────────────────────────────────
+      (window as any).submitRailNewsletter = async function(e: Event) {
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        const nome = (form.elements.namedItem("nome") as HTMLInputElement).value.trim();
+        const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+        const btn = form.querySelector("button") as HTMLButtonElement;
+        if (btn) btn.disabled = true;
+        try {
+          await fetch("/newsletter", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email }),
+          });
+        } catch {}
+        form.reset();
+        const msg = document.getElementById("rail-nl-msg");
+        if (msg) { msg.style.display = "block"; }
+      };
     </script>
   </body>
 </html>

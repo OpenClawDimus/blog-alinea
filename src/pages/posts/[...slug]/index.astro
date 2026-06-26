@@ -1,19 +1,9 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import PostLayout from "@/layouts/PostLayout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Datetime from "@/components/Datetime.astro";
-import Tag from "@/components/Tag.astro";
 import { getPostSlug, getPostUrl } from "@/utils/getPostPaths";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
-import { toTransitionName } from "@/utils/toTransitionName";
-import EditPost from "./_components/EditPost.astro";
-import ShareLinks from "./_components/ShareLinks.astro";
-import BackButton from "./_components/BackButton.astro";
-import BackToTopButton from "./_components/BackToTopButton.astro";
-import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import config from "@/config";
 
 export async function getStaticPaths() {
@@ -68,14 +58,13 @@ const {
   modDatetime,
   timezone,
   tags,
-  hideEditPost,
   faq,
 } = post.data;
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const h2Headings = headings.filter(h => h.depth === 2);
 
 let ogImageUrl: string | undefined;
-
 if (typeof initOgImage === "string") {
   ogImageUrl = initOgImage;
 } else if (initOgImage?.src) {
@@ -83,16 +72,26 @@ if (typeof initOgImage === "string") {
 }
 
 if (!ogImageUrl && config.features.dynamicOgImage) {
-  const postUrl = getPostUrl(post.id, post.filePath, locale).replace(
-    /\/+$/,
-    ""
-  );
+  const postUrl = getPostUrl(post.id, post.filePath, locale).replace(/\/+$/, "");
   ogImageUrl = `${postUrl}/index.png`;
 }
 
-const ogImage = ogImageUrl
-  ? new URL(ogImageUrl, Astro.url.origin).href
-  : undefined;
+const ogImage = ogImageUrl ? new URL(ogImageUrl, Astro.url.origin).href : undefined;
+
+const TAG_GRADIENT: Record<string, string> = {
+  "giro-de-estoque": "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 45%,#4a1060 100%)",
+  "carro-parado":    "linear-gradient(135deg,#0d1a22 0%,#0f2d3d 45%,#103a4a 100%)",
+  "lead-fantasma":   "linear-gradient(135deg,#220d1a 0%,#3d0f2a 45%,#5a1040 100%)",
+  "seminovos":       "linear-gradient(135deg,#1a1a0d 0%,#2d2d0f 45%,#3d3010 100%)",
+  "gestao":          "linear-gradient(135deg,#0d220d 0%,#0f3d0f 45%,#103a10 100%)",
+  "aquisicao":       "linear-gradient(135deg,#22100d 0%,#3d1f0f 45%,#4a2010 100%)",
+  default:           "linear-gradient(135deg,#13101a 0%,#1e1528 45%,#2a1940 100%)",
+};
+const gradient = TAG_GRADIENT[tags[0]] ?? TAG_GRADIENT.default;
+
+const readTime = Math.ceil((post.body?.split(/\s+/).length ?? 800) / 220);
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
 ---
 
 <PostLayout
@@ -105,431 +104,268 @@ const ogImage = ogImageUrl
   postTitle={title}
   faq={faq}
 >
-  <Header />
-
-  <BackButton />
-
-  <main
-    id="main-content"
-    class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
-    data-pagefind-body
-  >
-    <h1
-      style={{ viewTransitionName: toTransitionName(title) }}
-      class="text-accent inline-block text-2xl font-bold sm:text-3xl"
+  <!-- ── Topbar ── -->
+  <nav class="sr-topbar" aria-label="Navegação principal">
+    <div class="sr-topnav">
+      <a href="/posts" data-active={Astro.url.pathname.startsWith("/posts") ? "" : undefined}>Posts</a>
+      <a href="/tags">Tags</a>
+      <a href="/about">Sobre</a>
+    </div>
+    <a
+      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      target="_blank"
+      rel="noopener"
+      class="sr-btn sr-btn-wa"
+      style="font-size:13px;padding:8px 18px"
     >
-      {title}
-    </h1>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+      WhatsApp
+    </a>
+  </nav>
 
-    <div class="my-2 flex items-center gap-2">
-      <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      <span
-        aria-hidden="true"
-        class:list={[
-          "text-muted-foreground max-sm:hidden",
-          { hidden: !config.features.editPost?.enabled || hideEditPost },
-        ]}
-      >
-        |
-      </span>
-      <EditPost {hideEditPost} {post} class="max-sm:hidden" />
+  <!-- ── Cover (gradient, sem stock photo) ── -->
+  <div class="sr-post-cover">
+    <div
+      style={`position:absolute;inset:0;background:${gradient};width:100%;height:120%`}
+      aria-hidden="true"
+    ></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,.1) 0%,rgba(11,10,13,.42) 50%,var(--bg) 100%)" aria-hidden="true"></div>
+    <div class="sr-cover-cap">
+      <div class="inner">
+        <nav class="sr-crumb" aria-label="Breadcrumb">
+          <a href="/">Início</a>
+          <span class="sep" aria-hidden="true">›</span>
+          <a href="/posts">Posts</a>
+          {tags[0] && (
+            <>
+              <span class="sep" aria-hidden="true">›</span>
+              <a href={`/tags/${slugifyStr(tags[0])}`}>{tags[0]}</a>
+            </>
+          )}
+        </nav>
+        <h1 class="sr-post-h1 sr-reveal">{title}</h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Post body ── -->
+  <div class="sr-post-shell">
+
+    <!-- Meta bar -->
+    <div class="sr-post-meta">
+      <div class="who">
+        <div class="sr-avatar" aria-hidden="true">G</div>
+        <span>Guilherme Ribeiro</span>
+      </div>
+      <span class="sr-dotsep" aria-hidden="true"></span>
+      {pubDatetime && (
+        <time datetime={pubDatetime.toISOString()} class="sec">{fmtDate(pubDatetime)}</time>
+      )}
+      <span class="sr-dotsep" aria-hidden="true"></span>
+      <span class="sec">{readTime} min de leitura</span>
+      <span class="sr-dotsep" aria-hidden="true"></span>
+      {tags.slice(0, 2).map(tag => (
+        <a href={`/tags/${slugifyStr(tag)}`} class="sr-tag" style="font-size:10px;padding:3px 9px">
+          {tag}
+        </a>
+      ))}
     </div>
 
-    <article
-      id="article"
-      class:list={[
-        "mt-8 w-full",
-        "app-prose max-w-app",
-        "prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)",
-      ]}
-    >
-      <Content />
-    </article>
+    <!-- Article grid: prose + right col -->
+    <div class="sr-article" data-pagefind-body>
+      <!-- ── Prose ── -->
+      <div class="sr-prose">
+        {description && (
+          <p class="sr-dek-lead">{description}</p>
+        )}
 
-    <hr class="my-8 border-dashed" />
+        <article id="article" class="app-prose">
+          <Content />
+        </article>
 
-    <EditPost class="sm:hidden" {hideEditPost} {post} />
+        <!-- Adjacent nav (post) -->
+        {(prevPost || nextPost) && (
+          <nav class="sr-adj-nav" aria-label="Artigos relacionados">
+            {prevPost && (
+              <a href={`/posts/${getPostSlug(prevPost.id, prevPost.filePath)}/`} class="sr-adj-item">
+                <span class="lab">← Anterior</span>
+                <span class="ttl">{prevPost.title}</span>
+              </a>
+            )}
+            {nextPost && (
+              <a href={`/posts/${getPostSlug(nextPost.id, nextPost.filePath)}/`} class="sr-adj-item next">
+                <span class="lab">Próximo →</span>
+                <span class="ttl">{nextPost.title}</span>
+              </a>
+            )}
+          </nav>
+        )}
+      </div>
 
-    <BackToTopButton />
+      <!-- ── Right col: TOC + lead capture ── -->
+      <aside class="sr-rightcol" aria-label="Índice e newsletter">
+        {h2Headings.length > 0 && (
+          <div class="sr-toc" id="sr-toc">
+            <p class="lab">Neste artigo</p>
+            <ul>
+              {h2Headings.map(h => (
+                <li>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-    <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
-    </ul>
+        <!-- Lead capture -->
+        <div class="sr-solve">
+          <p class="b">Newsletter</p>
+          <h4>Toda semana: o que o portal não te conta</h4>
+          <p>Marketing automotivo sem enrolação. Para dono e gerente de revenda.</p>
+          <form id="post-nl-form" onsubmit="submitPostNewsletter(event)" style="display:flex;flex-direction:column;gap:8px">
+            <div class="sr-field">
+              <input type="text" name="nome" placeholder="Seu nome" autocomplete="given-name" required />
+            </div>
+            <div class="sr-field">
+              <input type="email" name="email" placeholder="Seu e-mail" autocomplete="email" required />
+            </div>
+            <button type="submit" class="sr-btn" style="width:100%;justify-content:center;font-size:13px;padding:10px 20px">
+              Quero receber →
+            </button>
+            <p id="post-nl-msg" style="font-size:11.5px;color:var(--magenta);display:none;font-family:var(--font-mono);margin:0">
+              ✓ Inscrito! Toda semana na sua caixa.
+            </p>
+          </form>
+        </div>
+      </aside>
+    </div>
 
-    <ShareLinks />
+    <!-- Tags row -->
+    <div style="margin-top:56px;padding-bottom:80px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+      <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Tags:</span>
+      {tags.map(tag => (
+        <a href={`/tags/${slugifyStr(tag)}`} class="sr-tag">{tag}</a>
+      ))}
+    </div>
+  </div>
 
-    <hr class="my-8 border-dashed" />
+  <script is:inline data-astro-rerun>
+    // Copy buttons
+    (function attachCopyButtons() {
+      const copyButtonLabel = "Copiar";
+      const codeBlocks = Array.from(document.querySelectorAll("pre"));
+      for (const codeBlock of codeBlocks) {
+        const wrapper = document.createElement("div");
+        wrapper.style.position = "relative";
+        const computedStyle = getComputedStyle(codeBlock);
+        const hasFileNameOffset =
+          computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+        const topClass = hasFileNameOffset ? "top-(--file-name-offset)" : "-top-3";
+        const copyButton = document.createElement("button");
+        copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+        copyButton.innerHTML = copyButtonLabel;
+        codeBlock.setAttribute("tabindex", "0");
+        codeBlock.appendChild(copyButton);
+        codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+        wrapper.appendChild(codeBlock);
+        copyButton.addEventListener("click", async () => {
+          const code = codeBlock.querySelector("code");
+          await navigator.clipboard.writeText(code?.innerText ?? "");
+          copyButton.innerText = "Copiado";
+          setTimeout(() => { copyButton.innerText = copyButtonLabel; }, 700);
+        });
+      }
+    })();
 
-    <AdjacentPostNav {prevPost} {nextPost} />
-  </main>
-  <Footer />
+    // Accessible lightbox
+    (function initLightbox() {
+      const article = document.getElementById("article");
+      if (!article) return;
+      const prefersReducedMotion = () =>
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let overlay = null, lastFocused = null;
+      requestAnimationFrame(() => {
+        for (const img of Array.from(article.querySelectorAll("img"))) {
+          if (img.closest("a")) continue;
+          img.setAttribute("role", "button");
+          img.setAttribute("tabindex", "0");
+          img.setAttribute("aria-haspopup", "dialog");
+          img.setAttribute("aria-label", img.alt ? `Zoom: ${img.alt}` : "Zoom imagem");
+        }
+      });
+      function open(src, alt, trigger) {
+        if (overlay) return;
+        lastFocused = trigger ?? document.activeElement;
+        overlay = document.createElement("div");
+        overlay.setAttribute("role", "dialog");
+        overlay.setAttribute("aria-modal", "true");
+        overlay.className = "fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-200";
+        const closeBtn = document.createElement("button");
+        closeBtn.type = "button";
+        closeBtn.setAttribute("aria-label", "Fechar");
+        closeBtn.className = "absolute end-4 top-4 rounded p-2 text-3xl leading-none text-white";
+        closeBtn.innerHTML = "&#10005;";
+        closeBtn.addEventListener("click", close);
+        const image = document.createElement("img");
+        image.src = src; image.alt = "";
+        image.className = "max-h-[90dvh] max-w-[90dvw] cursor-default object-contain";
+        overlay.append(closeBtn, image);
+        overlay.addEventListener("click", e => { if (e.target === overlay) close(); });
+        document.body.appendChild(overlay);
+        document.body.style.overflow = "hidden";
+        document.addEventListener("keydown", onKeyDown);
+        window.__closeLightbox = close;
+        requestAnimationFrame(() => overlay?.classList.add("opacity-100"));
+        closeBtn.focus();
+      }
+      function close() {
+        if (!overlay) return;
+        const el = overlay; overlay = null;
+        window.__closeLightbox = null;
+        document.removeEventListener("keydown", onKeyDown);
+        document.body.style.overflow = "";
+        lastFocused?.focus();
+        if (prefersReducedMotion()) { el.remove(); return; }
+        el.addEventListener("transitionend", () => el.remove(), { once: true });
+        setTimeout(() => el.remove(), 250);
+        el.classList.remove("opacity-100");
+      }
+      function onKeyDown(e) { if (e.key === "Escape") close(); }
+      article.addEventListener("click", e => {
+        const img = e.target.closest("img");
+        if (!img || !article.contains(img) || img.closest("a")) return;
+        e.preventDefault();
+        open(img.currentSrc || img.src, img.alt, img);
+      });
+    })();
+
+    if (!window.__lightboxSwapBound) {
+      window.__lightboxSwapBound = true;
+      document.addEventListener("astro:before-swap", () => window.__closeLightbox?.());
+    }
+    document.addEventListener("astro:after-swap", () =>
+      window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+    );
+  </script>
+
+  <script>
+    (window as any).submitPostNewsletter = async function(e: Event) {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const btn = form.querySelector("button") as HTMLButtonElement;
+      const nome = (form.elements.namedItem("nome") as HTMLInputElement).value.trim();
+      const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+      if (btn) btn.disabled = true;
+      try {
+        await fetch("/newsletter", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, email }),
+        });
+      } catch {}
+      form.reset();
+      const msg = document.getElementById("post-nl-msg");
+      if (msg) msg.style.display = "block";
+    };
+  </script>
 </PostLayout>
-
-<script is:inline data-astro-rerun>
-  function createProgressBar() {
-    const progressContainer = document.createElement("div");
-    progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
-
-    const progressBar = document.createElement("div");
-    progressBar.className = "progress-bar h-1 w-0 bg-accent";
-    progressBar.id = "myBar";
-
-    progressContainer.appendChild(progressBar);
-    document.body.appendChild(progressContainer);
-  }
-  createProgressBar();
-
-  function updateScrollProgress() {
-    document.addEventListener("scroll", () => {
-      const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      if (document) {
-        const myBar = document.getElementById("myBar");
-        if (myBar) {
-          myBar.style.width = scrolled + "%";
-        }
-      }
-    });
-  }
-  updateScrollProgress();
-
-  function addHeadingLinks() {
-    const headings = Array.from(
-      document.querySelectorAll("h2, h3, h4, h5, h6")
-    );
-    for (const heading of headings) {
-      heading.classList.add("group");
-      const link = document.createElement("a");
-      link.className =
-        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
-      link.href = "#" + heading.id;
-
-      const span = document.createElement("span");
-      span.ariaHidden = "true";
-      span.innerText = "#";
-      link.appendChild(span);
-      heading.appendChild(link);
-    }
-  }
-  addHeadingLinks();
-
-  function attachCopyButtons() {
-    const copyButtonLabel = "Copy";
-    const codeBlocks = Array.from(document.querySelectorAll("pre"));
-
-    for (const codeBlock of codeBlocks) {
-      const wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
-
-      const computedStyle = getComputedStyle(codeBlock);
-      const hasFileNameOffset =
-        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
-
-      const topClass = hasFileNameOffset
-        ? "top-(--file-name-offset)"
-        : "-top-3";
-
-      const copyButton = document.createElement("button");
-      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
-      copyButton.innerHTML = copyButtonLabel;
-      codeBlock.setAttribute("tabindex", "0");
-      codeBlock.appendChild(copyButton);
-
-      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
-      wrapper.appendChild(codeBlock);
-
-      copyButton.addEventListener("click", async () => {
-        await copyCode(codeBlock, copyButton);
-      });
-    }
-
-    async function copyCode(block, button) {
-      const code = block.querySelector("code");
-      const text = code?.innerText;
-
-      await navigator.clipboard.writeText(text ?? "");
-
-      button.innerText = "Copied";
-
-      setTimeout(() => {
-        button.innerText = copyButtonLabel;
-      }, 700);
-    }
-  }
-  attachCopyButtons();
-
-  /** Accessible image lightbox for article images. */
-  function initLightbox() {
-    const article = document.getElementById("article");
-    if (!article) return;
-
-    const prefersReducedMotion = () =>
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let overlay = null;
-    let lastFocused = null;
-
-    // Defer attribute mutations so they don't push the LCP timestamp.
-    // Event listeners below use delegation and don't need the attributes to exist yet.
-    requestAnimationFrame(() => {
-      const images = Array.from(article.querySelectorAll("img"));
-      for (const image of images) {
-        if (image.closest("a")) continue;
-        image.setAttribute("role", "button");
-        image.setAttribute("tabindex", "0");
-        image.setAttribute("aria-haspopup", "dialog");
-        image.setAttribute(
-          "aria-label",
-          image.alt ? `Zoom image: ${image.alt}` : "Zoom image"
-        );
-      }
-    });
-
-    function open(src, alt, trigger) {
-      if (overlay) return;
-      lastFocused = trigger ?? document.activeElement;
-
-      overlay = document.createElement("div");
-      overlay.setAttribute("role", "dialog");
-      overlay.setAttribute("aria-modal", "true");
-      overlay.setAttribute(
-        "aria-label",
-        alt ? `Image preview: ${alt}` : "Image preview"
-      );
-      overlay.className =
-        "fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-200 motion-reduce:transition-none";
-
-      const closeButton = document.createElement("button");
-      closeButton.type = "button";
-      closeButton.setAttribute("aria-label", "Close image preview");
-      closeButton.className =
-        "absolute end-4 top-4 rounded p-2 text-3xl leading-none text-white";
-      closeButton.innerHTML = "&#10005;";
-      closeButton.addEventListener("click", close);
-
-      const image = document.createElement("img");
-      image.src = src;
-      image.alt = "";
-      image.className =
-        "max-h-[90dvh] max-w-[90dvw] cursor-default object-contain";
-
-      overlay.append(closeButton, image);
-      overlay.addEventListener("click", e => {
-        if (e.target === overlay && currentScale <= 1) close();
-      });
-
-      let currentScale = 1;
-      let translateX = 0;
-      let translateY = 0;
-      let initialDist = 0;
-      let initialScale = 1;
-      let panStartX = 0;
-      let panStartY = 0;
-      let panStartTranslateX = 0;
-      let panStartTranslateY = 0;
-      let lastTapTime = 0;
-
-      function applyTransform() {
-        image.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
-      }
-
-      function resetTransform() {
-        currentScale = 1;
-        translateX = 0;
-        translateY = 0;
-        image.style.transform = "";
-      }
-
-      overlay.addEventListener(
-        "touchstart",
-        e => {
-          const t = e.touches;
-          if (t.length === 2) {
-            initialDist = Math.hypot(
-              t[1].clientX - t[0].clientX,
-              t[1].clientY - t[0].clientY
-            );
-            initialScale = currentScale;
-          } else if (t.length === 1) {
-            const now = Date.now();
-            if (now - lastTapTime < 300) {
-              e.preventDefault();
-              if (currentScale > 1) {
-                resetTransform();
-              } else {
-                currentScale = 2;
-                translateX = 0;
-                translateY = 0;
-                applyTransform();
-              }
-              lastTapTime = 0;
-              panStartX = t[0].clientX;
-              panStartY = t[0].clientY;
-              panStartTranslateX = translateX;
-              panStartTranslateY = translateY;
-            } else {
-              lastTapTime = now;
-              if (currentScale > 1) {
-                panStartX = t[0].clientX;
-                panStartY = t[0].clientY;
-                panStartTranslateX = translateX;
-                panStartTranslateY = translateY;
-              }
-            }
-          }
-        },
-        { passive: false }
-      );
-
-      overlay.addEventListener(
-        "touchmove",
-        e => {
-          const t = e.touches;
-          if (t.length === 2) {
-            e.preventDefault();
-            const dist = Math.hypot(
-              t[1].clientX - t[0].clientX,
-              t[1].clientY - t[0].clientY
-            );
-            currentScale = Math.min(
-              4,
-              Math.max(1, initialScale * (dist / initialDist))
-            );
-            applyTransform();
-          } else if (t.length === 1) {
-            if (currentScale > 1) {
-              e.preventDefault();
-              translateX =
-                panStartTranslateX + (t[0].clientX - panStartX) / currentScale;
-              translateY =
-                panStartTranslateY + (t[0].clientY - panStartY) / currentScale;
-              const maxX = Math.max(
-                0,
-                (image.clientWidth - overlay.clientWidth / currentScale) / 2
-              );
-              const maxY = Math.max(
-                0,
-                (image.clientHeight - overlay.clientHeight / currentScale) / 2
-              );
-              translateX = Math.min(maxX, Math.max(-maxX, translateX));
-              translateY = Math.min(maxY, Math.max(-maxY, translateY));
-              applyTransform();
-            } else {
-              e.preventDefault();
-            }
-          }
-        },
-        { passive: false }
-      );
-
-      overlay.addEventListener("touchend", e => {
-        if (e.touches.length === 0 && currentScale <= 1.05) {
-          resetTransform();
-        }
-      });
-
-      overlay.addEventListener("touchcancel", e => {
-        if (e.touches.length === 0 && currentScale <= 1.05) {
-          resetTransform();
-        }
-      });
-
-      document.body.appendChild(overlay);
-      document.body.style.overflow = "hidden";
-      document.addEventListener("keydown", onKeyDown);
-      window.__closeLightbox = close;
-
-      requestAnimationFrame(() => overlay?.classList.add("opacity-100"));
-      closeButton.focus();
-    }
-
-    function close() {
-      if (!overlay) return;
-      const el = overlay;
-      overlay = null;
-      window.__closeLightbox = null;
-
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
-      lastFocused?.focus();
-      lastFocused = null;
-
-      if (prefersReducedMotion()) {
-        el.remove();
-        return;
-      }
-      const remove = () => el.remove();
-      el.addEventListener("transitionend", remove, { once: true });
-      setTimeout(remove, 250); // fallback in case transitionend never fires
-      el.classList.remove("opacity-100");
-    }
-
-    function onKeyDown(e) {
-      if (e.key === "Escape") {
-        close();
-      } else if (e.key === "Tab") {
-        trapFocus(e);
-      }
-    }
-
-    // Keep keyboard focus inside the open dialog.
-    function trapFocus(e) {
-      if (!overlay) return;
-      const focusables = overlay.querySelectorAll(
-        'a[href], button, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusables.length === 0) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-
-    function triggerFromEvent(e) {
-      const image = e.target.closest("img");
-      if (!image || !article.contains(image) || image.closest("a")) return null;
-      return image;
-    }
-
-    function activate(image) {
-      open(image.currentSrc || image.src, image.alt, image);
-    }
-
-    article.addEventListener("click", e => {
-      const image = triggerFromEvent(e);
-      if (!image) return;
-      e.preventDefault();
-      activate(image);
-    });
-
-    article.addEventListener("keydown", e => {
-      if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar") return;
-      const image = triggerFromEvent(e);
-      if (!image) return;
-      e.preventDefault();
-      activate(image);
-    });
-  }
-  initLightbox();
-
-  if (!window.__lightboxSwapBound) {
-    window.__lightboxSwapBound = true;
-    document.addEventListener("astro:before-swap", () =>
-      window.__closeLightbox?.()
-    );
-  }
-
-  document.addEventListener("astro:after-swap", () =>
-    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
-  );
-</script>

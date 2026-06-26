@@ -1,131 +1,208 @@
 ---
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
-import Card from "@/components/Card.astro";
-import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
-import { useTranslations } from "@/i18n";
 import config from "@/config";
 
-const { socials, posts: postsConfig } = config;
-
 const locale = Astro.currentLocale ?? config.site.lang;
-const t = useTranslations(locale);
+const homePath = getRelativeLocaleUrl(locale, "");
 
 const posts = await getCollection("posts");
 const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
-const homePath = getRelativeLocaleUrl(locale, "");
+const featuredPost = sortedPosts.find(({ data }) => data.featured) ?? sortedPosts[0];
+const gridPosts = sortedPosts.filter(p => p.id !== featuredPost?.id).slice(0, 2);
+const row3Posts = sortedPosts.filter(p => p.id !== featuredPost?.id).slice(2, 5);
+
+// Gradient por cluster de tags (sem foto = sem stock-photo genérico)
+const TAG_GRADIENT: Record<string, string> = {
+  "giro-de-estoque": "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 45%,#4a1060 100%)",
+  "carro-parado":    "linear-gradient(135deg,#0d1a22 0%,#0f2d3d 45%,#103a4a 100%)",
+  "lead-fantasma":   "linear-gradient(135deg,#220d1a 0%,#3d0f2a 45%,#5a1040 100%)",
+  "seminovos":       "linear-gradient(135deg,#1a1a0d 0%,#2d2d0f 45%,#3d3010 100%)",
+  "gestao":          "linear-gradient(135deg,#0d220d 0%,#0f3d0f 45%,#103a10 100%)",
+  "aquisicao":       "linear-gradient(135deg,#22100d 0%,#3d1f0f 45%,#4a2010 100%)",
+  default:           "linear-gradient(135deg,#13101a 0%,#1e1528 45%,#2a1940 100%)",
+};
+const getGrad = (tags: string[]) =>
+  TAG_GRADIENT[tags[0]] ?? TAG_GRADIENT.default;
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
 ---
 
 <Layout>
-  <Header />
-  <main
-    id="main-content"
-    data-layout="index"
-    data-home-path={homePath}
-    class="app-layout"
-  >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <p class="text-accent mb-3 font-mono text-xs tracking-[0.14em] uppercase">
-        Varejo automotivo · sem enrolação
-      </p>
-      <h1 class="my-3 inline-block text-4xl font-semibold sm:my-5 sm:text-5xl">
-        Marketing que mede carro vendido, não lead.
-      </h1>
+  <!-- Topbar -->
+  <nav class="sr-topbar" aria-label="Navegação principal">
+    <div class="sr-topnav">
+      <a href="/posts" data-active={Astro.url.pathname === "/posts" ? "" : undefined}>Posts</a>
+      <a href="/tags">Tags</a>
+      <a href="/about">Sobre</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px">
       <a
+        href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
         target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="ms-2 inline-block align-middle"
-        aria-label="RSS Feed"
-        title="RSS Feed"
+        rel="noopener"
+        class="sr-btn sr-btn-wa"
+        style="font-size:13px;padding:8px 18px"
       >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp
       </a>
+    </div>
+  </nav>
 
-      <p class="text-foreground/80 mt-2 max-w-2xl">
-        Conteúdo neutro de fornecedor para quem vive de girar estoque: dono e
-        gerente de revenda, seminovos e concessionária. A gente não vende portal
-        nem CRM — então pode falar a verdade sobre reduzir dependência de portal,
-        matar o lead-fantasma e medir cada real até a chave na mão do cliente.
-      </p>
-      {
-        socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {t.home.socialLinks}:
-            </div>
-            <Socials />
+  <main id="main-content" data-layout="index" data-home-path={homePath} class="sr-wrap">
+
+    <!-- Eyebrow -->
+    <p class="sr-eyebrow" style="margin-bottom:0">Varejo automotivo · sem enrolação</p>
+
+    <!-- ── HERO (post em destaque) ── -->
+    {featuredPost && (
+      <a href={`/posts/${featuredPost.id}/`} class="sr-hero sr-reveal" style="display:grid">
+        <div class="cover" style={`background:${getGrad(featuredPost.data.tags)};min-height:320px;display:flex;align-items:flex-end;padding:32px 38px`}>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,.05) 0%,rgba(11,10,13,.5) 62%,var(--surface) 100%)"></div>
+        </div>
+        <div class="body">
+          <span class="sr-tag"><b>{featuredPost.data.tags[0]?.replace(/-/g," ")}</b></span>
+          <h1 style="font-family:var(--font-display);font-weight:500;font-variation-settings:'opsz' 144;font-size:clamp(28px,3.6vw,48px);line-height:1.04;letter-spacing:-.025em;margin:16px 0 12px;max-width:22ch">
+            {featuredPost.data.title}
+          </h1>
+          <p style="color:var(--ink-2);font-size:17px;max-width:64ch;margin:0 0 16px">{featuredPost.data.description}</p>
+          <div class="sr-datastrip">
+            <div class="sr-avatar" style="width:26px;height:26px;font-size:11px" aria-hidden="true">G</div>
+            <span>Guilherme Ribeiro</span>
+            <span class="sr-dotsep"></span>
+            <time datetime={featuredPost.data.pubDatetime.toISOString()}>
+              {fmtDate(featuredPost.data.pubDatetime)}
+            </time>
           </div>
-        )
-      }
+        </div>
+      </a>
+    )}
+
+    <!-- ── Seção: últimas análises ── -->
+    {sortedPosts.length > 1 && (
+      <>
+        <div class="sr-section-head">
+          <h2>Últimas análises</h2>
+          <a href="/posts">Ver todas <span aria-hidden="true">→</span></a>
+        </div>
+
+        <!-- Grid 2fr 1fr -->
+        {gridPosts.length > 0 && (
+          <div class="sr-grid-asym">
+            {gridPosts.map((post, i) => (
+              <a
+                href={`/posts/${post.id}/`}
+                class:list={["sr-card sr-reveal", { tall: i === 0 }]}
+              >
+                <div
+                  class="thumb"
+                  style={`background:${getGrad(post.data.tags)};min-height:${i === 0 ? "280px" : "180px"}`}
+                  aria-hidden="true"
+                >
+                  <div class="sr-thumb-pattern" style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
+                </div>
+                <div class="ov">
+                  <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
+                  <h3>{post.data.title}</h3>
+                  <div class="sr-datastrip">
+                    <time datetime={post.data.pubDatetime.toISOString()}>
+                      {fmtDate(post.data.pubDatetime)}
+                    </time>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+
+        <!-- Row de 3 -->
+        {row3Posts.length > 0 && (
+          <div class="sr-row3">
+            {row3Posts.map(post => (
+              <a href={`/posts/${post.id}/`} class="sr-card sr-reveal">
+                <div class="thumb" style={`background:${getGrad(post.data.tags)}`} aria-hidden="true">
+                  <div style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
+                </div>
+                <div class="ov">
+                  <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
+                  <h3 class="pad">{post.data.title}</h3>
+                  <p class="sr-meta">
+                    <time datetime={post.data.pubDatetime.toISOString()}>
+                      {fmtDate(post.data.pubDatetime)}
+                    </time>
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </>
+    )}
+
+    <!-- ── Newsletter fold ── -->
+    <section class="sr-news-fold sr-reveal" aria-labelledby="nl-heading">
+      <p class="sr-eyebrow">Newsletter</p>
+      <h2 id="nl-heading">
+        Toda semana: a análise que o <em>portal não te conta</em>
+      </h2>
+      <p>
+        Marketing automotivo sem enrolação. Sem portal, sem CRM, sem bullshit.
+        Para dono e gerente de revenda.
+      </p>
+      <form id="home-nl-form" onsubmit="submitHomeNewsletter(event)" style="display:flex;gap:10px;width:min(520px,100%)">
+        <div class="sr-field" style="flex:1">
+          <input type="text" name="nome" placeholder="Seu nome" required autocomplete="given-name" />
+        </div>
+        <div class="sr-field" style="flex:1.5">
+          <input type="email" name="email" placeholder="Seu e-mail" required autocomplete="email" />
+        </div>
+        <button type="submit" class="sr-btn" style="white-space:nowrap;font-size:13px;padding:10px 20px">Quero →</button>
+      </form>
+      <p id="home-nl-msg" style="font-family:var(--font-mono);font-size:12px;color:var(--magenta);display:none;margin-top:10px">
+        ✓ Inscrito! Toda semana na sua caixa.
+      </p>
+      <div class="sr-proof">
+        <span><b>100%</b> sem spam</span>
+        <span>·</span>
+        <span>Cancelar a qualquer momento</span>
+        <span>·</span>
+        <span><b>blog.dimus.com.br</b></span>
+      </div>
     </section>
 
-    {
-      featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-border border-b": recentPosts.length > 0 },
-          ]}
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.featured}
-          </h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.recentPosts}
-          </h2>
-          <ul>
-            {recentPosts.slice(0, postsConfig.perIndex).map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="my-8 text-center">
-      <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
-        {t.home.allPosts}
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
-    </div>
   </main>
-  <Footer />
-</Layout>
 
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset;
-    const baseRoot = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-    if (indexLayout?.layout) {
-      sessionStorage.setItem("backUrl", indexLayout.homePath ?? baseRoot);
-    }
-  });
-</script>
+  <script>
+    document.addEventListener("astro:page-load", () => {
+      const el = document.querySelector("#main-content") as HTMLElement;
+      if (el?.dataset.layout) {
+        const baseRoot = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+        sessionStorage.setItem("backUrl", el.dataset.homePath ?? baseRoot);
+      }
+    });
+
+    (window as any).submitHomeNewsletter = async function(e: Event) {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const btn = form.querySelector("button") as HTMLButtonElement;
+      const nome = (form.elements.namedItem("nome") as HTMLInputElement).value.trim();
+      const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+      if (btn) btn.disabled = true;
+      try {
+        await fetch("/newsletter", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, email }),
+        });
+      } catch {}
+      form.reset();
+      const msg = document.getElementById("home-nl-msg");
+      if (msg) msg.style.display = "block";
+      if (btn) btn.disabled = false;
+    };
+  </script>
+</Layout>
