@@ -1,36 +1,87 @@
 ---
 import { getEntry, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
 import config from "@/config";
 
 const about = await getEntry("pages", "about");
-
-if (!about) {
-  throw new Error(
-    "Missing content entry: `about.md` or `about.mdx` in `src/content/pages/`"
-  );
-}
-
+if (!about) throw new Error("Missing src/content/pages/about.md");
 const { Content } = await render(about);
 ---
 
 <Layout
   title={`${about.data.title} | ${config.site.title}`}
   description={about.data.description}
-  ogImage={about.data.ogImage}
-  canonicalURL={about.data.canonicalURL}
 >
-  <Header />
+  <nav class="sr-topbar" aria-label="Navegação principal">
+    <div class="sr-topnav">
+      <a href="/posts">Posts</a>
+      <a href="/tags">Tags</a>
+      <a href="/about" data-active="">Sobre</a>
+    </div>
+    <a
+      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      target="_blank" rel="noopener"
+      class="sr-btn sr-btn-wa"
+      style="font-size:13px;padding:8px 18px"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+      WhatsApp
+    </a>
+  </nav>
 
-  <Breadcrumb />
+  <main class="sr-wrap sr-about-wrap">
+    <nav class="sr-crumb" aria-label="Breadcrumb" style="margin-bottom:32px">
+      <a href="/">Início</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <span style="color:var(--ink-2)">Sobre</span>
+    </nav>
 
-  <Main pageTitle={about.data.title} class="app-prose">
-    <Content />
-  </Main>
+    <p class="sr-eyebrow" style="margin-bottom:0">Quem escreve</p>
+    <h1 class="sr-archive-title">{about.data.title}</h1>
 
-  <Footer />
+    <div class="sr-about-prose app-prose">
+      <Content />
+    </div>
+  </main>
 </Layout>
+
+<style>
+.sr-about-wrap {
+  max-width: 760px;
+}
+.sr-about-prose {
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: rgb(203, 196, 210);
+}
+.sr-about-prose h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+  margin: 40px 0 14px;
+  color: var(--ink);
+}
+.sr-about-prose p { margin: 0 0 18px; }
+.sr-about-prose strong { color: var(--ink); font-weight: 600; }
+.sr-about-prose ul { list-style: none; padding: 0; margin: 0 0 18px; }
+.sr-about-prose li {
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 8px;
+}
+.sr-about-prose li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--magenta);
+  font-weight: 700;
+}
+.sr-about-prose a {
+  color: var(--magenta);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+</style>

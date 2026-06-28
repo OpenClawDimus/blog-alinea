@@ -213,109 +213,132 @@ const metaPixelHtml = metaPixelId
       import ScrollTrigger from "gsap/ScrollTrigger";
       gsap.registerPlugin(ScrollTrigger);
 
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function initShowroom() {
+        // Kill stale triggers from previous page
+        ScrollTrigger.getAll().forEach(t => t.kill());
 
-      // ── Reading progress bar ───────────────────────────────────
-      const prog = document.getElementById("sr-progress");
-      if (prog) {
-        const upd = () => {
-          const h = document.documentElement;
-          const max = h.scrollHeight - h.clientHeight;
-          prog.style.width = (max > 0 ? (scrollY / max * 100) : 0) + "%";
-        };
-        addEventListener("scroll", upd, { passive: true });
-        upd();
-      }
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // ── Active rail link ───────────────────────────────────────
-      document.querySelectorAll("#sr-clusters a").forEach(a => {
-        if (location.pathname.startsWith((a as HTMLAnchorElement).getAttribute("href") || "___")) {
-          a.setAttribute("data-active", "");
+        // ── Reading progress bar ─────────────────────────────────
+        const prog = document.getElementById("sr-progress");
+        if (prog) {
+          const upd = () => {
+            const h = document.documentElement;
+            const max = h.scrollHeight - h.clientHeight;
+            prog.style.width = (max > 0 ? (scrollY / max * 100) : 0) + "%";
+          };
+          addEventListener("scroll", upd, { passive: true });
+          upd();
         }
-      });
 
-      // ── Card reveal on scroll (Emil: purposeful, não decorativo) ──
-      if (!reduce) {
-        const reveals = document.querySelectorAll(".sr-reveal");
-        reveals.forEach((el, i) => {
-          ScrollTrigger.create({
-            trigger: el,
-            start: "top 88%",
-            onEnter: () => {
+        // ── Active rail link ─────────────────────────────────────
+        document.querySelectorAll("#sr-clusters a").forEach(a => {
+          a.removeAttribute("data-active");
+          if (location.pathname.startsWith((a as HTMLAnchorElement).getAttribute("href") || "___")) {
+            a.setAttribute("data-active", "");
+          }
+        });
+
+        // ── Card reveal on scroll ────────────────────────────────
+        if (!reduce) {
+          const reveals = [...document.querySelectorAll(".sr-reveal")];
+          reveals.forEach((el, i) => {
+            const rect = (el as HTMLElement).getBoundingClientRect();
+            const inView = rect.top < window.innerHeight * 0.92;
+            if (inView) {
+              // Already in viewport — reveal immediately with a short stagger
               gsap.to(el, {
                 opacity: 1,
                 y: 0,
-                duration: 0.65,
-                delay: (i % 3) * 0.08,
+                duration: 0.55,
+                delay: (i % 4) * 0.07,
                 ease: "power3.out",
-                overwrite: "auto",
               });
               (el as HTMLElement).classList.add("sr-visible");
-            },
-            once: true,
+            } else {
+              ScrollTrigger.create({
+                trigger: el,
+                start: "top 90%",
+                onEnter: () => {
+                  gsap.to(el, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.65,
+                    delay: (i % 3) * 0.08,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                  });
+                  (el as HTMLElement).classList.add("sr-visible");
+                },
+                once: true,
+              });
+            }
           });
-        });
 
-        // ── Cover parallax (post view) ─────────────────────────
-        const coverImg = document.querySelector(".sr-post-cover img") as HTMLElement;
-        if (coverImg) {
-          gsap.to(coverImg, {
-            yPercent: 16,
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".sr-post-cover",
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-        }
-
-        // ── TOC scroll-spy ─────────────────────────────────────
-        const heads = [...document.querySelectorAll(".sr-prose h2")];
-        const tocLinks = [...document.querySelectorAll(".sr-toc a")];
-        if (heads.length && tocLinks.length) {
-          heads.forEach((h, i) => {
-            ScrollTrigger.create({
-              trigger: h,
-              start: "top 30%",
-              end: "bottom 30%",
-              onToggle: s => {
-                if (s.isActive) {
-                  tocLinks.forEach(l => l.classList.remove("active"));
-                  if (tocLinks[i]) tocLinks[i].classList.add("active");
-                }
+          // ── Cover parallax (post view) ───────────────────────
+          const coverImg = document.querySelector(".sr-post-cover img") as HTMLElement;
+          if (coverImg) {
+            gsap.to(coverImg, {
+              yPercent: 16,
+              ease: "none",
+              scrollTrigger: {
+                trigger: ".sr-post-cover",
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
               },
             });
-          });
-          tocLinks.forEach((a, i) => {
-            a.addEventListener("click", e => {
-              e.preventDefault();
-              heads[i]?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+
+          // ── TOC scroll-spy ───────────────────────────────────
+          const heads = [...document.querySelectorAll(".sr-prose h2")];
+          const tocLinks = [...document.querySelectorAll(".sr-toc a")];
+          if (heads.length && tocLinks.length) {
+            heads.forEach((h, idx) => {
+              ScrollTrigger.create({
+                trigger: h,
+                start: "top 30%",
+                end: "bottom 30%",
+                onToggle: s => {
+                  if (s.isActive) {
+                    tocLinks.forEach(l => l.classList.remove("active"));
+                    if (tocLinks[idx]) tocLinks[idx].classList.add("active");
+                  }
+                },
+              });
             });
-          });
+            tocLinks.forEach((a, idx) => {
+              a.addEventListener("click", e => {
+                e.preventDefault();
+                heads[idx]?.scrollIntoView({ behavior: "smooth", block: "start" });
+              });
+            });
+          }
         }
+
+        // ── Rail newsletter ──────────────────────────────────────
+        (window as any).submitRailNewsletter = async function(e: Event) {
+          e.preventDefault();
+          const form = e.target as HTMLFormElement;
+          const nome = (form.elements.namedItem("nome") as HTMLInputElement).value.trim();
+          const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+          const btn = form.querySelector("button") as HTMLButtonElement;
+          if (btn) btn.disabled = true;
+          try {
+            await fetch("/newsletter", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ nome, email }),
+            });
+          } catch {}
+          form.reset();
+          const msg = document.getElementById("rail-nl-msg");
+          if (msg) msg.style.display = "block";
+        };
       }
 
-      // ── Rail newsletter submit ─────────────────────────────────
-      (window as any).submitRailNewsletter = async function(e: Event) {
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const nome = (form.elements.namedItem("nome") as HTMLInputElement).value.trim();
-        const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
-        const btn = form.querySelector("button") as HTMLButtonElement;
-        if (btn) btn.disabled = true;
-        try {
-          await fetch("/newsletter", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, email }),
-          });
-        } catch {}
-        form.reset();
-        const msg = document.getElementById("rail-nl-msg");
-        if (msg) { msg.style.display = "block"; }
-      };
+      // Re-run on every page (including after ViewTransition navigation)
+      document.addEventListener("astro:page-load", initShowroom);
     </script>
   </body>
 </html>

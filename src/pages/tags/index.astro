@@ -1,32 +1,69 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
-import Tag from "@/components/Tag.astro";
 import { getUniqueTags } from "@/utils/getUniqueTags";
-import { useTranslations } from "@/i18n";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { slugifyAll } from "@/utils/slugify";
 import config from "@/config";
 
-const posts = await getCollection("posts", ({ data }) => !data.draft);
+const posts = await getCollection("posts");
+const sorted = getSortedPosts(posts);
 const tags = getUniqueTags(posts);
 
-const locale = Astro.currentLocale ?? config.site.lang;
-const t = useTranslations(locale);
+// post count per tag
+const countMap: Record<string, number> = {};
+for (const { tag } of tags) {
+  countMap[tag] = sorted.filter(p =>
+    slugifyAll(p.data.tags).includes(tag)
+  ).length;
+}
+
+const TAG_GRADIENT: Record<string, string> = {
+  "giro-de-estoque": "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 100%)",
+  "seminovos":       "linear-gradient(135deg,#1a1a0d 0%,#3d3010 100%)",
+  "gestao":          "linear-gradient(135deg,#0d220d 0%,#103a10 100%)",
+  "aquisicao":       "linear-gradient(135deg,#22100d 0%,#4a2010 100%)",
+  "atribuicao":      "linear-gradient(135deg,#0d1222 0%,#102a4a 100%)",
+  "metricas":        "linear-gradient(135deg,#1a0d0d 0%,#4a1212 100%)",
+  "atendimento":     "linear-gradient(135deg,#0d1a1a 0%,#103a3a 100%)",
+  "whatsapp":        "linear-gradient(135deg,#0d1a0d 0%,#103a10 100%)",
+  "precificacao":    "linear-gradient(135deg,#1a0d1a 0%,#3a103a 100%)",
+  "indicacao":       "linear-gradient(135deg,#1a150d 0%,#3a2a10 100%)",
+  default:           "linear-gradient(135deg,#13101a 0%,#2a1940 100%)",
+};
+const getGrad = (tag: string) => TAG_GRADIENT[tag] ?? TAG_GRADIENT.default;
 ---
 
-<Layout title={`${t.pages.tagsTitle} | ${config.site.title}`}>
-  <Header />
+<Layout title={`Tags | ${config.site.title}`}>
+  <nav class="sr-topbar" aria-label="Navegação principal">
+    <div class="sr-topnav">
+      <a href="/posts">Posts</a>
+      <a href="/tags" data-active="">Tags</a>
+      <a href="/about">Sobre</a>
+    </div>
+    <a
+      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      target="_blank" rel="noopener"
+      class="sr-btn sr-btn-wa"
+      style="font-size:13px;padding:8px 18px"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+      WhatsApp
+    </a>
+  </nav>
 
-  <Breadcrumb />
+  <main class="sr-wrap">
+    <p class="sr-eyebrow" style="margin-bottom:0">Clusters editoriais</p>
+    <h1 class="sr-archive-title">Tags</h1>
+    <p class="sr-tags-desc">Todos os temas cobertos nesta publicação. Clique para filtrar os artigos por assunto.</p>
 
-  <Main pageTitle={t.pages.tagsTitle} pageDesc={t.pages.tagsDesc}>
-    <ul class="flex flex-wrap gap-6">
-      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} />)}
-    </ul>
-  </Main>
-
-  <Footer />
+    <div class="sr-tag-grid">
+      {tags.map(({ tag, tagName }) => (
+        <a href={`/tags/${tag}/`} class="sr-tag-card sr-reveal" style={`background:${getGrad(tag)}`}>
+          <span class="sr-tag-name">{tagName.replace(/-/g, " ")}</span>
+          <span class="sr-tag-count">{countMap[tag]} {countMap[tag] === 1 ? "artigo" : "artigos"}</span>
+        </a>
+      ))}
+    </div>
+  </main>
 </Layout>

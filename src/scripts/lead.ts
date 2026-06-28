@@ -142,12 +142,92 @@ function handleSubmit(form: HTMLFormElement) {
   const intent =
     form.dataset.intent || "Quero o diagnóstico de giro do meu estoque.";
   const msg = `Olá! Sou ${nome}. ${intent}${extra} [ID:${ref}]`;
-  window.open(
-    "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg),
-    "_blank",
-    "noopener"
-  );
+  const waUrl = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
   form.reset();
+
+  // Popup de confirmação com countdown de 3s antes do redirect
+  showWAPopup(waUrl, nome);
+}
+
+function showWAPopup(waUrl: string, nome: string): void {
+  const existing = document.getElementById("sr-wa-popup");
+  if (existing) existing.remove();
+
+  const popup = document.createElement("div");
+  popup.id = "sr-wa-popup";
+  popup.setAttribute("role", "dialog");
+  popup.setAttribute("aria-modal", "true");
+  popup.setAttribute("aria-label", "Redirecionando para WhatsApp");
+  popup.innerHTML = `
+    <div id="sr-wa-popup-inner">
+      <div id="sr-wa-popup-icon">✓</div>
+      <p id="sr-wa-popup-ok">Recebemos! Abrindo WhatsApp…</p>
+      <p id="sr-wa-popup-name">${nome}, vamos continuar no WhatsApp.</p>
+      <div id="sr-wa-popup-count" aria-live="polite">3</div>
+      <button id="sr-wa-popup-go" type="button">Ir agora →</button>
+      <p id="sr-wa-popup-skip">ou <button id="sr-wa-popup-cancel" type="button">fechar</button></p>
+    </div>
+  `;
+  Object.assign(popup.style, {
+    position: "fixed", inset: "0", zIndex: "9999",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    background: "rgba(11,10,13,.88)", backdropFilter: "blur(10px)",
+  } as CSSStyleDeclaration);
+
+  const inner = popup.querySelector<HTMLElement>("#sr-wa-popup-inner")!;
+  Object.assign(inner.style, {
+    background: "#131017",
+    border: "1px solid rgba(225,55,158,.3)",
+    borderRadius: "20px",
+    padding: "36px 40px 28px",
+    maxWidth: "380px",
+    width: "calc(100% - 40px)",
+    textAlign: "center",
+    boxShadow: "0 32px 80px rgba(0,0,0,.7)",
+  } as CSSStyleDeclaration);
+
+  document.body.appendChild(popup);
+
+  // inline styles for inner elements
+  const icon = document.getElementById("sr-wa-popup-icon")!;
+  Object.assign(icon.style, { fontSize: "32px", marginBottom: "12px", color: "#25D366" });
+  const okEl = document.getElementById("sr-wa-popup-ok")!;
+  Object.assign(okEl.style, { fontFamily: "var(--font-body)", fontWeight: "600", fontSize: "17px", color: "var(--ink)", margin: "0 0 6px" });
+  const nameEl = document.getElementById("sr-wa-popup-name")!;
+  Object.assign(nameEl.style, { fontSize: "14px", color: "var(--ink-2)", margin: "0 0 20px" });
+  const countEl = document.getElementById("sr-wa-popup-count")!;
+  Object.assign(countEl.style, { fontSize: "44px", fontWeight: "700", color: "var(--magenta)", margin: "0 0 20px", lineHeight: "1", fontFamily: "var(--font-mono)" });
+  const goBtn = document.getElementById("sr-wa-popup-go")!;
+  Object.assign(goBtn.style, {
+    display: "block", width: "100%", padding: "12px 20px", borderRadius: "999px",
+    background: "#25D366", border: "none", color: "#fff", fontWeight: "700",
+    fontSize: "15px", cursor: "pointer", marginBottom: "14px", fontFamily: "var(--font-body)",
+  });
+  const skipEl = document.getElementById("sr-wa-popup-skip")!;
+  Object.assign(skipEl.style, { fontSize: "12px", color: "var(--dim)", margin: "0" });
+  const cancelBtn = document.getElementById("sr-wa-popup-cancel")!;
+  Object.assign(cancelBtn.style, { background: "none", border: "none", color: "var(--dim)", cursor: "pointer", textDecoration: "underline", font: "inherit" });
+
+  let count = 3;
+  function openWA() {
+    clearInterval(timer);
+    popup.remove();
+    window.open(waUrl, "_blank", "noopener");
+  }
+  function closePopup() {
+    clearInterval(timer);
+    popup.remove();
+  }
+
+  goBtn.addEventListener("click", openWA);
+  cancelBtn.addEventListener("click", closePopup);
+  popup.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Escape") closePopup(); });
+
+  const timer = setInterval(() => {
+    count--;
+    countEl.textContent = String(count);
+    if (count <= 0) openWA();
+  }, 1000);
 }
 
 function init() {

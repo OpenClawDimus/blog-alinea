@@ -60,9 +60,18 @@ const fmtDate = (d: Date) =>
 
     <!-- ── HERO (post em destaque) ── -->
     {featuredPost && (
-      <a href={`/posts/${featuredPost.id}/`} class="sr-hero sr-reveal" style="display:grid">
-        <div class="cover" style={`background:${getGrad(featuredPost.data.tags)};min-height:320px;display:flex;align-items:flex-end;padding:32px 38px`}>
-          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,.05) 0%,rgba(11,10,13,.5) 62%,var(--surface) 100%)"></div>
+      <a href={`/posts/${featuredPost.id}/`} class="sr-hero sr-reveal">
+        <div class="cover" style={`background:${getGrad(featuredPost.data.tags)}`}>
+          {typeof featuredPost.data.ogImage === "string" && (
+            <img
+              src={featuredPost.data.ogImage}
+              alt=""
+              aria-hidden="true"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          )}
         </div>
         <div class="body">
           <span class="sr-tag"><b>{featuredPost.data.tags[0]?.replace(/-/g," ")}</b></span>
@@ -100,10 +109,14 @@ const fmtDate = (d: Date) =>
               >
                 <div
                   class="thumb"
-                  style={`background:${getGrad(post.data.tags)};min-height:${i === 0 ? "280px" : "180px"}`}
+                  style={`background:${getGrad(post.data.tags)}`}
                   aria-hidden="true"
                 >
-                  <div class="sr-thumb-pattern" style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
+                  {typeof post.data.ogImage === "string" ? (
+                    <img src={post.data.ogImage} alt="" loading="lazy" decoding="async" />
+                  ) : (
+                    <div style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
+                  )}
                 </div>
                 <div class="ov">
                   <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
@@ -125,7 +138,11 @@ const fmtDate = (d: Date) =>
             {row3Posts.map(post => (
               <a href={`/posts/${post.id}/`} class="sr-card sr-reveal">
                 <div class="thumb" style={`background:${getGrad(post.data.tags)}`} aria-hidden="true">
-                  <div style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
+                  {typeof post.data.ogImage === "string" ? (
+                    <img src={post.data.ogImage} alt="" loading="lazy" decoding="async" />
+                  ) : (
+                    <div style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
+                  )}
                 </div>
                 <div class="ov">
                   <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>

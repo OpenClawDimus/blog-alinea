@@ -241,10 +241,10 @@ body::after {
   box-shadow: 0 12px 30px rgba(178,30,151,.42);
 }
 .sr-btn-wa {
-  background: #1faf54;
-  box-shadow: 0 8px 22px rgba(31,175,84,.3);
+  background: #15803d; /* WCAG AA 5.3:1 vs #fff at 13px */
+  box-shadow: 0 8px 22px rgba(21,128,61,.35);
 }
-.sr-btn-wa:hover { box-shadow: 0 12px 30px rgba(31,175,84,.4); }
+.sr-btn-wa:hover { box-shadow: 0 12px 30px rgba(21,128,61,.48); }
 
 .sr-btn-mini {
   background: var(--magenta);
@@ -450,7 +450,7 @@ body::after {
 /* ── Row de 3 cards ─────────────────────────────────────────── */
 .sr-row3 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 22px;
   margin-top: 22px;
 }
@@ -607,6 +607,22 @@ body::after {
 }
 .sr-post-h1 em { font-style: italic; color: var(--magenta); font-weight: 500; }
 
+/* ── Back arrow (post pages) ────────────────────────────────── */
+.sr-back-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  padding: 14px 40px 0;
+  transition: color .2s var(--ease-s);
+}
+.sr-back-arrow:hover { color: var(--ink-2); }
+
 /* ── Post shell ─────────────────────────────────────────────── */
 .sr-post-shell {
   max-width: 1280px;
@@ -656,12 +672,16 @@ body::after {
 /* ── Article grid: prose + TOC ──────────────────────────────── */
 .sr-article {
   display: grid;
-  grid-template-columns: 1fr 200px;
-  gap: 48px;
+  grid-template-columns: 1fr 180px;
+  gap: 40px;
   padding: 40px 0 0;
   align-items: start;
 }
 .sr-prose { min-width: 0; }
+
+/* Root cause fix: Tailwind @apply prose injeta max-width:65ch por padrão.
+   Override obrigatório — a coluna já é definida pelo grid sr-article (1fr). */
+.app-prose { max-width: none; }
 
 /* C1 — prose body guarantee (Hanken Grotesk, legível, WCAG AA) */
 .sr-prose .app-prose p,
@@ -950,6 +970,99 @@ body::after {
   .sr-reveal { opacity: 1 !important; transform: none !important; }
 }
 
+/* ── Archive page ───────────────────────────────────────────── */
+.sr-archive-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(32px, 4vw, 52px);
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  margin: 18px 0 48px;
+  color: var(--ink);
+}
+
+/* List of posts (archive / /posts/) */
+.sr-list-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sr-list-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.07);
+  background: #18141f;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color .35s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease);
+  margin-bottom: 14px;
+}
+.sr-list-card:hover {
+  border-color: rgba(255,255,255,.18);
+  transform: translateX(4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.5);
+}
+
+.sr-list-thumb {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  min-height: 160px;
+}
+.sr-list-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s var(--ease);
+}
+.sr-list-card:hover .sr-list-thumb img { transform: scale(1.07); }
+
+.sr-list-body {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.sr-list-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  margin: 4px 0 0;
+  color: var(--ink);
+}
+
+.sr-list-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 4px 0 0;
+  max-width: 68ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sr-list-date {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  color: var(--dim);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
 /* ── Adjacent post nav ──────────────────────────────────────── */
 .sr-adj-nav {
   display: flex;
@@ -986,6 +1099,74 @@ body::after {
   font-size: 15.5px;
   line-height: 1.25;
   letter-spacing: -.01em;
+}
+
+/* ── Tags page description ───────────────────────────────────── */
+.sr-tags-desc {
+  font-size: 15px;
+  color: var(--muted);
+  margin: -30px 0 48px;
+  max-width: 56ch;
+  line-height: 1.55;
+}
+
+/* ── Tags grid ───────────────────────────────────────────────── */
+.sr-tag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.sr-tag-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  text-decoration: none;
+  color: var(--ink);
+  min-height: 130px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.sr-tag-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, transparent 30%, rgba(0,0,0,.55));
+}
+.sr-tag-card:hover {
+  border-color: rgba(255,255,255,.22);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,.55);
+}
+.sr-tag-name {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  text-transform: capitalize;
+}
+.sr-tag-count {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  margin-top: 6px;
+}
+
+/* ── List-thumb overlay: legibilidade do texto sobre imagem ──── */
+.sr-list-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,.35) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 /* ── Mobile: colapsa rail acima do shell ────────────────────── */

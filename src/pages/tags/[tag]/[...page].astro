@@ -2,16 +2,10 @@
 import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Main from "@/components/Main.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Card from "@/components/Card.astro";
-import Footer from "@/components/Footer.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getUniqueTags } from "@/utils/getUniqueTags";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyAll } from "@/utils/slugify";
-import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
@@ -22,7 +16,6 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const tagPosts = getSortedPosts(
       posts.filter(({ data }) => slugifyAll(data.tags).includes(tag))
     );
-
     return paginate(tagPosts, {
       params: { tag },
       props: { tagName },
@@ -32,26 +25,81 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 const { page, tagName } = Astro.props;
+const { tag } = Astro.params;
 
-const locale = Astro.currentLocale ?? config.site.lang;
-const t = useTranslations(locale);
+const TAG_GRADIENT: Record<string, string> = {
+  "giro-de-estoque": "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 45%,#4a1060 100%)",
+  "seminovos":       "linear-gradient(135deg,#1a1a0d 0%,#2d2d0f 45%,#3d3010 100%)",
+  "gestao":          "linear-gradient(135deg,#0d220d 0%,#0f3d0f 45%,#103a10 100%)",
+  "aquisicao":       "linear-gradient(135deg,#22100d 0%,#3d1f0f 45%,#4a2010 100%)",
+  "atribuicao":      "linear-gradient(135deg,#0d1222 0%,#0f1e3d 45%,#102a4a 100%)",
+  "metricas":        "linear-gradient(135deg,#1a0d0d 0%,#3d1010 45%,#4a1212 100%)",
+  "atendimento":     "linear-gradient(135deg,#0d1a1a 0%,#0f3030 45%,#103a3a 100%)",
+  "whatsapp":        "linear-gradient(135deg,#0d1a0d 0%,#0f3d0f 45%,#103a10 100%)",
+  "precificacao":    "linear-gradient(135deg,#1a0d1a 0%,#3a103a 45%,#4a1060 100%)",
+  "indicacao":       "linear-gradient(135deg,#1a150d 0%,#3a2a10 45%,#4a3510 100%)",
+  default:           "linear-gradient(135deg,#13101a 0%,#1e1528 45%,#2a1940 100%)",
+};
+const getGrad = (tags: string[]) =>
+  TAG_GRADIENT[tags[0]] ?? TAG_GRADIENT.default;
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+
+const displayTag = tagName.replace(/-/g, " ");
 ---
 
-<Layout title={`${t.pages.tagTitle}: ${tagName} | ${config.site.title}`}>
-  <Header />
+<Layout title={`${displayTag} | ${config.site.title}`}>
+  <nav class="sr-topbar" aria-label="Navegação principal">
+    <div class="sr-topnav">
+      <a href="/posts">Posts</a>
+      <a href="/tags" data-active="">Tags</a>
+      <a href="/about">Sobre</a>
+    </div>
+    <a
+      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      target="_blank" rel="noopener"
+      class="sr-btn sr-btn-wa"
+      style="font-size:13px;padding:8px 18px"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+      WhatsApp
+    </a>
+  </nav>
 
-  <Breadcrumb />
+  <main class="sr-wrap">
+    <nav class="sr-crumb" aria-label="Breadcrumb" style="margin-bottom:28px">
+      <a href="/">Início</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <a href="/tags">Tags</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <span style="color:var(--ink-2)">{displayTag}</span>
+    </nav>
 
-  <Main
-    pageTitle={`${t.pages.tagTitle}: ${tagName}`}
-    pageDesc={`${t.pages.tagDesc} "${tagName}".`}
-  >
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
-  </Main>
+    <p class="sr-eyebrow" style="margin-bottom:0">Cluster</p>
+    <h1 class="sr-archive-title" style="text-transform:capitalize">{displayTag}</h1>
+    <p class="sr-tags-desc">{page.total} {page.total === 1 ? "artigo" : "artigos"} sobre este tema</p>
 
-  <Pagination {page} />
+    <div class="sr-list-grid">
+      {page.data.map((post) => (
+        <a href={`/posts/${post.id}/`} class="sr-list-card sr-reveal">
+          <div class="sr-list-thumb" style={`background:${getGrad(post.data.tags)}`}>
+            {typeof post.data.ogImage === "string" ? (
+              <img src={post.data.ogImage} alt="" loading="lazy" decoding="async" />
+            ) : null}
+          </div>
+          <div class="sr-list-body">
+            <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
+            <h2 class="sr-list-title">{post.data.title}</h2>
+            <p class="sr-list-desc">{post.data.description}</p>
+            <time class="sr-list-date" datetime={post.data.pubDatetime.toISOString()}>
+              {fmtDate(post.data.pubDatetime)}
+            </time>
+          </div>
+        </a>
+      ))}
+    </div>
 
-  <Footer noMarginTop={page.lastPage > 1} />
+    {page.lastPage > 1 && <Pagination {page} />}
+  </main>
 </Layout>

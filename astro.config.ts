@@ -79,13 +79,13 @@ export default defineConfig({
   },
   fonts: [
     {
-      name: "Fraunces",
+      name: "Playfair Display",
       cssVariable: "--font-fraunces",
       provider: fontProviders.google(),
       fallbacks: ["Georgia", "serif"],
-      weights: [400, 500, 600, 700],
+      weights: [400, 500, 600, 700, 800, 900],
       styles: ["normal", "italic"],
-      formats: ["woff2", "woff", "ttf"], // ttf p/ satori (OG images)
+      formats: ["woff2", "woff", "ttf"],
     },
     {
       name: "Hanken Grotesk",
