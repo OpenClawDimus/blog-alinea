@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
+import CutoutCard from "@/components/blog/CutoutCard.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import config from "@/config";
 
@@ -100,61 +101,36 @@ const fmtDate = (d: Date) =>
           <a href="/posts">Ver todas <span aria-hidden="true">→</span></a>
         </div>
 
-        <!-- Grid 2fr 1fr -->
+        <!-- Grid 2fr 1fr — CutoutCard -->
         {gridPosts.length > 0 && (
           <div class="sr-grid-asym">
             {gridPosts.map((post, i) => (
-              <a
+              <CutoutCard
                 href={`/posts/${post.id}/`}
-                class:list={["sr-card sr-reveal", { tall: i === 0 }]}
-              >
-                <div
-                  class="thumb"
-                  style={`background:${getGrad(post.data.tags)}`}
-                  aria-hidden="true"
-                >
-                  {typeof post.data.ogImage === "string" ? (
-                    <img src={post.data.ogImage} alt="" loading="lazy" decoding="async" />
-                  ) : (
-                    <div style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
-                  )}
-                </div>
-                <div class="ov">
-                  <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
-                  <h3>{post.data.title}</h3>
-                  <div class="sr-datastrip">
-                    <time datetime={post.data.pubDatetime.toISOString()}>
-                      {fmtDate(post.data.pubDatetime)}
-                    </time>
-                  </div>
-                </div>
-              </a>
+                gradient={getGrad(post.data.tags)}
+                tag={post.data.tags[0] ?? "análise"}
+                title={post.data.title}
+                date={post.data.pubDatetime}
+                ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
+                tall={i === 0}
+                pinLabel={i === 0 ? "Análise" : undefined}
+              />
             ))}
           </div>
         )}
 
-        <!-- Row de 3 -->
+        <!-- Row de 3 — CutoutCard -->
         {row3Posts.length > 0 && (
           <div class="sr-row3">
             {row3Posts.map(post => (
-              <a href={`/posts/${post.id}/`} class="sr-card sr-reveal">
-                <div class="thumb" style={`background:${getGrad(post.data.tags)}`} aria-hidden="true">
-                  {typeof post.data.ogImage === "string" ? (
-                    <img src={post.data.ogImage} alt="" loading="lazy" decoding="async" />
-                  ) : (
-                    <div style="position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:12px 12px"></div>
-                  )}
-                </div>
-                <div class="ov">
-                  <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
-                  <h3 class="pad">{post.data.title}</h3>
-                  <p class="sr-meta">
-                    <time datetime={post.data.pubDatetime.toISOString()}>
-                      {fmtDate(post.data.pubDatetime)}
-                    </time>
-                  </p>
-                </div>
-              </a>
+              <CutoutCard
+                href={`/posts/${post.id}/`}
+                gradient={getGrad(post.data.tags)}
+                tag={post.data.tags[0] ?? "análise"}
+                title={post.data.title}
+                date={post.data.pubDatetime}
+                ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
+              />
             ))}
           </div>
         )}

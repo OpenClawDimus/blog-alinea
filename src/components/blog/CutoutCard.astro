@@ -1,0 +1,44 @@
+---
+interface Props {
+  href: string;
+  gradient: string;
+  tag: string;
+  title: string;
+  date: Date;
+  ogImage?: string | undefined;
+  tall?: boolean;
+  pinLabel?: string;
+}
+
+const { href, gradient, tag, title, date, ogImage, tall = false, pinLabel } = Astro.props;
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+---
+
+<a href={href} class:list={["sr-cutcard sr-reveal", { "sr-cutcard--tall": tall }]}>
+  {pinLabel && (
+    <div class="sr-cutcard__pin" aria-label={pinLabel}>{pinLabel}</div>
+  )}
+
+  <div class="sr-cutcard__media" style={`background:${gradient}`} aria-hidden="true">
+    {ogImage && (
+      <img src={ogImage} alt="" loading="lazy" decoding="async" />
+    )}
+    {!ogImage && (
+      <div class="sr-cutcard__noise"></div>
+    )}
+    <div class="sr-cutcard__overlay"></div>
+
+    <div class="sr-cutcard__inset">
+      <span class="sr-kicker">{tag.replace(/-/g, " ")}</span>
+    </div>
+  </div>
+
+  <div class="sr-cutcard__body">
+    <h3 class="sr-cutcard__title">{title}</h3>
+    <div class="sr-datastrip">
+      <time datetime={date.toISOString()}>{fmtDate(date)}</time>
+    </div>
+  </div>
+</a>

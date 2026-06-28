@@ -471,6 +471,140 @@ body::after {
   margin-top: 10px;
 }
 
+/* ── CutoutCard ─────────────────────────────────────────────── */
+.sr-cutcard {
+  position: relative;
+  background: #18141f;
+  border: 1px solid rgba(255,255,255,0.11);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--ink);
+  display: block;
+  transition: transform .5s var(--ease), box-shadow .45s var(--ease), border-color .4s;
+}
+.sr-cutcard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 70px rgba(0,0,0,.6);
+  border-color: rgba(255,255,255,.2);
+}
+.sr-cutcard--tall { display: flex; }
+.sr-cutcard--tall .sr-cutcard__media {
+  aspect-ratio: auto;
+  flex: 1;
+  min-height: 240px;
+}
+
+/* Media */
+.sr-cutcard__media {
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.sr-cutcard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--ease);
+  filter: saturate(1.02);
+}
+.sr-cutcard:hover .sr-cutcard__media img { transform: scale(1.06); }
+.sr-cutcard__noise {
+  position: absolute;
+  inset: 0;
+  opacity: .04;
+  background-image: repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);
+  background-size: 12px 12px;
+}
+.sr-cutcard__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11,10,13,.04) 0%, rgba(11,10,13,.62) 72%);
+}
+
+/* Inset label — bottom-left of media with concave corners */
+.sr-cutcard__inset {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #18141f;
+  padding: 9px 16px 10px;
+  border-top-right-radius: 22px;
+  z-index: 2;
+}
+/* Concave corner: above the inset at the left card edge */
+.sr-cutcard__inset::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -20px;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 100% 100%, transparent 20px, #18141f 20px);
+}
+/* Concave corner: right of the inset at the bottom card edge */
+.sr-cutcard__inset::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 0% 0%, transparent 20px, #18141f 20px);
+}
+
+/* Pin badge — top-right with concave corners */
+.sr-cutcard__pin {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  background: var(--magenta);
+  color: #fff;
+  padding: 6px 15px;
+  border-bottom-left-radius: 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+/* Concave corner: left of the pin at the top card edge */
+.sr-cutcard__pin::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 100% 100%, transparent 14px, var(--magenta) 14px);
+}
+/* Concave corner: below the pin at the right card edge */
+.sr-cutcard__pin::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 100% 0%, transparent 14px, var(--magenta) 14px);
+}
+
+/* Content body */
+.sr-cutcard__body { padding: 18px 22px 20px; }
+.sr-cutcard__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.1;
+  letter-spacing: -.022em;
+  margin: 6px 0 0;
+}
+.sr-cutcard--tall .sr-cutcard__title { font-size: 20px; }
+/* row3 size override */
+.sr-row3 .sr-cutcard__title { font-size: 17px; }
+
 /* ── Newsletter fold (home) ─────────────────────────────────── */
 .sr-news-fold {
   margin-top: 120px;
@@ -1196,6 +1330,8 @@ body::after {
   .sr-wrap { padding: 24px 20px 80px; }
   .sr-grid-asym { grid-template-columns: 1fr; }
   .sr-row3 { grid-template-columns: 1fr; }
+  .sr-cutcard--tall { flex-direction: column; }
+  .sr-cutcard--tall .sr-cutcard__media { min-height: 220px; aspect-ratio: 16/10; flex: none; }
   .sr-article { grid-template-columns: 1fr; gap: 40px; }
   .sr-rightcol { position: static; }
   .sr-post-shell { padding: 0 20px; }
