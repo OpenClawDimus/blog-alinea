@@ -476,6 +476,7 @@ body::after {
   position: relative;
   background: #18141f;
   border: 1px solid rgba(255,255,255,0.11);
+  border-radius: 24px;
   overflow: hidden;
   box-shadow: var(--shadow-card);
   cursor: pointer;
@@ -592,7 +593,7 @@ body::after {
 }
 
 /* Content body */
-.sr-cutcard__body { padding: 18px 22px 20px; }
+.sr-cutcard__body { padding: 18px 22px 18px; }
 .sr-cutcard__title {
   font-family: var(--font-display);
   font-weight: 600;
@@ -604,6 +605,29 @@ body::after {
 .sr-cutcard--tall .sr-cutcard__title { font-size: 20px; }
 /* row3 size override */
 .sr-row3 .sr-cutcard__title { font-size: 17px; }
+.sr-cutcard__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.sr-cutcard__cta {
+  display: inline-flex;
+  align-items: center;
+  background: var(--magenta);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  white-space: nowrap;
+  transition: opacity .25s;
+}
+.sr-cutcard:hover .sr-cutcard__cta { opacity: .82; }
 
 /* ── Newsletter fold (home) ─────────────────────────────────── */
 .sr-news-fold {

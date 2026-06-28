@@ -37,8 +37,11 @@ const fmtDate = (d: Date) =>
 
   <div class="sr-cutcard__body">
     <h3 class="sr-cutcard__title">{title}</h3>
-    <div class="sr-datastrip">
-      <time datetime={date.toISOString()}>{fmtDate(date)}</time>
+    <div class="sr-cutcard__footer">
+      <div class="sr-datastrip">
+        <time datetime={date.toISOString()}>{fmtDate(date)}</time>
+      </div>
+      <span class="sr-cutcard__cta">Ler análise →</span>
     </div>
   </div>
 </a>
