@@ -524,45 +524,29 @@ body::after {
   background: linear-gradient(180deg, rgba(11,10,13,.04) 0%, rgba(11,10,13,.62) 72%);
 }
 
-/* Inset label — bottom-left of media with concave corners */
+/* Inset label — bottom-left of media */
 .sr-cutcard__inset {
   position: absolute;
   bottom: 0;
   left: 0;
   background: #18141f;
+  color: #18141f; /* currentColor for SVG corners */
   padding: 9px 16px 10px;
   border-top-right-radius: 22px;
   z-index: 2;
 }
-/* Concave corner: above the inset at the left card edge */
-.sr-cutcard__inset::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: -20px;
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle at 100% 100%, transparent 20px, #18141f 20px);
-}
-/* Concave corner: right of the inset at the bottom card edge */
-.sr-cutcard__inset::after {
-  content: '';
-  position: absolute;
-  left: 100%;
-  bottom: 0;
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle at 0% 0%, transparent 20px, #18141f 20px);
-}
 
-/* Pin badge — top-right with concave corners */
+/* Pin badge — top-right (inside media) */
 .sr-cutcard__pin {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 10;
   background: var(--magenta);
-  color: #fff;
+  color: var(--magenta); /* currentColor for SVG corners */
+  display: flex;
+  align-items: center;
+  gap: 0;
   padding: 6px 15px;
   border-bottom-left-radius: 14px;
   font-family: var(--font-mono);
@@ -570,27 +554,26 @@ body::after {
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
+  line-height: 1;
 }
-/* Concave corner: left of the pin at the top card edge */
-.sr-cutcard__pin::before {
-  content: '';
+/* override color for pin label text */
+.sr-cutcard__pin > :not(svg) { color: #fff; }
+
+/* SVG CutoutCorner pieces — shared base */
+.sr-cc {
   position: absolute;
-  right: 100%;
-  top: 0;
-  width: 14px;
-  height: 14px;
-  background: radial-gradient(circle at 100% 100%, transparent 14px, var(--magenta) 14px);
+  display: block;
+  pointer-events: none;
+  flex-shrink: 0;
 }
-/* Concave corner: below the pin at the right card edge */
-.sr-cutcard__pin::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 100%;
-  width: 14px;
-  height: 14px;
-  background: radial-gradient(circle at 100% 0%, transparent 14px, var(--magenta) 14px);
-}
+/* Inset: above-left concave corner */
+.sr-cc--inset-t { top: -31px; left: -1px; transform: rotate(90deg); }
+/* Inset: below-right concave corner */
+.sr-cc--inset-r { right: -31px; bottom: -1px; transform: rotate(90deg); }
+/* Pin: left concave corner */
+.sr-cc--pin-l { top: 0; left: -23px; transform: rotate(-90deg); }
+/* Pin: bottom concave corner */
+.sr-cc--pin-b { right: 0; bottom: -23px; transform: rotate(-90deg); }
 
 /* Content body */
 .sr-cutcard__body { padding: 18px 22px 18px; }

@@ -14,24 +14,45 @@ const { href, gradient, tag, title, date, ogImage, tall = false, pinLabel } = As
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+
+// Real path from cult-ui CutoutCorner (viewBox 0 0 200 200)
+// Concave notch is at top-left; rotate to change orientation
+const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
 ---
 
 <a href={href} class:list={["sr-cutcard sr-reveal", { "sr-cutcard--tall": tall }]}>
-  {pinLabel && (
-    <div class="sr-cutcard__pin" aria-label={pinLabel}>{pinLabel}</div>
-  )}
 
   <div class="sr-cutcard__media" style={`background:${gradient}`} aria-hidden="true">
-    {ogImage && (
-      <img src={ogImage} alt="" loading="lazy" decoding="async" />
-    )}
-    {!ogImage && (
-      <div class="sr-cutcard__noise"></div>
-    )}
+    {ogImage && <img src={ogImage} alt="" loading="lazy" decoding="async" />}
+    {!ogImage && <div class="sr-cutcard__noise"></div>}
     <div class="sr-cutcard__overlay"></div>
 
+    {/* Pin badge — top-right corner, inside media so corners clip correctly */}
+    {pinLabel && (
+      <div class="sr-cutcard__pin">
+        {/* Left side of pin — concave corner connecting pin to card top edge */}
+        <svg class="sr-cc sr-cc--pin-l" width="24" height="24" viewBox="0 0 200 200" aria-hidden="true">
+          <path d={CP} fill="currentColor" />
+        </svg>
+        {pinLabel}
+        {/* Bottom of pin — concave corner connecting pin to card right edge */}
+        <svg class="sr-cc sr-cc--pin-b" width="24" height="24" viewBox="0 0 200 200" aria-hidden="true">
+          <path d={CP} fill="currentColor" />
+        </svg>
+      </div>
+    )}
+
+    {/* Inset label — bottom-left of media */}
     <div class="sr-cutcard__inset">
+      {/* Above the inset at its left edge */}
+      <svg class="sr-cc sr-cc--inset-t" width="32" height="32" viewBox="0 0 200 200" aria-hidden="true">
+        <path d={CP} fill="currentColor" />
+      </svg>
       <span class="sr-kicker">{tag.replace(/-/g, " ")}</span>
+      {/* Right of inset at its bottom */}
+      <svg class="sr-cc sr-cc--inset-r" width="32" height="32" viewBox="0 0 200 200" aria-hidden="true">
+        <path d={CP} fill="currentColor" />
+      </svg>
     </div>
   </div>
 
