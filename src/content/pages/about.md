@@ -1,24 +1,28 @@
 ---
 title: "Sobre o Blog Dimus"
-description: "Conteúdo de marketing automotivo orientado a carro vendido, não a lead — feito pela Dimus para donos e gerentes de revenda."
+description: "Blog de marketing automotivo que mede resultado em carro vendido — sem parceria com portal, sem comissão de CRM, sem afiliado de ferramenta."
 ---
 
-Este é o blog da **Dimus**: marketing automotivo que mede **carro vendido, não lead**.
+Este blog é para o dono de revenda, o gerente comercial e o gerente de marketing que já cansou de relatório bonito e caixa fraco.
 
-A maior parte do conteúdo do setor é feita por quem ganha com lead (portal) ou com cadastro (CRM). Nós não vendemos nenhum dos dois — então podemos falar a verdade que ninguém fala: como reduzir a dependência do portal, parar de pagar por lead-fantasma e rastrear cada real de mídia até a chave na mão do cliente.
+Se você já questionou um portal, uma agência ou um gestor de tráfego sobre o custo real por venda e recebeu uma planilha de leads como resposta — você está no lugar certo.
 
 ## Para quem é
 
-- **Dono de revenda e seminovos** que sente o caixa antes de ver o relatório.
-- **Gerente comercial** que cansou de lead que não atende.
-- **Gerente de marketing** que precisa provar venda, não CTR.
+- **Dono de revenda de seminovos** que acorda segunda preocupado com giro, não com CTR.
+- **Gerente comercial** que responde pelo resultado de venda, não pelo relatório de campanha.
+- **Gerente de marketing** que precisa de benchmark real para defender decisão de verba.
 
 ## O que você encontra aqui
 
-- A conta real do que cada decisão custa: carro parado, lead-fantasma, CAC por carro vendido.
-- Calculadoras que falam a língua do caixa.
-- O caminho para um canal de aquisição próprio, sem queimar margem.
+Análises sobre o que realmente funciona no marketing automotivo brasileiro. Benchmarks reais de custo por venda. A matemática que ninguém no setor quer fazer em voz alta — porque ela expõe quem vive de métrica de vaidade.
 
-Quer aplicar isso na sua loja? Em todo post tem um caminho direto para falar com a gente no WhatsApp.
+Sem parceria com portal. Sem comissão de CRM. Sem afiliado de ferramenta. Podemos falar a verdade porque não vendemos nenhum produto do setor.
+
+## Como usar
+
+Se você quer entender a matemática do seu marketing, comece pelos artigos de custo por venda e benchmark de atendimento.
+
+Se você quer conversar sobre como implementar isso na sua operação, o DimusHelp existe para isso:
 
 — Equipe Dimus · [dimus.com.br](https://dimus.com.br)
