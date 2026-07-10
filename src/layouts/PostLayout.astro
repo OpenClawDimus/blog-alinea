@@ -34,6 +34,21 @@ const publisher = {
   "@type": "Organization",
   name: "Dimus",
   url: orgUrl,
+  logo: {
+    "@type": "ImageObject",
+    url: new URL("default-og.jpg", site.url).href,
+  },
+};
+
+// E-E-A-T: autor real (Person) com sameAs — sinal de autoridade para Google e LLMs
+const eeatAuthor = {
+  "@type": "Person",
+  name: "Guilherme Ribeiro",
+  url: "https://guilhermeribeiro.me",
+  sameAs: [
+    "https://www.instagram.com/guilhermeribeiro.me/",
+    "https://dimus.com.br",
+  ],
 };
 
 const article = {
@@ -47,13 +62,7 @@ const article = {
   mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Organization",
-      name: site.author,
-      ...(site.profile && { url: site.profile }),
-    },
-  ],
+  author: [eeatAuthor],
   publisher,
 };
 
