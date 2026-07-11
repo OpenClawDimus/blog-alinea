@@ -29,22 +29,38 @@ const {
 const pageUrl =
   canonicalURL ?? new URL(Astro.url.pathname, Astro.site).href;
 const orgUrl = site.profile || site.url;
+const siteBase = (Astro.site ?? new URL(site.url)).href
+const orgId = `${siteBase}#organization`
 
 const publisher = {
   "@type": "Organization",
+  "@id": orgId,
   name: "Dimus",
   url: orgUrl,
   logo: {
     "@type": "ImageObject",
-    url: new URL("default-og.jpg", site.url).href,
+    "@id": `${siteBase}#logo`,
+    url: new URL("favicon.svg", siteBase).href,
+    contentUrl: new URL("favicon.svg", siteBase).href,
   },
 };
 
-// E-E-A-T: autor real (Person) com sameAs — sinal de autoridade para Google e LLMs
+// E-E-A-T: autor real (Person) com expertise explícita — sinal de autoridade para Google e LLMs
 const eeatAuthor = {
   "@type": "Person",
+  "@id": "https://guilhermeribeiro.me/#person",
   name: "Guilherme Ribeiro",
   url: "https://guilhermeribeiro.me",
+  jobTitle: "Fundador",
+  worksFor: { "@id": orgId },
+  knowsAbout: [
+    "marketing automotivo",
+    "CRM para concessionárias",
+    "gestão de leads automotivos",
+    "atribuição de marketing digital",
+    "revenda de veículos seminovos",
+    "gestão de concessionárias",
+  ],
   sameAs: [
     "https://www.instagram.com/guilhermeribeiro.me/",
     "https://dimus.com.br",
@@ -107,6 +123,7 @@ const structuredData = {
   <Fragment slot="head">
     <!-- Override og:type for article pages -->
     <meta property="og:type" content="article" />
+    <meta property="article:author" content="https://guilhermeribeiro.me" />
 
     {
       pubDatetime && (

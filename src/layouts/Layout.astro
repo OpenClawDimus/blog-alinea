@@ -29,6 +29,40 @@ const rssHref = getRelativeLocaleUrl(
   "rss.xml"
 );
 
+// E-E-A-T global: WebSite + Organization em todas as páginas
+const siteBase = (Astro.site ?? new URL(site.url)).href
+const orgId = `${siteBase}#organization`
+const globalSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": orgId,
+      name: "Dimus",
+      url: site.profile || site.url,
+      logo: {
+        "@type": "ImageObject",
+        "@id": `${siteBase}#logo`,
+        url: new URL("favicon.svg", siteBase).href,
+        contentUrl: new URL("favicon.svg", siteBase).href,
+      },
+      sameAs: [
+        "https://instagram.com/dimus",
+        "https://www.linkedin.com/company/dimus/",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteBase}#website`,
+      url: siteBase,
+      name: site.title,
+      description: site.description,
+      publisher: { "@id": orgId },
+      inLanguage: site.lang,
+    },
+  ],
+}
+
 // Meta Pixel ID — dataset Dimus (BM_MotherShip). PÚBLICO (client-side, ok commitar).
 // Só injeta em PRODUÇÃO (build) → dev local não polui o pixel real. Override por
 // PUBLIC_META_PIXEL_ID. HTML montado no frontmatter + <Fragment set:html> p/ o
@@ -116,6 +150,13 @@ const metaPixelHtml = metaPixelId
 
     <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
+
+    <!-- E-E-A-T global: Organization + WebSite -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(globalSchema)}
+    />
 
     <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
     <slot name="head" />
