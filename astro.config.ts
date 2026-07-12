@@ -32,9 +32,10 @@ export default defineConfig({
           try {
             const out = execFileSync("node", ["scripts/gate-event-naming.mjs"]);
             logger.info(out.toString().trim());
-          } catch (e) {
-            if (e.stdout) logger.error(e.stdout.toString());
-            if (e.stderr) logger.error(e.stderr.toString());
+          } catch (e: unknown) {
+            const err = e as { stdout?: Buffer; stderr?: Buffer };
+            if (err.stdout) logger.error(err.stdout.toString());
+            if (err.stderr) logger.error(err.stderr.toString());
             throw new Error("Gate de nomenclatura de eventos FALHOU — build bloqueado.");
           }
         },
