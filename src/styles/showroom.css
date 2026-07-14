@@ -593,6 +593,18 @@ body::after {
   margin: 6px 0 0;
 }
 .sr-cutcard--tall .sr-cutcard__title { font-size: 20px; }
+.sr-cutcard--tall .sr-cutcard__desc {
+  font-size: 13.5px;
+  line-height: 1.56;
+  color: var(--muted);
+  margin: 10px 0 0;
+  flex: 1;
+  min-height: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 /* row3 size override */
 .sr-row3 .sr-cutcard__title { font-size: 17px; }
 .sr-cutcard__footer {

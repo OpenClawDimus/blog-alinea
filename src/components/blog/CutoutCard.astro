@@ -25,7 +25,7 @@ const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
 <a href={href} class:list={["sr-cutcard sr-reveal", { "sr-cutcard--tall": tall }]}>
 
   <div class="sr-cutcard__media" style={`background:${gradient}`} aria-hidden="true">
-    {ogImage && <img src={ogImage} alt="" loading="lazy" decoding="async" />}
+    {ogImage && <img src={ogImage} alt="" loading="lazy" decoding="async" onerror="this.style.display='none'" />}
     {!ogImage && <div class="sr-cutcard__noise"></div>}
     <div class="sr-cutcard__overlay"></div>
 
@@ -61,12 +61,15 @@ const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
   <div class="sr-cutcard__body">
     <h3 class="sr-cutcard__title">{title}</h3>
 
-    {(readingTime || description) && (
+    {tall && description && (
+      <p class="sr-cutcard__desc">{description}</p>
+    )}
+
+    {readingTime && (
       <div class="sr-cutcard__peek" aria-hidden="true">
         <div class="sr-cutcard__peek-inner">
           <div class="sr-peek-content">
-            {readingTime && <span class="sr-read-badge">⏱ {readingTime} min de leitura</span>}
-            {description && <p class="sr-peek-desc">{description}</p>}
+            <span class="sr-read-badge">⏱ {readingTime} min de leitura</span>
           </div>
         </div>
       </div>
