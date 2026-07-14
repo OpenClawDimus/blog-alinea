@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import CutoutCard from "@/components/blog/CutoutCard.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import config from "@/config";
@@ -27,8 +28,8 @@ const TAG_GRADIENT: Record<string, string> = {
 const getGrad = (tags: string[]) =>
   TAG_GRADIENT[tags[0]] ?? TAG_GRADIENT.default;
 
-const fmtDate = (d: Date) =>
-  d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+const getReadTime = (body: string | undefined) =>
+  Math.ceil((body?.split(/\s+/).length ?? 800) / 220);
 ---
 
 <Layout title={`Posts | ${config.site.title}`}>
@@ -54,23 +55,18 @@ const fmtDate = (d: Date) =>
     <p class="sr-eyebrow" style="margin-bottom:0">Arquivo</p>
     <h1 class="sr-archive-title">Todos os artigos</h1>
 
-    <div class="sr-list-grid">
-      {page.data.map((post, i) => (
-        <a href={`/posts/${post.id}/`} class="sr-list-card sr-reveal">
-          <div class="sr-list-thumb" style={`background:${getGrad(post.data.tags)}`}>
-            {typeof post.data.ogImage === "string" ? (
-              <img src={post.data.ogImage} alt="" loading="lazy" decoding="async" />
-            ) : null}
-          </div>
-          <div class="sr-list-body">
-            <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
-            <h2 class="sr-list-title">{post.data.title}</h2>
-            <p class="sr-list-desc">{post.data.description}</p>
-            <time class="sr-list-date" datetime={post.data.pubDatetime.toISOString()}>
-              {fmtDate(post.data.pubDatetime)}
-            </time>
-          </div>
-        </a>
+    <div class="sr-row3">
+      {page.data.map(post => (
+        <CutoutCard
+          href={`/posts/${post.id}/`}
+          gradient={getGrad(post.data.tags)}
+          tag={post.data.tags[0] ?? "análise"}
+          title={post.data.title}
+          date={post.data.pubDatetime}
+          ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
+          readingTime={getReadTime(post.body)}
+          description={post.data.description}
+        />
       ))}
     </div>
 
