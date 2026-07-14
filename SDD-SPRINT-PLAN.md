@@ -81,7 +81,28 @@ Login do Guilherme persiste no profile. Conta GA4 admin: ribeirofguilherme@gmail
 
 - ✅ **Sprint 3 ADMIN** (tag `blog-dimus/v0.5.0-admin`, commit `ae362ff`, pushado): `functions/admin.js` painel `/admin` protegido por `DASH_KEY` (downloads/magnet via JOIN catálogo finito, conversão/post = leads÷views, leads/origem, leads recentes c/ PII telefone mascarada + noindex + esc() anti-XSS); `_middleware.js` agora grava `page_views` (post_slug derivado de /posts/<slug>/, device, country, só em content-type HTML); migration `0002_admin_catalog.sql` (lead_magnets + page_views + 2 índices) APLICADA no D1 remoto via wrangler global; seed catálogo FINITO 3 magnets (calc-carro-parado/estoque-giro, calc-cac-carro-vendido/atribuicao, quiz-refem-portal/portal) verificado. Build verde 22 páginas.
 - 🔁 **Gate adversarial Sprint 2+3** (workflow `wf_93a45f49-f30`): full audit + QA + red team + devil's advocate → verify adversarial por finding → synthesis null-safe. Rodando. (Anterior `wf_ee91c76d` falhou: limite semanal + bug `gate.verdict` em null.)
-- 🔜 **E1 Deploy** (pós-gate): CF Pages `blog-dimus` + secrets (META_PIXEL_ID/META_ACCESS_TOKEN/BLUEPRINT_SUPABASE_KEY/DASH_KEY) + domínio + smoke /tracker CAPI 200 + /admin + Lighthouse ≥95.
+- ✅ **Deploy live:** blog.dimus.com.br no ar, CI/CD via GitHub Actions → CF Pages (Global API Key auth), Bing WMT verificado, sitemap GSC submetido.
+
+---
+
+## SPRINT 4 — SEO Performance Intelligence  ◀ SPEC PRONTA (2026-07-12)
+**Spec completa:** `SPRINT-4-SPEC.md` — 6 waves com critério binário por wave.
+**Baseline:** `blog-dimus/v1.5.0-gate3-fixes` · Pipeline SEO autônomo ativo (11+ artigos publicados, 45 keywords).
+
+### O que o sprint entrega
+- **Wave 1:** Schema D1 — 5 novas tabelas (`gsc_daily`, `rank_snapshots`, `page_events`, `attribution_touchpoints`, `content_weekly`) via migration `0008`
+- **Wave 2 (P0):** GSC daily → D1 (estende `gsc-keyword-feeder`, 2 pulls: por query + por página)
+- **Wave 3 (P1):** DataForSEO weekly rank tracking → D1 (`rank_snapshots`, $1.40/ano, alerta Slack tier 1)
+- **Wave 4 (P1):** Scroll ≥75% + CTA click beacon (JS ~25 linhas + `/analytics` CF Function + attribution first-touch no form)
+- **Wave 5 (P0):** Weekly rollup cron + `/admin` upgrade (tabela action_signal + content gap list)
+- **Wave 6:** Gate adversarial obrigatório (audit + red team + fix loop)
+
+### Embasamento (pesquisa ultra verificada)
+- GSC: 2–3 dias de lag, combinar page+query quebra rows — solução: 2 calls separadas
+- DataForSEO: SERP Standard (não Labs), $0.0006/keyword, cadência semanal ótima, alerta ≥5 pos de queda
+- Engagement: scroll ≥75% = artigo lido, GA4 nativo só dispara 90% → beacon custom obrigatório
+- Attribution: Linear como modelo operacional, First-touch como secundário (SQL puro, sem ML)
+- B2B: 6–8 touchpoints médios antes de conversão (Avid Demand 2025)
 
 ## GATE ADVERSARIAL Sprint 2+3 — wf_93a45f49-f30 (2026-06-24)
 **Veredito: PASS-WITH-FIXES** · 48 findings → 43 confirmadas (verify adversarial) → 5 refutadas.
