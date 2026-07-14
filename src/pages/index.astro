@@ -30,6 +30,9 @@ const getGrad = (tags: string[]) =>
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+
+const getReadTime = (body: string | undefined) =>
+  Math.ceil((body?.split(/\s+/).length ?? 800) / 220);
 ---
 
 <Layout>
@@ -114,6 +117,8 @@ const fmtDate = (d: Date) =>
                 ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
                 tall={i === 0}
                 pinLabel={i === 0 ? "Análise" : undefined}
+                readingTime={getReadTime(post.body)}
+                description={post.data.description}
               />
             ))}
           </div>
@@ -130,6 +135,8 @@ const fmtDate = (d: Date) =>
                 title={post.data.title}
                 date={post.data.pubDatetime}
                 ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
+                readingTime={getReadTime(post.body)}
+                description={post.data.description}
               />
             ))}
           </div>

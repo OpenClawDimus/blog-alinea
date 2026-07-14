@@ -90,7 +90,8 @@ function dsHTML() {
 <meta name="robots" content="noindex, nofollow">
 <title>Design System · Blog Dimus</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
 /* ── Reset & Base ───────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -125,7 +126,7 @@ body{font:15px/1.6 'Hanken Grotesk',ui-sans-serif,system-ui,sans-serif;padding:0
   display:flex;flex-direction:column;gap:6px;
 }
 .ds-nav-brand{
-  font-family:'Fraunces',serif;font-size:18px;font-weight:600;
+  font-family:'Playfair Display',serif;font-size:18px;font-weight:600;
   color:var(--ink);letter-spacing:-.02em;margin-bottom:20px;
 }
 .ds-nav-brand span{color:var(--magenta)}
@@ -139,7 +140,7 @@ body{font:15px/1.6 'Hanken Grotesk',ui-sans-serif,system-ui,sans-serif;padding:0
 .ds-nav .back{color:var(--magenta);font-size:12px;margin-bottom:16px;border:1px solid var(--hair-mag);border-radius:999px;padding:5px 12px;display:inline-block;text-align:center}
 
 .ds-main{padding:48px 56px 120px;max-width:1100px}
-h1.ds-page-title{font-family:'Fraunces',serif;font-size:clamp(28px,3vw,42px);font-weight:500;color:var(--ink);letter-spacing:-.03em;margin-bottom:6px}
+h1.ds-page-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);font-weight:500;color:var(--ink);letter-spacing:-.03em;margin-bottom:6px}
 .ds-version{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.1em;margin-bottom:56px}
 
 /* ── Section ────────────────────────────────────────────────── */
@@ -150,7 +151,7 @@ h1.ds-page-title{font-family:'Fraunces',serif;font-size:clamp(28px,3vw,42px);fon
   display:flex;align-items:center;gap:12px;
 }
 .ds-section-label::after{content:'';flex:1;height:1px;background:var(--hair)}
-h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--ink);letter-spacing:-.02em;margin-bottom:24px}
+h2.ds-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;color:var(--ink);letter-spacing:-.02em;margin-bottom:24px}
 .ds-desc{font-size:14px;color:var(--muted);max-width:60ch;line-height:1.6;margin-bottom:28px}
 
 /* ── Tables ─────────────────────────────────────────────────── */
@@ -201,13 +202,13 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
 .ds-comp-desc{font-size:12px;color:var(--dim);margin-top:3px}
 
 /* ── Inline preview components ─────────────────────────────── */
-.demo-btn{display:inline-flex;align-items:center;gap:8px;background:var(--magenta);color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:14px;padding:10px 22px;border-radius:72px;border:0;cursor:pointer;box-shadow:0 8px 22px rgba(178,30,151,.34)}
+.demo-btn{display:inline-flex;align-items:center;gap:8px;background:var(--magenta);color:#fff;font-family:'Playfair Display',serif;font-weight:600;font-size:14px;padding:10px 22px;border-radius:72px;border:0;cursor:pointer;box-shadow:0 8px 22px rgba(178,30,151,.34)}
 .demo-eyebrow{display:inline-flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta)}
 .demo-eyebrow::before{content:'';width:30px;height:1px;background:var(--magenta);opacity:.6}
 .demo-tag{display:inline-flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--hair);border-radius:72px;padding:5px 12px}
 .demo-kicker{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .demo-card-mini{background:#18141f;border:1px solid rgba(255,255,255,.11);border-radius:14px;padding:20px;width:100%}
-.demo-card-mini h3{font-family:'Fraunces',serif;font-weight:600;font-size:18px;letter-spacing:-.02em;margin-top:8px;color:var(--ink)}
+.demo-card-mini h3{font-family:'Playfair Display',serif;font-weight:600;font-size:18px;letter-spacing:-.02em;margin-top:8px;color:var(--ink)}
 .demo-field{display:flex;background:var(--bg);border:1px solid var(--hair);border-radius:10px;overflow:hidden;width:100%}
 .demo-field input{flex:1;background:none;border:0;outline:none;color:var(--ink);font-family:'Hanken Grotesk',sans-serif;font-size:13px;padding:10px 12px}
 .demo-field input::placeholder{color:var(--dim)}
@@ -215,7 +216,7 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
 .demo-tldr h4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);margin-bottom:10px}
 .demo-tldr li{padding-left:18px;font-size:14px;color:var(--ink-2);position:relative;margin-bottom:8px;list-style:none}
 .demo-tldr li::before{content:'';position:absolute;left:2px;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--magenta)}
-.demo-pull{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:22px;line-height:1.22;color:var(--ink);border-left:2px solid var(--magenta);padding-left:16px;max-width:22ch}
+.demo-pull{font-family:'Playfair Display',serif;font-weight:500;font-style:italic;font-size:22px;line-height:1.22;color:var(--ink);border-left:2px solid var(--magenta);padding-left:16px;max-width:22ch}
 
 /* ── WCAG ───────────────────────────────────────────────────── */
 .wcag-row td:first-child{font-family:'JetBrains Mono',monospace;font-size:12px}
@@ -339,11 +340,11 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
         <div class="ds-type-row" style="padding:24px 28px">
           <div class="ds-type-meta">
             <strong>--font-display</strong>
-            Fraunces · Display<br>
-            opsz 9–144 · italic real<br>
-            pesos: 300–700
+            Playfair Display · Display<br>
+            ital 0/1 · peso 400–900<br>
+            var CSS: --font-fraunces
           </div>
-          <div style="font-family:'Fraunces',serif;font-size:clamp(28px,4vw,48px);font-weight:500;font-variation-settings:'opsz' 144;letter-spacing:-.03em;color:var(--ink)">
+          <div style="font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:500;font-variation-settings:'opsz' 144;letter-spacing:-.03em;color:var(--ink)">
             Marketing medido
           </div>
         </div>
@@ -351,9 +352,9 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
           <div class="ds-type-meta">
             <strong>--font-display (italic)</strong>
             font-style: italic<br>
-            opsz 36 · peso 400
+            Playfair Display · peso 400
           </div>
-          <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:400;font-variation-settings:'opsz' 36;font-style:italic;color:var(--ink-2);line-height:1.45">
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:400;font-variation-settings:'opsz' 36;font-style:italic;color:var(--ink-2);line-height:1.45">
             Em carro vendido no seu pátio.
           </div>
         </div>
@@ -386,16 +387,16 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
       <!-- Heading hierarchy -->
       <h2 class="ds-h">Hierarquia de Títulos</h2>
       <div style="background:var(--surface);border:1px solid var(--hair);border-radius:14px;padding:32px 36px;margin-bottom:24px">
-        <div style="font-family:'Fraunces',serif;font-size:clamp(32px,5vw,52px);font-weight:500;font-variation-settings:'opsz' 144;letter-spacing:-.03em;line-height:1.03;margin-bottom:6px;color:var(--ink)">H1 — Post Title <em style="font-style:italic;color:var(--magenta)">em Fraunces</em></div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:500;font-variation-settings:'opsz' 144;letter-spacing:-.03em;line-height:1.03;margin-bottom:6px;color:var(--ink)">H1 — Post Title <em style="font-style:italic;color:var(--magenta)">em Fraunces</em></div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-bottom:32px">clamp(32px,5vw,58px) · opsz 144 · weight 500 · lh 1.03</div>
 
-        <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:600;letter-spacing:-.025em;line-height:1.2;margin-top:44px;margin-bottom:8px;color:var(--ink)">H2 — Seção Principal do Artigo</div>
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:600;letter-spacing:-.025em;line-height:1.2;margin-top:44px;margin-bottom:8px;color:var(--ink)">H2 — Seção Principal do Artigo</div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-bottom:16px">22px · weight 600 · --ink · margin-top 44px</div>
 
-        <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:600;letter-spacing:-.015em;margin-top:28px;margin-bottom:8px;color:var(--ink-2)">H3 — Subseção (cor --ink-2)</div>
+        <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:600;letter-spacing:-.015em;margin-top:28px;margin-bottom:8px;color:var(--ink-2)">H3 — Subseção (cor --ink-2)</div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-bottom:16px">17px · weight 600 · --ink-2 · margin-top 28px</div>
 
-        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-top:20px;margin-bottom:6px;color:var(--ink)">H4 Editorial — dentro de card</div>
+        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin-top:20px;margin-bottom:6px;color:var(--ink)">H4 Editorial — dentro de card</div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);margin-top:16px">H4 LABEL — MONO UPPERCASE MAGENTA</div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim)">10.5–11px · mono · uppercase · letter-spacing .14–.18em</div>
       </div>
@@ -548,7 +549,7 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
         </div>
         <div class="ds-comp-item">
           <div class="ds-comp-preview">
-            <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:500;font-style:italic;color:var(--ink);border-left:2px solid var(--magenta);padding-left:16px;max-width:22ch;line-height:1.22">
+            <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:500;font-style:italic;color:var(--ink);border-left:2px solid var(--magenta);padding-left:16px;max-width:22ch;line-height:1.22">
               "Pago oito mil por mês e ainda não sei de onde vem minha venda."
             </div>
           </div>
@@ -567,6 +568,47 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
           </div>
           <div class="ds-comp-label"><div class="ds-comp-name">.sr-tldr</div><div class="ds-comp-desc">Summary box · mono header magenta</div></div>
         </div>
+
+        <!-- CutoutCard tall -->
+        <div class="ds-comp-item" style="grid-column:1/-1">
+          <div class="ds-comp-preview" style="padding:20px">
+            <div style="display:flex;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.11);width:100%;height:160px">
+              <div style="flex:0 0 42%;background:linear-gradient(135deg,#1a0d22,#4a1060);min-height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(225,55,158,.7)">MEDIA STRIP</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(225,55,158,.9);font-weight:600">flex: 0 0 42%</div>
+              </div>
+              <div style="flex:1;min-width:0;padding:14px 18px;display:flex;flex-direction:column;justify-content:space-between">
+                <div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">ANALYTICS</div>
+                  <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--ink);line-height:1.2;letter-spacing:-.01em">847 leads. 9 vendas. Ninguém calculou isso.</div>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--dim)">12 JUL 2026</div>
+              </div>
+            </div>
+          </div>
+          <div class="ds-comp-label"><div class="ds-comp-name">.sr-cutcard--tall</div><div class="ds-comp-desc">Card horizontal · media 42% fixo (flex: 0 0 42%) · body flex:1 com min-width:0</div></div>
+        </div>
+
+        <!-- CutoutCard peek animation -->
+        <div class="ds-comp-item" style="grid-column:1/-1">
+          <div class="ds-comp-preview" style="padding:20px">
+            <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(225,55,158,.25);background:#18141f;width:100%;max-width:420px;padding:16px 18px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">ANALYTICS</div>
+              <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--ink);line-height:1.2;letter-spacing:-.01em;margin-bottom:10px">847 leads. 9 vendas. Ninguém calculou isso.</div>
+              <!-- peek content — shown in hover state -->
+              <div style="margin-bottom:10px">
+                <span style="display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);border:1px solid rgba(225,55,158,.3);border-radius:999px;padding:3px 10px;margin-bottom:6px">⏱ 5 min de leitura</span>
+                <p style="font-size:12.5px;line-height:1.5;color:var(--muted);margin:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">Descubra quanto você paga por venda em cada canal sem depender de portais caros.</p>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--dim)">12 JUL 2026</div>
+                <div style="font-size:12px;color:var(--muted)">Ler análise →</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--dim);text-align:center">↑ estado hover — peek expandido via grid-template-rows 0fr→1fr</div>
+          </div>
+          <div class="ds-comp-label"><div class="ds-comp-name">.sr-cutcard__peek</div><div class="ds-comp-desc">Hover expand · grid-template-rows: 0fr → 1fr · badge de tempo + excerpt 2 linhas</div></div>
+        </div>
       </div>
     </section>
 
@@ -575,13 +617,13 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
       <div class="ds-section-label">09 · Prose & Artigo</div>
       <h2 class="ds-h">Componentes de Artigo</h2>
       <div style="background:var(--surface);border:1px solid var(--hair);border-radius:14px;padding:32px 36px">
-        <div style="font-family:'Fraunces',serif;font-size:clamp(24px,4vw,40px);font-weight:500;font-variation-settings:'opsz' 144;letter-spacing:-.03em;line-height:1.05;margin-bottom:6px;color:var(--ink)">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,40px);font-weight:500;font-variation-settings:'opsz' 144;letter-spacing:-.03em;line-height:1.05;margin-bottom:6px;color:var(--ink)">
           Uma revenda cancelou o Webmotors.
           <em style="font-style:italic;color:var(--magenta)">Não sumiu do mapa.</em>
         </div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-bottom:28px">RASTREIO · 12 JUL 2026 · 5 MIN</div>
 
-        <div style="font-family:'Fraunces',serif;font-weight:400;font-variation-settings:'opsz' 36;font-size:22px;line-height:1.45;font-style:italic;color:var(--ink-2);margin-bottom:28px">
+        <div style="font-family:'Playfair Display',serif;font-weight:400;font-variation-settings:'opsz' 36;font-size:22px;line-height:1.45;font-style:italic;color:var(--ink-2);margin-bottom:28px">
           Ela descobriu que 60% das suas vendas vinham de canais que nenhuma agência estava rastreando. Esta é a história de como ela fez isso.
         </div>
 
@@ -597,7 +639,7 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
       <h2 class="ds-h">Componentes de Conversão</h2>
       <div style="border:1px solid var(--hair-mag);border-left:2px solid var(--magenta);border-radius:13px;padding:24px 26px;background:var(--surface);margin-bottom:24px">
         <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin-bottom:8px">FERRAMENTA GRATUITA</div>
-        <h4 style="font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin-bottom:6px">Calculadora de CAC por Canal</h4>
+        <h4 style="font-family:'Playfair Display',serif;font-weight:600;font-size:21px;margin-bottom:6px">Calculadora de CAC por Canal</h4>
         <p style="font-size:14.5px;color:var(--ink-2);margin-bottom:14px">Descubra quanto você paga por venda em cada canal. Leva 3 minutos.</p>
         <div style="display:flex;gap:10px;max-width:440px">
           <div class="demo-field" style="flex:1"><input placeholder="seu@email.com"></div>
@@ -717,7 +759,7 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
       <div class="ds-gate">
         <h3>G2 — Typography Gate</h3>
         <ul>
-          <li>H1 usa Fraunces com opsz 144, clamp(32px,5vw,58px)</li>
+          <li>H1 usa Playfair Display (var --font-fraunces), clamp(32px,5vw,58px)</li>
           <li>Corpo do artigo: Hanken Grotesk 16.5px / lh 1.72</li>
           <li>Labels técnicos: JetBrains Mono uppercase letter-spacing ≥.08em</li>
           <li>Nenhum texto abaixo de 10.5px (--text-xs)</li>
@@ -759,7 +801,7 @@ h2.ds-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--
       <div class="ds-gate">
         <h3>Build & Deploy</h3>
         <ul>
-          <li>Build verde: node --trace-uncaught node_modules/.bin/astro build</li>
+          <li>Build verde: sh node_modules/.bin/astro build</li>
           <li>Sprint 4 SEO pipeline intacto (cron publica a cada 30min)</li>
           <li>OG testada no WhatsApp preview</li>
         </ul>
