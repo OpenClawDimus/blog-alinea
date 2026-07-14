@@ -62,7 +62,9 @@ const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
     <h3 class="sr-cutcard__title">{title}</h3>
 
     {tall && description && (
-      <p class="sr-cutcard__desc">{description}</p>
+      <div class="sr-cutcard__desc-wrap">
+        <p class="sr-cutcard__desc">{description}</p>
+      </div>
     )}
 
     {readingTime && (

@@ -501,7 +501,9 @@ body::after {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+}
+.sr-cutcard--tall .sr-cutcard__footer {
+  margin-top: auto;
 }
 
 /* Media */
@@ -593,15 +595,18 @@ body::after {
   margin: 6px 0 0;
 }
 .sr-cutcard--tall .sr-cutcard__title { font-size: 20px; }
+.sr-cutcard--tall .sr-cutcard__desc-wrap {
+  margin: 10px 0 0;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
 .sr-cutcard--tall .sr-cutcard__desc {
   font-size: 13.5px;
   line-height: 1.56;
   color: var(--muted);
-  margin: 10px 0 0;
-  flex: 1;
-  min-height: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
