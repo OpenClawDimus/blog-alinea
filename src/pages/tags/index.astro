@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import { getUniqueTags } from "@/utils/getUniqueTags";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyAll } from "@/utils/slugify";
+import { humanizeTag } from "@/utils/humanizeTag";
 import config from "@/config";
 
 const posts = await getCollection("posts");
@@ -60,7 +61,7 @@ const getGrad = (tag: string) => TAG_GRADIENT[tag] ?? TAG_GRADIENT.default;
     <div class="sr-tag-grid">
       {tags.map(({ tag, tagName }) => (
         <a href={`/tags/${tag}/`} class="sr-tag-card sr-reveal" style={`background:${getGrad(tag)}`}>
-          <span class="sr-tag-name">{tagName.replace(/-/g, " ")}</span>
+          <span class="sr-tag-name">{humanizeTag(tagName)}</span>
           <span class="sr-tag-count">{countMap[tag]} {countMap[tag] === 1 ? "artigo" : "artigos"}</span>
         </a>
       ))}

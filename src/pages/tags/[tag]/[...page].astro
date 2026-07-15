@@ -6,6 +6,7 @@ import Pagination from "@/components/Pagination.astro";
 import { getUniqueTags } from "@/utils/getUniqueTags";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyAll } from "@/utils/slugify";
+import { humanizeTag } from "@/utils/humanizeTag";
 import config from "@/config";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
@@ -46,7 +47,7 @@ const getGrad = (tags: string[]) =>
 const fmtDate = (d: Date) =>
   d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
 
-const displayTag = tagName.replace(/-/g, " ");
+const displayTag = humanizeTag(tagName);
 ---
 
 <Layout title={`${displayTag} | ${config.site.title}`}>
@@ -77,7 +78,7 @@ const displayTag = tagName.replace(/-/g, " ");
     </nav>
 
     <p class="sr-eyebrow" style="margin-bottom:0">Cluster</p>
-    <h1 class="sr-archive-title" style="text-transform:capitalize">{displayTag}</h1>
+    <h1 class="sr-archive-title">{displayTag}</h1>
     <p class="sr-tags-desc">{page.total} {page.total === 1 ? "artigo" : "artigos"} sobre este tema</p>
 
     <div class="sr-list-grid">
@@ -89,7 +90,7 @@ const displayTag = tagName.replace(/-/g, " ");
             ) : null}
           </div>
           <div class="sr-list-body">
-            <span class="sr-kicker">{post.data.tags[0]?.replace(/-/g," ")}</span>
+            <span class="sr-kicker">{humanizeTag(post.data.tags[0] ?? "")}</span>
             <h2 class="sr-list-title">{post.data.title}</h2>
             <p class="sr-list-desc">{post.data.description}</p>
             <time class="sr-list-date" datetime={post.data.pubDatetime.toISOString()}>

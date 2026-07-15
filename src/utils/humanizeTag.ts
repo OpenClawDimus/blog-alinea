@@ -1,0 +1,26 @@
+const TAG_LABELS: Record<string, string> = {
+  "atribuicao": "Atribuição",
+  "aquisicao": "Aquisição",
+  "gestao": "Gestão",
+  "metricas": "Métricas",
+  "giro-de-estoque": "Giro de Estoque",
+  "carro-parado": "Carro Parado",
+  "lead-fantasma": "Lead Fantasma",
+  "automotivo-leads": "Leads Automotivos",
+  "seminovos": "Seminovos",
+  "vendas-de-seminovos": "Vendas de Seminovos",
+  "estrategia-de-revenda": "Estratégia de Revenda",
+  "precificacao": "Precificação",
+  "dependencia": "Dependência",
+  "whatsapp": "WhatsApp",
+  "cac": "CAC",
+  "roi-marketing-digital": "ROI Marketing Digital",
+  "tecnologia-para-negocios": "Tecnologia para Negócios",
+  "vendas-pme": "Vendas PME",
+  "pmes": "PMEs",
+  "email-marketing": "Email Marketing",
+};
+
+export function humanizeTag(slug: string): string {
+  return TAG_LABELS[slug] ?? slug.replace(/-/g, " ");
+}

@@ -4,6 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
 import CutoutCard from "@/components/blog/CutoutCard.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
+import { humanizeTag } from "@/utils/humanizeTag";
 import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
@@ -11,9 +12,11 @@ const homePath = getRelativeLocaleUrl(locale, "");
 
 const posts = await getCollection("posts");
 const sortedPosts = getSortedPosts(posts);
-const featuredPost = sortedPosts.find(({ data }) => data.featured) ?? sortedPosts[0];
-const gridPosts = sortedPosts.filter(p => p.id !== featuredPost?.id).slice(0, 2);
-const row3Posts = sortedPosts.filter(p => p.id !== featuredPost?.id).slice(2, 5);
+// Excluir variantes -reddit da home (conteúdo de FAQ duplicado)
+const mainPosts = sortedPosts.filter(p => !p.id.endsWith("-reddit"));
+const featuredPost = mainPosts.find(({ data }) => data.featured) ?? mainPosts[0];
+const gridPosts = mainPosts.filter(p => p.id !== featuredPost?.id).slice(0, 2);
+const row3Posts = mainPosts.filter(p => p.id !== featuredPost?.id).slice(2, 5);
 
 // Gradient por cluster de tags (sem foto = sem stock-photo genérico)
 const TAG_GRADIENT: Record<string, string> = {
@@ -79,7 +82,7 @@ const getReadTime = (body: string | undefined) =>
           )}
         </div>
         <div class="body">
-          <span class="sr-tag"><b>{featuredPost.data.tags[0]?.replace(/-/g," ")}</b></span>
+          <span class="sr-tag"><b>{humanizeTag(featuredPost.data.tags[0] ?? "")}</b></span>
           <h1 style="font-family:var(--font-display);font-weight:500;font-variation-settings:'opsz' 144;font-size:clamp(28px,3.6vw,48px);line-height:1.04;letter-spacing:-.025em;margin:16px 0 12px;max-width:22ch">
             {featuredPost.data.title}
           </h1>
@@ -165,6 +168,9 @@ const getReadTime = (body: string | undefined) =>
       <p id="home-nl-msg" style="font-family:var(--font-mono);font-size:12px;color:var(--magenta);display:none;margin-top:10px">
         ✓ Inscrito! Toda semana na sua caixa.
       </p>
+      <p id="home-nl-err" style="font-family:var(--font-mono);font-size:12px;color:#e11;display:none;margin-top:10px">
+        Erro ao inscrever. Tente novamente.
+      </p>
       <div class="sr-proof">
         <span><b>100%</b> sem spam</span>
         <span>·</span>
@@ -191,17 +197,27 @@ const getReadTime = (body: string | undefined) =>
       const btn = form.querySelector("button") as HTMLButtonElement;
       const nome = (form.elements.namedItem("nome") as HTMLInputElement).value.trim();
       const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+      const msgEl = document.getElementById("home-nl-msg");
+      const errEl = document.getElementById("home-nl-err");
       if (btn) btn.disabled = true;
       try {
-        await fetch("/newsletter", {
+        const res = await fetch("/newsletter", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nome, email }),
         });
-      } catch {}
-      form.reset();
-      const msg = document.getElementById("home-nl-msg");
-      if (msg) msg.style.display = "block";
+        if (res.ok) {
+          form.reset();
+          if (msgEl) msgEl.style.display = "block";
+          if (errEl) errEl.style.display = "none";
+        } else {
+          if (errEl) errEl.style.display = "block";
+          if (msgEl) msgEl.style.display = "none";
+        }
+      } catch {
+        if (errEl) errEl.style.display = "block";
+        if (msgEl) msgEl.style.display = "none";
+      }
       if (btn) btn.disabled = false;
     };
   </script>

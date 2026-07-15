@@ -1,4 +1,6 @@
 ---
+import { humanizeTag } from "@/utils/humanizeTag";
+
 interface Props {
   href: string;
   gradient: string;
@@ -50,7 +52,7 @@ const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
       <svg class="sr-cc sr-cc--inset-t" width="32" height="32" viewBox="0 0 200 200" aria-hidden="true">
         <path d={CP} fill="currentColor" />
       </svg>
-      <span class="sr-kicker">{tag.replace(/-/g, " ")}</span>
+      <span class="sr-kicker">{humanizeTag(tag)}</span>
       {/* Right of inset at its bottom */}
       <svg class="sr-cc sr-cc--inset-r" width="32" height="32" viewBox="0 0 200 200" aria-hidden="true">
         <path d={CP} fill="currentColor" />
