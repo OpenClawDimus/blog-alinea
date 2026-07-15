@@ -242,40 +242,59 @@ export async function onRequest(context) {
 
 // ── Views ────────────────────────────────────────────────────────────────────
 
-// Tokens únicos consolidados (Wave 5 — anti-slop): cor, tipo, espaçamento 8px.
-// Fraunces só em títulos de seção; JetBrains Mono em todo número/tabela (tnum).
-// Accent magenta usado como lanterna (estado ativo, deltas, links) — nunca decorativo.
+// Tokens únicos consolidados (Wave 5 — anti-slop, ver DESIGN.md). OKLCH,
+// neutros tingidos pro hue da marca (magenta), accent como lanterna — nunca
+// preenchimento decorativo. Fraunces só em título de página + divisores de
+// seção; mono reservado a DADOS (slug, timestamp, contagem, %).
 const TOKENS = `
   :root {
-    --bg:#0b0a0d; --panel:#141217; --panel2:#18151b; --line:#26222c;
-    --ink:#f4f1f5; --mut:#a39daa; --mag:#e1379e; --ok:#1faf54; --warn:#e1b33a;
-    --sp1:8px; --sp2:16px; --sp3:24px; --sp4:32px;
+    --bg:        oklch(14% 0.010 335);
+    --surface-1: oklch(17% 0.011 335);
+    --surface-2: oklch(20% 0.012 335);
+    --line:      oklch(28% 0.012 335);
+    --ink:       oklch(95% 0.006 335);
+    --ink-mut:   oklch(68% 0.014 335);
+    --ink-faint: oklch(48% 0.012 335);
+    --mag:       oklch(62% 0.19 350);
+    --mag-dim:   oklch(62% 0.19 350 / 0.10);
+    --good:      oklch(64% 0.14 152);
+    --warn:      oklch(70% 0.15 75);
+    --sp1:8px; --sp2:16px; --sp3:24px; --sp4:40px;
   }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 ui-sans-serif,-apple-system,"Hanken Grotesk",system-ui,sans-serif; }
-  h1 { font:600 24px/1.2 "Fraunces",Georgia,serif; margin:0 0 4px; }
-  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--mut); margin:0 0 var(--sp2); font-weight:600; font-family:"Fraunces",Georgia,serif; }
-  .sub { color:var(--mut); margin:0 0 var(--sp4); font-size:13px; }
-  .num, .mono, table { font-variant-numeric:tabular-nums; }
-  .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp2); margin-bottom:var(--sp4); }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:var(--sp2) 18px; }
-  .card .n { font:600 28px/1 "Fraunces",Georgia,serif; font-variant-numeric:tabular-nums; }
-  .card .l { color:var(--mut); font-size:12px; text-transform:uppercase; letter-spacing:.04em; margin-top:6px; }
-  section { margin-bottom:var(--sp4); }
-  table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; font-size:13.5px; font-family:ui-monospace,"JetBrains Mono",monospace; }
-  th,td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); }
-  th { color:var(--mut); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; font-family:ui-sans-serif,system-ui,sans-serif; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.55 ui-sans-serif,-apple-system,"Hanken Grotesk",system-ui,sans-serif; }
+  h1 { font:500 33px/1.15 "Fraunces",Georgia,serif; margin:0 0 4px; letter-spacing:-.01em; }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-mut); margin:0 0 var(--sp2); font-weight:600; font-family:ui-sans-serif,system-ui,sans-serif; }
+  .sub { color:var(--ink-mut); margin:0 0 var(--sp4); font-size:14px; max-width:70ch; }
+  section { margin-bottom:var(--sp4); padding-bottom:var(--sp4); border-bottom:1px solid var(--line); }
+  section:last-of-type { border-bottom:0; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; border-top:1px solid var(--line); }
+  th,td { text-align:left; padding:11px 4px; border-bottom:1px solid var(--line); }
+  th:not(:first-child), td:not(:first-child) { padding-left:20px; }
+  th { color:var(--ink-faint); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-family:ui-sans-serif,system-ui,sans-serif; padding-top:0; }
   tr:last-child td { border-bottom:0; }
-  td.num,th.num { text-align:right; }
-  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; border:1px solid var(--line); color:var(--mut); font-family:ui-sans-serif,system-ui,sans-serif; }
+  td.num,th.num { text-align:right; font-variant-numeric:tabular-nums; font-family:ui-monospace,"JetBrains Mono",monospace; }
+  .stat { color:var(--ink-faint); font-family:ui-sans-serif,system-ui,sans-serif; }
   .mag { color:var(--mag); }
-  .mono { font-family:ui-monospace,"JetBrains Mono",monospace; font-size:12px; color:var(--mut); }
-  .empty { color:var(--mut); padding:18px 14px; font-family:ui-sans-serif,system-ui,sans-serif; }
-  .err { color:#ff6b6b; font-size:12px; }
-  .botnote { color:var(--mut); font-size:12px; margin:-8px 0 var(--sp4); font-family:ui-monospace,"JetBrains Mono",monospace; }
-  a.logout { color:var(--mut); font-size:12px; text-decoration:none; border:1px solid var(--line); padding:6px 12px; border-radius:999px; cursor:pointer; font-family:ui-sans-serif,system-ui,sans-serif; }
+  .mono { font-family:ui-monospace,"JetBrains Mono",monospace; }
+  .faint { color:var(--ink-faint); }
+  .empty { color:var(--ink-mut); max-width:60ch; }
+  .err { color:oklch(70% 0.18 25); font-size:12px; }
+  .botnote { color:var(--ink-faint); font-size:13px; margin:-20px 0 var(--sp4); max-width:70ch; }
+  a.logout { color:var(--ink-mut); font-size:12px; text-decoration:none; border:1px solid var(--line); padding:6px 12px; border-radius:6px; cursor:pointer; font-family:ui-sans-serif,system-ui,sans-serif; }
+  a.logout:hover { color:var(--ink); border-color:var(--ink-mut); }
   .top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:var(--sp3); }
-  .chart-wrap { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:var(--sp2); }
+
+  /* Faixa de métricas: linha tipográfica, não grid de cards idênticos. */
+  .kpi-row { display:flex; flex-wrap:wrap; gap:0; margin-bottom:var(--sp3); }
+  .kpi { padding:0 32px 0 0; margin-right:32px; border-right:1px solid var(--line); }
+  .kpi:last-child { border-right:0; margin-right:0; padding-right:0; }
+  .kpi .n { font:500 32px/1 "Fraunces",Georgia,serif; font-variant-numeric:tabular-nums; }
+  .kpi .l { color:var(--ink-faint); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; margin-top:8px; font-family:ui-sans-serif,system-ui,sans-serif; }
+
+  .chart-wrap { padding:var(--sp2) 0 0; }
+  .chart-wrap svg path.line { stroke-dasharray:2000; stroke-dashoffset:2000; animation:draw-in .7s cubic-bezier(.16,1,.3,1) forwards; }
+  @keyframes draw-in { to { stroke-dashoffset:0; } }
 `;
 
 // Ícones thin monocromáticos (estilo Lucide, desenhados à mão — stroke=currentColor).
@@ -305,9 +324,9 @@ function lineChartSVG(rows, { width = 640, height = 110, color = 'var(--mag)' } 
   const first = data[0]?.day || '';
   const last = data[data.length - 1]?.day || '';
   return `<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none">
-      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/>
+      <polyline class="line" points="${points}" fill="none" stroke="${color}" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
     </svg>
-    <div class="mono" style="display:flex;justify-content:space-between;margin-top:6px;">
+    <div class="mono faint" style="display:flex;justify-content:space-between;margin-top:8px;font-size:11.5px;">
       <span>${esc(first)}</span><span>${esc(last)}</span>
     </div>`;
 }
@@ -345,28 +364,39 @@ const SHELL = (title, active, body) => `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>${esc(title)} · Blog Dimus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
   ${TOKENS}
   .shell { display:flex; min-height:100dvh; }
-  .sidebar { width:220px; flex:0 0 220px; background:var(--panel); border-right:1px solid var(--line); padding:var(--sp3) var(--sp2); display:flex; flex-direction:column; gap:2px; transition:width .15s ease, flex-basis .15s ease; }
-  .brand { font:600 15px/1.2 "Fraunces",Georgia,serif; padding:0 10px var(--sp3); color:var(--ink); }
-  .navitem { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; color:var(--mut); text-decoration:none; font-size:13.5px; }
-  .navitem .ic { display:flex; flex:0 0 auto; }
-  .navitem:hover { color:var(--ink); background:var(--panel2); }
-  .navitem.active { color:var(--mag); background:rgba(225,55,158,.08); }
-  .collapse-btn { margin-top:auto; display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; color:var(--mut); background:none; border:1px solid var(--line); cursor:pointer; font-size:12px; font-family:ui-sans-serif,system-ui,sans-serif; }
-  .collapse-btn svg { transition:transform .15s ease; }
+  .sidebar {
+    width:212px; flex:0 0 212px; background:var(--surface-1); border-right:1px solid var(--line);
+    padding:var(--sp3) var(--sp2); display:flex; flex-direction:column; gap:1px;
+    transition:width .18s cubic-bezier(.16,1,.3,1), flex-basis .18s cubic-bezier(.16,1,.3,1);
+    position:sticky; top:0; align-self:flex-start; height:100dvh; overflow-y:auto;
+  }
+  .brand { font:500 16px/1.2 "Fraunces",Georgia,serif; padding:2px 10px var(--sp3); color:var(--ink); letter-spacing:-.01em; }
+  .navitem { display:flex; align-items:center; gap:11px; padding:8px 10px; border-radius:6px; color:var(--ink-mut); text-decoration:none; font-size:13.5px; }
+  .navitem .ic { display:flex; flex:0 0 auto; opacity:.85; }
+  .navitem:hover { color:var(--ink); background:var(--surface-2); }
+  .navitem.active { color:var(--mag); background:var(--mag-dim); }
+  .navitem.active .ic { opacity:1; }
+  .collapse-btn { margin-top:auto; display:flex; align-items:center; gap:11px; padding:8px 10px; border-radius:6px; color:var(--ink-faint); background:none; border:0; cursor:pointer; font-size:12px; font-family:ui-sans-serif,system-ui,sans-serif; }
+  .collapse-btn:hover { color:var(--ink-mut); background:var(--surface-2); }
+  .collapse-btn svg { transition:transform .18s ease; flex:0 0 auto; }
   .main { flex:1; min-width:0; padding:var(--sp4) var(--sp4) 80px; }
   .wrap { max-width:1080px; margin:0 auto; }
-  body.sb-collapsed .sidebar { width:56px; flex-basis:56px; padding-left:8px; padding-right:8px; }
+  body.sb-collapsed .sidebar { width:52px; flex-basis:52px; padding-left:8px; padding-right:8px; }
   body.sb-collapsed .navitem { justify-content:center; }
   body.sb-collapsed .navitem .lb, body.sb-collapsed .brand .lb, body.sb-collapsed .collapse-btn .lb { display:none; }
-  body.sb-collapsed .brand { text-align:center; padding:0 0 var(--sp3); }
+  body.sb-collapsed .brand { text-align:center; padding:2px 0 var(--sp3); }
   body.sb-collapsed .collapse-btn svg { transform:rotate(180deg); }
   @media (max-width:720px) {
     .shell { flex-direction:column; }
-    .sidebar { width:100%; flex-direction:row; flex-wrap:wrap; border-right:0; border-bottom:1px solid var(--line); }
+    .sidebar { width:100%; flex-direction:row; flex-wrap:wrap; border-right:0; border-bottom:1px solid var(--line); position:static; height:auto; }
     .collapse-btn { display:none; }
+    .main { padding:var(--sp3) var(--sp2) 60px; }
   }
 </style>
 </head>
@@ -643,9 +673,9 @@ function dashboardHTML({ section, totals, magnets, posts, origins, originSession
   const magnetsTbl = tableOrEmpty(magnets,
     `<th>Magnet</th><th>Tipo</th><th>Cluster</th><th class="num">Downloads</th>`,
     (m) => `<tr>
-      <td>${esc(m.title)} <span class="mono">${esc(m.slug)}</span>${m.active ? '' : ' <span class="pill">inativo</span>'}</td>
-      <td><span class="pill">${esc(m.type || '—')}</span></td>
-      <td>${esc(m.cluster || '—')}</td>
+      <td>${esc(m.title)} <span class="mono faint">${esc(m.slug)}</span>${m.active ? '' : ' <span class="faint">· inativo</span>'}</td>
+      <td class="faint">${esc(m.type || '—')}</td>
+      <td class="faint">${esc(m.cluster || '—')}</td>
       <td class="num">${m.downloads ?? 0}</td></tr>`,
     'Catálogo vazio — rode o seed de lead_magnets.');
 
@@ -688,11 +718,11 @@ function dashboardHTML({ section, totals, magnets, posts, origins, originSession
     'Sem dados ainda.');
 
   const cards = `
-    <div class="cards">
-      <div class="card"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div></div>
-      <div class="card"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
-      <div class="card"><div class="n">${t.views ?? 0}</div><div class="l">Views</div></div>
-      <div class="card"><div class="n">${t.sessions ?? 0}</div><div class="l">Sessões</div></div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div></div>
+      <div class="kpi"><div class="n">${t.sessions ?? 0}</div><div class="l">Sessões reais</div></div>
+      <div class="kpi"><div class="n">${t.views ?? 0}</div><div class="l">Views</div></div>
+      <div class="kpi"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
     </div>
     <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real). Números acima já refletem só tráfego real.</p>`;
 
@@ -728,12 +758,12 @@ function dashboardHTML({ section, totals, magnets, posts, origins, originSession
 
     system: `
       <section><h2>Saúde do tracking</h2>
-        <div class="cards">
-          <div class="card"><div class="n mag">${botPct}%</div><div class="l">Tráfego bot (histórico)</div></div>
-          <div class="card"><div class="n">${t.bot_sessions ?? 0}</div><div class="l">Sessions marcadas bot</div></div>
-          <div class="card"><div class="n">${t.all_sessions ?? 0}</div><div class="l">Sessions brutas totais</div></div>
-          <div class="card"><div class="n mono" style="font-size:15px">${esc(fmtDate(t.last_ingestion))}</div><div class="l">Última ingestão</div></div>
+        <div class="kpi-row">
+          <div class="kpi"><div class="n mag">${botPct}%</div><div class="l">Tráfego bot (histórico)</div></div>
+          <div class="kpi"><div class="n">${t.bot_sessions ?? 0}</div><div class="l">Sessions marcadas bot</div></div>
+          <div class="kpi"><div class="n">${t.all_sessions ?? 0}</div><div class="l">Sessions brutas totais</div></div>
         </div>
+        <p class="stat">Última ingestão: <span class="mono">${esc(fmtDate(t.last_ingestion))}</span></p>
       </section>
       <section><h2>Sessões reais vs. bot descartado — últimos 30 dias</h2>${dailyTbl}</section>`,
   };
