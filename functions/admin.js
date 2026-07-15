@@ -159,12 +159,16 @@ export async function onRequest(context) {
   }
 
   // ── Queries ────────────────────────────────────────────────────────────
+  // Todas as agregações de sessions/page_views filtram is_bot = 0 (Wave 1 —
+  // ~94% do tráfego bruto era axios/curl, não leitores reais).
   const [totals] = await q(env, `
     SELECT
-      (SELECT COUNT(*) FROM leads)            AS leads,
-      (SELECT COUNT(*) FROM page_views)       AS views,
-      (SELECT COUNT(*) FROM magnet_downloads) AS downloads,
-      (SELECT COUNT(*) FROM sessions)         AS sessions
+      (SELECT COUNT(*) FROM leads)                          AS leads,
+      (SELECT COUNT(*) FROM page_views WHERE is_bot = 0)     AS views,
+      (SELECT COUNT(*) FROM magnet_downloads)                AS downloads,
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0)       AS sessions,
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 1)       AS bot_sessions,
+      (SELECT COUNT(*) FROM sessions)                        AS all_sessions
   `).then((r) => (Array.isArray(r) ? r : [{}]));
 
   const magnets = await q(env, `
@@ -181,7 +185,7 @@ export async function onRequest(context) {
            COUNT(*) AS views,
            (SELECT COUNT(*) FROM leads l WHERE l.post_slug = pv.post_slug) AS leads
     FROM page_views pv
-    WHERE pv.post_slug != ''
+    WHERE pv.post_slug != '' AND pv.is_bot = 0
     GROUP BY pv.post_slug
     ORDER BY views DESC
   `);
@@ -240,6 +244,7 @@ const SHELL = (title, body) => `<!doctype html>
   .mono { font-family:ui-monospace,"JetBrains Mono",monospace; font-size:12px; color:var(--mut); }
   .empty { color:var(--mut); padding:18px 14px; }
   .err { color:#ff6b6b; font-size:12px; }
+  .botnote { color:var(--mut); font-size:12px; margin:-24px 0 32px; font-family:ui-monospace,"JetBrains Mono",monospace; }
   a.logout { color:var(--mut); font-size:12px; text-decoration:none; border:1px solid var(--line); padding:6px 12px; border-radius:999px; cursor:pointer; }
   .top { display:flex; justify-content:space-between; align-items:flex-start; }
 </style>
@@ -490,13 +495,15 @@ function tableOrEmpty(rows, cols, render, emptyMsg) {
 
 function dashboardHTML({ totals, magnets, posts, origins, recent, adminUser }) {
   const t = totals || {};
+  const botPct = t.all_sessions ? ((t.bot_sessions / t.all_sessions) * 100).toFixed(0) : 0;
   const cards = `
     <div class="cards">
       <div class="card"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div></div>
       <div class="card"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
       <div class="card"><div class="n">${t.views ?? 0}</div><div class="l">Views</div></div>
       <div class="card"><div class="n">${t.sessions ?? 0}</div><div class="l">Sessões</div></div>
-    </div>`;
+    </div>
+    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real). Números acima já refletem só tráfego real.</p>`;
 
   const magnetsTbl = tableOrEmpty(magnets,
     `<th>Magnet</th><th>Tipo</th><th>Cluster</th><th class="num">Downloads</th>`,

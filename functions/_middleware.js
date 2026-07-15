@@ -93,6 +93,9 @@ export async function onRequest(context) {
 
     // post_slug derivado de /posts/<slug>/ (vazio p/ não-post); device do UA
     const ua = request.headers.get('user-agent') || '';
+    // Bot check: ~94% das sessions eram axios/curl (scripts, não leitores).
+    // Marca is_bot=1 (nunca DELETE — raw preservado, filtrado nas queries do admin).
+    const requestIsBot = isBot(ua);
     const postMatch = url.pathname.match(/^\/posts\/([^/]+)\/?$/);
     const postSlug = postMatch ? postMatch[1] : '';
     const deviceType = /Mobi|Android|iPhone|iPad|iPod/i.test(ua)
@@ -103,12 +106,12 @@ export async function onRequest(context) {
       context.waitUntil(
         env.DB.prepare(`
           INSERT INTO page_views (
-            session_id, post_slug, path, referrer, device_type, country, created_at
-          ) VALUES (?,?,?,?,?,?,?)
+            session_id, post_slug, path, referrer, device_type, country, created_at, is_bot
+          ) VALUES (?,?,?,?,?,?,?,?)
         `).bind(
           sessionId, postSlug, url.pathname,
           request.headers.get('referer') || '',
-          deviceType, cfCountry, nowSec
+          deviceType, cfCountry, nowSec, requestIsBot ? 1 : 0
         ).run().catch((e) => console.error('[d1-pageview]', url.pathname, e && e.message))
       );
     }
@@ -121,8 +124,8 @@ export async function onRequest(context) {
           utm_source, utm_medium, utm_campaign, utm_content, utm_term,
           campaign_id, adset_id, ad_id, placement,
           country, region, city, postal_code, timezone, asn,
-          created_at, updated_at
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+          created_at, updated_at, is_bot
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(session_id) DO UPDATE SET
           fbclid       = CASE WHEN excluded.fbclid       != '' THEN excluded.fbclid       ELSE sessions.fbclid       END,
           gclid        = CASE WHEN excluded.gclid        != '' THEN excluded.gclid        ELSE sessions.gclid        END,
@@ -137,7 +140,8 @@ export async function onRequest(context) {
           adset_id     = CASE WHEN excluded.adset_id     != '' THEN excluded.adset_id     ELSE sessions.adset_id     END,
           ad_id        = CASE WHEN excluded.ad_id        != '' THEN excluded.ad_id        ELSE sessions.ad_id        END,
           placement    = CASE WHEN excluded.placement    != '' THEN excluded.placement    ELSE sessions.placement    END,
-          updated_at   = excluded.updated_at
+          updated_at   = excluded.updated_at,
+          is_bot       = excluded.is_bot
       `).bind(
         sessionId, externalId, fbclid, gclid, msclkid, fbc, fbp,
         request.headers.get('cf-connecting-ip') || request.headers.get('x-real-ip') || '',
@@ -147,7 +151,7 @@ export async function onRequest(context) {
         utmSource, utmMedium, utmCampaign, utmContent, utmTerm,
         campaignId, adsetId, adId, placement,
         cfCountry, cfRegion, cfCity, cfPostalCode, cfTimezone, cfAsn,
-        nowSec, nowSec
+        nowSec, nowSec, requestIsBot ? 1 : 0
       ).run().catch((e) => console.error('[d1-session]', e && e.message))
     );
   }
@@ -165,6 +169,14 @@ export async function onRequest(context) {
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
+
+// Denylist de tooling/scripts conhecidos — não pega bots que forjam UA de browser
+// real (fora de escopo aqui; próxima camada seria request.cf.botManagement).
+const BOT_UA_RE = /curl|wget|axios|python-requests|python-urllib|go-http-client|scrapy|headlesschrome|\bbot\b|spider|crawler|postman|insomnia/i;
+function isBot(ua) {
+  if (!ua) return true; // sem UA nenhum = quase sempre script, não browser real
+  return BOT_UA_RE.test(ua);
+}
 
 function getRawParam(search, name) {
   const m = (search || '').match(new RegExp('[?&]' + name + '=([^&]*)'));
