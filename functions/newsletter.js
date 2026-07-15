@@ -244,7 +244,10 @@ export async function onRequestPost(context) {
         ]);
         const capiPayload = {
           data: [{
-            event_name: 'Lead',
+            // Evento próprio (estudo de tracking wf_f26e1b8f-44a): newsletter
+            // não é lead comercial — antes disparava 'Lead' e contaminava a
+            // audiência de lookalike com inscritos sem intenção de compra.
+            event_name: 'dimus_NewsletterSignup',
             event_time: Math.floor(Date.now() / 1000),
             event_id: 'nl-' + emailTrimmed + '-' + Date.now().toString(36),
             action_source: 'website',

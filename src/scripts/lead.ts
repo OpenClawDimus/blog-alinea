@@ -76,6 +76,7 @@ function handleSubmit(form: HTMLFormElement) {
     if (gtag)
       gtag("event", "generate_lead", {
         lead_source: "blog",
+        lead_type: "form_principal", // distingue de newsletter (ver NewsletterForm.astro)
         lead_origin: origin, // origem canônica legível (ex.: blog-calc-estoque)
         method: "form-first-whatsapp",
         post_slug: form.dataset.postSlug || "",

@@ -67,7 +67,16 @@ export async function onRequestPost(context) {
     utm_content = '', utm_term = '', ctwa_clid = '',
   } = body;
 
-  const ALLOWED_META_EVENTS = new Set(['Lead', 'LeadForm', 'LeadMiniForm', 'CompleteRegistration', 'PageView']);
+  // Taxonomia final de tracking (estudo wf_f26e1b8f-44a, 2026-07-15):
+  // Lead/CompleteRegistration/LeadForm/LeadMiniForm INTOCADOS (alimentam
+  // otimização de campanha Meta ativa). ViewContent/dimus_LeadMagnetOpen/
+  // dimus_LeadMagnetComplete são NOVOS — eventos anônimos (sem PII), não
+  // geram registro em `leads`/GHL/Supabase, só sinal pro Meta CAPI.
+  const ALLOWED_META_EVENTS = new Set([
+    'Lead', 'LeadForm', 'LeadMiniForm', 'CompleteRegistration', 'PageView',
+    'ViewContent', 'dimus_LeadMagnetOpen', 'dimus_LeadMagnetComplete',
+  ]);
+  const ANONYMOUS_EVENTS = new Set(['PageView', 'ViewContent', 'dimus_LeadMagnetOpen', 'dimus_LeadMagnetComplete']);
   const event_name = rawEventName || 'Lead';
   if (!ALLOWED_META_EVENTS.has(event_name)) return json({ error: 'invalid event_name' }, 422);
   const event_id = rawEventId || lead_ref || crypto.randomUUID();
@@ -85,7 +94,7 @@ export async function onRequestPost(context) {
   // Limite: 10 leads por IP por janela de 60 s.
   const RATE_LIMIT_MAX    = 10;
   const RATE_LIMIT_WINDOW = 60; // segundos
-  if (env.DB && event_name !== 'PageView') {
+  if (env.DB && !ANONYMOUS_EVENTS.has(event_name)) {
     const rateIp  = request.headers.get('cf-connecting-ip') || request.headers.get('x-real-ip') || 'unknown';
     const rateNow = Math.floor(Date.now() / 1000);
     const rateWindow = rateNow - RATE_LIMIT_WINDOW;
@@ -127,7 +136,7 @@ export async function onRequestPost(context) {
 
   // ── Validação server-side (não confiar no client; anti-flood do CRM) ──────
   // Espelha src/scripts/lead.ts. Bloqueia ANTES de CAPI/D1/forward.
-  if (event_name !== 'PageView') {
+  if (!ANONYMOUS_EVENTS.has(event_name)) {
     const nomeOk = String(nome || user_data.fn || '').trim().length >= 2;
     const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(email || user_data.em || '').trim());
     const phoneDigits = String(whatsapp || user_data.ph || '').replace(/\D/g, '');
@@ -262,7 +271,7 @@ export async function onRequestPost(context) {
   // Falha em GHL NÃO bloqueia D1/Supabase/CAPI.
   let ghlContactId = '';
   let ghlOpportunityId = '';
-  if (env.GHL_TOKEN && env.GHL_LOCATION_ID && event_name !== 'PageView' && (nome || whatsapp)) {
+  if (env.GHL_TOKEN && env.GHL_LOCATION_ID && !ANONYMOUS_EVENTS.has(event_name) && (nome || whatsapp)) {
     const nameParts = (nome || '').trim().split(/\s+/).filter(Boolean);
     const realEmail = (email || user_data.em || '').trim();
     const ghlBody = {
@@ -347,7 +356,7 @@ export async function onRequestPost(context) {
 
   // ── Grava lead em D1 ─────────────────────────────────────────────────────
   const nowSec = Math.floor(Date.now() / 1000);
-  if (env.DB && event_name !== 'PageView') {
+  if (env.DB && !ANONYMOUS_EVENTS.has(event_name)) {
     context.waitUntil(
       env.DB.prepare(`
         INSERT INTO leads (
@@ -395,7 +404,7 @@ export async function onRequestPost(context) {
   // ── Forward fire-and-forget → Supabase blueprint (CRM compartilhado) ─────
   // Schema REAL: first_name/last_name/phone/segment/landing_page/custom_fields
   // jsonb/ig_data_source(CHECK)/tags. Só dispara com KEY setada (smoke não toca CRM).
-  if (env.BLUEPRINT_SUPABASE_URL && env.BLUEPRINT_SUPABASE_KEY && event_name !== 'PageView' && (nome || whatsapp)) {
+  if (env.BLUEPRINT_SUPABASE_URL && env.BLUEPRINT_SUPABASE_KEY && !ANONYMOUS_EVENTS.has(event_name) && (nome || whatsapp)) {
     const nameParts = (nome || '').trim().split(/\s+/).filter(Boolean);
     const phoneDigits = (whatsapp || '').replace(/\D/g, '');
     const realEmail = (email || user_data.em || '').trim();

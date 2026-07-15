@@ -150,4 +150,28 @@ const structuredData = {
   </Fragment>
 
   <slot />
+
+  <script define:vars={{ postSlug: Astro.url.pathname.match(/^\/posts\/([^/]+)\/?$/)?.[1] || "" }}>
+    // ViewContent (estudo de tracking wf_f26e1b8f-44a): sinal anônimo pro Meta
+    // CAPI de visita a post individual — evento novo, não toca leads/GHL/Supabase
+    // (tracker.js trata como ANONYMOUS_EVENTS). Dispara 1x por carregamento real
+    // de página (não em cada astro:after-swap re-render do mesmo slug).
+    function fireViewContent() {
+      if (!postSlug) return;
+      const key = "dimus_vc_" + postSlug;
+      if (window.sessionStorage.getItem(key)) return;
+      window.sessionStorage.setItem(key, "1");
+      fetch("/tracker", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event_name: "ViewContent",
+          lead_origin: postSlug,
+          source: "blog",
+          post_slug: postSlug,
+        }),
+      }).catch(() => {});
+    }
+    fireViewContent();
+  </script>
 </Layout>

@@ -144,6 +144,13 @@ const {
             form.reset();
             if (msg) { msg.textContent = "✓ Confirmado! Verifique seu e-mail."; msg.className = "nl-fine success"; }
             if (btn) btn.remove();
+            // GA4 (estudo de tracking wf_f26e1b8f-44a): generate_lead com
+            // lead_type distinto do form principal — mesmo evento recomendado,
+            // dimensão separada. Meta CAPI já dispara server-side em newsletter.js.
+            try {
+              const gtag = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag;
+              if (gtag) gtag("event", "generate_lead", { lead_source: "blog", lead_type: "newsletter" });
+            } catch { /* noop */ }
           } else {
             if (msg) { msg.textContent = result.error || "Tente novamente em instantes."; msg.className = "nl-fine error"; }
             if (btn) { btn.disabled = false; btn.textContent = "Quero receber →"; }
