@@ -13,7 +13,7 @@ O admin atual de blog.dimus.com.br mostra números que são **94% mentira**: das
 
 Estado desejado: um dashboard de **conteúdo e conversão** (modelo HubSpot/Ghost, não Plausible/Vercel) que amarra cada post a leads e origem, sobre dados limpos, com identidade visual do blog (dark `#0b0a0d`, magenta `#e1379e`, Fraunces + JetBrains Mono) em vez do layout genérico atual.
 
-Dois bloqueadores foram identificados: (a) a poluição de bot precisa ser corrigida na ingestão E nas queries antes de qualquer UI nova — senão a UI nova exibe o mesmo lixo bonito (segue bloqueador real, ver Wave 1); (b) ~~não existe credencial para GA4/GSC hoje~~ **RESOLVIDO 2026-07-14** — SA `dimus-seo@dimus-billing-monitor.iam.gserviceaccount.com` criada, chave salva no GSM (`dimus-seo-sa-json`), concedida como Leitor na conta GA4 "Dimus" e como Restrita na Domain Property GSC `sc-domain:dimus.com.br`. Validado com smoke-test real: `runReport` (GA4) e `searchAnalytics.query` (GSC) retornaram HTTP 200 com dados reais. **Property ID correto da GA4 é `543369220`** (não 542894737 — esse era um ID antigo/stale de antes da property passar pela lixeira e ser restaurada; measurement ID `G-Q6KH427C70` permanece o mesmo). Wave 0 **desbloqueada** — Wave 4 pode prosseguir sem depender de ação humana adicional.
+Dois bloqueadores foram identificados: (a) a poluição de bot precisa ser corrigida na ingestão E nas queries antes de qualquer UI nova — senão a UI nova exibe o mesmo lixo bonito (segue bloqueador real, ver Wave 1); (b) ~~não existe credencial para GA4/GSC hoje~~ **RESOLVIDO 2026-07-14** — SA `dimus-seo@dimus-billing-monitor.iam.gserviceaccount.com` criada, chave salva no GSM (`dimus-seo-sa-json`), concedida como Leitor na conta GA4 "Dimus" e como Restrita na Domain Property GSC `sc-domain:dimus.com.br`. Validado com smoke-test real: `runReport` (GA4) e `searchAnalytics.query` (GSC) retornaram HTTP 200 com dados reais. **Property ID correto da GA4 é `543369220`** (não 542894737 — esse era um ID antigo/stale de antes da property passar pela lixeira e ser restaurada; measurement ID `G-Y7PSFTCZJL` permanece o mesmo). Wave 0 **desbloqueada** — Wave 4 pode prosseguir sem depender de ação humana adicional.
 
 ---
 
@@ -147,7 +147,7 @@ Cada wave termina com `NOTES.md` atualizado antes de `/compact`. Critérios são
 
 ### Wave 0 — Provisionar acesso GA4/GSC (SA `dimus-seo`) — ✅ **CONCLUÍDA 2026-07-14**
 
-**Objetivo**: existir credencial funcional para ler GA4 (property `543369220`, measurement ID `G-Q6KH427C70`) e a property GSC que cobre blog.dimus.com.br.
+**Objetivo**: existir credencial funcional para ler GA4 (property `543369220`, measurement ID `G-Y7PSFTCZJL`) e a property GSC que cobre blog.dimus.com.br.
 
 **Achado (ultra research 2026-07-14, com fontes):**
 - DNS de `dimus.com.br` já tem `google-site-verification=biS0jmcrqohqO2xywFnkPiiE6455UqjlXvm5BgZJJP8` no domínio raiz — evidência forte de que uma **Domain Property já existe** no GSC para `dimus.com.br` (esse método de verificação — DNS TXT — é específico de Domain properties; URL-prefix properties normalmente usam HTML tag/arquivo/GA/GTM).
@@ -169,7 +169,7 @@ Cada wave termina com `NOTES.md` atualizado antes de `/compact`. Critérios são
 - `searchAnalytics.query` GSC (`sc-domain:dimus.com.br`, 2026-07-01 a 2026-07-14) → **HTTP 200**, retornou queries reais (ex: "dimus", 42 impressions, posição média 3.67).
 - `sites.list` GSC confirmou `permissionLevel: siteRestrictedUser` pra `sc-domain:dimus.com.br`.
 
-**Gotcha registrado**: o Property ID GA4 usado inicialmente (`542894737`, de memória/documentação anterior) estava **stale** — a property passou por lixeira/restauração em algum momento e o ID numérico mudou para `543369220`, mantendo o mesmo measurement ID `G-Q6KH427C70`. Sempre confirmar o Property ID atual via URL do GA4 (`#/a{account}p{property}/...`) antes de hardcodar em código de produção.
+**Gotcha registrado**: o Property ID GA4 usado inicialmente (`542894737`, de memória/documentação anterior) estava **stale** — a property passou por lixeira/restauração em algum momento e o ID numérico mudou para `543369220`, mantendo o mesmo measurement ID `G-Y7PSFTCZJL`. Sempre confirmar o Property ID atual via URL do GA4 (`#/a{account}p{property}/...`) antes de hardcodar em código de produção.
 
 ### Wave 1 — Filtro de bot (dados primeiro, zero UI nova) — ✅ **CONCLUÍDA 2026-07-14**
 
