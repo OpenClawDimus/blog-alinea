@@ -804,6 +804,7 @@ function loginHTML() {
             colorPrimary:'#e1379e',
             colorBackground:'#0e0c11',
             colorInputBackground:'#0b0a0d',
+            colorInputText:'#f4f1f5',
             colorText:'#f4f1f5',
             colorTextSecondary:'#6b6472',
             colorDanger:'#ff5252',
@@ -820,6 +821,8 @@ function loginHTML() {
             footerAction:{ display:'none' },
             formFieldInput:{
               background:'#0b0a0d',
+              color:'#f4f1f5',
+              caretColor:'#e1379e',
               border:'1px solid rgba(255,255,255,.08)',
               borderRadius:'4px',
               fontFamily:"'JetBrains Mono', monospace",
