@@ -66,6 +66,50 @@ só edição de `admin.js`. Credenciais já prontas da Wave 0 (SA `dimus-seo`,
 property `543369220`, `sc-domain:dimus.com.br`); seção Busca já existe em
 empty state honesto aguardando essa wave.
 
+## 005 — Redesign real (feedback: "tá uma merda, amador, raso")
+
+Causa raiz encontrada: o `SHELL` do dashboard nunca importava as fontes
+Fraunces/JetBrains Mono via `<link>` — só a *login page* importava. Todo
+título/número do dashboard renderizava em Georgia/system-mono fallback desde
+sempre. Isso, mais 4 cards idênticos genéricos + `.pill` em tudo + tabelas
+em card-dentro-de-card, é o que leu como "AI slop"/amador.
+
+Rodei `/impeccable` de verdade: criei `PRODUCT.md`+`DESIGN.md` (registro
+"product", cenário: Guilherme checando números reais no laptop, não um
+dashboard ambiente) documentando anti-referências explícitas (grid de 4 cards
+idênticos, pills em tudo, card-dentro-de-card) e um sistema de tokens OKLCH.
+
+Mudanças aplicadas em `functions/admin.js`:
+- **Fix do font-loading** (causa raiz) — `<link>` Fraunces+JetBrains Mono no
+  `<head>` do SHELL.
+- **Bug real do botão colapsar**: a sidebar não era `position:sticky` — ao
+  rolar a página ela desaparecia (parecia "quebrada"). Corrigido com
+  `position:sticky; top:0; height:100dvh; overflow-y:auto`. O toggle JS em si
+  sempre funcionou (confirmado via mock local com Claude Browser).
+- KPI "cards" → `kpi-row` tipográfica (Fraunces grande + label caps, hairline
+  divisor entre itens) — não é mais grid de 4 boxes idênticos.
+- `.pill` removido de tudo (tipo/cluster/status de magnet) — texto simples.
+- Tabelas: sem wrapper card-dentro-de-card, hairline top/bottom só.
+- Paleta migrada pra OKLCH tingida (ver DESIGN.md), border-radius reduzido.
+- Gráfico de linha ganhou draw-in animado (stroke-dashoffset) no primeiro
+  paint.
+
+**Validação**: sem sessão Clerk ativa no agent-browser nesta parte da sessão
+(perdida após um `close --all` no meio da depuração do botão), então validei
+via **mock local** — renderizei `dashboardHTML()` fora do Cloudflare Function
+com dados de exemplo, servido por `python3 -m http.server`, aberto no Claude
+Browser pane (sem precisar de login). Confirmei visualmente: Overview, Posts,
+Magnets, mobile 375px. Deploy feito em produção (`wrangler pages deploy`).
+**Não confirmei a versão final autenticada em blog.dimus.com.br nesta sessão**
+— pedir pro Guilherme conferir com a própria sessão logada.
+
+**Achado importante**: existem commits no repo (`bcc885b`, `9d6239a`,
+`9d7e145`) que eu não fiz — corrigem o gate de idTag dos 6 posts automotivos
++ outros fixes, assinados "Claude Sonnet 4.6". Outra sessão/processo está
+mexendo neste mesmo repo em paralelo. Não conflita com meu trabalho (arquivos
+diferentes), mas o Guilherme foi avisado no chat — checar se é uma sessão
+esquecida aberta em outra janela.
+
 ## Re-âncora pós-compact
 
 **Última ação**: Waves 2, 3 e 5 implementadas em `functions/admin.js`,
