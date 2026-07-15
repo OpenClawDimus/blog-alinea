@@ -168,7 +168,8 @@ export async function onRequest(context) {
       (SELECT COUNT(*) FROM magnet_downloads)                AS downloads,
       (SELECT COUNT(*) FROM sessions WHERE is_bot = 0)       AS sessions,
       (SELECT COUNT(*) FROM sessions WHERE is_bot = 1)       AS bot_sessions,
-      (SELECT COUNT(*) FROM sessions)                        AS all_sessions
+      (SELECT COUNT(*) FROM sessions)                        AS all_sessions,
+      (SELECT MAX(created_at) FROM sessions)                 AS last_ingestion
   `).then((r) => (Array.isArray(r) ? r : [{}]));
 
   const magnets = await q(env, `
@@ -180,9 +181,11 @@ export async function onRequest(context) {
     ORDER BY downloads DESC, m.slug
   `);
 
+  // M4/M7 — posts distintos com tráfego + sessions únicas + conversão por post.
   const posts = await q(env, `
     SELECT pv.post_slug,
            COUNT(*) AS views,
+           COUNT(DISTINCT pv.session_id) AS sessions,
            (SELECT COUNT(*) FROM leads l WHERE l.post_slug = pv.post_slug) AS leads
     FROM page_views pv
     WHERE pv.post_slug != '' AND pv.is_bot = 0
@@ -190,12 +193,22 @@ export async function onRequest(context) {
     ORDER BY views DESC
   `);
 
+  // M6 — origem por lead (conversão) e por session (tráfego bruto real).
   const origins = await q(env, `
     SELECT CASE WHEN utm_source = '' OR utm_source IS NULL THEN '(direto/orgânico)' ELSE utm_source END AS origem,
            COUNT(*) AS leads
     FROM leads
     GROUP BY origem
     ORDER BY leads DESC
+  `);
+
+  const originSessions = await q(env, `
+    SELECT CASE WHEN utm_source = '' OR utm_source IS NULL THEN '(direto/orgânico)' ELSE utm_source END AS origem,
+           COUNT(*) AS sessions
+    FROM sessions
+    WHERE is_bot = 0
+    GROUP BY origem
+    ORDER BY sessions DESC
   `);
 
   const recent = await q(env, `
@@ -205,7 +218,22 @@ export async function onRequest(context) {
     LIMIT 40
   `);
 
-  const html = dashboardHTML({ totals, magnets, posts, origins, recent, adminUser });
+  // M8 — série diária sessions reais vs. bot descartado (últimos 30 dias com dado).
+  const daily = await q(env, `
+    SELECT strftime('%Y-%m-%d', created_at, 'unixepoch') AS day,
+           SUM(CASE WHEN is_bot = 0 THEN 1 ELSE 0 END) AS real,
+           SUM(CASE WHEN is_bot = 1 THEN 1 ELSE 0 END) AS bot
+    FROM sessions
+    GROUP BY day
+    ORDER BY day DESC
+    LIMIT 30
+  `);
+
+  const section = (url.searchParams.get('s') || 'overview').toLowerCase();
+  const html = dashboardHTML({
+    section, totals, magnets, posts, origins, originSessions, recent, daily, adminUser,
+    gscGa4Enabled: !!env.GSC_GA4_ENABLED,
+  });
   return new Response(html, {
     status: 200,
     headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' },
@@ -214,7 +242,103 @@ export async function onRequest(context) {
 
 // ── Views ────────────────────────────────────────────────────────────────────
 
-const SHELL = (title, body) => `<!doctype html>
+// Tokens únicos consolidados (Wave 5 — anti-slop): cor, tipo, espaçamento 8px.
+// Fraunces só em títulos de seção; JetBrains Mono em todo número/tabela (tnum).
+// Accent magenta usado como lanterna (estado ativo, deltas, links) — nunca decorativo.
+const TOKENS = `
+  :root {
+    --bg:#0b0a0d; --panel:#141217; --panel2:#18151b; --line:#26222c;
+    --ink:#f4f1f5; --mut:#a39daa; --mag:#e1379e; --ok:#1faf54; --warn:#e1b33a;
+    --sp1:8px; --sp2:16px; --sp3:24px; --sp4:32px;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 ui-sans-serif,-apple-system,"Hanken Grotesk",system-ui,sans-serif; }
+  h1 { font:600 24px/1.2 "Fraunces",Georgia,serif; margin:0 0 4px; }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--mut); margin:0 0 var(--sp2); font-weight:600; font-family:"Fraunces",Georgia,serif; }
+  .sub { color:var(--mut); margin:0 0 var(--sp4); font-size:13px; }
+  .num, .mono, table { font-variant-numeric:tabular-nums; }
+  .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp2); margin-bottom:var(--sp4); }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:var(--sp2) 18px; }
+  .card .n { font:600 28px/1 "Fraunces",Georgia,serif; font-variant-numeric:tabular-nums; }
+  .card .l { color:var(--mut); font-size:12px; text-transform:uppercase; letter-spacing:.04em; margin-top:6px; }
+  section { margin-bottom:var(--sp4); }
+  table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; font-size:13.5px; font-family:ui-monospace,"JetBrains Mono",monospace; }
+  th,td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); }
+  th { color:var(--mut); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; font-family:ui-sans-serif,system-ui,sans-serif; }
+  tr:last-child td { border-bottom:0; }
+  td.num,th.num { text-align:right; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; border:1px solid var(--line); color:var(--mut); font-family:ui-sans-serif,system-ui,sans-serif; }
+  .mag { color:var(--mag); }
+  .mono { font-family:ui-monospace,"JetBrains Mono",monospace; font-size:12px; color:var(--mut); }
+  .empty { color:var(--mut); padding:18px 14px; font-family:ui-sans-serif,system-ui,sans-serif; }
+  .err { color:#ff6b6b; font-size:12px; }
+  .botnote { color:var(--mut); font-size:12px; margin:-8px 0 var(--sp4); font-family:ui-monospace,"JetBrains Mono",monospace; }
+  a.logout { color:var(--mut); font-size:12px; text-decoration:none; border:1px solid var(--line); padding:6px 12px; border-radius:999px; cursor:pointer; font-family:ui-sans-serif,system-ui,sans-serif; }
+  .top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:var(--sp3); }
+  .chart-wrap { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:var(--sp2); }
+`;
+
+// Ícones thin monocromáticos (estilo Lucide, desenhados à mão — stroke=currentColor).
+function icon(name) {
+  const paths = {
+    overview: 'M2 9l6-6 6 6M4 8v6h8V8',
+    posts: 'M5 2h5l3 3v9H5z M10 2v3h3',
+    leads: 'M8 9a2.5 2.5 0 100-5 2.5 2.5 0 000 5z M3 14c0-3 2.2-5 5-5s5 2 5 5',
+    origins: 'M8 14A6 6 0 108 2a6 6 0 000 12z M8 8l2.5-3.5L9 8l-2.5 3.5z',
+    magnets: 'M2 5.5L8 3l6 2.5v5L8 13 2 10.5z M2 5.5L8 8l6-2.5 M8 8v5',
+    search: 'M7 12A4.5 4.5 0 107 3a4.5 4.5 0 000 9z M10.3 10.3L14 14',
+    system: 'M2 8h2.5l1.5-4 2 8 1.5-4H14',
+  };
+  const d = paths[name] || paths.overview;
+  return `<svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+}
+
+// Gráfico de linha simples (M8) — único tipo aprovado pro benchmarking (§5.6).
+// Zero decoração: sem gradiente, sem preenchimento, sem eixo — só a série.
+function lineChartSVG(rows, { width = 640, height = 110, color = 'var(--mag)' } = {}) {
+  if (!rows || !rows.length) return '<div class="empty">Sem dados de sessão ainda.</div>';
+  const data = rows.slice().reverse(); // ordem cronológica ascendente
+  const max = Math.max(...data.map((d) => d.real || 0), 1);
+  const stepX = data.length > 1 ? width / (data.length - 1) : 0;
+  const pt = (d, i) => `${(i * stepX).toFixed(1)},${(height - ((d.real || 0) / max) * height).toFixed(1)}`;
+  const points = data.map(pt).join(' ');
+  const first = data[0]?.day || '';
+  const last = data[data.length - 1]?.day || '';
+  return `<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none">
+      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="mono" style="display:flex;justify-content:space-between;margin-top:6px;">
+      <span>${esc(first)}</span><span>${esc(last)}</span>
+    </div>`;
+}
+
+const NAV_ITEMS = [
+  { key: 'overview', label: 'Overview' },
+  { key: 'posts', label: 'Posts' },
+  { key: 'leads', label: 'Leads' },
+  { key: 'origins', label: 'Origens' },
+  { key: 'magnets', label: 'Magnets' },
+  { key: 'search', label: 'Busca' },
+  { key: 'system', label: 'Sistema' },
+];
+
+function sidebarNav(active) {
+  const items = NAV_ITEMS.map((it) => `
+    <a class="navitem${it.key === active ? ' active' : ''}" href="/admin?s=${it.key}">
+      <span class="ic">${icon(it.key)}</span><span class="lb">${esc(it.label)}</span>
+    </a>`).join('');
+  return `
+    <nav class="sidebar" id="sidebar">
+      <div class="brand"><span class="lb">Blog Dimus</span></div>
+      ${items}
+      <button class="collapse-btn" id="collapseBtn" type="button" title="Colapsar sidebar">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M10 3L5 8l5 5"/></svg>
+        <span class="lb">Colapsar</span>
+      </button>
+    </nav>`;
+}
+
+const SHELL = (title, active, body) => `<!doctype html>
 <html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="utf-8">
@@ -222,34 +346,47 @@ const SHELL = (title, body) => `<!doctype html>
 <meta name="robots" content="noindex, nofollow">
 <title>${esc(title)} · Blog Dimus</title>
 <style>
-  :root { --bg:#0b0a0d; --panel:#141217; --line:#26222c; --ink:#f4f1f5; --mut:#a39daa; --mag:#e1379e; --ok:#1faf54; --warn:#e1b33a; }
-  * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 ui-sans-serif,-apple-system,"Hanken Grotesk",system-ui,sans-serif; padding:32px 20px 80px; }
-  .wrap { max-width:1040px; margin:0 auto; }
-  h1 { font:600 26px/1.2 "Fraunces",Georgia,serif; margin:0 0 4px; }
-  .sub { color:var(--mut); margin:0 0 28px; font-size:13px; }
-  .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:32px; }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
-  .card .n { font:600 28px/1 "Fraunces",Georgia,serif; }
-  .card .l { color:var(--mut); font-size:12px; text-transform:uppercase; letter-spacing:.04em; margin-top:6px; }
-  section { margin-bottom:34px; }
-  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--mut); margin:0 0 12px; font-weight:600; }
-  table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; font-size:13.5px; }
-  th,td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); }
-  th { color:var(--mut); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; }
-  tr:last-child td { border-bottom:0; }
-  td.num,th.num { text-align:right; font-variant-numeric:tabular-nums; }
-  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; border:1px solid var(--line); color:var(--mut); }
-  .mag { color:var(--mag); }
-  .mono { font-family:ui-monospace,"JetBrains Mono",monospace; font-size:12px; color:var(--mut); }
-  .empty { color:var(--mut); padding:18px 14px; }
-  .err { color:#ff6b6b; font-size:12px; }
-  .botnote { color:var(--mut); font-size:12px; margin:-24px 0 32px; font-family:ui-monospace,"JetBrains Mono",monospace; }
-  a.logout { color:var(--mut); font-size:12px; text-decoration:none; border:1px solid var(--line); padding:6px 12px; border-radius:999px; cursor:pointer; }
-  .top { display:flex; justify-content:space-between; align-items:flex-start; }
+  ${TOKENS}
+  .shell { display:flex; min-height:100dvh; }
+  .sidebar { width:220px; flex:0 0 220px; background:var(--panel); border-right:1px solid var(--line); padding:var(--sp3) var(--sp2); display:flex; flex-direction:column; gap:2px; transition:width .15s ease, flex-basis .15s ease; }
+  .brand { font:600 15px/1.2 "Fraunces",Georgia,serif; padding:0 10px var(--sp3); color:var(--ink); }
+  .navitem { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; color:var(--mut); text-decoration:none; font-size:13.5px; }
+  .navitem .ic { display:flex; flex:0 0 auto; }
+  .navitem:hover { color:var(--ink); background:var(--panel2); }
+  .navitem.active { color:var(--mag); background:rgba(225,55,158,.08); }
+  .collapse-btn { margin-top:auto; display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; color:var(--mut); background:none; border:1px solid var(--line); cursor:pointer; font-size:12px; font-family:ui-sans-serif,system-ui,sans-serif; }
+  .collapse-btn svg { transition:transform .15s ease; }
+  .main { flex:1; min-width:0; padding:var(--sp4) var(--sp4) 80px; }
+  .wrap { max-width:1080px; margin:0 auto; }
+  body.sb-collapsed .sidebar { width:56px; flex-basis:56px; padding-left:8px; padding-right:8px; }
+  body.sb-collapsed .navitem { justify-content:center; }
+  body.sb-collapsed .navitem .lb, body.sb-collapsed .brand .lb, body.sb-collapsed .collapse-btn .lb { display:none; }
+  body.sb-collapsed .brand { text-align:center; padding:0 0 var(--sp3); }
+  body.sb-collapsed .collapse-btn svg { transform:rotate(180deg); }
+  @media (max-width:720px) {
+    .shell { flex-direction:column; }
+    .sidebar { width:100%; flex-direction:row; flex-wrap:wrap; border-right:0; border-bottom:1px solid var(--line); }
+    .collapse-btn { display:none; }
+  }
 </style>
 </head>
-<body><div class="wrap">${body}</div></body></html>`;
+<body>
+  <div class="shell">
+    ${sidebarNav(active)}
+    <div class="main"><div class="wrap">${body}</div></div>
+  </div>
+  <script>
+    (function () {
+      var KEY = 'admin_sidebar_collapsed';
+      var btn = document.getElementById('collapseBtn');
+      if (localStorage.getItem(KEY) === '1') document.body.classList.add('sb-collapsed');
+      if (btn) btn.addEventListener('click', function () {
+        document.body.classList.toggle('sb-collapsed');
+        localStorage.setItem(KEY, document.body.classList.contains('sb-collapsed') ? '1' : '0');
+      });
+    })();
+  </script>
+</body></html>`;
 
 function loginHTML() {
   // Design: Editorial — Fraunces serif display, Motion One entrance, ultra-minimal
@@ -493,17 +630,15 @@ function tableOrEmpty(rows, cols, render, emptyMsg) {
   return `<table><thead><tr>${cols}</tr></thead><tbody>${rows.map(render).join('')}</tbody></table>`;
 }
 
-function dashboardHTML({ totals, magnets, posts, origins, recent, adminUser }) {
+const SECTION_TITLES = {
+  overview: 'Overview', posts: 'Posts', leads: 'Leads', origins: 'Origens',
+  magnets: 'Magnets', search: 'Busca', system: 'Sistema',
+};
+
+function dashboardHTML({ section, totals, magnets, posts, origins, originSessions, recent, daily, adminUser, gscGa4Enabled }) {
   const t = totals || {};
   const botPct = t.all_sessions ? ((t.bot_sessions / t.all_sessions) * 100).toFixed(0) : 0;
-  const cards = `
-    <div class="cards">
-      <div class="card"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div></div>
-      <div class="card"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
-      <div class="card"><div class="n">${t.views ?? 0}</div><div class="l">Views</div></div>
-      <div class="card"><div class="n">${t.sessions ?? 0}</div><div class="l">Sessões</div></div>
-    </div>
-    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real). Números acima já refletem só tráfego real.</p>`;
+  const active = SECTION_TITLES[section] ? section : 'overview';
 
   const magnetsTbl = tableOrEmpty(magnets,
     `<th>Magnet</th><th>Tipo</th><th>Cluster</th><th class="num">Downloads</th>`,
@@ -515,11 +650,12 @@ function dashboardHTML({ totals, magnets, posts, origins, recent, adminUser }) {
     'Catálogo vazio — rode o seed de lead_magnets.');
 
   const postsTbl = tableOrEmpty(posts,
-    `<th>Post</th><th class="num">Views</th><th class="num">Leads</th><th class="num">Conversão</th>`,
+    `<th>Post</th><th class="num">Views</th><th class="num">Sessões</th><th class="num">Leads</th><th class="num">Conversão</th>`,
     (p) => {
       const conv = p.views ? ((p.leads / p.views) * 100).toFixed(1) + '%' : '—';
       return `<tr><td class="mono">${esc(p.post_slug)}</td>
         <td class="num">${p.views ?? 0}</td>
+        <td class="num">${p.sessions ?? 0}</td>
         <td class="num">${p.leads ?? 0}</td>
         <td class="num mag">${conv}</td></tr>`;
     },
@@ -529,6 +665,11 @@ function dashboardHTML({ totals, magnets, posts, origins, recent, adminUser }) {
     `<th>Origem</th><th class="num">Leads</th>`,
     (o) => `<tr><td>${esc(o.origem)}</td><td class="num">${o.leads ?? 0}</td></tr>`,
     'Nenhum lead ainda.');
+
+  const originSessionsTbl = tableOrEmpty(originSessions,
+    `<th>Origem</th><th class="num">Sessões</th>`,
+    (o) => `<tr><td>${esc(o.origem)}</td><td class="num">${o.sessions ?? 0}</td></tr>`,
+    'Nenhuma sessão real ainda.');
 
   const recentTbl = tableOrEmpty(recent,
     `<th>Quando</th><th>Nome</th><th>WhatsApp</th><th>Post</th><th>Magnet</th><th>Origem</th>`,
@@ -541,16 +682,68 @@ function dashboardHTML({ totals, magnets, posts, origins, recent, adminUser }) {
       <td>${esc(l.utm_source || 'direto')}</td></tr>`,
     'Nenhum lead capturado ainda.');
 
-  return SHELL('Admin', `
+  const dailyTbl = tableOrEmpty(daily,
+    `<th>Dia</th><th class="num">Sessões reais</th><th class="num">Bot descartado</th>`,
+    (d) => `<tr><td class="mono">${esc(d.day)}</td><td class="num">${d.real ?? 0}</td><td class="num mono">${d.bot ?? 0}</td></tr>`,
+    'Sem dados ainda.');
+
+  const cards = `
+    <div class="cards">
+      <div class="card"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div></div>
+      <div class="card"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
+      <div class="card"><div class="n">${t.views ?? 0}</div><div class="l">Views</div></div>
+      <div class="card"><div class="n">${t.sessions ?? 0}</div><div class="l">Sessões</div></div>
+    </div>
+    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real). Números acima já refletem só tráfego real.</p>`;
+
+  const top5 = (posts || []).slice(0, 5);
+  const top5Tbl = tableOrEmpty(top5,
+    `<th>Post</th><th class="num">Views</th><th class="num">Leads</th>`,
+    (p) => `<tr><td class="mono">${esc(p.post_slug)}</td><td class="num">${p.views ?? 0}</td><td class="num">${p.leads ?? 0}</td></tr>`,
+    'Nenhuma view registrada ainda.');
+
+  const sections = {
+    overview: `
+      ${cards}
+      <section><h2>Sessões reais por dia (bot já descartado)</h2><div class="chart-wrap">${lineChartSVG(daily)}</div></section>
+      <section><h2>Top 5 posts</h2>${top5Tbl}</section>`,
+
+    posts: `<section><h2>Conversão por post (view → lead)</h2>${postsTbl}</section>`,
+
+    leads: `<section><h2>Leads recentes</h2>${recentTbl}</section>`,
+
+    origins: `
+      <section><h2>Leads por origem (conversão)</h2>${originsTbl}</section>
+      <section><h2>Sessões reais por origem (tráfego)</h2>${originSessionsTbl}</section>`,
+
+    magnets: `<section><h2>Downloads por magnet (catálogo finito)</h2>${magnetsTbl}</section>`,
+
+    search: gscGa4Enabled ? `<section><h2>Busca orgânica (GA4/GSC)</h2><div class="empty">GSC_GA4_ENABLED ligado mas Wave 4 (ingestão) ainda não implementada.</div></section>` : `
+      <section><h2>Busca orgânica (GA4/GSC)</h2>
+        <div class="empty">
+          Aguardando Wave 4 — credenciais GA4/GSC já provisionadas (Wave 0, property <span class="mono">543369220</span>),
+          mas a integração de dados (cron diário + tabelas <span class="mono">ga4_daily</span>/<span class="mono">gsc_daily</span>) ainda não foi implementada.
+          Esta seção nasce honesta: sem dado fake, sem placeholder de número.
+        </div></section>`,
+
+    system: `
+      <section><h2>Saúde do tracking</h2>
+        <div class="cards">
+          <div class="card"><div class="n mag">${botPct}%</div><div class="l">Tráfego bot (histórico)</div></div>
+          <div class="card"><div class="n">${t.bot_sessions ?? 0}</div><div class="l">Sessions marcadas bot</div></div>
+          <div class="card"><div class="n">${t.all_sessions ?? 0}</div><div class="l">Sessions brutas totais</div></div>
+          <div class="card"><div class="n mono" style="font-size:15px">${esc(fmtDate(t.last_ingestion))}</div><div class="l">Última ingestão</div></div>
+        </div>
+      </section>
+      <section><h2>Sessões reais vs. bot descartado — últimos 30 dias</h2>${dailyTbl}</section>`,
+  };
+
+  const body = `
     <div class="top">
-      <div><h1>Blog Dimus · Admin</h1><p class="sub">Catálogo finito de magnets · analytics de conversão · leads</p></div>
+      <div><h1>${esc(SECTION_TITLES[active])}</h1><p class="sub">Blog Dimus · Admin — ${esc(adminUser?.email || '')}</p></div>
       <a class="logout clerk-signout" href="#">sair</a>
     </div>
-    ${cards}
-    <section><h2>Downloads por magnet (catálogo finito)</h2>${magnetsTbl}</section>
-    <section><h2>Conversão por post</h2>${postsTbl}</section>
-    <section><h2>Leads por origem</h2>${originsTbl}</section>
-    <section><h2>Leads recentes</h2>${recentTbl}</section>
+    ${sections[active] || sections.overview}
     <script async crossorigin="anonymous"
       data-clerk-publishable-key="${CLERK_PK}"
       src="${CLERK_FRONTEND_API}/npm/@clerk/clerk-js@5/dist/clerk.browser.js">
@@ -567,5 +760,7 @@ function dashboardHTML({ totals, magnets, posts, origins, recent, adminUser }) {
           });
         });
       });
-    </script>`);
+    </script>`;
+
+  return SHELL(SECTION_TITLES[active], active, body);
 }
