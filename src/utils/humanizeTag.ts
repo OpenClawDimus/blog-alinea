@@ -19,6 +19,17 @@ const TAG_LABELS: Record<string, string> = {
   "vendas-pme": "Vendas PME",
   "pmes": "PMEs",
   "email-marketing": "Email Marketing",
+  "automacao-whatsapp": "Automação WhatsApp",
+  "chatbot": "Chatbot",
+  "funil-de-vendas": "Funil de Vendas",
+  "crm": "CRM",
+  "ia-para-negocios": "IA para Negócios",
+  "atendimento-ao-cliente": "Atendimento ao Cliente",
+  "marketing-conteudo": "Marketing de Conteúdo",
+  "agencia-ia": "Agência de IA",
+  "automacao-marketing": "Automação de Marketing",
+  "leads": "Leads",
+  "ia-para-vendas": "IA para Vendas",
 };
 
 export function humanizeTag(slug: string): string {
