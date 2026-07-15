@@ -270,3 +270,82 @@ ETAPAS QUE NÃO RODARAM E POR QUÊ:
   não travei o pipeline nisso porque bloquear a auditoria de admin.js por
   erro em wa-webhook.js seria security theater, não rigor.
 
+## 009 — Estudo de tracking completo + implementação real (Meta CAPI, GA4, Wave 4)
+
+Usuário pediu `/workflows` completo sobre o que mais adicionar ao sistema de
+tracking (KROB, Meta Ads, GA4, GSC, identificação de usuário). Workflow
+`wf_f26e1b8f-44a` (8 agentes: 3 auditoria de código real + 4 pesquisa +
+síntese) produziu um estudo completo (artifact publicado no chat).
+
+**Achado crítico do estudo**: `SPEC.md` documentava `G-Q6KH427C70` como
+measurement ID GA4 "correto", mas o código real (`Layout.astro`) sempre usou
+`G-Y7PSFTCZJL`. Corrigido (commit `19b0203`) — doc só, zero risco.
+
+**Implementado, com confirmação explícita do usuário** (risco de campanha
+Meta ativa foi levantado e aceito):
+- `tracker.js`: 3 eventos Meta CAPI novos, todos anônimos (sem PII, não
+  tocam `leads`/GHL/Supabase, só sinal pro CAPI) — `ViewContent`,
+  `dimus_LeadMagnetOpen`, `dimus_LeadMagnetComplete`. `Lead`/
+  `CompleteRegistration` intocados (alimentam campanha ativa).
+- `newsletter.js`: evento trocado de `Lead` (genérico, contaminava
+  audiência lookalike) para `dimus_NewsletterSignup`.
+- `lead.ts` + `NewsletterForm.astro`: GA4 `generate_lead` ganha
+  `lead_type` (`form_principal`/`newsletter`) — retrofit sem quebrar o
+  evento existente.
+- `PostLayout.astro`: `ViewContent` dispara 1x por post real (dedup via
+  `sessionStorage`), novo — antes nada disparava em visita de post.
+- **Não implementado nesta rodada** (escopo intencionalmente cortado):
+  `dimus_LeadMagnetOpen`/`Complete` no client-side dos 3 componentes de
+  calculadora/quiz (`Calculator.astro`, `CalculatorCAC.astro`,
+  `QuizPortal.astro`) — precisa de debounce (calc roda em cada `input`,
+  disparar em cada tecla seria spam de evento) e passar `post_slug` como
+  prop. Backend já aceita os nomes; falta só o disparo client-side.
+  `dimus_whatsapp_click` (GA4) e `file_download` também deferidos — não
+  achei todos os pontos de link WA/download nesta sessão.
+
+**Gotcha de build resolvido**: `npm run build` falhava (bug conhecido de
+resolução de arquitetura do rollup, npm/cli#4828) mesmo após
+`rm -rf node_modules && npm install` limpo. Causa: o wrapper `npm run`
+nesse ambiente resolve um `rollup-darwin-x64` por engano mesmo em arm64.
+Fix: rodar os passos do script manualmente
+(`node_modules/.bin/astro build`, `node_modules/.bin/astro check`,
+`node_modules/.bin/pagefind`) em vez de `npm run build` — funciona
+100% igual, só contorna o bug do wrapper.
+
+**Wave 4 (GA4/GSC no dashboard) implementada e validada com dado real de
+produção**:
+- Migration `0009_ga4_gsc_daily.sql` aplicada (tabelas `ga4_daily`/
+  `gsc_daily`).
+- Novo Worker `cron-worker/` (`blog-dimus-cron`, deployado em
+  `blog-dimus-cron.growth-520.workers.dev`) — Cloudflare Pages Functions
+  não expõe `scheduled()`, precisa de Worker companion com o mesmo D1
+  binding. JWT RS256 via `crypto.subtle` (SA `dimus-seo`), token OAuth2
+  cacheado em KV (namespace `TOKEN_CACHE`, id
+  `48d922ed3aaf4ae6aad8ba4f2aabd322`), fetch REST GA4 `runReport` + GSC
+  `searchAnalytics.query`. Cron diário 06:00 UTC. Endpoint de trigger
+  manual protegido por token (`MANUAL_TRIGGER_TOKEN`, salvo no GSM como
+  `dimus-blog-cron-trigger-token`).
+- **Smoke-test real rodado**: 5 linhas GA4 + 13 linhas GSC gravadas de
+  verdade no D1 de produção (não simulado).
+- `admin.js` seção Busca: lê exclusivamente do D1 (nunca chama
+  `googleapis.com` direto). GSC filtrado a `page LIKE
+  'https://blog.dimus.com.br%'` — a Domain Property cobre `dimus.com.br`
+  inteiro, sem esse filtro mostraria busca de outros subdomínios como se
+  fosse do blog.
+- **Validado ao vivo**: gráfico de sessões GA4 real renderizando; GSC
+  mostra empty state honesto (sem impressão pro blog nos últimos 3 dias
+  — dado real, não bug).
+- Secret `GSC_GA4_ENABLED=1` setado no projeto principal `blog-dimus`.
+  **Gotcha reproduzido de novo**: precisou de 2 deploys (secret só binda
+  depois do deploy seguinte à criação do secret).
+
+**Pendências que sobraram, registradas explicitamente**:
+1. Client-side de `dimus_LeadMagnetOpen`/`Complete` (calculadoras/quiz).
+2. `dimus_whatsapp_click` (GA4) e `file_download` — não localizados/
+   instrumentados nesta sessão.
+3. RLS do `admin_access_log` só libera 2 emails (achado do full audit
+   anterior, não mexido).
+4. Confirmar manualmente no GA4 Admin > Fluxos de dados que
+   `G-Y7PSFTCZJL` é de fato o stream ativo (a correção foi feita só por
+   leitura de código-fonte, não por confirmação na UI do Google).
+
