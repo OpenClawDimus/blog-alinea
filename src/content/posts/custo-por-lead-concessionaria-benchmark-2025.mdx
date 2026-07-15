@@ -1,0 +1,100 @@
+---
+title: "Custo por Lead em Concessionária: Benchmark 2025 e Como Calcular o Seu"
+pubDatetime: 2026-07-14T09:00:00-03:00
+description: "Quanto custa realmente um lead de portal automotivo? Benchmark 2025 por canal com valores reais em R$ para revendas de seminovos brasileiras."
+author: "Guilherme Ribeiro"
+featured: false
+ogImage: /covers/custo-por-lead-concessionaria.jpg
+tags:
+  - "automotivo-metricas"
+  - "custo-por-lead"
+  - "gestao-revenda"
+  - "leads-automotivos"
+faq:
+  - q: "Qual o custo por lead médio em concessionária no Brasil em 2025?"
+    a: "O CPL médio em portais automotivos como Webmotors e iCarros varia de R$ 60 a R$ 120 por lead gerado. No Google Ads o range é mais amplo: R$ 30 a R$ 200 dependendo da região e da competição local. Revendas com SLA de atendimento abaixo de 5 minutos costumam ter CPL efetivo até 40% menor porque convertem mais do mesmo investimento."
+  - q: "Como calcular o CPL real da minha revenda?"
+    a: "Some todo investimento em aquisição no mês — portais, Google Ads, Meta Ads, salário de pré-vendas — e divida pelo número de leads qualificados (aqueles que responderam ao menos um contato). A maioria das revendas comete o erro de incluir leads fantasma no denominador, o que subestima o CPL real e distorce decisões de corte de canal."
+  - q: "CPL no Webmotors é mais caro que no Google Ads?"
+    a: "Webmotors entrega CPL mais previsível (R$ 60–90 em média) mas com maior proporção de lead fantasma — compradores que pesquisam sem intenção imediata. Google Ads tem variação maior mas permite segmentação geográfica que elimina desperdício em regiões de baixo potencial. A comparação correta é CPL por venda fechada, não por lead gerado."
+  - q: "Qual CPL é aceitável para revenda de seminovos?"
+    a: "Depende do ticket médio e da taxa de conversão. Para seminovos de R$ 40–80k com margem bruta de 8–12%, um CPL de R$ 80–150 por lead qualificado ainda é sustentável. Se o CPL superar 4% da margem bruta por venda, o modelo está no limite. O benchmark de revendas saudáveis é CPL abaixo de 2,5% da margem."
+  - q: "O que fazer quando o CPL está muito alto?"
+    a: "Primeiro diagnostique a causa: é o canal gerando poucos leads (problema de alcance) ou os leads não convertem (problema de conversão ou qualidade)? Cortar investimento quando o problema é conversão só piora o resultado. Foque em melhorar o SLA de atendimento — resposta em menos de 5 minutos dobra a taxa de conversão em qualquer canal sem custo adicional."
+---
+
+import AnswerCapsule from "@/components/blog/AnswerCapsule.astro";
+import CompareTable from "@/components/blog/CompareTable.astro";
+import DimusHelp from "@/components/blog/DimusHelp.astro";
+import LeadForm from "@/components/blog/LeadForm.astro";
+
+<AnswerCapsule question="Quanto custa um lead de concessionária em 2025?">
+Um lead de portal automotivo custa em média R$ 60–120 no Webmotors e iCarros. Mas esse número engana: ele não inclui os leads fantasma que você paga e nunca convertem. O CPL real — calculado sobre leads que efetivamente responderam — costuma ser 40–60% maior do que o número que aparece no boleto do portal.
+</AnswerCapsule>
+
+> **Sem conflito de interesse:** A Dimus não vende portal, CRM nem nenhum produto do setor automotivo. Nosso negócio é consultoria — só ganhamos quando você vende mais carros.
+
+## O número que está no boleto não é o CPL real da sua revenda
+
+A maioria dos donos de revenda sabe o que paga por mês no Webmotors. Poucos sabem o CPL real.
+
+A diferença está no denominador. Quando você divide o investimento pelo total de leads gerados, inclui na conta os leads fantasma — aqueles que preencheram o formulário ou mandaram mensagem e nunca responderam nenhum contato. Em portais automotivos, essa faixa representa entre 25% e 35% dos leads gerados (estimativa mercado BR 2025).
+
+Isso significa que se você paga R$ 3.000 por mês num portal e gera 40 leads, sendo 30% fantasmas, seu CPL aparente é R$ 75. Mas o CPL real — calculado sobre os 28 leads que efetivamente responderam — é R$ 107. Uma diferença de R$ 32 por lead que muda completamente a análise de ROI do canal.
+
+O problema se amplifica quando você tem múltiplos canais com perfis de fantasma diferentes: Google Ads tende a gerar menos fantasmas porque o comprador está em busca ativa; portais de classificados atraem mais compradores em fase de pesquisa passiva, com menor intenção imediata.
+
+## Benchmark de CPL por canal: o que o mercado automotivo BR pratica em 2025
+
+<CompareTable
+  headers={["Canal", "CPL médio (aparente)", "% Lead fantasma estimado", "CPL real estimado"]}
+  rows={[
+    ["Webmotors", "R$ 60–90", "28–32%", "R$ 85–130 (estimativa mercado BR)"],
+    ["iCarros", "R$ 50–80", "30–35%", "R$ 75–120 (estimativa mercado BR)"],
+    ["OLX Autos", "R$ 30–60", "35–45%", "R$ 55–110 (estimativa mercado BR)"],
+    ["Google Ads (busca)", "R$ 40–150", "15–20%", "R$ 50–185 (varia por região)"],
+    ["Meta Ads (feed)", "R$ 25–80", "40–55%", "R$ 55–175 (alto volume, baixa intenção)"],
+    ["Indicação de clientes", "R$ 0–15", "<5%", "R$ 5–20 (CAC quase zero)"]
+  ]}
+/>
+
+Esses números são estimativas baseadas em padrões observados no mercado de seminovos BR. O CPL real da sua revenda depende do ticket médio do estoque, da região (capitais costumam ter CPL mais alto pela competição), e principalmente da velocidade de atendimento.
+
+Uma revenda no interior de SP com atendimento em menos de 3 minutos pode ter CPL efetivo 30% abaixo da média regional. Uma revenda na mesma cidade que demora 2 horas para retornar um lead pode ter CPL 2x maior — não porque paga mais, mas porque desperdiça mais do que recebe.
+
+## Como calcular o CPL real em 4 passos
+
+**Passo 1:** Some todo investimento em aquisição no mês: portais (valor exato do contrato), Google Ads (extrair do painel), Meta Ads, salário e comissão de quem faz pré-vendas ou atende leads.
+
+**Passo 2:** Exporte todos os leads do período do seu CRM ou planilha.
+
+**Passo 3:** Classifique: quantos responderam ao menos 1 contato? Esses são leads qualificados. Os que não responderam nada em 3 tentativas são fantasmas — tire do denominador.
+
+**Passo 4:** Divida o investimento total pelo número de leads qualificados. Esse é o seu CPL real.
+
+Exemplo prático: revenda no interior de MG, R$ 4.500/mês em portais + R$ 800 em Google Ads + R$ 1.200 em salário de pré-vendas = R$ 6.500 total. Gerou 60 leads, 42 responderam. CPL real = R$ 154 por lead qualificado.
+
+Com ticket médio de R$ 55k e margem de 9% (R$ 4.950), e taxa de conversão de 1 venda para cada 5 leads qualificados, o custo de aquisição por venda é R$ 770 — saudável para esse perfil.
+
+## Três alavancas para reduzir o CPL sem cortar canal
+
+**1. Velocidade de atendimento.** A única variável que você controla que impacta diretamente o CPL. Resposta em menos de 5 minutos pode reduzir leads fantasma em 40–50% — mais leads respondem quando o vendedor chega enquanto o interesse ainda está quente. Custo de implementação: zero.
+
+**2. Qualidade do anúncio.** Anúncios com fotos reais do veículo (não foto de catálogo), descrição honesta com defeitos pequenos e preço visível atraem leads com maior intenção de compra. Menos leads, mais qualificados, menor CPL real.
+
+**3. Canais de indicação ativados.** Cliente que comprou e indica tem CPL próximo de zero e taxa de conversão 3x maior. Um programa simples de indicação — R$ 200 de desconto em revisão para quem indicar um amigo que comprar — pode mudar a equação do CPL de toda a revenda.
+
+<DimusHelp postSlug="custo-por-lead-concessionaria-benchmark-2025" cluster="automotivo-metricas" variant="automotivo-metricas" />
+
+## O que fazer amanhã de manhã
+
+Antes de reajustar qualquer investimento em canal, calcule o CPL real da sua revenda pelos últimos 30 dias usando os 4 passos acima. Você vai encontrar um número diferente do que imagina — e muito provavelmente vai descobrir que o canal mais caro no boleto não é o mais caro no resultado.
+
+<LeadForm
+  idTag="blog-post-automotivo-metricas"
+  postSlug="custo-por-lead-concessionaria-benchmark-2025"
+  cluster="automotivo-metricas"
+  headline="Quer calcular o CPL real da sua revenda?"
+  subheadline="Consultor Dimus em 15 minutos, sem enrolação."
+  ctaLabel="Falar com consultor →"
+/>
