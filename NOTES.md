@@ -110,6 +110,30 @@ mexendo neste mesmo repo em paralelo. Não conflita com meu trabalho (arquivos
 diferentes), mas o Guilherme foi avisado no chat — checar se é uma sessão
 esquecida aberta em outra janela.
 
+## 006 — Redesign profundo (3 pesquisas paralelas: Kowalski, benchmark de mercado, crítica adversarial)
+
+Usuário rejeitou o polish anterior como ainda raso ("nao acredito que foi o fable... nao tem nada de analytics"). Rodei 3 agentes de pesquisa em paralelo antes de mexer em código:
+
+1. **Motion/interação (Emil Kowalski)**: easings fortes (`cubic-bezier(0.23,1,0.32,1)` entrada, nunca `ease-in`), duração <300ms, nunca `transition:all`, `scale(0.97)` em press, nada de animação em ações de alta frequência (hover em lista, navegação por teclado).
+2. **Benchmark de mercado** (PostHog, Fathom, Plausible, Umami, Vercel Analytics, Ghost, HubSpot): o que é honesto vs. inflado na nossa escala de dado (2-4 leads/mês). Cohort/retention e funil multi-step SÃO absurdos aqui (célula vazia, falsa precisão); comparação de período, atribuição post→lead e drill-down de referrer SÃO honestos mesmo com N pequeno.
+3. **Crítica adversarial do `admin.js`**: achou o pecado real — duas queries de origem (`origins`+`originSessions`) nunca cruzadas em conversão, zero drill-down em post/lead, seção Sistema literalmente duplicando o gráfico da Overview, colunas pagas (`event_name`, `cluster`) buscadas e nunca renderizadas.
+
+**Implementado** (tudo validado contra D1 de produção via curl direto, já que a sessão Clerk do agent-browser expirou nesta parte da sessão):
+- Funil de origem mesclado (`mergeOrigins()`) — sessão→lead com conversão real, substitui as 2 tabelas soltas.
+- Comparação semana-vs-semana em Overview (`period` query, 3 pares now/prev, delta com ▲/▼ + par absoluto sempre visível — nunca só %).
+- Drill-down de post (`?s=posts&post=<slug>`): série diária do post + leads daquele post especificamente.
+- Leads: mostra `event_name`+`cluster` (já buscados, nunca renderizados antes) + link pro post de origem.
+- Sistema: parou de duplicar o dump de 30 dias da Overview — agora mostra só "picos de bot fora do padrão" (>1000/dia), conteúdo distinto.
+- Realtime honesto: "sessões última hora" (query `active_1h`, sem inflar).
+- Motion: fade-in de página (`prefers-reduced-motion` respeitado), hover real em linha de tabela (`background-color` 120ms, não `all`), `:focus-visible` em magenta, press states `scale(0.97-0.98)` em nav/botões, draw-in do gráfico corrigido (seletor `.line` não batia com `<polyline>`, nunca animava antes).
+
+**Validação**: sem sessão Clerk ativa (perdida num `close --all` anterior, sem CLERK_SECRET_KEY acessível no GSM pra remintar token). Validei via mock local (Node + vm, dados de exemplo) renderizado no Claude Browser pane, e testei as queries novas direto contra o D1 de produção via curl (retornaram dados reais: sessions_now=717, sessions_prev=404, leads_now=4 — confirma que o schema aceita as queries). **Não confirmei o resultado final autenticado em blog.dimus.com.br** — pedir pro Guilherme conferir com a sessão logada dele.
+
+**Pendências explícitas, não implementadas nesta rodada** (fora de escopo por tempo, registradas pra próxima):
+- Sparkline por post na tabela de Posts (precisa de query agrupada por post_slug+dia — mais cara, adiada).
+- Transição de seção via fetch parcial (hoje é full page reload — arquitetura Cloudflare Function sem SPA, decisão consciente do SPEC original; mitigado com fade-in de página).
+- Wave 4 (GA4/GSC) segue não implementada.
+
 ## Re-âncora pós-compact
 
 **Última ação**: Waves 2, 3 e 5 implementadas em `functions/admin.js`,
