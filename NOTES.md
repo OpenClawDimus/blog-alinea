@@ -36,21 +36,54 @@ não é meu bug, fora de escopo). Workaround: `wrangler pages deploy` reaproveit
 o `dist/` de um build anterior válido — `functions/` é lido fresco da raiz do
 repo pelo Cloudflare Pages independente da idade do `dist/`.
 
+## 004 — Waves 2, 3 e 5 concluídas (sidebar + dashboard completo + design)
+
+Commit `c3d612d`, deployado em produção (`wrangler pages deploy`, deployment
+`ad12103b`→ novo após o commit) e validado ao vivo via `agent-browser` em 4
+seções (Overview, Sistema, Busca, teste de colapso de sidebar).
+
+- **Wave 2**: shell com sidebar 240px + 7 seções via `?s=` (full page reload,
+  sem SPA — mantém stack Pages Function vanilla). Ícones thin desenhados à
+  mão (SVG inline, sem lib externa).
+- **Wave 3**: M1-M9 completos. Destaque: Sistema mostra o spike de bot do dia
+  2026-07-05 isolado (13.226 descartado vs. 101 sessões reais) — confirma a
+  Wave 1 funcionando em produção com dado real, não sintético.
+- **Wave 5**: tokens consolidados no topo do arquivo (`TOKENS` const), 1 único
+  tipo de gráfico (linha SVG, M8), JetBrains Mono + tabular-nums em toda
+  tabela/card. Não rodei a auditoria formal `impeccable`/`w-audit-anti-slop`
+  desta sessão — os 7 critérios do §5 do SPEC foram checados manualmente via
+  code review, não pela skill.
+- **Gap conhecido, não bloqueante**: o botão "Colapsar" da sidebar não
+  colapsou visualmente no teste com `agent-browser click` (JS de toggle não
+  disparou ou CSS não aplicou — não investigado a fundo). Testar em browser
+  real antes de considerar Wave 2 critério 2 (persistência do collapse) 100%
+  fechado.
+
+**Wave 4 (GA4/GSC) NÃO implementada nesta sessão** — decisão consciente por
+escopo/tempo: exige módulo JWT RS256 (`crypto.subtle`), Cron Trigger diário,
+migration `0009` (tabelas `ga4_daily`/`gsc_daily`), cache KV — infra nova, não
+só edição de `admin.js`. Credenciais já prontas da Wave 0 (SA `dimus-seo`,
+property `543369220`, `sc-domain:dimus.com.br`); seção Busca já existe em
+empty state honesto aguardando essa wave.
+
 ## Re-âncora pós-compact
 
-**Última ação**: Wave 0 e Wave 1 implementadas, deployadas e validadas ao vivo
-com screenshot real (agent-browser). Notas salvas (TRACKING-NOTES.md +
-NOTES.md), prestes a fazer commit de snapshot antes de partir pras waves 2-5.
+**Última ação**: Waves 2, 3 e 5 implementadas em `functions/admin.js`,
+deployadas em produção e validadas ao vivo via `agent-browser` (screenshots
+reais de Overview/Sistema/Busca). Commit `c3d612d`.
 
-**Estado atual**: Wave 0 ✅ | Wave 1 ✅ | Wave 2 (sidebar) pendente | Wave 3
-(dashboard completo M1-M9) pendente | Wave 4 (GA4/GSC no dashboard, já tem
-credenciais prontas da Wave 0) pendente | Wave 5 (polish anti-slop) pendente.
+**Estado atual**: Wave 0 ✅ | Wave 1 ✅ | Wave 2 ✅ (gap: teste de collapse
+sidebar não confirmado) | Wave 3 ✅ | Wave 4 ⏳ não implementada (infra
+GA4/GSC: JWT+cron+KV+migration 0009) | Wave 5 ✅ (sem auditoria formal
+`impeccable` rodada).
 
-**Próximo passo exato**: Implementar Wave 2 (sidebar 240px colapsável + shell
-com 7 seções) em `functions/admin.js` do repo `blog-dimus`, seguido de Wave 3
-(métricas reais M1-M9), Wave 4 (GA4/GSC), Wave 5 (design polish) — tudo
-conforme `SPEC.md`. Deploy incremental com `wrangler pages deploy` (Global API
-Key) e validação via `agent-browser` a cada wave.
+**Próximo passo exato**: (1) confirmar em browser real que o collapse da
+sidebar funciona (localStorage + toggle de classe `sb-collapsed`); (2) rodar
+`impeccable`/`w-audit-anti-slop` formalmente sobre `functions/admin.js` pra
+fechar Wave 5 com critério binário; (3) se o usuário quiser Wave 4, abrir
+como trabalho novo — módulo JWT RS256 + Cron Trigger + migration `0009` +
+seção Busca lendo do D1 pré-agregado.
 
-**Prompt de retomada pronto**: "Leia o NOTES.md do blog-dimus e retome de onde
-paramos — implementar Waves 2 a 5 do SPEC.md."
+**Prompt de retomada pronto**: "Leia o NOTES.md do blog-dimus — Waves 0,1,2,3,5
+prontas e deployadas. Falta: confirmar collapse da sidebar, rodar auditoria
+anti-slop formal, e decidir se entra a Wave 4 (GA4/GSC)."
