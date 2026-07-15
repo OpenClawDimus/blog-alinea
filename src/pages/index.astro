@@ -18,6 +18,10 @@ const featuredPost = mainPosts.find(({ data }) => data.featured) ?? mainPosts[0]
 const gridPosts = mainPosts.filter(p => p.id !== featuredPost?.id).slice(0, 2);
 const row3Posts = mainPosts.filter(p => p.id !== featuredPost?.id).slice(2, 5);
 
+// Badge "NOVO" para posts publicados nos últimos 7 dias
+const NEW_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000;
+const isNew = (d: Date) => Date.now() - d.getTime() < NEW_THRESHOLD_MS;
+
 // Gradient por cluster de tags (sem foto = sem stock-photo genérico)
 const TAG_GRADIENT: Record<string, string> = {
   "giro-de-estoque": "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 45%,#4a1060 100%)",
@@ -122,6 +126,7 @@ const getReadTime = (body: string | undefined) =>
                 tall={i === 0}
                 readingTime={getReadTime(post.body)}
                 description={post.data.description}
+                pinLabel={isNew(post.data.pubDatetime) ? "Novo" : undefined}
               />
             ))}
           </div>
@@ -141,6 +146,7 @@ const getReadTime = (body: string | undefined) =>
                 coverImage={post.data.coverImage}
                 readingTime={getReadTime(post.body)}
                 description={post.data.description}
+                pinLabel={isNew(post.data.pubDatetime) ? "Novo" : undefined}
               />
             ))}
           </div>
