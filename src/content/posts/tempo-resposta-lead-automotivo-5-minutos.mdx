@@ -29,7 +29,7 @@ import CompareTable from "@/components/blog/CompareTable.astro";
 import DimusHelp from "@/components/blog/DimusHelp.astro";
 import LeadForm from "@/components/blog/LeadForm.astro";
 
-<AnswerCapsule question="Qual o impacto do tempo de resposta ao lead no mercado automotivo?">
+<AnswerCapsule q="Qual o impacto do tempo de resposta ao lead no mercado automotivo?">
 O comprador de carro que manda mensagem agora está com o celular na mão, comparando opções. Em 10 minutos, ele já contactou duas outras revendas. Em 1 hora, pode ter comprado. Responder ao lead automotivo em menos de 5 minutos está associado a taxas de conexão de 85%+ — o mesmo lead, respondido em 30 minutos, tem taxa de conexão de 35% ou menos.
 </AnswerCapsule>
 
@@ -46,14 +46,14 @@ Essa é a razão pela qual o tempo de resposta tem impacto desproporcional na ta
 ## Benchmark de tempo de resposta por canal e taxa de conversão associada
 
 <CompareTable
-  headers={["Tempo de resposta", "Taxa de conexão estimada", "Probabilidade de conversão", "Benchmark de mercado BR"]}
+  headers={["Tempo de resposta", "Taxa de conexão estimada", "Probabilidade de conversão"]}
   rows={[
-    ["Menos de 5 minutos", "85–92%", "Alta (referência 100%)", "Revendas alto desempenho"],
-    ["5–15 minutos", "75–85%", "Alta (queda ~15%)", "Meta recomendada Dimus"],
-    ["15–30 minutos", "55–70%", "Média (queda ~35%)", "Média do mercado BR"],
-    ["30 min – 1 hora", "35–55%", "Baixa (queda ~55%)", "Abaixo da média"],
-    ["1–4 horas", "20–35%", "Muito baixa (queda ~75%)", "Zona de desperdício"],
-    ["Acima de 4 horas", "Menos de 15%", "Crítica (queda ~90%)", "Lead quase perdido"]
+    ["Menos de 5 minutos", "85–92%", "Alta (referência 100%)"],
+    ["5–15 minutos", "75–85%", "Alta (queda ~15%)"],
+    ["15–30 minutos", "55–70%", "Média (queda ~35%)"],
+    ["30 min – 1 hora", "35–55%", "Baixa (queda ~55%)"],
+    ["1–4 horas", "20–35%", "Muito baixa (queda ~75%)"],
+    ["Acima de 4 horas", "Menos de 15%", "Crítica (queda ~90%)"]
   ]}
 />
 
@@ -92,7 +92,7 @@ Extraia do seu CRM os leads dos últimos 30 dias com o timestamp de entrada e o 
   idTag="blog-post-atendimento"
   postSlug="tempo-resposta-lead-automotivo-5-minutos"
   cluster="automotivo-metricas"
-  headline="Quer implementar um SLA de resposta ao lead na sua revenda?"
-  subheadline="Consultor Dimus em 15 minutos, sem enrolação."
-  ctaLabel="Falar com consultor →"
+  title="Quer implementar um SLA de resposta ao lead na sua revenda?"
+  sub="Consultor Dimus em 15 minutos, sem enrolação."
+  cta="Falar com consultor →"
 />

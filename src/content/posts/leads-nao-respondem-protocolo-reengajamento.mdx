@@ -29,7 +29,7 @@ import CompareTable from "@/components/blog/CompareTable.astro";
 import DimusHelp from "@/components/blog/DimusHelp.astro";
 import LeadForm from "@/components/blog/LeadForm.astro";
 
-<AnswerCapsule question="O que fazer quando leads não respondem na revenda?">
+<AnswerCapsule q="O que fazer quando leads não respondem na revenda?">
 Lead que não responde não é lead perdido — na maioria dos casos, é lead mal trabalhado no timing errado ou com a abordagem errada. O protocolo de 3 tentativas em 48 horas com canais e mensagens diferentes recupera entre 20% e 35% dos leads que pareciam fantasmas. Depois de 3 tentativas sem resposta, é hora de arquivar e ativar via remarketing passivo — não insistir.
 </AnswerCapsule>
 
@@ -50,13 +50,13 @@ A causa número quatro está diretamente ligada ao timing: [responder ao lead em
 ## Quando reengajar, quando arquivar, quando tentar de novo
 
 <CompareTable
-  headers={["Tempo sem resposta", "Status", "Ação recomendada", "Probabilidade de recuperação"]}
+  headers={["Tempo sem resposta", "Ação recomendada", "Probabilidade de recuperação"]}
   rows={[
-    ["0–1 hora", "Lead quente parado", "Segundo contato imediato — canal diferente", "Alta (40–60%)"],
-    ["1–4 horas", "Lead esfriando", "Terceira tentativa com urgência real", "Média (25–40%)"],
-    ["4–24 horas", "Lead frio", "Última tentativa ativa com informação nova", "Baixa (10–25%)"],
-    ["24–48 horas", "Provável fantasma", "Arquivar lead ativo, iniciar remarketing passivo", "Muito baixa (<10%)"],
-    ["30+ dias", "Frio longo prazo", "Reativação suave com novo estoque", "Residual (5–8%)"]
+    ["0–1 hora", "Segundo contato imediato — canal diferente", "Alta (40–60%)"],
+    ["1–4 horas", "Terceira tentativa com urgência real", "Média (25–40%)"],
+    ["4–24 horas", "Última tentativa ativa com informação nova", "Baixa (10–25%)"],
+    ["24–48 horas", "Arquivar lead ativo, iniciar remarketing passivo", "Muito baixa (<10%)"],
+    ["30+ dias", "Reativação suave com novo estoque", "Residual (5–8%)"]
   ]}
 />
 
@@ -118,7 +118,7 @@ Pegue os leads dos últimos 30 dias que estão como "sem resposta" no CRM. Apliq
   idTag="blog-post-atendimento"
   postSlug="leads-nao-respondem-protocolo-reengajamento"
   cluster="automotivo-metricas"
-  headline="Quer implementar um protocolo de reengajamento na sua revenda?"
-  subheadline="Consultor Dimus em 15 minutos, sem enrolação."
-  ctaLabel="Falar com consultor →"
+  title="Quer implementar um protocolo de reengajamento na sua revenda?"
+  sub="Consultor Dimus em 15 minutos, sem enrolação."
+  cta="Falar com consultor →"
 />
