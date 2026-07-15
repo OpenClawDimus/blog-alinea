@@ -392,12 +392,35 @@ export async function onRequest(context) {
     LIMIT 30
   `, ...teamIps);
 
+  // Wave 4 — GA4/GSC pré-agregados pelo Worker cron separado (blog-dimus-cron,
+  // scheduled() 1x/dia). admin.js NUNCA chama googleapis.com direto — só lê
+  // D1. GSC filtrado a blog.dimus.com.br porque a Domain Property cobre todo
+  // dimus.com.br (todos os subdomínios), não só o blog.
+  let ga4Summary = [];
+  let gscTop = [];
+  if (env.GSC_GA4_ENABLED) {
+    ga4Summary = await q(env, `
+      SELECT date, SUM(sessions) AS sessions, SUM(engaged_sessions) AS engaged_sessions,
+             SUM(generate_lead_events) AS generate_lead_events
+      FROM ga4_daily GROUP BY date ORDER BY date DESC LIMIT 30
+    `);
+    gscTop = await q(env, `
+      SELECT page, query, SUM(clicks) AS clicks, SUM(impressions) AS impressions,
+             ROUND(SUM(position_sum) * 1.0 / SUM(impressions), 1) AS position
+      FROM gsc_daily
+      WHERE page LIKE 'https://blog.dimus.com.br%'
+      GROUP BY page, query
+      ORDER BY clicks DESC, impressions DESC
+      LIMIT 30
+    `);
+  }
+
   const section = (url.searchParams.get('s') || 'overview').toLowerCase();
   const html = dashboardHTML({
     section, totals, period, magnets, posts, postDetail, orphanPosts, devicesSite,
     newsletterTotals, newsletterDaily, accessLog,
     originsLeads, originsSessions, recent, daily, adminUser,
-    gscGa4Enabled: !!env.GSC_GA4_ENABLED,
+    gscGa4Enabled: !!env.GSC_GA4_ENABLED, ga4Summary, gscTop,
   });
   return new Response(html, {
     status: 200,
@@ -887,7 +910,7 @@ function mergeOrigins(leadsRows, sessionsRows) {
   return Array.from(map.values()).sort((a, b) => b.sessions - a.sessions);
 }
 
-function dashboardHTML({ section, totals, period, magnets, posts, postDetail, orphanPosts, devicesSite, newsletterTotals, newsletterDaily, accessLog, originsLeads, originsSessions, recent, daily, adminUser, gscGa4Enabled }) {
+function dashboardHTML({ section, totals, period, magnets, posts, postDetail, orphanPosts, devicesSite, newsletterTotals, newsletterDaily, accessLog, originsLeads, originsSessions, recent, daily, adminUser, gscGa4Enabled, ga4Summary, gscTop }) {
   const t = totals || {};
   const p = period || {};
   const nl = newsletterTotals || {};
@@ -1062,7 +1085,21 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
       <section><h2>Crescimento acumulado de inscritos</h2><div class="chart-wrap">${lineChartSVG(nlChartRows)}</div></section>
       <p class="empty">Conversão newsletter → lead por email não é calculável hoje: a tabela <span class="mono">leads</span> não tem coluna de email pra cruzar com <span class="mono">newsletter_subscribers</span>. Registrado como gap, não estimado.</p>`,
 
-    search: gscGa4Enabled ? `<section><h2>Busca orgânica (GA4/GSC)</h2><div class="empty">GSC_GA4_ENABLED ligado mas Wave 4 (ingestão) ainda não implementada.</div></section>` : `
+    search: gscGa4Enabled ? (() => {
+      const ga4Chart = lineChartSVG((ga4Summary || []).map((d) => ({ day: d.date, real: d.sessions })));
+      const ga4Tbl = tableOrEmpty(ga4Summary,
+        `<th>Dia</th><th class="num">Sessões (GA4)</th><th class="num">Engajadas</th><th class="num">generate_lead</th>`,
+        (d) => `<tr><td class="mono">${esc(d.date)}</td><td class="num">${d.sessions ?? 0}</td><td class="num">${d.engaged_sessions ?? 0}</td><td class="num mag">${d.generate_lead_events ?? 0}</td></tr>`,
+        'Sem dado GA4 ainda — Worker cron roda 1x/dia.');
+      const gscTbl = tableOrEmpty(gscTop,
+        `<th>Página</th><th>Query</th><th class="num">Clicks</th><th class="num">Impressões</th><th class="num">Posição</th>`,
+        (r) => `<tr><td class="mono faint">${esc((r.page || '').replace('https://blog.dimus.com.br', ''))}</td><td>${esc(r.query)}</td><td class="num mag">${r.clicks ?? 0}</td><td class="num">${r.impressions ?? 0}</td><td class="num">${r.position ?? '—'}</td></tr>`,
+        'Sem dado GSC do blog ainda — Worker cron roda 1x/dia.');
+      return `
+        <section><h2>Sessões GA4 por dia</h2><div class="chart-wrap">${ga4Chart}</div></section>
+        <section><h2>generate_lead e engajamento (GA4)</h2>${ga4Tbl}</section>
+        <section><h2>Top queries/páginas — busca orgânica (GSC, só blog.dimus.com.br)</h2>${gscTbl}</section>`;
+    })() : `
       <section><h2>Busca orgânica (GA4/GSC)</h2>
         <div class="empty">
           Aguardando Wave 4 — credenciais GA4/GSC já provisionadas (Wave 0, property <span class="mono">543369220</span>),

@@ -1,0 +1,28 @@
+name = "blog-dimus-cron"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+# Roda 1x/dia as 06:00 UTC (03:00 America/Sao_Paulo) -- fora do horario de
+# pico de leitura do dashboard, dado ja fica pronto quando alguem abrir de manha.
+[triggers]
+crons = ["0 6 * * *"]
+
+# Mesmo D1 do blog-dimus (blog-tracking) -- so este Worker grava em
+# ga4_daily/gsc_daily; functions/admin.js so LE dessas tabelas.
+[[d1_databases]]
+binding = "DB"
+database_name = "blog-tracking"
+database_id = "71f19cdf-555b-46f3-9b13-b81eb1238e96"
+
+# KV para cache do access token OAuth2 (~55min TTL, evita mintar token novo
+# a cada chamada dentro da mesma execucao do cron).
+[[kv_namespaces]]
+binding = "TOKEN_CACHE"
+id = "48d922ed3aaf4ae6aad8ba4f2aabd322"
+
+[vars]
+GA4_PROPERTY_ID = "543369220"
+GSC_SITE_URL = "sc-domain:dimus.com.br"
+
+# Secrets (via wrangler secret put, nunca aqui):
+#   GA4_SA_CLIENT_EMAIL, GA4_SA_PRIVATE_KEY
