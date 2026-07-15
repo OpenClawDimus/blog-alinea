@@ -14,7 +14,33 @@ const posts = await getCollection("posts");
 const sortedPosts = getSortedPosts(posts);
 // Excluir variantes -reddit da home (conteúdo de FAQ duplicado)
 const mainPosts = sortedPosts.filter(p => !p.id.endsWith("-reddit"));
-const featuredPost = mainPosts.find(({ data }) => data.featured) ?? mainPosts[0];
+
+// ── Motor de destaque: melhor post por indicadores SEO ──────────────────────
+// Regra: maior clicks nos últimos 30 dias (GSC). Tiebreaker: menor posição.
+// Fonte: seoa_performance (Supabase). Fallback: post mais recente.
+let featuredPost = mainPosts[0];
+try {
+  const SB_URL  = import.meta.env.PUBLIC_SUPABASE_URL  ?? "https://tllelzquwdfcjjlsurai.supabase.co";
+  const SB_KEY  = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  if (SB_KEY) {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/seoa_performance?select=page_url,clicks,position&source=eq.gsc&order=clicks.desc,position.asc&limit=10`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+    );
+    if (res.ok) {
+      const rows: Array<{ page_url: string; clicks: number; position: number }> = await res.json();
+      for (const row of rows) {
+        // Extrai slug da URL: .../posts/<slug>/
+        const match = row.page_url.match(/\/posts\/([^/]+)\/?$/);
+        if (!match) continue;
+        const slug = match[1];
+        const candidate = mainPosts.find(p => p.id === slug || p.id === `${slug}/index`);
+        if (candidate) { featuredPost = candidate; break; }
+      }
+    }
+  }
+} catch { /* silently fall back to most recent */ }
+
 const gridPosts = mainPosts.filter(p => p.id !== featuredPost?.id).slice(0, 2);
 const row3Posts = mainPosts.filter(p => p.id !== featuredPost?.id).slice(2, 5);
 
