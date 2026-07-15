@@ -161,6 +161,9 @@ export async function onRequest(context) {
   // ── Queries ────────────────────────────────────────────────────────────
   // Todas as agregações de sessions/page_views filtram is_bot = 0 (Wave 1 —
   // ~94% do tráfego bruto era axios/curl, não leitores reais).
+  const nowSec = Math.floor(Date.now() / 1000);
+  const D7 = 7 * 86400;
+
   const [totals] = await q(env, `
     SELECT
       (SELECT COUNT(*) FROM leads)                          AS leads,
@@ -169,7 +172,20 @@ export async function onRequest(context) {
       (SELECT COUNT(*) FROM sessions WHERE is_bot = 0)       AS sessions,
       (SELECT COUNT(*) FROM sessions WHERE is_bot = 1)       AS bot_sessions,
       (SELECT COUNT(*) FROM sessions)                        AS all_sessions,
-      (SELECT MAX(created_at) FROM sessions)                 AS last_ingestion
+      (SELECT MAX(created_at) FROM sessions)                 AS last_ingestion,
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - 3600}) AS active_1h
+  `).then((r) => (Array.isArray(r) ? r : [{}]));
+
+  // Comparação semana-vs-semana anterior (mesmos dados já agregados por dia,
+  // só recortados em duas janelas — nenhuma query nova além desta).
+  const [period] = await q(env, `
+    SELECT
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - D7}) AS sessions_now,
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}) AS sessions_prev,
+      (SELECT COUNT(*) FROM page_views WHERE is_bot = 0 AND created_at >= ${nowSec - D7}) AS views_now,
+      (SELECT COUNT(*) FROM page_views WHERE is_bot = 0 AND created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}) AS views_prev,
+      (SELECT COUNT(*) FROM leads WHERE created_at >= ${nowSec - D7}) AS leads_now,
+      (SELECT COUNT(*) FROM leads WHERE created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}) AS leads_prev
   `).then((r) => (Array.isArray(r) ? r : [{}]));
 
   const magnets = await q(env, `
@@ -193,8 +209,26 @@ export async function onRequest(context) {
     ORDER BY views DESC
   `);
 
-  // M6 — origem por lead (conversão) e por session (tráfego bruto real).
-  const origins = await q(env, `
+  // Drill-down de post individual (?s=posts&post=<slug>) — série diária real
+  // do post + leads específicos daquele post (mesma query pattern de `daily`).
+  const postSlug = url.searchParams.get('post') || '';
+  let postDetail = null;
+  if (postSlug) {
+    const postDaily = await q(env, `
+      SELECT strftime('%Y-%m-%d', created_at, 'unixepoch') AS day, COUNT(*) AS views
+      FROM page_views WHERE post_slug = ? AND is_bot = 0
+      GROUP BY day ORDER BY day DESC LIMIT 30
+    `, postSlug);
+    const postLeads = await q(env, `
+      SELECT lead_name, wa_phone, lead_phone, magnet_slug, utm_source, event_name, created_at
+      FROM leads WHERE post_slug = ? ORDER BY created_at DESC
+    `, postSlug);
+    postDetail = { slug: postSlug, daily: postDaily, leads: postLeads };
+  }
+
+  // M6 — origem por lead e por session, mescladas por chave em JS (funil real
+  // origem → sessão → lead) em vez de duas tabelas soltas sem conversão.
+  const originsLeads = await q(env, `
     SELECT CASE WHEN utm_source = '' OR utm_source IS NULL THEN '(direto/orgânico)' ELSE utm_source END AS origem,
            COUNT(*) AS leads
     FROM leads
@@ -202,7 +236,7 @@ export async function onRequest(context) {
     ORDER BY leads DESC
   `);
 
-  const originSessions = await q(env, `
+  const originsSessions = await q(env, `
     SELECT CASE WHEN utm_source = '' OR utm_source IS NULL THEN '(direto/orgânico)' ELSE utm_source END AS origem,
            COUNT(*) AS sessions
     FROM sessions
@@ -231,7 +265,8 @@ export async function onRequest(context) {
 
   const section = (url.searchParams.get('s') || 'overview').toLowerCase();
   const html = dashboardHTML({
-    section, totals, magnets, posts, origins, originSessions, recent, daily, adminUser,
+    section, totals, period, magnets, posts, postDetail,
+    originsLeads, originsSessions, recent, daily, adminUser,
     gscGa4Enabled: !!env.GSC_GA4_ENABLED,
   });
   return new Response(html, {
@@ -281,8 +316,9 @@ const TOKENS = `
   .empty { color:var(--ink-mut); max-width:60ch; }
   .err { color:oklch(70% 0.18 25); font-size:12px; }
   .botnote { color:var(--ink-faint); font-size:13px; margin:-20px 0 var(--sp4); max-width:70ch; }
-  a.logout { color:var(--ink-mut); font-size:12px; text-decoration:none; border:1px solid var(--line); padding:6px 12px; border-radius:6px; cursor:pointer; font-family:ui-sans-serif,system-ui,sans-serif; }
+  a.logout { color:var(--ink-mut); font-size:12px; text-decoration:none; border:1px solid var(--line); padding:6px 12px; border-radius:6px; cursor:pointer; font-family:ui-sans-serif,system-ui,sans-serif; transition:color 120ms ease, border-color 120ms ease; }
   a.logout:hover { color:var(--ink); border-color:var(--ink-mut); }
+  a.logout:active { transform:scale(0.97); }
   .top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:var(--sp3); }
 
   /* Faixa de métricas: linha tipográfica, não grid de cards idênticos. */
@@ -291,10 +327,32 @@ const TOKENS = `
   .kpi:last-child { border-right:0; margin-right:0; padding-right:0; }
   .kpi .n { font:500 32px/1 "Fraunces",Georgia,serif; font-variant-numeric:tabular-nums; }
   .kpi .l { color:var(--ink-faint); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; margin-top:8px; font-family:ui-sans-serif,system-ui,sans-serif; }
+  .kpi .d { font-size:12px; margin-top:6px; font-family:ui-monospace,"JetBrains Mono",monospace; }
 
   .chart-wrap { padding:var(--sp2) 0 0; }
-  .chart-wrap svg path.line { stroke-dasharray:2000; stroke-dashoffset:2000; animation:draw-in .7s cubic-bezier(.16,1,.3,1) forwards; }
+  .chart-wrap svg .line { stroke-dasharray:3000; stroke-dashoffset:3000; animation:draw-in .8s cubic-bezier(0.23,1,0.32,1) forwards; }
   @keyframes draw-in { to { stroke-dashoffset:0; } }
+
+  /* Motion/interação (princípios Emil Kowalski): easing forte, duração curta,
+     só transform/color — nunca 'transition:all'; sem animação em nav/teclado. */
+  @media (prefers-reduced-motion: no-preference) {
+    body { animation:page-in 180ms cubic-bezier(0.23,1,0.32,1); }
+  }
+  @keyframes page-in { from { opacity:0; } to { opacity:1; } }
+  tr { transition:background-color 120ms ease; }
+  @media (hover:hover) and (pointer:fine) {
+    tbody tr:hover { background:var(--surface-1); }
+  }
+  .rowa { color:inherit; text-decoration:none; border-bottom:1px solid transparent; transition:color 120ms ease, border-color 120ms ease; }
+  @media (hover:hover) and (pointer:fine) {
+    .rowa:hover { color:var(--mag); border-color:var(--mag-dim); }
+  }
+  .backlink { color:var(--ink-mut); text-decoration:none; font-size:13px; display:inline-block; margin-bottom:var(--sp2); transition:color 120ms ease; }
+  .backlink:hover { color:var(--mag); }
+  .good { color:var(--good); }
+  .bad { color:var(--warn); }
+  :focus-visible { outline:2px solid var(--mag); outline-offset:2px; border-radius:2px; }
+  button, a { -webkit-tap-highlight-color:transparent; }
 `;
 
 // Ícones thin monocromáticos (estilo Lucide, desenhados à mão — stroke=currentColor).
@@ -377,13 +435,15 @@ const SHELL = (title, active, body) => `<!doctype html>
     position:sticky; top:0; align-self:flex-start; height:100dvh; overflow-y:auto;
   }
   .brand { font:500 16px/1.2 "Fraunces",Georgia,serif; padding:2px 10px var(--sp3); color:var(--ink); letter-spacing:-.01em; }
-  .navitem { display:flex; align-items:center; gap:11px; padding:8px 10px; border-radius:6px; color:var(--ink-mut); text-decoration:none; font-size:13.5px; }
+  .navitem { display:flex; align-items:center; gap:11px; padding:8px 10px; border-radius:6px; color:var(--ink-mut); text-decoration:none; font-size:13.5px; transition:color 120ms ease, background-color 120ms ease; }
   .navitem .ic { display:flex; flex:0 0 auto; opacity:.85; }
-  .navitem:hover { color:var(--ink); background:var(--surface-2); }
+  @media (hover:hover) and (pointer:fine) { .navitem:hover { color:var(--ink); background:var(--surface-2); } }
+  .navitem:active { transform:scale(0.98); }
   .navitem.active { color:var(--mag); background:var(--mag-dim); }
   .navitem.active .ic { opacity:1; }
-  .collapse-btn { margin-top:auto; display:flex; align-items:center; gap:11px; padding:8px 10px; border-radius:6px; color:var(--ink-faint); background:none; border:0; cursor:pointer; font-size:12px; font-family:ui-sans-serif,system-ui,sans-serif; }
-  .collapse-btn:hover { color:var(--ink-mut); background:var(--surface-2); }
+  .collapse-btn { margin-top:auto; display:flex; align-items:center; gap:11px; padding:8px 10px; border-radius:6px; color:var(--ink-faint); background:none; border:0; cursor:pointer; font-size:12px; font-family:ui-sans-serif,system-ui,sans-serif; transition:color 120ms ease, background-color 120ms ease; }
+  @media (hover:hover) and (pointer:fine) { .collapse-btn:hover { color:var(--ink-mut); background:var(--surface-2); } }
+  .collapse-btn:active { transform:scale(0.97); }
   .collapse-btn svg { transition:transform .18s ease; flex:0 0 auto; }
   .main { flex:1; min-width:0; padding:var(--sp4) var(--sp4) 80px; }
   .wrap { max-width:1080px; margin:0 auto; }
@@ -665,10 +725,39 @@ const SECTION_TITLES = {
   magnets: 'Magnets', search: 'Busca', system: 'Sistema',
 };
 
-function dashboardHTML({ section, totals, magnets, posts, origins, originSessions, recent, daily, adminUser, gscGa4Enabled }) {
+// Delta vs. período anterior — nunca inventa significância: mostra o par
+// absoluto sempre junto do %, e admite quando não há período anterior pra comparar.
+function deltaTag(now, prev) {
+  now = now || 0; prev = prev || 0;
+  if (!prev) return `<span class="faint">sem período anterior pra comparar</span>`;
+  const diff = now - prev;
+  const pct = ((diff / prev) * 100).toFixed(0);
+  const arrow = diff > 0 ? '▲' : diff < 0 ? '▼' : '·';
+  const cls = diff > 0 ? 'good' : diff < 0 ? 'bad' : 'faint';
+  return `<span class="${cls}">${arrow} ${Math.abs(pct)}%</span> <span class="faint">(${prev} → ${now})</span>`;
+}
+
+// Funil real origem → sessão → lead: mescla as duas queries por chave em vez
+// de exibir duas tabelas soltas que o leitor tinha que cruzar de cabeça.
+function mergeOrigins(leadsRows, sessionsRows) {
+  if (leadsRows && leadsRows.__error) return leadsRows;
+  if (sessionsRows && sessionsRows.__error) return sessionsRows;
+  const map = new Map();
+  (sessionsRows || []).forEach((r) => map.set(r.origem, { origem: r.origem, sessions: r.sessions || 0, leads: 0 }));
+  (leadsRows || []).forEach((r) => {
+    const e = map.get(r.origem) || { origem: r.origem, sessions: 0, leads: 0 };
+    e.leads = r.leads || 0;
+    map.set(r.origem, e);
+  });
+  return Array.from(map.values()).sort((a, b) => b.sessions - a.sessions);
+}
+
+function dashboardHTML({ section, totals, period, magnets, posts, postDetail, originsLeads, originsSessions, recent, daily, adminUser, gscGa4Enabled }) {
   const t = totals || {};
+  const p = period || {};
   const botPct = t.all_sessions ? ((t.bot_sessions / t.all_sessions) * 100).toFixed(0) : 0;
   const active = SECTION_TITLES[section] ? section : 'overview';
+  const postSlugParam = postDetail?.slug || '';
 
   const magnetsTbl = tableOrEmpty(magnets,
     `<th>Magnet</th><th>Tipo</th><th>Cluster</th><th class="num">Downloads</th>`,
@@ -681,56 +770,82 @@ function dashboardHTML({ section, totals, magnets, posts, origins, originSession
 
   const postsTbl = tableOrEmpty(posts,
     `<th>Post</th><th class="num">Views</th><th class="num">Sessões</th><th class="num">Leads</th><th class="num">Conversão</th>`,
-    (p) => {
-      const conv = p.views ? ((p.leads / p.views) * 100).toFixed(1) + '%' : '—';
-      return `<tr><td class="mono">${esc(p.post_slug)}</td>
-        <td class="num">${p.views ?? 0}</td>
-        <td class="num">${p.sessions ?? 0}</td>
-        <td class="num">${p.leads ?? 0}</td>
+    (post) => {
+      const conv = post.views ? ((post.leads / post.views) * 100).toFixed(1) + '%' : '—';
+      const href = `/admin?s=posts&post=${encodeURIComponent(post.post_slug)}`;
+      return `<tr>
+        <td class="mono"><a class="rowa" href="${href}">${esc(post.post_slug)}</a></td>
+        <td class="num">${post.views ?? 0}</td>
+        <td class="num">${post.sessions ?? 0}</td>
+        <td class="num">${post.leads ?? 0}</td>
         <td class="num mag">${conv}</td></tr>`;
     },
     'Nenhuma view registrada ainda.');
 
-  const originsTbl = tableOrEmpty(origins,
-    `<th>Origem</th><th class="num">Leads</th>`,
-    (o) => `<tr><td>${esc(o.origem)}</td><td class="num">${o.leads ?? 0}</td></tr>`,
-    'Nenhum lead ainda.');
-
-  const originSessionsTbl = tableOrEmpty(originSessions,
-    `<th>Origem</th><th class="num">Sessões</th>`,
-    (o) => `<tr><td>${esc(o.origem)}</td><td class="num">${o.sessions ?? 0}</td></tr>`,
-    'Nenhuma sessão real ainda.');
+  const mergedOrigins = mergeOrigins(originsLeads, originsSessions);
+  const originsTbl = tableOrEmpty(mergedOrigins,
+    `<th>Origem</th><th class="num">Sessões</th><th class="num">Leads</th><th class="num">Conversão</th>`,
+    (o) => {
+      const conv = o.sessions ? ((o.leads / o.sessions) * 100).toFixed(2) + '%' : '—';
+      return `<tr><td>${esc(o.origem)}</td><td class="num">${o.sessions ?? 0}</td><td class="num">${o.leads ?? 0}</td><td class="num mag">${conv}</td></tr>`;
+    },
+    'Nenhuma origem registrada ainda.');
 
   const recentTbl = tableOrEmpty(recent,
-    `<th>Quando</th><th>Nome</th><th>WhatsApp</th><th>Post</th><th>Magnet</th><th>Origem</th>`,
+    `<th>Quando</th><th>Nome</th><th>WhatsApp</th><th>Post</th><th>Magnet</th><th>Origem</th><th>Evento</th>`,
     (l) => `<tr>
       <td class="mono">${esc(fmtDate(l.created_at))}</td>
       <td>${esc(l.lead_name || '—')}</td>
       <td class="mono">${maskPhone(l.wa_phone || l.lead_phone)}</td>
-      <td class="mono">${esc(l.post_slug || '—')}</td>
+      <td class="mono"><a class="rowa" href="/admin?s=posts&post=${encodeURIComponent(l.post_slug || '')}">${esc(l.post_slug || '—')}</a></td>
       <td class="mono">${esc(l.magnet_slug || '—')}</td>
-      <td>${esc(l.utm_source || 'direto')}</td></tr>`,
+      <td>${esc(l.utm_source || 'direto')}${l.cluster ? ` <span class="faint">· ${esc(l.cluster)}</span>` : ''}</td>
+      <td class="faint">${esc(l.event_name || '—')}</td></tr>`,
     'Nenhum lead capturado ainda.');
 
-  const dailyTbl = tableOrEmpty(daily,
-    `<th>Dia</th><th class="num">Sessões reais</th><th class="num">Bot descartado</th>`,
-    (d) => `<tr><td class="mono">${esc(d.day)}</td><td class="num">${d.real ?? 0}</td><td class="num mono">${d.bot ?? 0}</td></tr>`,
-    'Sem dados ainda.');
+  // Sistema mostra ANOMALIAS (picos de bot fora do padrão), não o mesmo dump
+  // de 30 dias que já vira o gráfico da Overview — conteúdo distinto por seção.
+  const botSpikes = (daily || []).filter((d) => (d.bot || 0) > 1000).sort((a, b) => (b.bot || 0) - (a.bot || 0));
+  const spikesTbl = tableOrEmpty(botSpikes,
+    `<th>Dia</th><th class="num">Bot descartado</th><th class="num">Sessões reais</th>`,
+    (d) => `<tr><td class="mono">${esc(d.day)}</td><td class="num mag">${d.bot ?? 0}</td><td class="num">${d.real ?? 0}</td></tr>`,
+    'Nenhum pico de bot fora do padrão nos últimos 30 dias.');
 
   const cards = `
     <div class="kpi-row">
-      <div class="kpi"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div></div>
-      <div class="kpi"><div class="n">${t.sessions ?? 0}</div><div class="l">Sessões reais</div></div>
-      <div class="kpi"><div class="n">${t.views ?? 0}</div><div class="l">Views</div></div>
+      <div class="kpi"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div><div class="d">${deltaTag(p.leads_now, p.leads_prev)}</div></div>
+      <div class="kpi"><div class="n">${t.sessions ?? 0}</div><div class="l">Sessões reais</div><div class="d">${deltaTag(p.sessions_now, p.sessions_prev)}</div></div>
+      <div class="kpi"><div class="n">${t.views ?? 0}</div><div class="l">Views</div><div class="d">${deltaTag(p.views_now, p.views_prev)}</div></div>
       <div class="kpi"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
+      <div class="kpi"><div class="n">${t.active_1h ?? 0}</div><div class="l">Sessões — última hora</div></div>
     </div>
-    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real). Números acima já refletem só tráfego real.</p>`;
+    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real). Números acima já refletem só tráfego real. Deltas comparam os últimos 7 dias vs. os 7 dias anteriores.</p>
+    <p class="stat">Conversão geral: <span class="mono mag">${t.sessions ? ((t.leads / t.sessions) * 100).toFixed(2) : '0.00'}%</span> das sessões reais viraram lead (${t.leads ?? 0} de ${t.sessions ?? 0}).</p>`;
 
   const top5 = (posts || []).slice(0, 5);
   const top5Tbl = tableOrEmpty(top5,
     `<th>Post</th><th class="num">Views</th><th class="num">Leads</th>`,
-    (p) => `<tr><td class="mono">${esc(p.post_slug)}</td><td class="num">${p.views ?? 0}</td><td class="num">${p.leads ?? 0}</td></tr>`,
+    (post) => `<tr><td class="mono"><a class="rowa" href="/admin?s=posts&post=${encodeURIComponent(post.post_slug)}">${esc(post.post_slug)}</a></td><td class="num">${post.views ?? 0}</td><td class="num">${post.leads ?? 0}</td></tr>`,
     'Nenhuma view registrada ainda.');
+
+  // Drill-down de post individual — clicar num post na tabela leva pra cá.
+  let postDetailBody = '';
+  if (postDetail) {
+    const chartRows = (postDetail.daily || []).map((d) => ({ day: d.day, real: d.views }));
+    const postLeadsTbl = tableOrEmpty(postDetail.leads,
+      `<th>Quando</th><th>Nome</th><th>WhatsApp</th><th>Magnet</th><th>Origem</th>`,
+      (l) => `<tr>
+        <td class="mono">${esc(fmtDate(l.created_at))}</td>
+        <td>${esc(l.lead_name || '—')}</td>
+        <td class="mono">${maskPhone(l.wa_phone || l.lead_phone)}</td>
+        <td class="mono">${esc(l.magnet_slug || '—')}</td>
+        <td>${esc(l.utm_source || 'direto')}</td></tr>`,
+      'Nenhum lead deste post ainda.');
+    postDetailBody = `
+      <a class="backlink" href="/admin?s=posts">← todos os posts</a>
+      <section><h2>Views por dia (últimos 30 dias com dado)</h2><div class="chart-wrap">${lineChartSVG(chartRows)}</div></section>
+      <section><h2>Leads deste post</h2>${postLeadsTbl}</section>`;
+  }
 
   const sections = {
     overview: `
@@ -738,13 +853,11 @@ function dashboardHTML({ section, totals, magnets, posts, origins, originSession
       <section><h2>Sessões reais por dia (bot já descartado)</h2><div class="chart-wrap">${lineChartSVG(daily)}</div></section>
       <section><h2>Top 5 posts</h2>${top5Tbl}</section>`,
 
-    posts: `<section><h2>Conversão por post (view → lead)</h2>${postsTbl}</section>`,
+    posts: postDetail ? postDetailBody : `<section><h2>Conversão por post (view → lead)</h2>${postsTbl}</section>`,
 
     leads: `<section><h2>Leads recentes</h2>${recentTbl}</section>`,
 
-    origins: `
-      <section><h2>Leads por origem (conversão)</h2>${originsTbl}</section>
-      <section><h2>Sessões reais por origem (tráfego)</h2>${originSessionsTbl}</section>`,
+    origins: `<section><h2>Funil por origem: sessão → lead (conversão real)</h2>${originsTbl}</section>`,
 
     magnets: `<section><h2>Downloads por magnet (catálogo finito)</h2>${magnetsTbl}</section>`,
 
@@ -762,17 +875,21 @@ function dashboardHTML({ section, totals, magnets, posts, origins, originSession
           <div class="kpi"><div class="n mag">${botPct}%</div><div class="l">Tráfego bot (histórico)</div></div>
           <div class="kpi"><div class="n">${t.bot_sessions ?? 0}</div><div class="l">Sessions marcadas bot</div></div>
           <div class="kpi"><div class="n">${t.all_sessions ?? 0}</div><div class="l">Sessions brutas totais</div></div>
+          <div class="kpi"><div class="n">${t.active_1h ?? 0}</div><div class="l">Sessões — última hora</div></div>
         </div>
         <p class="stat">Última ingestão: <span class="mono">${esc(fmtDate(t.last_ingestion))}</span></p>
       </section>
-      <section><h2>Sessões reais vs. bot descartado — últimos 30 dias</h2>${dailyTbl}</section>`,
+      <section><h2>Picos de bot fora do padrão (últimos 30 dias)</h2>${spikesTbl}</section>`,
   };
 
-  const body = `
+  const topBlock = `
     <div class="top">
-      <div><h1>${esc(SECTION_TITLES[active])}</h1><p class="sub">Blog Dimus · Admin — ${esc(adminUser?.email || '')}</p></div>
+      <div><h1${postDetail ? ' class="mono" style="font-size:26px;"' : ''}>${postDetail ? esc(postDetail.slug) : esc(SECTION_TITLES[active])}</h1><p class="sub">Blog Dimus · Admin — ${esc(adminUser?.email || '')}</p></div>
       <a class="logout clerk-signout" href="#">sair</a>
-    </div>
+    </div>`;
+
+  const body = `
+    ${topBlock}
     ${sections[active] || sections.overview}
     <script async crossorigin="anonymous"
       data-clerk-publishable-key="${CLERK_PK}"
@@ -792,5 +909,5 @@ function dashboardHTML({ section, totals, magnets, posts, origins, originSession
       });
     </script>`;
 
-  return SHELL(SECTION_TITLES[active], active, body);
+  return SHELL(postSlugParam ? postSlugParam : SECTION_TITLES[active], active, body);
 }
