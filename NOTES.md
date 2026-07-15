@@ -155,3 +155,48 @@ seção Busca lendo do D1 pré-agregado.
 **Prompt de retomada pronto**: "Leia o NOTES.md do blog-dimus — Waves 0,1,2,3,5
 prontas e deployadas. Falta: confirmar collapse da sidebar, rodar auditoria
 anti-slop formal, e decidir se entra a Wave 4 (GA4/GSC)."
+
+---
+
+## Estado git (2026-07-15 13:48)
+- **Branch:** main
+- **Dir:** /Users/guilhermeribeiro/Downloads/blog-dimus
+- **Modificados:** nenhum
+
+## 007 — Expansão sistêmica (Workflow com 6 agentes: pesquisa + investigação + síntese)
+
+Usuário pediu explicitamente `/workflows` com "visão sistêmica e vários agents" —
+rodei um Workflow real (`wf_439960b4-2ce`, 6 agentes: 3 pesquisa de mercado em
+paralelo + 2 investigação de schema em paralelo + 1 síntese) antes de codar.
+Achados usados na implementação:
+
+- **Newsletter nunca era exibida** — tabela `newsletter_subscribers` (email,
+  nome, created_at) existe desde a migration 0006 e nunca tinha query no
+  admin.js. Nova seção "Newsletter" no sidebar: total + novos 7d vs 7d
+  anterior + curva de crescimento acumulado.
+- **Gap real, não inventado**: conversão newsletter→lead por email é
+  impossível hoje — `leads` não tem coluna email (confirmado via `PRAGMA
+  table_info` direto no D1), só `lead_phone`/`wa_phone`. Reportado na UI como
+  gap explícito, não estimado com placeholder.
+- **Separação de acessos**: `admin_access_log` (Supabase, já existia, nunca
+  lido — só escrito) agora tem seção própria em Sistema ("Acessos da
+  equipe"). Os IPs distintos de lá excluem tráfego interno das métricas de
+  `sessions` reais na Overview (D1 e Supabase são bancos diferentes — sem
+  JOIN possível, filtro aplicado no worker via `NOT IN (?,?...)` com os IPs
+  como binds).
+- **Painel de post expandido** (pedido explícito do usuário — "quero um
+  painel expandido quando clico no post"): drill-down agora tem sessões vs.
+  média do site, conversão vs. média do site, breakdown de referrer, UTM e
+  dispositivo daquele post específico — tudo com queries novas, zero
+  migration.
+- **Novos indicadores gerais**: posts órfãos (sem view há 14 dias, na aba
+  Posts) e breakdown de dispositivo site-wide (Overview) — validados contra
+  D1 de produção real: desktop 2987 views vs. mobile 242 (dado real, não
+  mock).
+- **Todas as queries novas testadas via curl direto contra o D1 de produção**
+  antes do deploy (compareStats, orphanPosts, devicesSite, newsletterTotals)
+  — todas `success:true` com dado real.
+
+**Ainda pendente**: full audit adversarial explicitamente pedido pelo
+usuário ("QUero um full audit") — próximo passo desta sessão.
+

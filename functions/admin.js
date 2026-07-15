@@ -47,6 +47,31 @@ async function logAdminAccess(sid, clerkUserId, email, path, request, secretKey)
   } catch { /* audit log é best-effort */ }
 }
 
+// Lê admin_access_log (Supabase) — quem da equipe acessou o painel, quando,
+// de onde. Retorna também os IPs distintos, usados pra excluir tráfego da
+// própria equipe das métricas de audiência real do blog (ver mergeOrigins-
+// style: filtro aplicado no worker, não em SQL cross-database — sessions/
+// page_views vivem no D1, admin_access_log vive no Supabase, sem JOIN possível).
+async function getAdminAccessLog(sid, secretKey) {
+  try {
+    const r = await fetch(`https://api.clerk.com/v1/sessions/${sid}/tokens/supabase_blog`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${secretKey}`, 'content-type': 'application/json' },
+    });
+    if (!r.ok) return { rows: [], ips: [] };
+    const { jwt: templatedToken } = await r.json();
+    if (!templatedToken) return { rows: [], ips: [] };
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/admin_access_log?site=eq.blog&select=email,ip,path,user_agent,created_at&order=created_at.desc&limit=100`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${templatedToken}` } }
+    );
+    if (!res.ok) return { rows: [], ips: [] };
+    const rows = await res.json().catch(() => []);
+    const ips = Array.from(new Set((Array.isArray(rows) ? rows : []).map((r) => r.ip).filter(Boolean))).slice(0, 20);
+    return { rows: Array.isArray(rows) ? rows : [], ips };
+  } catch { return { rows: [], ips: [] }; }
+}
+
 function getCk(cookie, name) {
   const m = cookie.match(new RegExp('(?:^|;)\\s*' + name + '=([^;]*)'));
   return m ? decodeURIComponent(m[1]) : '';
@@ -158,6 +183,14 @@ export async function onRequest(context) {
     });
   }
 
+  // ── Acessos da equipe (Supabase admin_access_log) ─────────────────────────
+  // IPs de quem já logou no /admin excluem o próprio tráfego interno das
+  // métricas de sessions (page_views não tem ip_address — exclusão fica
+  // restrita a sessions, ver NOTES.md).
+  const accessLog = await getAdminAccessLog(payload.sid, env.CLERK_SECRET_KEY);
+  const teamIps = accessLog.ips;
+  const teamExcl = teamIps.length ? ` AND ip_address NOT IN (${teamIps.map(() => '?').join(',')})` : '';
+
   // ── Queries ────────────────────────────────────────────────────────────
   // Todas as agregações de sessions/page_views filtram is_bot = 0 (Wave 1 —
   // ~94% do tráfego bruto era axios/curl, não leitores reais).
@@ -169,24 +202,24 @@ export async function onRequest(context) {
       (SELECT COUNT(*) FROM leads)                          AS leads,
       (SELECT COUNT(*) FROM page_views WHERE is_bot = 0)     AS views,
       (SELECT COUNT(*) FROM magnet_downloads)                AS downloads,
-      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0)       AS sessions,
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0${teamExcl})       AS sessions,
       (SELECT COUNT(*) FROM sessions WHERE is_bot = 1)       AS bot_sessions,
       (SELECT COUNT(*) FROM sessions)                        AS all_sessions,
       (SELECT MAX(created_at) FROM sessions)                 AS last_ingestion,
-      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - 3600}) AS active_1h
-  `).then((r) => (Array.isArray(r) ? r : [{}]));
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - 3600}${teamExcl}) AS active_1h
+  `, ...teamIps, ...teamIps).then((r) => (Array.isArray(r) ? r : [{}]));
 
   // Comparação semana-vs-semana anterior (mesmos dados já agregados por dia,
   // só recortados em duas janelas — nenhuma query nova além desta).
   const [period] = await q(env, `
     SELECT
-      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - D7}) AS sessions_now,
-      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}) AS sessions_prev,
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - D7}${teamExcl}) AS sessions_now,
+      (SELECT COUNT(*) FROM sessions WHERE is_bot = 0 AND created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}${teamExcl}) AS sessions_prev,
       (SELECT COUNT(*) FROM page_views WHERE is_bot = 0 AND created_at >= ${nowSec - D7}) AS views_now,
       (SELECT COUNT(*) FROM page_views WHERE is_bot = 0 AND created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}) AS views_prev,
       (SELECT COUNT(*) FROM leads WHERE created_at >= ${nowSec - D7}) AS leads_now,
       (SELECT COUNT(*) FROM leads WHERE created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}) AS leads_prev
-  `).then((r) => (Array.isArray(r) ? r : [{}]));
+  `, ...teamIps, ...teamIps).then((r) => (Array.isArray(r) ? r : [{}]));
 
   const magnets = await q(env, `
     SELECT m.slug, m.title, m.type, m.cluster, m.active,
@@ -209,8 +242,18 @@ export async function onRequest(context) {
     ORDER BY views DESC
   `);
 
-  // Drill-down de post individual (?s=posts&post=<slug>) — série diária real
-  // do post + leads específicos daquele post (mesma query pattern de `daily`).
+  // Posts órfãos — sem view nos últimos 14 dias (indicador de conteúdo
+  // esquecido, calculável só com page_views, zero infra nova).
+  const orphanPosts = await q(env, `
+    SELECT post_slug, MAX(created_at) AS ultima_view, COUNT(*) AS views_total
+    FROM page_views WHERE post_slug != '' AND is_bot = 0
+    GROUP BY post_slug HAVING MAX(created_at) < ${nowSec - 14 * 86400}
+    ORDER BY ultima_view ASC
+  `);
+
+  // Drill-down de post individual (?s=posts&post=<slug>) — série diária real,
+  // leads, e a partir daqui a versão expandida: sessions/conversão vs. média
+  // do site, breakdown de referrer, UTM e dispositivo daquele post específico.
   const postSlug = url.searchParams.get('post') || '';
   let postDetail = null;
   if (postSlug) {
@@ -223,8 +266,63 @@ export async function onRequest(context) {
       SELECT lead_name, wa_phone, lead_phone, magnet_slug, utm_source, event_name, created_at
       FROM leads WHERE post_slug = ? ORDER BY created_at DESC
     `, postSlug);
-    postDetail = { slug: postSlug, daily: postDaily, leads: postLeads };
+    const [compareStats] = await q(env, `
+      SELECT
+        (SELECT COUNT(DISTINCT session_id) FROM page_views WHERE post_slug = ? AND is_bot = 0) AS post_sessions,
+        (SELECT AVG(cnt) FROM (
+           SELECT COUNT(DISTINCT session_id) AS cnt FROM page_views
+           WHERE post_slug != '' AND is_bot = 0 GROUP BY post_slug
+        )) AS avg_sessions_site,
+        (SELECT COUNT(*) FROM leads WHERE post_slug = ?) AS post_leads,
+        (SELECT COUNT(*) FROM leads) AS site_leads,
+        (SELECT COUNT(DISTINCT session_id) FROM sessions WHERE is_bot = 0) AS site_sessions
+    `, postSlug, postSlug).then((r) => (Array.isArray(r) ? r : [{}]));
+    const postReferrers = await q(env, `
+      SELECT CASE WHEN referrer = '' OR referrer IS NULL THEN '(direto)' ELSE referrer END AS referrer,
+             COUNT(*) AS views, COUNT(DISTINCT session_id) AS sessions
+      FROM page_views WHERE post_slug = ? AND is_bot = 0
+      GROUP BY referrer ORDER BY views DESC LIMIT 15
+    `, postSlug);
+    const postUtms = await q(env, `
+      SELECT CASE WHEN s.utm_source = '' OR s.utm_source IS NULL THEN '(direto/orgânico)' ELSE s.utm_source END AS utm_source,
+             COUNT(DISTINCT s.session_id) AS sessions
+      FROM sessions s
+      WHERE s.session_id IN (SELECT DISTINCT session_id FROM page_views WHERE post_slug = ? AND is_bot = 0 AND session_id != '')
+      GROUP BY utm_source ORDER BY sessions DESC
+    `, postSlug);
+    const postDevices = await q(env, `
+      SELECT CASE WHEN device_type = '' OR device_type IS NULL THEN 'desconhecido' ELSE device_type END AS device,
+             COUNT(*) AS views, COUNT(DISTINCT session_id) AS sessions
+      FROM page_views WHERE post_slug = ? AND is_bot = 0
+      GROUP BY device ORDER BY views DESC
+    `, postSlug);
+    postDetail = {
+      slug: postSlug, daily: postDaily, leads: postLeads, compareStats,
+      referrers: postReferrers, utms: postUtms, devices: postDevices,
+    };
   }
+
+  // Breakdown de dispositivo site-wide (via page_views — sessions não tem
+  // device_type, só page_views e leads têm essa coluna).
+  const devicesSite = await q(env, `
+    SELECT CASE WHEN device_type = '' OR device_type IS NULL THEN 'desconhecido' ELSE device_type END AS device,
+           COUNT(*) AS views, COUNT(DISTINCT session_id) AS sessions
+    FROM page_views WHERE is_bot = 0
+    GROUP BY device ORDER BY views DESC
+  `);
+
+  // Newsletter — novos inscritos 7d vs. 7d anteriores, total geral, curva de
+  // crescimento diária (tabela newsletter_subscribers, nunca antes exibida).
+  const [newsletterTotals] = await q(env, `
+    SELECT
+      (SELECT COUNT(*) FROM newsletter_subscribers) AS total,
+      (SELECT COUNT(*) FROM newsletter_subscribers WHERE created_at >= ${nowSec - D7}) AS novos_7d,
+      (SELECT COUNT(*) FROM newsletter_subscribers WHERE created_at >= ${nowSec - 2 * D7} AND created_at < ${nowSec - D7}) AS novos_7d_prev
+  `).then((r) => (Array.isArray(r) ? r : [{}]));
+  const newsletterDaily = await q(env, `
+    SELECT strftime('%Y-%m-%d', created_at, 'unixepoch') AS day, COUNT(*) AS novos
+    FROM newsletter_subscribers GROUP BY day ORDER BY day ASC
+  `);
 
   // M6 — origem por lead e por session, mescladas por chave em JS (funil real
   // origem → sessão → lead) em vez de duas tabelas soltas sem conversão.
@@ -265,7 +363,8 @@ export async function onRequest(context) {
 
   const section = (url.searchParams.get('s') || 'overview').toLowerCase();
   const html = dashboardHTML({
-    section, totals, period, magnets, posts, postDetail,
+    section, totals, period, magnets, posts, postDetail, orphanPosts, devicesSite,
+    newsletterTotals, newsletterDaily, accessLog,
     originsLeads, originsSessions, recent, daily, adminUser,
     gscGa4Enabled: !!env.GSC_GA4_ENABLED,
   });
@@ -363,6 +462,7 @@ function icon(name) {
     leads: 'M8 9a2.5 2.5 0 100-5 2.5 2.5 0 000 5z M3 14c0-3 2.2-5 5-5s5 2 5 5',
     origins: 'M8 14A6 6 0 108 2a6 6 0 000 12z M8 8l2.5-3.5L9 8l-2.5 3.5z',
     magnets: 'M2 5.5L8 3l6 2.5v5L8 13 2 10.5z M2 5.5L8 8l6-2.5 M8 8v5',
+    newsletter: 'M2 4h12v8H2z M2 4l6 5 6-5',
     search: 'M7 12A4.5 4.5 0 107 3a4.5 4.5 0 000 9z M10.3 10.3L14 14',
     system: 'M2 8h2.5l1.5-4 2 8 1.5-4H14',
   };
@@ -395,6 +495,7 @@ const NAV_ITEMS = [
   { key: 'leads', label: 'Leads' },
   { key: 'origins', label: 'Origens' },
   { key: 'magnets', label: 'Magnets' },
+  { key: 'newsletter', label: 'Newsletter' },
   { key: 'search', label: 'Busca' },
   { key: 'system', label: 'Sistema' },
 ];
@@ -722,7 +823,7 @@ function tableOrEmpty(rows, cols, render, emptyMsg) {
 
 const SECTION_TITLES = {
   overview: 'Overview', posts: 'Posts', leads: 'Leads', origins: 'Origens',
-  magnets: 'Magnets', search: 'Busca', system: 'Sistema',
+  magnets: 'Magnets', newsletter: 'Newsletter', search: 'Busca', system: 'Sistema',
 };
 
 // Delta vs. período anterior — nunca inventa significância: mostra o par
@@ -752,9 +853,10 @@ function mergeOrigins(leadsRows, sessionsRows) {
   return Array.from(map.values()).sort((a, b) => b.sessions - a.sessions);
 }
 
-function dashboardHTML({ section, totals, period, magnets, posts, postDetail, originsLeads, originsSessions, recent, daily, adminUser, gscGa4Enabled }) {
+function dashboardHTML({ section, totals, period, magnets, posts, postDetail, orphanPosts, devicesSite, newsletterTotals, newsletterDaily, accessLog, originsLeads, originsSessions, recent, daily, adminUser, gscGa4Enabled }) {
   const t = totals || {};
   const p = period || {};
+  const nl = newsletterTotals || {};
   const botPct = t.all_sessions ? ((t.bot_sessions / t.all_sessions) * 100).toFixed(0) : 0;
   const active = SECTION_TITLES[section] ? section : 'overview';
   const postSlugParam = postDetail?.slug || '';
@@ -811,6 +913,29 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
     (d) => `<tr><td class="mono">${esc(d.day)}</td><td class="num mag">${d.bot ?? 0}</td><td class="num">${d.real ?? 0}</td></tr>`,
     'Nenhum pico de bot fora do padrão nos últimos 30 dias.');
 
+  const orphansTbl = tableOrEmpty(orphanPosts,
+    `<th>Post</th><th class="num">Views totais</th><th class="num">Última view</th>`,
+    (o) => `<tr><td class="mono"><a class="rowa" href="/admin?s=posts&post=${encodeURIComponent(o.post_slug)}">${esc(o.post_slug)}</a></td><td class="num">${o.views_total ?? 0}</td><td class="num">${esc(fmtDate(o.ultima_view))}</td></tr>`,
+    'Nenhum post órfão — todos tiveram tráfego nos últimos 14 dias.');
+
+  const devicesTbl = tableOrEmpty(devicesSite,
+    `<th>Dispositivo</th><th class="num">Views</th><th class="num">Sessões</th>`,
+    (d) => `<tr><td>${esc(d.device)}</td><td class="num">${d.views ?? 0}</td><td class="num">${d.sessions ?? 0}</td></tr>`,
+    'Sem dados de dispositivo ainda.');
+
+  const teamIpsCount = (accessLog?.ips || []).length;
+  const accessLogTbl = tableOrEmpty(accessLog?.rows,
+    `<th>Quando</th><th>Email</th><th>IP</th><th>Path</th>`,
+    (a) => `<tr><td class="mono">${esc(fmtDate(a.created_at ? Math.floor(new Date(a.created_at).getTime() / 1000) : 0))}</td><td>${esc(a.email || '—')}</td><td class="mono">${esc(a.ip || '—')}</td><td class="mono faint">${esc(a.path || '—')}</td></tr>`,
+    'Nenhum acesso registrado ainda (admin_access_log vazio ou indisponível).');
+
+  const nlPct7d = deltaTag(nl.novos_7d, nl.novos_7d_prev);
+  let nlCumulative = 0;
+  const nlChartRows = (newsletterDaily || []).map((d) => {
+    nlCumulative += d.novos || 0;
+    return { day: d.day, real: nlCumulative };
+  }).reverse(); // lineChartSVG espera ordem desc (ele reverte internamente)
+
   const cards = `
     <div class="kpi-row">
       <div class="kpi"><div class="n mag">${t.leads ?? 0}</div><div class="l">Leads</div><div class="d">${deltaTag(p.leads_now, p.leads_prev)}</div></div>
@@ -819,7 +944,7 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
       <div class="kpi"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
       <div class="kpi"><div class="n">${t.active_1h ?? 0}</div><div class="l">Sessões — última hora</div></div>
     </div>
-    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real). Números acima já refletem só tráfego real. Deltas comparam os últimos 7 dias vs. os 7 dias anteriores.</p>
+    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real).${teamIpsCount ? ` Tráfego de ${teamIpsCount} IP(s) da própria equipe (via admin_access_log) já excluído das sessões acima.` : ''} Deltas comparam os últimos 7 dias vs. os 7 dias anteriores.</p>
     <p class="stat">Conversão geral: <span class="mono mag">${t.sessions ? ((t.leads / t.sessions) * 100).toFixed(2) : '0.00'}%</span> das sessões reais viraram lead (${t.leads ?? 0} de ${t.sessions ?? 0}).</p>`;
 
   const top5 = (posts || []).slice(0, 5);
@@ -841,9 +966,40 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
         <td class="mono">${esc(l.magnet_slug || '—')}</td>
         <td>${esc(l.utm_source || 'direto')}</td></tr>`,
       'Nenhum lead deste post ainda.');
+
+    const cs = postDetail.compareStats || {};
+    const postSessions = cs.post_sessions ?? 0;
+    const avgSessions = cs.avg_sessions_site ? Number(cs.avg_sessions_site).toFixed(1) : '0.0';
+    const postConv = postSessions ? ((cs.post_leads / postSessions) * 100).toFixed(2) : '0.00';
+    const siteConv = cs.site_sessions ? ((cs.site_leads / cs.site_sessions) * 100).toFixed(2) : '0.00';
+    const compareRow = `
+      <div class="kpi-row">
+        <div class="kpi"><div class="n">${postSessions}</div><div class="l">Sessões deste post</div><div class="d faint">média do site: ${avgSessions}</div></div>
+        <div class="kpi"><div class="n mag">${postConv}%</div><div class="l">Conversão deste post</div><div class="d faint">média do site: ${siteConv}%</div></div>
+      </div>`;
+
+    const referrersTbl = tableOrEmpty(postDetail.referrers,
+      `<th>Referrer</th><th class="num">Views</th><th class="num">Sessões</th>`,
+      (r) => `<tr><td class="mono">${esc(r.referrer)}</td><td class="num">${r.views ?? 0}</td><td class="num">${r.sessions ?? 0}</td></tr>`,
+      'Sem referrer registrado ainda.');
+
+    const utmsTbl = tableOrEmpty(postDetail.utms,
+      `<th>Origem (UTM)</th><th class="num">Sessões</th>`,
+      (u) => `<tr><td>${esc(u.utm_source)}</td><td class="num">${u.sessions ?? 0}</td></tr>`,
+      'Sem UTM registrado ainda.');
+
+    const devicesPostTbl = tableOrEmpty(postDetail.devices,
+      `<th>Dispositivo</th><th class="num">Views</th><th class="num">Sessões</th>`,
+      (d) => `<tr><td>${esc(d.device)}</td><td class="num">${d.views ?? 0}</td><td class="num">${d.sessions ?? 0}</td></tr>`,
+      'Sem dados de dispositivo ainda.');
+
     postDetailBody = `
       <a class="backlink" href="/admin?s=posts">← todos os posts</a>
       <section><h2>Views por dia (últimos 30 dias com dado)</h2><div class="chart-wrap">${lineChartSVG(chartRows)}</div></section>
+      <section><h2>Este post vs. média do site</h2>${compareRow}</section>
+      <section><h2>Origem por referrer</h2>${referrersTbl}</section>
+      <section><h2>Origem por UTM</h2>${utmsTbl}</section>
+      <section><h2>Dispositivo</h2>${devicesPostTbl}</section>
       <section><h2>Leads deste post</h2>${postLeadsTbl}</section>`;
   }
 
@@ -851,15 +1007,26 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
     overview: `
       ${cards}
       <section><h2>Sessões reais por dia (bot já descartado)</h2><div class="chart-wrap">${lineChartSVG(daily)}</div></section>
-      <section><h2>Top 5 posts</h2>${top5Tbl}</section>`,
+      <section><h2>Top 5 posts</h2>${top5Tbl}</section>
+      <section><h2>Dispositivo (site inteiro)</h2>${devicesTbl}</section>`,
 
-    posts: postDetail ? postDetailBody : `<section><h2>Conversão por post (view → lead)</h2>${postsTbl}</section>`,
+    posts: postDetail ? postDetailBody : `
+      <section><h2>Conversão por post (view → lead)</h2>${postsTbl}</section>
+      <section><h2>Posts órfãos — sem view nos últimos 14 dias</h2>${orphansTbl}</section>`,
 
     leads: `<section><h2>Leads recentes</h2>${recentTbl}</section>`,
 
     origins: `<section><h2>Funil por origem: sessão → lead (conversão real)</h2>${originsTbl}</section>`,
 
     magnets: `<section><h2>Downloads por magnet (catálogo finito)</h2>${magnetsTbl}</section>`,
+
+    newsletter: `
+      <div class="kpi-row">
+        <div class="kpi"><div class="n mag">${nl.total ?? 0}</div><div class="l">Inscritos totais</div></div>
+        <div class="kpi"><div class="n">${nl.novos_7d ?? 0}</div><div class="l">Novos — últimos 7 dias</div><div class="d">${nlPct7d}</div></div>
+      </div>
+      <section><h2>Crescimento acumulado de inscritos</h2><div class="chart-wrap">${lineChartSVG(nlChartRows)}</div></section>
+      <p class="empty">Conversão newsletter → lead por email não é calculável hoje: a tabela <span class="mono">leads</span> não tem coluna de email pra cruzar com <span class="mono">newsletter_subscribers</span>. Registrado como gap, não estimado.</p>`,
 
     search: gscGa4Enabled ? `<section><h2>Busca orgânica (GA4/GSC)</h2><div class="empty">GSC_GA4_ENABLED ligado mas Wave 4 (ingestão) ainda não implementada.</div></section>` : `
       <section><h2>Busca orgânica (GA4/GSC)</h2>
@@ -879,7 +1046,10 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
         </div>
         <p class="stat">Última ingestão: <span class="mono">${esc(fmtDate(t.last_ingestion))}</span></p>
       </section>
-      <section><h2>Picos de bot fora do padrão (últimos 30 dias)</h2>${spikesTbl}</section>`,
+      <section><h2>Picos de bot fora do padrão (últimos 30 dias)</h2>${spikesTbl}</section>
+      <section><h2>Acessos da equipe ao painel (admin_access_log)</h2>
+        <p class="stat">${teamIpsCount} IP(s) distintos identificados — já excluídos do tráfego real na Overview.</p>
+        ${accessLogTbl}</section>`,
   };
 
   const topBlock = `
