@@ -200,3 +200,73 @@ Achados usados na implementação:
 **Ainda pendente**: full audit adversarial explicitamente pedido pelo
 usuário ("QUero um full audit") — próximo passo desta sessão.
 
+## 008 — Full audit (skill `full-audit`, Workflow `wf_b00b3e88-427`)
+
+```
+GATE 0: lint ✗ (39 erros no-console, todos em tracker.js/wa-webhook.js/
+        gate-event-naming.mjs — NENHUM em admin.js) | build ✗ (bug local
+        conhecido @rollup/rollup-darwin-x64, documentado desde Wave 1;
+        functions/ não faz parte do build Astro, deploy é via
+        wrangler pages deploy dist, independente) | gate:naming ✓ | testes N/A
+ANALISADOR: COMPLEXO — 644 linhas alteradas em 1 arquivo (limite 150),
+        toca auth gate (Clerk) e PII de leads (path sensível, heurística
+        do skill não pegou pelo nome do arquivo, mas o conteúdo qualifica)
+CONTRATO/SPEC: N/A — sem CONTRACT.yaml nem ADR pra functions/admin.js
+
+FINDERS: audit (2 achados) | qa (3 achados) | red team (5 achados) — 11 brutos
+VERIFICAÇÃO ADVERSARIAL: 11 brutos → 10 sobreviveram → 1 morto como falso-positivo
+DEVIL'S ADVOCATE: rodou — veredito approach_questionable — getAdminAccessLog
+        síncrono no caminho crítico (quebra o padrão fire-and-forget do
+        resto do arquivo); exclusão por IP é proxy frágil pra "é da equipe"
+MUTATION TESTING: não disparado (sem suíte de teste pro módulo)
+E2E: não rodado (sem sessão Clerk ativa pra login real — ver pendência
+        separada sobre CLERK_SECRET_KEY não estar no GSM)
+ROLLBACK: git revert 1a3c0fc/b19398a limpo, sem conflito (confirmado)
+
+ACHADOS SOBREVIVENTES — CORRIGIDOS nesta sessão (commit 1a3c0fc):
+1. [alta] Exclusão de tráfego da equipe só aplicada em totals/period; daily
+   e originsSessions ainda contavam a equipe apesar do texto na UI dizer o
+   contrário. → Corrigido: teamExcl aplicado consistentemente + texto da UI
+   agora declara exatamente o que é filtrado (sessões) vs. o que não é
+   (views/leads).
+2. [média] logAdminAccess + getAdminAccessLog mintavam 2 tokens Clerk
+   idênticos por request. → Corrigido: mintSupabaseBlogToken() único,
+   compartilhado, com timeout de 2.5s (mitiga o concern do devil's
+   advocate sobre bloquear o render numa API externa lenta).
+
+ACHADOS SOBREVIVENTES — DOCUMENTADOS, NÃO CORRIGIDOS (decisão fora do
+meu mandato nesta sessão, exigem decisão do dono do produto/infra):
+3. [alta] RLS de `admin_access_log` (Supabase) só libera SELECT pra
+   suporte@dimus.com.br e ribeirofguilherme@gmail.com — qualquer outro
+   admin autenticado vê "nenhum acesso" mesmo havendo dado real,
+   indistinguível de tabela vazia. Decisão: expandir a allowlist RLS ou
+   aceitar a limitação — não é algo pra eu decidir sozinho.
+4. [alta] `verifyClerkJwt` valida assinatura + exp mas nunca checa
+   revogação de sessão no Clerk — um `__session` roubado continua válido
+   até expirar mesmo depois de sign-out remoto. Pré-existente (código de
+   antes desta sessão), não introduzido hoje.
+5. [alta] `logAdminAccess` engole qualquer erro (catch vazio) — falha da
+   API do Clerk deixa acesso não-auditado sem nenhum sinal. Pré-existente.
+6. [média] Stack de auth Clerk duplicada byte-a-byte entre admin.js e
+   admin/ds.js. Pré-existente, cresceu com o diff de hoje mas não foi eu
+   quem criou a duplicação original.
+7. [média] `onRequest` monolítico, 236 linhas, sem separação auth/dados/
+   view — dificulta manutenção futura. Débito técnico acumulado, não
+   quebra nada hoje.
+8. [média] Scripts de terceiros (jsdelivr motion, clerk-js) sem SRI, sem
+   CSP configurado. Pré-existente.
+9. [baixa] `payload.exp` undefined falharia aberto (não explorável hoje —
+   Clerk sempre seta exp). Pré-existente.
+
+ETAPAS QUE NÃO RODARAM E POR QUÊ:
+- Mutation testing: não disparado — módulo não tem suíte de teste (não é
+  uma lacuna nova, nunca teve).
+- E2E real (clique/conversão via browser autenticado): não rodado — falta
+  o CLERK_SECRET_KEY deste app no GSM pra mintar sign-in token
+  programaticamente. Pendência já sinalizada ao usuário antes deste audit,
+  segue aberta.
+- Gate 0 lint/build: rodaram mas falharam por razões 100% alheias ao meu
+  diff (débito de outros arquivos + bug local de ambiente já documentado) —
+  não travei o pipeline nisso porque bloquear a auditoria de admin.js por
+  erro em wa-webhook.js seria security theater, não rigor.
+
