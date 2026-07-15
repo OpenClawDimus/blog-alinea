@@ -15,18 +15,35 @@ const CLERK_PK = 'pk_live_Y2xlcmsuZGltdXMuY29tLmJyJA';
 const SUPABASE_URL = 'https://tllelzquwdfcjjlsurai.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRsbGVsenF1d2RmY2pqbHN1cmFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyOTExMjQsImV4cCI6MjA4OTg2NzEyNH0.bKUp91XCEvEtU1h8HtcqY7PeIaLuPLDjXUUZbvR5cRc';
 
-// Minta um token do template 'supabase_blog' (claim app='blog') a partir do
+// Minta 1 token do template 'supabase_blog' (claim app='blog') a partir do
 // sid presente no token de sessão padrão (__session), via Clerk Backend API.
-// Depois insere 1 linha em admin_access_log — best-effort, nunca bloqueia o dashboard.
-async function logAdminAccess(sid, clerkUserId, email, path, request, secretKey) {
+// Compartilhado entre logAdminAccess (escrita) e getAdminAccessLog (leitura)
+// — achado do full audit (wf_b00b3e88-427, #5 QA): antes cada função mintava
+// seu próprio token, dobrando a chamada de rede à toa no mesmo request.
+// Timeout defensivo (achado devil's advocate #1): getAdminAccessLog é
+// aguardado de forma síncrona antes do D1 rodar, diferente do padrão
+// fire-and-forget do resto do arquivo — um Clerk/Supabase lento não pode
+// travar o dashboard inteiro, então aborta rápido e segue sem exclusão.
+async function mintSupabaseBlogToken(sid, secretKey) {
   try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 2500);
     const r = await fetch(`https://api.clerk.com/v1/sessions/${sid}/tokens/supabase_blog`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${secretKey}`, 'content-type': 'application/json' },
+      signal: ctrl.signal,
     });
-    if (!r.ok) return;
+    clearTimeout(timer);
+    if (!r.ok) return null;
     const { jwt: templatedToken } = await r.json();
-    if (!templatedToken) return;
+    return templatedToken || null;
+  } catch { return null; }
+}
+
+// Insere 1 linha em admin_access_log — best-effort, nunca bloqueia o dashboard.
+async function logAdminAccess(clerkUserId, email, path, request, templatedToken) {
+  if (!templatedToken) return;
+  try {
     await fetch(`${SUPABASE_URL}/rest/v1/admin_access_log`, {
       method: 'POST',
       headers: {
@@ -52,15 +69,18 @@ async function logAdminAccess(sid, clerkUserId, email, path, request, secretKey)
 // própria equipe das métricas de audiência real do blog (ver mergeOrigins-
 // style: filtro aplicado no worker, não em SQL cross-database — sessions/
 // page_views vivem no D1, admin_access_log vive no Supabase, sem JOIN possível).
-async function getAdminAccessLog(sid, secretKey) {
+//
+// GOTCHA CONHECIDO (achado do full audit #4 QA, não corrigido nesta sessão):
+// a policy RLS de SELECT em admin_access_log (Supabase, projeto
+// tllelzquwdfcjjlsurai) só libera leitura pra suporte@dimus.com.br e
+// ribeirofguilherme@gmail.com. Qualquer outro admin autenticado recebe uma
+// lista vazia (200 OK, 0 linhas) indistinguível de "sem acessos ainda" — a
+// exclusão de tráfego da equipe silenciosamente não roda pra eles. Decisão
+// de segurança (expandir a allowlist RLS ou aceitar a limitação) fica pro
+// dono do produto, não é algo pra essa função decidir sozinha.
+async function getAdminAccessLog(templatedToken) {
+  if (!templatedToken) return { rows: [], ips: [] };
   try {
-    const r = await fetch(`https://api.clerk.com/v1/sessions/${sid}/tokens/supabase_blog`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${secretKey}`, 'content-type': 'application/json' },
-    });
-    if (!r.ok) return { rows: [], ips: [] };
-    const { jwt: templatedToken } = await r.json();
-    if (!templatedToken) return { rows: [], ips: [] };
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/admin_access_log?site=eq.blog&select=email,ip,path,user_agent,created_at&order=created_at.desc&limit=100`,
       { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${templatedToken}` } }
@@ -168,10 +188,6 @@ export async function onRequest(context) {
           email: user.email_addresses?.[0]?.email_address || '',
           role,
         };
-        // Audit log — best-effort, não bloqueia o dashboard se falhar.
-        context.waitUntil(
-          logAdminAccess(payload.sid, payload.sub, adminUser.email, url.pathname, request, env.CLERK_SECRET_KEY)
-        );
       }
     }
   }
@@ -183,11 +199,21 @@ export async function onRequest(context) {
     });
   }
 
+  // 1 mint de token Clerk 'supabase_blog' compartilhado entre escrita (audit
+  // log) e leitura (acessos da equipe) — antes cada função mintava o seu.
+  const supabaseBlogToken = await mintSupabaseBlogToken(payload.sid, env.CLERK_SECRET_KEY);
+
+  // Audit log — best-effort, fire-and-forget, não bloqueia o dashboard se falhar.
+  context.waitUntil(
+    logAdminAccess(payload.sub, adminUser.email, url.pathname, request, supabaseBlogToken)
+  );
+
   // ── Acessos da equipe (Supabase admin_access_log) ─────────────────────────
   // IPs de quem já logou no /admin excluem o próprio tráfego interno das
   // métricas de sessions (page_views não tem ip_address — exclusão fica
-  // restrita a sessions, ver NOTES.md).
-  const accessLog = await getAdminAccessLog(payload.sid, env.CLERK_SECRET_KEY);
+  // restrita a sessions, ver NOTES.md). Ver gotcha de RLS no comentário de
+  // getAdminAccessLog — não funciona pra todo admin, só pra 2 emails.
+  const accessLog = await getAdminAccessLog(supabaseBlogToken);
   const teamIps = accessLog.ips;
   const teamExcl = teamIps.length ? ` AND ip_address NOT IN (${teamIps.map(() => '?').join(',')})` : '';
 
@@ -334,14 +360,18 @@ export async function onRequest(context) {
     ORDER BY leads DESC
   `);
 
+  // teamExcl aplicado aqui também — achado do full audit (wf_b00b3e88-427,
+  // #3 QA): antes só totals/period excluíam a equipe, origins e daily
+  // continuavam contando o próprio tráfego interno apesar do texto na UI
+  // dizer "já excluído das sessões acima". Consistência agora.
   const originsSessions = await q(env, `
     SELECT CASE WHEN utm_source = '' OR utm_source IS NULL THEN '(direto/orgânico)' ELSE utm_source END AS origem,
            COUNT(*) AS sessions
     FROM sessions
-    WHERE is_bot = 0
+    WHERE is_bot = 0${teamExcl}
     GROUP BY origem
     ORDER BY sessions DESC
-  `);
+  `, ...teamIps);
 
   const recent = await q(env, `
     SELECT lead_name, lead_phone, wa_phone, event_name, post_slug, cluster, magnet_slug, utm_source, created_at
@@ -351,15 +381,16 @@ export async function onRequest(context) {
   `);
 
   // M8 — série diária sessions reais vs. bot descartado (últimos 30 dias com dado).
+  const dailyTeamExcl = teamIps.length ? ` WHERE ip_address NOT IN (${teamIps.map(() => '?').join(',')})` : '';
   const daily = await q(env, `
     SELECT strftime('%Y-%m-%d', created_at, 'unixepoch') AS day,
            SUM(CASE WHEN is_bot = 0 THEN 1 ELSE 0 END) AS real,
            SUM(CASE WHEN is_bot = 1 THEN 1 ELSE 0 END) AS bot
-    FROM sessions
+    FROM sessions${dailyTeamExcl}
     GROUP BY day
     ORDER BY day DESC
     LIMIT 30
-  `);
+  `, ...teamIps);
 
   const section = (url.searchParams.get('s') || 'overview').toLowerCase();
   const html = dashboardHTML({
@@ -944,7 +975,7 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
       <div class="kpi"><div class="n">${t.downloads ?? 0}</div><div class="l">Downloads</div></div>
       <div class="kpi"><div class="n">${t.active_1h ?? 0}</div><div class="l">Sessões — última hora</div></div>
     </div>
-    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real).${teamIpsCount ? ` Tráfego de ${teamIpsCount} IP(s) da própria equipe (via admin_access_log) já excluído das sessões acima.` : ''} Deltas comparam os últimos 7 dias vs. os 7 dias anteriores.</p>
+    <p class="botnote">Filtro de bot ativo (Wave 1) — ${t.bot_sessions ?? 0} de ${t.all_sessions ?? 0} sessions brutas descartadas (${botPct}% do tráfego bruto era script/tooling, não leitor real).${teamIpsCount ? ` Tráfego de ${teamIpsCount} IP(s) da própria equipe (via admin_access_log) já excluído das contagens de <strong>sessões</strong> em toda a Overview/Origens/Sistema — views e leads não são filtrados por IP (page_views não tem essa coluna).` : ''} Deltas comparam os últimos 7 dias vs. os 7 dias anteriores.</p>
     <p class="stat">Conversão geral: <span class="mono mag">${t.sessions ? ((t.leads / t.sessions) * 100).toFixed(2) : '0.00'}%</span> das sessões reais viraram lead (${t.leads ?? 0} de ${t.sessions ?? 0}).</p>`;
 
   const top5 = (posts || []).slice(0, 5);
@@ -1048,7 +1079,7 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
       </section>
       <section><h2>Picos de bot fora do padrão (últimos 30 dias)</h2>${spikesTbl}</section>
       <section><h2>Acessos da equipe ao painel (admin_access_log)</h2>
-        <p class="stat">${teamIpsCount} IP(s) distintos identificados — já excluídos do tráfego real na Overview.</p>
+        <p class="stat">${teamIpsCount ? `${teamIpsCount} IP(s) distintos identificados — já excluídos do tráfego real na Overview/Origens/série diária.` : 'Nenhum IP identificado ainda. Se você já acessou o painel antes e não vê nada aqui, a policy RLS do Supabase (admin_access_log) pode não liberar leitura pro seu email — checar com quem administra o Supabase antes de assumir que não há acesso registrado.'}</p>
         ${accessLogTbl}</section>`,
   };
 
