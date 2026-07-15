@@ -64,6 +64,7 @@ const getReadTime = (body: string | undefined) =>
           title={post.data.title}
           date={post.data.pubDatetime}
           ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
+          coverImage={post.data.coverImage}
           readingTime={getReadTime(post.body)}
           description={post.data.description}
         />
