@@ -266,8 +266,15 @@ export async function onRequestPost(context) {
   }
 
   // ── D1 write (mirror local — subscribers visíveis no /admin) ─────────────
+  // event_id inclui timestamp (achado de teste ao vivo 2026-07-15): antes era
+  // fixo 'nl-'+email, então uma reinscrição meses depois de um unsubscribe
+  // nunca aparecia de novo em `leads` (ON CONFLICT bloqueava pra sempre).
+  // O dedup real contra double-submit já é feito acima via
+  // newsletter_subscribers (ON CONFLICT(email), early-return) — este
+  // ON CONFLICT(event_id) aqui só protege contra retry da mesma requisição.
   if (env.DB) {
     const nlRef = 'nl-' + Date.now().toString(36) + '-' + emailTrimmed.slice(0, 4);
+    const nlEventId = 'nl-' + emailTrimmed + '-' + Date.now().toString(36);
     const nowSec = Math.floor(Date.now() / 1000);
     context.waitUntil(
       env.DB.prepare(`
@@ -276,7 +283,7 @@ export async function onRequestPost(context) {
         VALUES (?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(event_id) DO NOTHING
       `).bind(
-        nlRef, 'nl-' + emailTrimmed, nowSec, 'Newsletter',
+        nlRef, nlEventId, nowSec, 'Newsletter',
         nomeTrimmed, '', '', 'https://blog.dimus.com.br', ghlContactId, nowSec
       ).run().catch(e => console.error('[newsletter-d1]', e && e.message))
     );

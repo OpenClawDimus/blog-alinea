@@ -244,6 +244,10 @@ const getReadTime = (body: string | undefined) =>
           form.reset();
           if (msgEl) msgEl.style.display = "block";
           if (errEl) errEl.style.display = "none";
+          // GA4 (estudo de tracking wf_f26e1b8f-44a) -- generate_lead nunca
+          // disparava para inscrições feitas por este form (achado ao vivo).
+          const gtag = (window as any).gtag;
+          if (gtag) gtag("event", "generate_lead", { lead_source: "blog", lead_type: "newsletter" });
         } else {
           if (errEl) errEl.style.display = "block";
           if (msgEl) msgEl.style.display = "none";

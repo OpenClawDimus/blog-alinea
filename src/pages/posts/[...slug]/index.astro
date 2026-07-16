@@ -378,11 +378,18 @@ const fmtDate = (d: Date) =>
       const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
       if (btn) btn.disabled = true;
       try {
-        await fetch("/newsletter", {
+        const resp = await fetch("/newsletter", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nome, email }),
         });
+        const result = await resp.json().catch(() => ({}));
+        // GA4 (estudo de tracking wf_f26e1b8f-44a) -- generate_lead nunca
+        // disparava para inscrições feitas por este form (achado ao vivo).
+        if (resp.ok && (result as any).ok) {
+          const gtag = (window as any).gtag;
+          if (gtag) gtag("event", "generate_lead", { lead_source: "blog", lead_type: "newsletter" });
+        }
       } catch {}
       form.reset();
       const msg = document.getElementById("post-nl-msg");
