@@ -349,3 +349,72 @@ produção**:
    `G-Y7PSFTCZJL` é de fato o stream ativo (a correção foi feita só por
    leitura de código-fonte, não por confirmação na UI do Google).
 
+## 010 — Validação evento-a-evento com prova de 5 plataformas independentes
+
+Usuário exigiu evidência irrefutável, não aceitando afirmação sem prova ("vc
+tem a péssima tendência de falar que tá pronto, sem estar real"). Correto —
+processo revelou 2 bugs reais que só apareceram testando de ponta a ponta:
+
+**Bug 1 (achado e corrigido nesta sessão)**: `NewsletterForm.astro` (que eu
+tinha editado numa rodada anterior) é **código morto** — nunca importado em
+lugar nenhum. O formulário real de newsletter tem 3 implementações separadas
+e duplicadas: `rail-nl-form` em `Layout.astro` (sidebar, todo post/página),
+`post-nl-form` em `src/pages/posts/[...slug]/index.astro`, `home-nl-form` em
+`src/pages/index.astro`. Nenhuma disparava `generate_lead` (GA4). Corrigidas
+as 3, rebuild manual (`node_modules/.bin/astro build`, `npm run build`
+continua quebrado por bug de arquitetura do rollup no wrapper — ver insight
+#009) + deploy.
+
+**Bug 2 (achado testando ao vivo, DUAS vezes)**: `newsletter.js` tem dedup
+por email em `newsletter_subscribers` — quando o email já existe, retorna
+`{ok:true}` pro client SEM rodar Mautic/GHL/Resend/D1-mirror/Meta CAPI. Isso
+por si só é correto (não reenviar boas-vindas pra quem já é inscrito), MAS
+o client-side dispara `generate_lead` (GA4) mesmo nesse caminho de dedup —
+ou seja, dá pra "confirmar" um evento GA4 real sem nenhuma ação de CRM ter
+acontecido. Isso contaminou minha primeira tentativa de validação (o teste
+"funcionou" no GA4 mas não criou nada no GHL/Resend porque o email já
+tinha sido usado em testes anteriores da própria sessão). Resolvido: apaguei
+o registro de teste (`DELETE FROM newsletter_subscribers WHERE
+email=...guilhermeribeiro.me@gmail.com`, autorizado pelo usuário) e pedi
+reteste limpo.
+
+**Ferramental de validação usado** (nenhum é "confiar na minha palavra"):
+- `mcp__meta-ads__ads_get_dataset_quality` — Event Match Quality real dos 5
+  eventos (Lead 7.1, ViewContent 5.1, dimus_LeadMagnetOpen 3.8,
+  dimus_LeadMagnetComplete 3.8, dimus_NewsletterSignup 4.0).
+- `mcp__meta-ads__ads_get_dataset_details` — `last_fired_time` do dataset
+  batendo com a janela exata de teste.
+- Script Python standalone (`/tmp/ga4_realtime_check.py`) assinando JWT
+  RS256 com a SA `dimus-seo` e chamando `runRealtimeReport` da GA4 Data API
+  direto — sem esperar a agregação diária do Worker cron.
+- API do GHL (`services.leadconnectorhq.com/contacts/{id}`, token
+  `dimus-ghl-pit-token`) — contato real com nome/timestamp batendo.
+- D1 direto via curl — timestamps em segundos, comparados entre si.
+- Confirmação do usuário na própria caixa de entrada Gmail pro Resend (única
+  peça sem API acessível nesta sessão).
+
+**Resultado final — 5 sistemas, mesmo minuto (00:59, 2026-07-16), timestamps
+batendo entre si**:
+| Sistema | Evidência |
+|---|---|
+| D1 | linha nova, timestamp 00:59:07 |
+| GA4 Realtime | `generate_lead`, minutesAgo=00 |
+| GHL | contato atualizado, dateUpdated 00:59:09 -03 |
+| Meta CAPI | EMQ real pros 5 eventos, last_fired_time recente |
+| Resend | usuário confirmou recebimento às 00:59 |
+
+**Achado técnico paralelo, sem resolver**: as 3 ferramentas de browser
+automatizado que tenho (Claude Browser pane, agent-browser, Playwright)
+consistentemente serviram uma versão desatualizada do HTML/JS do blog,
+mesmo em páginas nunca visitadas, enquanto `curl` puro sempre pegou a
+versão certa (mesmo colo Cloudflare, `cf-cache-status: DYNAMIC`). Isso
+impediu validação 100% via browser automatizado — contornado pedindo pro
+usuário testar no navegador real dele. Vale investigar depois se é
+infraestrutura do sandbox ou algo específico do Cloudflare Pages.
+
+**Lógica de origem de lead documentada** (pedido do usuário: "como vamos
+saber origem"): já existe 100% nas colunas atuais, sem precisar de nada
+novo — `leads.event_name='Newsletter'` = newsletter; `magnet_slug != ''` =
+lead magnet; `event_name='Lead' AND magnet_slug=''` = lead puro do form;
+`post_slug`/`utm_source` em toda linha = atribuição de conteúdo/canal.
+
