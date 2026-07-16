@@ -4,7 +4,7 @@ pubDatetime: 2026-07-15T10:00:00-03:00
 description: "Margem bruta de 11% em seminovos é o número do boleto. A margem real desagrega o custo de cada canal de venda. Veja o cálculo e o benchmark por canal para revendas BR."
 author: "Guilherme Ribeiro"
 featured: false
-ogImage: /covers/margem-de-lucro-real-revenda-carros-usados.jpg
+ogImage: /og/og-margem-revenda.png
 coverImage: /covers/margem-de-lucro-real-revenda-carros-usados.jpg
 tags:
   - "automotivo-metricas"
@@ -121,6 +121,26 @@ Revendas de alto desempenho no Brasil operam com margem líquida real entre 7% e
 A relação entre giro e margem é direta: cada 10 dias a mais no estoque consome entre R$ 120 e R$ 400 em custo de capital (dependendo do valor do veículo e do CDI vigente), além de aumentar o risco de depreciação em relação à Tabela FIPE. Revenda que gira em 25 dias tem margem estruturalmente diferente de quem gira em 50 dias — com o mesmo spread de compra e venda.
 
 O canal de indicação é o maior alavancador de margem disponível para revenda de médio porte: CPL próximo de zero, taxa de conversão 3x maior, e sem custo de portal para descontar. [Por que indicação é o canal mais barato](/posts/indicacao-canal-mais-barato) mostra o cálculo completo.
+
+## Custo de capital por prazo de giro: o que cada dia representa em escala
+
+Para revenda de alto volume, o giro de estoque não é apenas uma métrica operacional — é o principal alavancador de margem disponível sem mudar nenhum canal, nenhum spread e nenhuma comissão. A tabela abaixo mostra o custo de capital mensal e o impacto por carro vendido para uma revenda de 150 unidades/mês com ticket médio de R$ 45.000 (CDI 10,5% a.a.):
+
+<CompareTable
+  headers={["Giro médio", "Estoque médio em carteira", "Custo de capital/mês", "Custo por carro vendido"]}
+  rows={[
+    ["20 dias", "100 unidades", "R$ 38.800", "R$ 259"],
+    ["30 dias", "150 unidades", "R$ 58.200", "R$ 388"],
+    ["40 dias", "200 unidades", "R$ 77.700", "R$ 518"],
+    ["50 dias", "250 unidades", "R$ 97.100", "R$ 647"],
+    ["60 dias", "300 unidades", "R$ 116.500", "R$ 777"]
+  ]}
+  caption="Base: 150 carros vendidos/mês, ticket médio R$ 45.000, CDI 10,5% a.a. Estoque médio = (unidades/mês) × (giro ÷ 30). Custo mensal = estoque médio × ticket × (CDI ÷ 365) × 30 dias. Custo por carro = custo mensal ÷ 150 vendas."
+/>
+
+A diferença entre girar em 20 dias e girar em 50 dias é de **R$ 388 por carro vendido** — 0,86% de margem em um veículo de R$ 45.000, exclusivamente pelo tempo de imobilização. Para uma revenda de 150 carros/mês, esse delta representa **R$ 58.300/mês** ou aproximadamente R$ 700k por ano em custo de capital que não aparece em nenhuma linha do DRE convencional.
+
+Cada dia a menos no giro médio equivale, nessa escala, a R$ 1.942 de custo mensal economizado — ou R$ 13 por carro vendido. Parece pouco por unidade; somado ao ano inteiro, é a diferença entre uma operação com 5% de margem líquida e uma com 7%.
 
 ## Qual a diferença entre margem bruta e margem líquida em concessionária?
 

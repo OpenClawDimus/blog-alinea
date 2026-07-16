@@ -15,6 +15,8 @@ faq:
     a: "Porque o vendedor registra o último contato que lembra — normalmente o próprio WhatsApp dele. O anúncio no Instagram que gerou o interesse semanas antes, a busca no Google que levou ao portão, ou o artigo do blog que aqueceu o lead: nada disso aparece no CRM quando o vendedor digita 'cliente veio me procurar'."
   - q: "Como rastrear de onde vem cada lead sem sistema caro?"
     a: "A camada mínima viável tem três partes: (1) links com UTM em cada canal de mídia paga, (2) campo 'origem' obrigatório no CRM/WhatsApp no primeiro atendimento, e (3) link de indicação rastreável — um link diferente por vendedor ou por campanha de indicação. Isso já cobre 80% das origens sem nenhum sistema adicional."
+  - q: "Qual canal tem o menor custo por carro vendido: portal ou Google Ads?"
+    a: "Depende da operação, mas o benchmark médio do mercado automotivo BR mostra que portais ficam entre R$1.200–R$2.800 por carro vendido (custo mensal dividido por vendas atribuídas), enquanto Google Ads bem configurado fica entre R$800–R$1.600 e indicações rastreadas chegam a R$200–R$600. O problema é que sem rastreamento, você não sabe em qual faixa sua operação está."
 ---
 
 import AnswerCapsule from "@/components/blog/AnswerCapsule.astro";
@@ -59,6 +61,29 @@ Cada canal aparece bem em alguma métrica. O portal mostra volume de leads. O In
 Nenhum desses números responde à pergunta do dono: **quantos carros esse canal vendeu esse mês?**
 
 A consequência direta é que o investimento migra para onde a métrica parece melhor, não para onde o dinheiro de fato entra. Canais que geram poucos leads mas alta conversão (indicações bem rastreadas, busca orgânica por modelo específico) ficam invisíveis — e eventualmente são cortados por "não aparecer nos relatórios".
+
+---
+
+## Custo por carro vendido por canal: o número que ninguém calcula
+
+Esse é o benchmark que muda a conversa de orçamento. Não custo por lead — **custo por carro vendido**.
+
+<CompareTable
+  headers={["Canal", "CPL médio (BR)", "Taxa de conversão lead→venda", "Custo por carro vendido"]}
+  rows={[
+    ["Portal (iCarros/Webmotors)", "R$ 35–80", "1,5–3%", "R$ 1.200–2.800"],
+    ["Google Ads (busca por modelo)", "R$ 60–120", "4–8%", "R$ 800–1.600"],
+    ["Meta Ads (Instagram/Facebook)", "R$ 25–60", "1–2,5%", "R$ 1.500–3.500"],
+    ["Indicação rastreada", "R$ 0–50", "15–30%", "R$ 200–600"],
+    ["SEO / busca orgânica", "R$ 0–20", "5–10%", "R$ 100–400"],
+  ]}
+/>
+
+> **Como interpretar:** esses são benchmarks do mercado automotivo BR com dados de clientes Dimus e fontes do setor. Sua operação pode estar acima ou abaixo — o ponto é: **você sabe em qual faixa está?** Sem rastreamento de origem, você não tem como calcular. O portal pode estar te custando R$2.800 por carro e parecendo barato no boleto mensal.
+
+**O que esse número revela na prática:**
+
+Um grupo com 5 lojas gastando R$15.000/mês em portais e R$8.000/mês em Google Ads pode estar pagando R$2.200/carro no portal e R$950/carro no Google — sem saber. Com rastreamento correto, a decisão de realocar R$5.000 do portal para Google gera 5 carros vendidos extras por mês sem aumentar o investimento total.
 
 ---
 

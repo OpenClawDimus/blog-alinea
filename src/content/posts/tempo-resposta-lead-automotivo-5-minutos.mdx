@@ -4,7 +4,7 @@ pubDatetime: 2026-07-11T09:00:00-03:00
 description: "Responder ao lead automotivo em menos de 5 minutos pode aumentar a conversão em até 400%. Veja o benchmark, o SLA ideal e como implementar na sua equipe."
 author: "Guilherme Ribeiro"
 featured: false
-ogImage: /covers/tempo-resposta-lead.jpg
+ogImage: /og/og-tempo-resposta-5min.png
 coverImage: /covers/tempo-resposta-lead.jpg
 tags:
   - "automotivo-metricas"
@@ -81,6 +81,28 @@ Um SLA que funciona tem três componentes:
 **2. Template de primeiro contato:** O vendedor não precisa pensar no que escrever. Tem um template com foto do veículo, nome do comprador (quando disponível) e uma pergunta direta. Escrever do zero consome 3–5 minutos extras — o template reduz para 30 segundos.
 
 **3. Escalada automática:** Se o vendedor não respondeu em 5 minutos, o gestor recebe alerta. Se não respondeu em 10 minutos, o lead é reatribuído para outro vendedor disponível. Sem escalada, a meta é descumprida silenciosamente e ninguém percebe até o fim do mês.
+
+## É lead ruim ou é tempo de resposta? Como separar as duas causas
+
+Toda revenda tem vendedores que reclamam de "lead ruim" — e gestores que aceitam essa narrativa sem questionar. Antes de trocar de portal, cortar verba de campanha ou culpar a fonte, faça esse diagnóstico simples no seu CRM:
+
+Extraia os leads dos últimos 60 dias da mesma fonte. Separe em dois grupos pelo tempo de resposta registrado:
+
+<CompareTable
+  headers={["Grupo", "Critério", "Benchmark de conversão automotivo BR"]}
+  rows={[
+    ["Respondidos em menos de 10 minutos", "Timestamp de entrada vs. primeiro contato enviado no CRM", "8–14% de conversão"],
+    ["Respondidos depois de 30 minutos", "Mesmo período, mesma campanha ou portal", "2–4% de conversão"]
+  ]}
+/>
+
+Se a diferença entre os grupos for de 3× ou mais, o problema não é o lead — é o processo de resposta. Esse dado muda completamente a conversa sobre onde investir e o que corrigir.
+
+**Para quem gerencia CRM:** esse relatório é a evidência concreta que permite mudar processo sem confronto com a equipe de vendas. Os números falam antes de qualquer conversa difícil. Se o seu CRM registra timestamps de entrada e de primeiro contato, você já tem os dados — basta cruzar.
+
+**Para quem gerencia marketing:** se suas campanhas convertem bem quando respondidas rápido e convertem mal quando a resposta demora, você tem leads bons — e um gargalo de atendimento mensurável. Esse cruzamento (fonte do lead × tempo de resposta × conversão) é o dado que separa "campanha ruim" de "processo de vendas com gargalo". É o número certo para apresentar ao gestor comercial.
+
+**Para o vendedor:** se você está respondendo em menos de 5 minutos e ainda assim não está convertendo, então faz sentido questionar a qualidade da fonte do lead. Se você está demorando 30 minutos ou mais — você acabou de encontrar onde está o gargalo, e ele está antes da negociação começar.
 
 <DimusHelp postSlug="tempo-resposta-lead-automotivo-5-minutos" cluster="automotivo-metricas" variant="atendimento" />
 

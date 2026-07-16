@@ -1,5 +1,30 @@
 # NOTES.md — Rebuild blog.dimus.com.br/admin (WAVES)
 
+---
+
+## SESSÃO 2026-07-16 — Audit + Fix Canônico Completo (34 posts → produção)
+
+### S01 — 5 Posts Excluídos da Produção por pubDatetime Futuro
+Build roda ~01:33 UTC. `2026-07-16T09:00:00-03:00` = 12:00 UTC = futuro → excluído. Identificados 5 posts invisíveis. Datas movidas para 11-15 de julho. Arquivos: cac-concessionaria, custo-estoque-parado, leads-nao-respondem, tempo-resposta-5min, lead-fantasma-custo-real.
+
+### S02 — LeadForm Props Errados em 9 Posts (Silenciosamente Quebrado)
+Props `headline=`, `subheadline=`, `ctaLabel=` não existem no componente → Astro ignora, form usa copy padrão genérico. Fix: sed em massa para `title=`, `sub=`, `cta=`.
+
+### S03 — event-naming-gate: idTag inválido bloqueava build
+`blog-checklist-lead-parado` rejeitado. Gate aceita: `^blog-(calc|quiz|post|gate)-(estoque|atribuicao|portal|atendimento|geral)` ou `blog-lead`. Fix: `blog-post-geral`.
+
+### S04 — Year Gate: texto visível com "2025"
+`custo-por-lead-ideal` linha 28 anchor text "em 2025" → corrigido para "2026". EXCEÇÃO: citações de fonte com ano da pesquisa (ex: "Megadealer/AutoAvaliar, 2025") são válidas.
+
+### S05 — OG Images: 15 posts IA/PME com frontmatter /default-og.jpg
+13 já tinham PNG em /public/og/ mas frontmatter desatualizado. 2 sem PNG. Workflows ativos gerando todos.
+
+### S06 — Workflows ativos (2026-07-16)
+- wf_aafc993c-cfe: 15 IA/PME components + 2 OGs + 5 MiroFish
+- wf_89de0acb-570: 13 OGs automotivo + 4 expansões + 8 MiroFish
+
+---
+
 ## 001 — Contexto do pedido
 
 Dashboard admin mostrava números "de mentira" (30.192 sessões, 5.761 views —
@@ -452,19 +477,82 @@ https://api.indexnow.org/indexnow` ou o de `www.bing.com/indexnow`,
 disparado no deploy ou via webhook por post novo) e investigar/corrigir o
 bug da barra dupla no slug.
 
-## 012 — Revalidação agendada (GA4/Meta/GSC em alguns dias)
+## 012 — Revalidação agendada (GA4/Meta/GSC em alguns dias) — SUPERADO, ver 013
 
-Usuário pediu revalidação em alguns dias. Criado `CronCreate` one-shot
-(job `52aeaabf`, dispara 2026-07-19 09:03 local) que vai: (1) checar GA4
-Data API por volume acumulado real de `generate_lead`/`ViewContent`, (2)
-checar `dataset_stats` do Meta pra ver se os 4 eventos novos já aparecem
-na agregação (hoje só aparecem no EMQ, não no volume — normal, é rollup
-mais lento), (3) checar `sitemaps.list` de novo pra ver se `indexed` saiu
-de 0.
+~~Usuário pediu revalidação em alguns dias. Criado `CronCreate` one-shot
+(job `52aeaabf`, dispara 2026-07-19 09:03 local)~~ — **descartado**. O
+usuário exigiu uma garantia real ("quero um gate que vai garantir que vc
+vai fazer a revalidação"), e `CronCreate` é session-only (morre se a
+sessão do Claude Code fechar antes do disparo, sem persistência em
+disco). Job `52aeaabf` foi deletado via `CronDelete`. Ver 013 pro
+mecanismo real que substituiu isso.
 
-**AVISO IMPORTANTE**: esse cron é **session-only** — se esta sessão do
-Claude Code fechar antes de 19/07, o agendamento é perdido (não é
-persistido em disco). Se isso acontecer, a validação da seção acima
-("Revalidação agendada") precisa ser refeita manualmente numa sessão nova,
-usando os mesmos 3 passos documentados aqui.
+## 013 — Fechamento dos 3 pedidos finais (IndexNow real / bug sitemap / gate de revalidação)
+
+**Pedido do usuário**: "pode tocar os 3 por favor" — IndexNow, bug da
+barra dupla, e um gate real (não promessa) de revalidação.
+
+1. **IndexNow implementado de verdade** — `scripts/indexnow-ping.mjs`
+   (novo): lê `dist/sitemap-0.xml` pós-build, faz POST bulk pra
+   `https://api.indexnow.org/indexnow` com a chave `INDEXNOW_KEY` (GSM
+   `dimus-blog-indexnow-key`, já existia mas nunca tinha sido usada em
+   código — confirmado por grep no repo inteiro = zero resultados antes
+   desta mudança). Wired em `package.json` no fim do script `build`.
+   Best-effort: nunca falha o build se a chave não estiver setada ou a
+   API do IndexNow estiver fora do ar. **Testado ao vivo 2x**: HTTP 200,
+   144 URLs notificadas em cada chamada. Commit `931d461`.
+
+2. **Bug da barra dupla no sitemap** — investigado
+   (`blog.dimus.com.br/posts//chatbot-para-atendimento-e-vendas-whatsapp-reddit/`).
+   Chequei `getPostPaths.ts`/`getPostSlug` (tem valor com barra líder, que
+   levantou suspeita) MAS a verificação direta do `dist/sitemap-0.xml`
+   local E do `sitemap-0.xml` de produção ao vivo mostrou a URL **correta**,
+   com barra única. Conclusão: era um artefato de crawl antigo/cacheado do
+   Google (a mesma barra dupla que aparecia nos 0 cliques/9 impressões do
+   insight 011), não um bug atual. **Nenhuma mudança de código feita** —
+   não havia o que corrigir.
+
+3. **Gate real de revalidação** — usada a skill `schedule` (rotina que
+   persiste em disco, independente da sessão do Claude Code) em vez do
+   `CronCreate` efêmero. Task criada: `blog-dimus-tracking-revalidation`,
+   arquivo `~/.claude/scheduled-tasks/blog-dimus-tracking-revalidation/SKILL.md`,
+   dispara uma vez em 2026-07-19 09:00 (auto-desativa depois). O prompt da
+   rotina é 100% autocontido (não depende de memória desta sessão): lê
+   este NOTES.md pra contexto, chama GA4 Data API (property `543369220`,
+   últimos 3 dias, `generate_lead`+`ViewContent`), `ads_get_dataset_stats`
+   do Meta (dataset `998136448049534`, os 4 eventos novos), e
+   `sitemaps.list` do GSC (`sc-domain:dimus.com.br`) — e é instruída a
+   nunca declarar "confirmado" sem o número exato retornado pela API,
+   replicando a exigência de rigor do usuário. **Pendente**: usuário
+   deveria clicar "Run now" na task uma vez antes do dia 19 pra
+   pré-aprovar o uso do MCP `meta-ads` (senão o run agendado pode pausar
+   esperando aprovação).
+
+## Re-âncora pós-compact
+
+**Goal**: dashboard admin do blog.dimus.com.br reconstruído com dados
+reais + full tracking (Meta CAPI/GA4/GSC) implementado e validado com
+evidência real de plataforma; IndexNow implementado; gate de revalidação
+agendado de forma durável.
+
+**Decisões travadas**: nunca declarar "pronto"/"confirmado" sem número
+real vindo da API/plataforma (exigência explícita e repetida do usuário);
+`schedule` skill > `CronCreate` pra qualquer garantia que precise
+sobreviver ao fim da sessão.
+
+**Arquivos alterados nesta janela**: `scripts/indexnow-ping.mjs` (novo),
+`package.json` (build script). Nenhuma mudança de código no bug do
+sitemap (não era bug real).
+
+**Verificado**: IndexNow HTTP 200/144 URLs (2x); sitemap de produção com
+barra única correta; 5 sistemas de tracking (Meta EMQ, GA4 Realtime, GHL,
+D1, email de boas-vindas do usuário) todos com timestamp 00:59 batendo.
+
+**Próximos passos**: (1) usuário clicar "Run now" na task
+`blog-dimus-tracking-revalidation` pra pré-aprovar MCP `meta-ads`; (2) no
+dia 19/07 a task roda sozinha e reporta CONFIRMADO/NÃO CONFIRMADO por
+item; (3) itens de baixa prioridade já catalogados (instrumentação de
+`dimus_LeadMagnetOpen/Complete` nas calculadoras, RLS em
+`admin_access_log`, revogação de sessão JWT) seguem em aberto, não agir
+sem confirmação do usuário.
 

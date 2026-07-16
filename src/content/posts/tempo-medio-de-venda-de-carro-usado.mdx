@@ -4,7 +4,7 @@ pubDatetime: 2026-07-15T09:00:00-03:00
 description: "Um carro usado demora em média 30 a 75 dias para ser vendido no Brasil. Veja o benchmark por faixa de preço, o custo de cada dia acima do ideal e 3 alavancas para girar mais rápido sem destruir margem."
 author: "Guilherme Ribeiro"
 featured: true
-ogImage: /covers/tempo-medio-venda-carro-usado.jpg
+ogImage: /og/og-tempo-medio-venda.png
 coverImage: /covers/tempo-medio-venda-carro-usado.jpg
 tags:
   - "automotivo-giro-estoque"
@@ -56,6 +56,29 @@ Os dados abaixo são baseados em benchmarks do mercado de revendas BR, especialm
     ["Acima de R$ 120k (luxo/importado)", "50–90 dias", "91–120 dias", "Acima de 130 dias", "R$ 65–100/dia"]
   ]}
 />
+
+> **Fonte e metodologia:** Os intervalos acima são compilados a partir de dados de referência do setor automotivo BR — incluindo relatórios FENABRAVE, dados históricos de plataformas como Webmotors e OLX Autos, e análise de operações acompanhadas pela Dimus. Os valores representam a **faixa interquartil das operações saudáveis**, não a média geral do mercado (que é significativamente mais alta). Adequados para uso como benchmark comparativo em relatórios gerenciais.
+
+### Como diagnosticar o giro em operações com portfólio misto
+
+Se sua revenda trabalha com veículos em múltiplas faixas de preço — o que é comum em operações acima de 40 carros/mês — o TM médio geral esconde o gargalo real. Um segmento de R$ 25–45k girando em 22 dias pode mascarar um segmento de R$ 75k+ parado há 85 dias.
+
+**Diagnóstico correto para operações mistas:**
+
+1. Separe os veículos vendidos no mês por faixa de preço
+2. Calcule o TM para cada faixa separadamente: soma dos dias no pátio ÷ quantidade vendida naquele segmento
+3. Compare cada faixa com o benchmark correspondente da tabela acima
+4. O segmento com maior desvio positivo do benchmark é o gargalo — não o TM médio geral
+
+**Exemplo prático — revenda com 80 carros/mês:**
+
+| Segmento | TM do mês | Benchmark | Status |
+|---|---|---|---|
+| R$ 25–45k | 25 dias | 15–30 dias | Saudável |
+| R$ 45–75k | 38 dias | 25–45 dias | Saudável |
+| Acima de R$ 75k | 92 dias | 40–65 dias | **Crítico — R$ 40–70/dia por unidade** |
+
+Nesse cenário, o TM médio agregado provavelmente pareceria "aceitável" — mas o segmento de alto valor está acumulando custo oculto de R$ 1.080–1.890 por veículo acima do benchmark. Com 5 carros nessa faixa, são R$ 5.400–9.450 de margem consumida no mês sem aparecer em nenhum relatório.
 
 Nas capitais, especialmente São Paulo e Rio de Janeiro, a concorrência é mais acirrada e os benchmarks tendem a ser 5–8 dias menores. Um carro que giraria em 35 dias no interior de MG pode demandar 28 dias na capital para a mesma faixa de preço.
 
