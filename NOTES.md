@@ -418,3 +418,53 @@ novo — `leads.event_name='Newsletter'` = newsletter; `magnet_slug != ''` =
 lead magnet; `event_name='Lead' AND magnet_slug=''` = lead puro do form;
 `post_slug`/`utm_source` em toda linha = atribuição de conteúdo/canal.
 
+## 011 — GSC: indexação real do blog (dado da API, não suposição)
+
+Usuário perguntou "GSC blog 100% mapeado? novos artigos são indexados
+automático?" — resposta com dado real, não inferência:
+
+**Achado**: cobertura de indexação real é ruim.
+- `sitemaps.list` (Domain Property `sc-domain:dimus.com.br`): sitemap do
+  blog tem **108 URLs enviadas, 0 indexadas** (campo oficial da API).
+- Cross-check via `searchAnalytics.query` (90 dias, filtro
+  `page contains blog.dimus.com.br`): só **8 páginas** com qualquer
+  impressão, **0 cliques, 9 impressões totais** no período. Confirma que
+  o "0 indexado" não é só um campo de API não-confiável — a cobertura real
+  é genuinamente baixa.
+- **Bug real achado de bônus**: uma URL no sitemap tem barra dupla —
+  `blog.dimus.com.br/posts//chatbot-para-atendimento-e-vendas-whatsapp-reddit/`
+  — provavelmente prejudica a indexação desse post especificamente. Não
+  investiguei a causa raiz (geração de slug/canonical) nem corrigi ainda.
+
+**Como funciona a indexação de post novo hoje**:
+- Sitemap (`sitemap-index.xml`) gerado automaticamente a cada build/deploy
+  (`@astrojs/sitemap`, já configurado, funciona).
+- **Não existe nenhum push ativo pro Google/Bing.** Vasculhei o repo
+  inteiro: existe uma secret `dimus-blog-indexnow-key` no GSM, provisionada
+  mas **nunca implementada em código nenhum** (grep por IndexNow no repo
+  inteiro = zero resultados). Nenhum step de CI (`deploy.yml`) faz ping de
+  sitemap. Indexação depende 100% do Google recrawlear por conta própria —
+  não é "automático" no sentido de notificação ativa, é passivo.
+
+**Pendente, aguardando decisão do usuário**: implementar IndexNow de verdade
+(a chave já existe, só falta o código — endpoint `POST
+https://api.indexnow.org/indexnow` ou o de `www.bing.com/indexnow`,
+disparado no deploy ou via webhook por post novo) e investigar/corrigir o
+bug da barra dupla no slug.
+
+## 012 — Revalidação agendada (GA4/Meta/GSC em alguns dias)
+
+Usuário pediu revalidação em alguns dias. Criado `CronCreate` one-shot
+(job `52aeaabf`, dispara 2026-07-19 09:03 local) que vai: (1) checar GA4
+Data API por volume acumulado real de `generate_lead`/`ViewContent`, (2)
+checar `dataset_stats` do Meta pra ver se os 4 eventos novos já aparecem
+na agregação (hoje só aparecem no EMQ, não no volume — normal, é rollup
+mais lento), (3) checar `sitemaps.list` de novo pra ver se `indexed` saiu
+de 0.
+
+**AVISO IMPORTANTE**: esse cron é **session-only** — se esta sessão do
+Claude Code fechar antes de 19/07, o agendamento é perdido (não é
+persistido em disco). Se isso acontecer, a validação da seção acima
+("Revalidação agendada") precisa ser refeita manualmente numa sessão nova,
+usando os mesmos 3 passos documentados aqui.
+
