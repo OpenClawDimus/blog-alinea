@@ -2,11 +2,15 @@
 title: "Checklist: Custo Real do Lead Parado na sua Revenda"
 description: "Calcule quanto cada lead parado custa à sua revenda. Checklist com 12 pontos de análise."
 pubDatetime: 2026-06-27T10:00:00Z
-draft: true
+draft: false
 slug: checklist-custo-do-lead-parado
-tags: [lead, custo, revenda, checklist]
+tags:
+  - "automotivo-metricas"
+  - "lead-parado"
+  - "gestao-revenda"
+  - "checklist"
 featured: false
-ogImage: /default-og.jpg
+ogImage: /covers/checklist-custo-do-lead-parado.jpg
 coverImage: /covers/checklist-custo-do-lead-parado.jpg
 faq:
   - q: "Quanto custa um lead parado em uma revenda?"
@@ -17,7 +21,15 @@ faq:
     a: "Multiplique o número de leads sem resposta em até 5 minutos por dia pelo ticket médio e pela margem da operação, depois por 22 dias úteis. Revendas com 5 leads parados/dia e ticket de R$40k podem perder R$88k/mês em oportunidades."
 ---
 
+import AnswerCapsule from "@/components/blog/AnswerCapsule.astro";
+import DimusHelp from "@/components/blog/DimusHelp.astro";
 import LeadForm from "@/components/blog/LeadForm.astro";
+
+<AnswerCapsule question="Quanto custa um lead parado em uma concessionária?">
+Depende do CAC e da taxa de conversão. Dividindo o custo de aquisição do lead pela taxa de conversão, cada lead perdido representa entre R$ 800 e R$ 4.000 em receita que não entrou. Com SLA de resposta acima de 5 minutos, a probabilidade de contato cai 21× — transformando lead pago em lead desperdiçado. Este checklist calcula o número real da sua operação.
+</AnswerCapsule>
+
+> **Sem conflito de interesse:** A Dimus não vende portal, CRM nem nenhum produto do setor automotivo. Nosso negócio é consultoria — só ganhamos quando você vende mais carros.
 
 # Checklist: Custo Real do Lead Parado na Revenda
 
@@ -88,9 +100,13 @@ Se o custo calculado acima for maior do que **R$5.000/mês**, você tem um probl
 
 Adicionar mais portais não resolve. O gargalo está no tempo de resposta e na qualificação do primeiro contato. Entenda [quanto tempo você realmente tem para responder um lead](/posts/tempo-de-resposta-ao-lead) antes de perder a venda para o concorrente — e compare com o [CPL por canal](/posts/custo-por-lead-concessionaria-benchmark-2025) para saber onde está o maior desperdício.
 
+<DimusHelp postSlug="checklist-custo-do-lead-parado" cluster="automotivo-metricas" variant="atribuicao" />
+
 <LeadForm
+  idTag="blog-post-geral"
+  postSlug="checklist-custo-do-lead-parado"
+  cluster="automotivo-metricas"
   title="Quero o diagnóstico da minha revenda"
-  description="Informe o custo calculado e receba uma análise personalizada por WhatsApp."
-  ctaText="Quero o diagnóstico →"
-  source="checklist-custo-lead-parado"
+  sub="Informe o custo calculado e receba uma análise personalizada por WhatsApp em 15 minutos."
+  cta="Quero o diagnóstico →"
 />
