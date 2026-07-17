@@ -15,27 +15,59 @@ const sortedPosts = getSortedPosts(posts);
 // Excluir variantes -reddit da home (conteúdo de FAQ duplicado)
 const mainPosts = sortedPosts.filter(p => !p.id.endsWith("-reddit"));
 
-// ── Motor de destaque: melhor post por indicadores SEO ──────────────────────
-// Regra: maior clicks nos últimos 30 dias (GSC). Tiebreaker: menor posição.
-// Fonte: seoa_performance (Supabase). Fallback: post mais recente.
+// ── Motor de destaque: melhor post por indicadores ──────────────────────────
+// Prioridade: (1) GSC clicks, (2) GA4 sessions agregadas, (3) post mais recente.
+// Fonte: seoa_performance (Supabase). Fallback graceful em qualquer erro.
 let featuredPost = mainPosts[0];
+
+function extractSlug(url: string): string | null {
+  const m = url.match(/\/posts\/([^/?#]+)\/?$/);
+  return m ? m[1] : null;
+}
+
+function findPost(slug: string) {
+  return mainPosts.find(p => p.id === slug || p.id === `${slug}/index`);
+}
+
 try {
-  const SB_URL  = import.meta.env.PUBLIC_SUPABASE_URL  ?? "https://tllelzquwdfcjjlsurai.supabase.co";
-  const SB_KEY  = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const SB_URL = import.meta.env.PUBLIC_SUPABASE_URL ?? "https://tllelzquwdfcjjlsurai.supabase.co";
+  const SB_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
   if (SB_KEY) {
-    const res = await fetch(
-      `${SB_URL}/rest/v1/seoa_performance?select=page_url,clicks,position&source=eq.gsc&order=clicks.desc,position.asc&limit=10`,
+    // 1ª tentativa: GSC clicks (orgânico real)
+    const gscRes = await fetch(
+      `${SB_URL}/rest/v1/seoa_performance?select=page_url,clicks,position&source=eq.gsc&clicks=gt.0&order=clicks.desc,position.asc&limit=10`,
       { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
     );
-    if (res.ok) {
-      const rows: Array<{ page_url: string; clicks: number; position: number }> = await res.json();
-      for (const row of rows) {
-        // Extrai slug da URL: .../posts/<slug>/
-        const match = row.page_url.match(/\/posts\/([^/]+)\/?$/);
-        if (!match) continue;
-        const slug = match[1];
-        const candidate = mainPosts.find(p => p.id === slug || p.id === `${slug}/index`);
-        if (candidate) { featuredPost = candidate; break; }
+    if (gscRes.ok) {
+      const gscRows: Array<{ page_url: string; clicks: number; position: number }> = await gscRes.json();
+      for (const row of gscRows) {
+        const slug = extractSlug(row.page_url);
+        const c = slug ? findPost(slug) : null;
+        if (c) { featuredPost = c; break; }
+      }
+    }
+
+    // 2ª tentativa: GA4 sessions por post (quando GSC ainda sem clicks)
+    if (featuredPost === mainPosts[0]) {
+      const ga4Res = await fetch(
+        `${SB_URL}/rest/v1/seoa_performance?select=page_url,sessions&source=eq.ga4&sessions=gt.0`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      if (ga4Res.ok) {
+        const ga4Rows: Array<{ page_url: string; sessions: number }> = await ga4Res.json();
+        // Agrega sessions por slug (múltiplas linhas por dia)
+        const bySlug = new Map<string, number>();
+        for (const row of ga4Rows) {
+          const slug = extractSlug(row.page_url);
+          if (!slug) continue;
+          bySlug.set(slug, (bySlug.get(slug) ?? 0) + (row.sessions ?? 0));
+        }
+        // Ordena por sessions DESC, pega o primeiro que existe nos posts
+        const ranked = [...bySlug.entries()].sort((a, b) => b[1] - a[1]);
+        for (const [slug] of ranked) {
+          const c = findPost(slug);
+          if (c) { featuredPost = c; break; }
+        }
       }
     }
   }
