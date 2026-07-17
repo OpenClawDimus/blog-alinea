@@ -1,5 +1,34 @@
 # TRACKING-NOTES — Blog Dimus (blog.dimus.com.br / seoa_publish_queue)
 
+## Insight #003 — Correções de design: badges removidos, black-card resolvido, grid 12 posts
+
+**Data:** 2026-07-17
+
+**Problema encontrado:** 3 violações de design visíveis em produção:
+1. Badges rosas "Novo" aparecendo em múltiplos cards (posts publicados nos últimos 7 dias via `isNew()`)
+2. Cards com fundo preto antes de carregar (`.sr-reveal { opacity:0 }` sem fallback CSS quando GSAP demorava)
+3. Grid fixado em 6 posts/página sem scrolling natural
+
+**Solução aplicada:**
+- `CutoutCard.astro`: removido `pinLabel` prop + bloco `.sr-cutcard__pin` inteiro
+- `index.astro`: removidas ambas chamadas `pinLabel={isNew(...)}`, adicionado `eager={i === 0}` no primeiro card do grid
+- `showroom.css`: adicionado fallback `@keyframes sr-fallback-reveal` com delay 1.8s — cartas revelam mesmo sem GSAP. Adicionado `.sr-visible` override que anula o fallback quando GSAP foi mais rápido
+- `Layout.astro`: GSAP stagger por coluna `(i % COLS) * 0.09` + dual-init `DOMContentLoaded`+`astro:page-load` (SSG precisa do DOMContentLoaded para visitas diretas por URL)
+- `[...page].astro`: `eager={idx < 3}` para as primeiras 3 cartas acima do fold
+- `astro-paper.config.ts`: `perPage/perIndex: 6 → 12`
+- `sr-row3` CSS: `repeat(auto-fill, minmax(300px,1fr))` + `@media ≥960px → 3 colunas fixas`
+
+**Regra documentada em código:**
+```
+// DESIGN RULE: stagger é por coluna dentro da linha (3-col grid).
+// Cartas in-viewport revelam imediatamente com micro-stagger.
+```
+
+**Commit:** `cf26ca5`
+**Arquivos afetados:** `astro-paper.config.ts`, `CutoutCard.astro`, `index.astro`, `[...page].astro`, `showroom.css`, `Layout.astro`
+
+---
+
 ## Insight #002 — Clerk auth restaurado + Wave 0/1 do dashboard admin concluídas
 
 **Data:** 2026-07-14/15
