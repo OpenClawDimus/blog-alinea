@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg1" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#640A52" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#190015" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0D0415" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="bg2" cx="85%" cy="75%" r="50%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF007F"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0D0415"/>
+  <rect width="1200" height="630" fill="url(#bg1)"/>
+  <rect width="1200" height="630" fill="url(#bg2)"/>
+  <rect width="1200" height="630" filter="url(#grain)"/>
+
+  <!-- Accent bar top -->
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
+
+  <!-- Magenta left accent -->
+  <rect x="0" y="6" width="6" height="624" fill="#FF007F" opacity="0.7"/>
+
+  <!-- Logo wordmark -->
+  <text x="80" y="72" font-family="'Bebas Neue', 'Arial Black', sans-serif" font-size="28" fill="#FFFFFF" letter-spacing="6">DIMUS</text>
+  <rect x="80" y="78" width="90" height="2" fill="#FF007F"/>
+
+  <!-- Category badge -->
+  <g transform="translate(80, 110)">
+    <rect width="130" height="30" rx="15" fill="rgba(255,0,127,0.12)" stroke="#FF007F" stroke-width="1"/>
+    <text x="14" y="21" font-family="'Gotham', 'Arial', sans-serif" font-size="13" fill="#FF007F" letter-spacing="2" font-weight="700">AUTOMOTIVO</text>
+  </g>
+
+  <!-- TITLE -->
+  <text x="80" y="200" font-family="'Bebas Neue', 'Arial Black', sans-serif" font-size="80" letter-spacing="-1">
+    <tspan x="80" dy="0" fill="#FFFFFF">Custo por Lead</tspan>
+    <tspan x="80" dy="84" fill="#FFFFFF">em Concessionária:</tspan>
+    <tspan x="80" dy="84" fill="#FF007F">Benchmark 2026</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <g transform="translate(80, 550)">
+    <text font-family="'Gotham', 'Arial', sans-serif" font-size="16" fill="#A098A6" letter-spacing="1">Referência de mercado · blog.dimus.com.br</text>
+  </g>
+
+  <!-- Decorative circles bottom-right -->
+  <circle cx="1110" cy="540" r="70" fill="none" stroke="#FF007F" stroke-width="2" opacity="0.5"/>
+  <circle cx="1110" cy="540" r="45" fill="none" stroke="#00E5FF" stroke-width="2" opacity="0.35"/>
+  <circle cx="1110" cy="540" r="22" fill="#FF007F" opacity="0.7"/>
+</svg>

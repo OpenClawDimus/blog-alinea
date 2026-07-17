@@ -2,6 +2,32 @@
 
 ---
 
+## SESSÃO 2026-07-17 — SEO Agency Audit + Secrets Fix + Fable 5 Audit
+
+### S-NEW-01 — GitHub CI BLOQUEADO por billing (repo privado)
+Causa: repo é PRIVADO, Free plan = 2.000 min/mês. Limite atingido. Erro: "recent account payments have failed or spending limit needs to be increased". Todos commits 16-17/07 (motor, IndexNow, AnswerCapsule) não chegaram em produção.
+**Solução imediata:** Tornar repo público → CI gratuito ilimitado. Alternativa: pagar GitHub Actions.
+
+### S-NEW-02 — GitHub Secrets: INDEXNOW_KEY + PUBLIC_SUPABASE_ANON_KEY ✅ SETADOS
+`gh secret list` confirmou às 2026-07-17T03:50-51Z. Fonte: GSM via pipe direto (valor nunca exibido). Quando CI desbloqueado → motor e IndexNow funcionam automaticamente.
+
+### S-NEW-03 — DataForSEO credential QUEBRADA no GSM
+`dimus-dataforseo-auth-b64` decodifica 12 bytes SEM colon → formato inválido. HTTP 401 confirmado. Conta existe com US$50. Fix: ir em app.dataforseo.com → API credentials → pegar API Password → `printf 'email:APIPASS' | base64 | gcloud secrets versions add dimus-dataforseo-auth-b64 --data-file=-`
+
+### S-NEW-04 — AnswerCapsule bug fix: 21/49 posts tinham pergunta-âncora invisível
+Componente só aceitava prop `q`, MDX usavam `question=`. Fix: alias `question?: string`. `const label = q ?? question`. Commit 9d83c2c. Aguarda CI.
+
+### S-NEW-05 — Fable 5 Audit: Autonomy 3.5/10, AEO 7/10, GEO 7.5/10
+2 false positives confirmados: "motor ativo" (secret nunca existiu) e "168 URLs pingadas" (INDEXNOW_KEY nunca no CI). 4 gaps críticos. 7 posts THIN (<800w). 7 regras permanentes definidas.
+
+### S-NEW-06 — Motor GA4 fallback implementado (commit 70a9b94)
+src/pages/index.astro: priority (1) GSC clicks>0, (2) GA4 sessions por slug, (3) mainPosts[0]. Aguarda CI.
+
+### S-NEW-07 — gsc_ingest.py executado manualmente: 5 rows GSC em seoa_performance
+SA dimus-seo@ confirmado com acesso GSC. 5 keywords, ~1 impressão cada, 0 clicks. Falta scheduling diário.
+
+---
+
 ## SESSÃO 2026-07-16 — Audit + Fix Canônico Completo (34 posts → produção)
 
 ### S01 — 5 Posts Excluídos da Produção por pubDatetime Futuro

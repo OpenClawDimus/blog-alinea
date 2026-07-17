@@ -519,6 +519,7 @@ function icon(name) {
     newsletter: 'M2 4h12v8H2z M2 4l6 5 6-5',
     search: 'M7 12A4.5 4.5 0 107 3a4.5 4.5 0 000 9z M10.3 10.3L14 14',
     system: 'M2 8h2.5l1.5-4 2 8 1.5-4H14',
+    quality: 'M2 13V9h3v4H2z M6 13V6h3v7H6z M10 13V3h3v10h-3z',
   };
   const d = paths[name] || paths.overview;
   return `<svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
@@ -552,6 +553,7 @@ const NAV_ITEMS = [
   { key: 'newsletter', label: 'Newsletter' },
   { key: 'search', label: 'Busca' },
   { key: 'system', label: 'Sistema' },
+  { key: 'quality', label: 'Qualidade' },
 ];
 
 function sidebarNav(active) {
@@ -880,7 +882,7 @@ function tableOrEmpty(rows, cols, render, emptyMsg) {
 
 const SECTION_TITLES = {
   overview: 'Overview', posts: 'Posts', leads: 'Leads', origins: 'Origens',
-  magnets: 'Magnets', newsletter: 'Newsletter', search: 'Busca', system: 'Sistema',
+  magnets: 'Magnets', newsletter: 'Newsletter', search: 'Busca', system: 'Sistema', quality: 'Qualidade',
 };
 
 // Delta vs. período anterior — nunca inventa significância: mostra o par
@@ -1121,6 +1123,88 @@ function dashboardHTML({ section, totals, period, magnets, posts, postDetail, or
       <section><h2>Acessos da equipe ao painel (admin_access_log)</h2>
         <p class="stat">${teamIpsCount ? `${teamIpsCount} IP(s) distintos identificados — já excluídos do tráfego real na Overview/Origens/série diária.` : 'Nenhum IP identificado ainda. Se você já acessou o painel antes e não vê nada aqui, a policy RLS do Supabase (admin_access_log) pode não liberar leitura pro seu email — checar com quem administra o Supabase antes de assumir que não há acesso registrado.'}</p>
         ${accessLogTbl}</section>`,
+
+    quality: `
+      <section>
+        <h2>Score editorial por post (SEO / GEO / AEO)</h2>
+        <p class="stat">Scores calculados no build a partir do conteúdo real dos arquivos MDX — nenhum número inventado.
+        <strong style="color:var(--ink-mut)">SEO</strong>: estrutura técnica (descrição, título, OG, FAQ, palavras).
+        <strong style="color:var(--ink-mut)">GEO</strong>: otimização para motores generativos (LLMs, AI overviews).
+        <strong style="color:var(--ink-mut)">AEO</strong>: componentes canônicos Dimus (AnswerCapsule, LeadForm, DimusHelp).</p>
+        <div id="q-loading" class="empty">Carregando scores...</div>
+        <div id="q-root" style="display:none"></div>
+      </section>
+      <script>
+      (function(){
+        function bar(n){
+          var c=n>=90?'var(--good)':n>=70?'var(--warn)':'var(--mag)';
+          return '<span style="display:inline-flex;align-items:center;gap:5px">'
+            +'<span style="width:44px;height:4px;background:var(--surface-2);border-radius:2px;overflow:hidden">'
+            +'<span style="width:'+n+'%;height:100%;background:'+c+';border-radius:2px;display:block"></span></span>'
+            +'<span class="mono" style="font-size:11px;min-width:26px;text-align:right">'+n+'</span></span>';
+        }
+        fetch('/posts-quality.json')
+          .then(function(r){return r.json();})
+          .then(function(d){
+            var posts=d.posts||[];
+            var avg=posts.length?Math.round(posts.reduce(function(a,p){return a+p.composite;},0)/posts.length):0;
+            var a90=posts.filter(function(p){return p.composite>=90;}).length;
+            var og=posts.filter(function(p){return p.has_unique_og;}).length;
+            var issues=posts.filter(function(p){return p.composite<70||!p.has_unique_og;});
+            var alert=issues.length
+              ?'<div style="background:var(--surface-1);border:1px solid oklch(62% 0.19 350/0.25);border-radius:8px;padding:14px 18px;margin-bottom:20px">'
+                +'<p style="margin:0;font-size:13px"><span style="color:var(--mag);font-weight:500">'+issues.length+' post(s) com problemas:</span> '
+                +issues.map(function(p){return '<span class="mono" style="font-size:11px">'+p.slug+'</span>';}).join(', ')+'</p></div>'
+              :'';
+            var kpis='<div class="kpi-row" style="margin-bottom:22px">'
+              +'<div class="kpi"><div class="n mag">'+posts.length+'</div><div class="l">Posts publicados</div></div>'
+              +'<div class="kpi"><div class="n">'+avg+'</div><div class="l">Score medio</div></div>'
+              +'<div class="kpi"><div class="n">'+a90+'</div><div class="l">Score &ge; 90</div></div>'
+              +'<div class="kpi"><div class="n">'+og+'</div><div class="l">OG unicos</div></div>'
+              +'</div>';
+            var rows=posts.map(function(p){
+              var ogFlag=p.has_unique_og
+                ?'<span style="color:var(--good)">&#10003;</span>'
+                :'<span style="color:var(--mag)">&#10007;</span>';
+              var comps=''
+                +(p.has_answer_capsule?'<span title="AnswerCapsule" style="color:var(--good)">AC</span> ':'<span style="color:var(--mag)">AC</span> ')
+                +(p.has_lead_form?'<span title="LeadForm" style="color:var(--good)">LF</span> ':'<span style="color:var(--mag)">LF</span> ')
+                +(p.has_dimus_help?'<span title="DimusHelp" style="color:var(--good)">DH</span>':'<span style="color:var(--mag)">DH</span>');
+              return '<tr>'
+                +'<td style="font-size:11.5px;max-width:300px"><a href="/posts/'+p.slug+'" class="rowa" target="_blank" rel="noopener">'+p.slug+'</a></td>'
+                +'<td class="num">'+bar(p.composite)+'</td>'
+                +'<td class="num">'+bar(p.seo)+'</td>'
+                +'<td class="num">'+bar(p.geo)+'</td>'
+                +'<td class="num">'+bar(p.aeo)+'</td>'
+                +'<td class="num mono" style="font-size:11px">'+p.word_count+'w</td>'
+                +'<td class="num">'+ogFlag+'</td>'
+                +'<td class="num mono" style="font-size:10.5px;letter-spacing:.02em">'+comps+'</td>'
+                +'</tr>';
+            }).join('');
+            var tbl='<div style="overflow-x:auto"><table>'
+              +'<thead><tr>'
+              +'<th>Post</th>'
+              +'<th class="num">Score</th>'
+              +'<th class="num">SEO</th>'
+              +'<th class="num">GEO</th>'
+              +'<th class="num">AEO</th>'
+              +'<th class="num">Palavras</th>'
+              +'<th class="num">OG</th>'
+              +'<th class="num">Comps</th>'
+              +'</tr></thead>'
+              +'<tbody>'+rows+'</tbody>'
+              +'</table></div>'
+              +'<p class="faint mono" style="font-size:11px;margin-top:10px">Score gerado em: '+new Date(d.generated_at).toLocaleString("pt-BR")+'</p>';
+            document.getElementById('q-root').innerHTML=alert+kpis+tbl;
+            document.getElementById('q-loading').style.display='none';
+            document.getElementById('q-root').style.display='';
+          })
+          .catch(function(e){
+            document.getElementById('q-loading').textContent='Erro ao carregar scores: '+e.message;
+          });
+      })();
+      </script>
+    `,
   };
 
   const topBlock = `
