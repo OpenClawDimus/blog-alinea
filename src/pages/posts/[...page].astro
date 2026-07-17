@@ -56,7 +56,7 @@ const getReadTime = (body: string | undefined) =>
     <h1 class="sr-archive-title">Todos os artigos</h1>
 
     <div class="sr-row3">
-      {page.data.map(post => (
+      {page.data.map((post, idx) => (
         <CutoutCard
           href={`/posts/${post.id}/`}
           gradient={getGrad(post.data.tags)}
@@ -67,6 +67,7 @@ const getReadTime = (body: string | undefined) =>
           coverImage={post.data.coverImage}
           readingTime={getReadTime(post.body)}
           description={post.data.description}
+          eager={idx < 3}
         />
       ))}
     </div>

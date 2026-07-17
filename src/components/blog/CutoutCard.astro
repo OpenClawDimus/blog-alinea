@@ -10,12 +10,13 @@ interface Props {
   ogImage?: string | undefined;
   coverImage?: string | undefined;
   tall?: boolean;
-  pinLabel?: string;
   readingTime?: number;
   description?: string;
+  /** Primeiras cartas acima do fold: eager loading para evitar flash de tela preta */
+  eager?: boolean;
 }
 
-const { href, gradient, tag, title, date, ogImage, coverImage, tall = false, pinLabel, readingTime, description } = Astro.props;
+const { href, gradient, tag, title, date, ogImage, coverImage, tall = false, readingTime, description, eager = false } = Astro.props;
 const cardImage = coverImage ?? (ogImage && ogImage !== '/default-og.jpg' ? ogImage : undefined);
 
 const fmtDate = (d: Date) =>
@@ -29,24 +30,9 @@ const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
 <a href={href} class:list={["sr-cutcard sr-reveal", { "sr-cutcard--tall": tall }]}>
 
   <div class="sr-cutcard__media" style={`background:${gradient}`} aria-hidden="true">
-    {cardImage && <img src={cardImage} alt="" loading="lazy" decoding="async" onerror="this.style.display='none'" />}
+    {cardImage && <img src={cardImage} alt="" loading={eager ? "eager" : "lazy"} decoding="async" onerror="this.style.display='none'" />}
     {!cardImage && <div class="sr-cutcard__noise"></div>}
     <div class="sr-cutcard__overlay"></div>
-
-    {/* Pin badge — top-right corner, inside media so corners clip correctly */}
-    {pinLabel && (
-      <div class="sr-cutcard__pin">
-        {/* Left side of pin — concave corner connecting pin to card top edge */}
-        <svg class="sr-cc sr-cc--pin-l" width="24" height="24" viewBox="0 0 200 200" aria-hidden="true">
-          <path d={CP} fill="currentColor" />
-        </svg>
-        {pinLabel}
-        {/* Bottom of pin — concave corner connecting pin to card right edge */}
-        <svg class="sr-cc sr-cc--pin-b" width="24" height="24" viewBox="0 0 200 200" aria-hidden="true">
-          <path d={CP} fill="currentColor" />
-        </svg>
-      </div>
-    )}
 
     {/* Inset label — bottom-left of media */}
     <div class="sr-cutcard__inset">

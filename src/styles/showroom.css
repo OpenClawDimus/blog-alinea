@@ -457,9 +457,12 @@ body::after {
 /* ── Row de 3 cards ─────────────────────────────────────────── */
 .sr-row3 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 22px;
-  margin-top: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+  margin-top: 32px;
+}
+@media (min-width: 960px) {
+  .sr-row3 { grid-template-columns: repeat(3, 1fr); }
 }
 .sr-row3 .sr-card .thumb { aspect-ratio: 16/11; }
 .sr-row3 .sr-card .pad { padding: 16px 18px 20px; }
@@ -1195,18 +1198,35 @@ body::after {
 .sr-callout .src { font-family: var(--font-mono); font-size: 10.5px; color: var(--dim); }
 
 /* ── GSAP reveal helper (JS adiciona .sr-visible) ──────────── */
+/*
+ * DESIGN RULE (não remover):
+ * Cartas começam com opacity:0. GSAP anima para 1.
+ * A animação CSS abaixo é um safety-net: se o JS falhar ou atrasar >1.8s,
+ * os cards se revelam via CSS para nunca ficarem pretos na tela do usuário.
+ */
+@keyframes sr-fallback-reveal {
+  to { opacity: 1; transform: translateY(0); }
+}
 .sr-reveal {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity .7s var(--ease), transform .7s var(--ease);
+  will-change: opacity, transform;
+  /* CSS fallback: revela após 1.8s se GSAP não disparar */
+  animation: sr-fallback-reveal 0.55s ease-out 1.8s both;
 }
 .sr-reveal.sr-visible {
+  /* GSAP assumiu: cancela o fallback CSS */
+  animation: none;
   opacity: 1;
   transform: translateY(0);
 }
 /* Reduced motion: revelar imediatamente, sem movimento */
 @media (prefers-reduced-motion: reduce) {
-  .sr-reveal { opacity: 1 !important; transform: none !important; }
+  .sr-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }
 
 /* ── Archive page ───────────────────────────────────────────── */

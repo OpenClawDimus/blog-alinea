@@ -286,31 +286,37 @@ const metaPixelHtml = metaPixelId
         });
 
         // ── Card reveal on scroll ────────────────────────────────
+        // DESIGN RULE: stagger é por coluna dentro da linha (3-col grid).
+        // Cartas in-viewport revelam imediatamente com micro-stagger.
+        // Cartas abaixo do fold revelam quando entram na tela via ScrollTrigger.
         if (!reduce) {
+          const COLS = 3;
           const reveals = [...document.querySelectorAll(".sr-reveal")];
           reveals.forEach((el, i) => {
             const rect = (el as HTMLElement).getBoundingClientRect();
-            const inView = rect.top < window.innerHeight * 0.92;
+            const inView = rect.top < window.innerHeight * 0.95;
+            const colDelay = (i % COLS) * 0.09; // stagger por coluna
             if (inView) {
-              // Already in viewport — reveal immediately with a short stagger
               gsap.to(el, {
                 opacity: 1,
                 y: 0,
-                duration: 0.55,
-                delay: (i % 4) * 0.07,
+                duration: 0.6,
+                delay: colDelay,
                 ease: "power3.out",
               });
               (el as HTMLElement).classList.add("sr-visible");
             } else {
+              // Cria um "snapshot" de i para o closure
+              const col = i % COLS;
               ScrollTrigger.create({
                 trigger: el,
-                start: "top 90%",
+                start: "top 92%",
                 onEnter: () => {
                   gsap.to(el, {
                     opacity: 1,
                     y: 0,
                     duration: 0.65,
-                    delay: (i % 3) * 0.08,
+                    delay: col * 0.09,
                     ease: "power3.out",
                     overwrite: "auto",
                   });
@@ -392,8 +398,14 @@ const metaPixelHtml = metaPixelId
         };
       }
 
-      // Re-run on every page (including after ViewTransition navigation)
+      // Run on initial load and after every ViewTransition navigation.
+      // DOMContentLoaded covers direct URL visits (astro:page-load fires too late for SSG).
       document.addEventListener("astro:page-load", initShowroom);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initShowroom, { once: true });
+      } else {
+        initShowroom();
+      }
     </script>
   </body>
 </html>

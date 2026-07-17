@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-17T20:11:50.596Z",
+  "generated_at": "2026-07-17T20:12:50.863Z",
   "posts": [
     {
       "slug": "como-gerar-leads-qualificados-com-inteligencia-artificial",
@@ -416,6 +416,24 @@
       "composite": 88
     },
     {
+      "slug": "indicacao-canal-mais-barato",
+      "title": "O canal com o menor custo por venda da sua revenda não aparece no relatório de mídia",
+      "pubDatetime": "2026-06-25T21:00:00-03:00",
+      "cluster": null,
+      "word_count": 1223,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/og-indicacao-canal.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_dimus_help": true,
+      "faq_count": 3,
+      "seo": 84,
+      "geo": 80,
+      "aeo": 100,
+      "composite": 88
+    },
+    {
       "slug": "tempo-medio-de-venda-de-carro-usado",
       "title": "Tempo Médio de Venda de Carro Usado: Benchmark Real para Revendas BR",
       "pubDatetime": "2026-07-15T09:00:00-03:00",
@@ -482,24 +500,6 @@
       "has_lead_form": true,
       "has_dimus_help": true,
       "faq_count": 4,
-      "seo": 78,
-      "geo": 80,
-      "aeo": 100,
-      "composite": 86
-    },
-    {
-      "slug": "indicacao-canal-mais-barato",
-      "title": "O canal com o menor custo por venda da sua revenda não aparece no relatório de mídia",
-      "pubDatetime": "2026-06-25T21:00:00-03:00",
-      "cluster": null,
-      "word_count": 1195,
-      "has_cover": true,
-      "has_unique_og": true,
-      "og_path": "/og/og-indicacao-canal.png",
-      "has_answer_capsule": true,
-      "has_lead_form": true,
-      "has_dimus_help": true,
-      "faq_count": 3,
       "seo": 78,
       "geo": 80,
       "aeo": 100,

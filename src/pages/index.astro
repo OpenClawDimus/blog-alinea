@@ -182,9 +182,9 @@ const getReadTime = (body: string | undefined) =>
                 ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
                 coverImage={post.data.coverImage}
                 tall={i === 0}
+                eager={i === 0}
                 readingTime={getReadTime(post.body)}
                 description={post.data.description}
-                pinLabel={isNew(post.data.pubDatetime) ? "Novo" : undefined}
               />
             ))}
           </div>
@@ -204,7 +204,6 @@ const getReadTime = (body: string | undefined) =>
                 coverImage={post.data.coverImage}
                 readingTime={getReadTime(post.body)}
                 description={post.data.description}
-                pinLabel={isNew(post.data.pubDatetime) ? "Novo" : undefined}
               />
             ))}
           </div>
