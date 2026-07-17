@@ -36,6 +36,7 @@ jobs:
         run: pnpm run build
         env:
           PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.PUBLIC_GOOGLE_SITE_VERIFICATION }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
 
       - name: "☁️ Deploy to Cloudflare Pages"
         run: npx --yes wrangler@4.95.0 pages deploy dist --project-name=blog-dimus --commit-dirty=true
