@@ -4,13 +4,15 @@
  * Capsula citável por IA logo no topo do post. Use 1 por pergunta-âncora.
  */
 interface Props {
-  q?: string; // pergunta (opcional, vira eyebrow)
+  q?: string;
+  question?: string; // alias para compatibilidade com MDX existentes
 }
-const { q } = Astro.props;
+const { q, question } = Astro.props;
+const label = q ?? question;
 ---
 
 <div class="answer-capsule not-prose" role="note">
-  {q && <p class="ac-q">{q}</p>}
+  {label && <p class="ac-q">{label}</p>}
   <div class="ac-body"><slot /></div>
 </div>
 
