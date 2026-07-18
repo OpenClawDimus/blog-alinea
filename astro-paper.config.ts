@@ -8,7 +8,7 @@ export default defineAstroPaperConfig({
       "Marketing que mede carro vendido, não lead. Conteúdo neutro-de-fornecedor para donos e gerentes de revenda, seminovos e concessionária.",
     author: "Dimus",
     profile: "https://dimus.com.br",
-    ogImage: "default-og.jpg",
+    ogImage: "default-og.png",
     lang: "pt-BR",
     timezone: "America/Sao_Paulo",
     dir: "ltr",

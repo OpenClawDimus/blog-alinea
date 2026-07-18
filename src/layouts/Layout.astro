@@ -85,11 +85,12 @@ const metaPixelHtml = metaPixelId
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} sizes="any" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="icon" href={getAssetPath("favicon.ico")} sizes="any" />
+    <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} />
+    <link rel="icon" type="image/png" href={getAssetPath("favicon.png")} sizes="32x32" />
+    <link rel="apple-touch-icon" href={getAssetPath("apple-touch-icon.png")} />
     <link rel="canonical" href={canonicalURL} />
-    <meta name="generator" content={Astro.generator} />
+    {/* Remove generator tag — evita exposição de stack */}
 
     <!-- Fonts — Revista Showroom -->
     <Font
@@ -133,8 +134,10 @@ const metaPixelHtml = metaPixelId
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:secure_url" content={socialImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:alt" content={title} />
     <meta property="og:locale" content="pt_BR" />
 
