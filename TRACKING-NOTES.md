@@ -1,5 +1,63 @@
 # TRACKING-NOTES — Blog Dimus (blog.dimus.com.br / seoa_publish_queue)
 
+---
+
+## ⛔ REGRAS OBRIGATÓRIAS DE IMAGEM — NUNCA VIOLAR
+
+Estas regras são executadas automaticamente em `scripts/gate-covers.mjs`, que roda como
+primeiro step do `npm run build`. Violar = build falha, deploy bloqueado.
+
+### R1 — coverImage ÚNICA por post
+Dois posts NUNCA podem ter o mesmo valor de `coverImage`. Um path = um post.
+Ao criar post novo, verificar com `grep -r "meu-arquivo.jpg" src/content/posts/` antes de usar.
+
+### R2 — Títulos únicos
+Dois posts NUNCA podem ter o mesmo título. Verificar com `grep -r "^title:" src/content/posts/`.
+
+### R3 — coverImage NUNCA vem de /og/
+Arquivos em `/public/og/` são templates de OG para link preview (LinkedIn, X, Slack).
+Eles NUNCA são usados como `coverImage` no frontmatter do post — pertencem ao campo `ogImage`.
+
+### R4 — coverImage com prefixo "og-" é proibido
+Qualquer arquivo cujo nome começa com `og-` é um template de OG. Jamais usar como capa.
+
+### Padrão de imagem de capa
+`coverImage` deve ser uma fotografia escura e cinematográfica (dark-cinematic).
+Fotos disponíveis: `public/covers/image_0_dark_cin_*.jpg` (26 não usadas em 2026-07-18).
+Verificar com: `grep -r "image_0_dark_cin" src/content/posts/ | awk -F: '{print $NF}' | sort`
+
+---
+
+## Insight #005 — Post duplicado deletado + covers duplicadas corrigidas + gate-covers implementado
+
+**Data:** 2026-07-18
+
+**Problemas encontrados:**
+1. `atribuicao-de-origem-qual-canal-vendeu.mdx` era cópia truncada (172 linhas, 3 FAQs) de
+   `atribuicao-de-marketing-automotivo.mdx` (197 linhas, 4 FAQs + tabela benchmark) — mesmo título,
+   mesma data, mesmo conteúdo até a linha 95. Aparecia duplicado no grid.
+2. `indicacao-invisivel-revenda.mdx` e `indicacao-canal-mais-barato.mdx` compartilhavam
+   `/covers/indicacao.jpg`.
+3. Outras covers duplicadas vinham sendo adicionadas sem validação automática.
+
+**Solução aplicada:**
+- Deletado `atribuicao-de-origem-qual-canal-vendeu.mdx` (versão truncada).
+- `indicacao-invisivel-revenda.mdx`: `coverImage` trocada para `/covers/image_0_dark_cin_20260715_133847.jpg`.
+- Criado `scripts/gate-covers.mjs`: valida R1-R4 em todos os 48 posts. Exit code 1 = build abortado.
+- `package.json` build script: `gate-covers.mjs` adicionado como primeiro gate.
+
+**Arquivos afetados:**
+- `src/content/posts/atribuicao-de-origem-qual-canal-vendeu.mdx` → DELETADO
+- `src/content/posts/indicacao-invisivel-revenda.mdx` → coverImage corrigida
+- `scripts/gate-covers.mjs` → NOVO
+- `package.json` → gate-covers adicionado no build
+
+**Gate verificado:** `node scripts/gate-covers.mjs` → ✅ 48 posts, 0 violações
+
+---
+
+## Insight #004 — MiroFish ajustes obrigatórios + covers OG-template substituídas
+
 ## Insight #003 — Correções de design: badges removidos, black-card resolvido, grid 12 posts
 
 **Data:** 2026-07-17
