@@ -132,9 +132,9 @@ const getReadTime = (body: string | undefined) =>
     {featuredPost && (
       <a href={`/posts/${featuredPost.id}/`} class="sr-hero sr-reveal">
         <div class="cover" style={`background:${getGrad(featuredPost.data.tags)}`}>
-          {typeof featuredPost.data.ogImage === "string" && (
+          {(featuredPost.data.coverImage || typeof featuredPost.data.ogImage === "string") && (
             <img
-              src={featuredPost.data.ogImage}
+              src={featuredPost.data.coverImage ?? (typeof featuredPost.data.ogImage === "string" ? featuredPost.data.ogImage : undefined)}
               alt=""
               aria-hidden="true"
               loading="eager"
