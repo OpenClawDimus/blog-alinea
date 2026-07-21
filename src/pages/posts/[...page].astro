@@ -30,6 +30,9 @@ const getGrad = (tags: string[]) =>
 
 const getReadTime = (body: string | undefined) =>
   Math.ceil((body?.split(/\s+/).length ?? 800) / 220);
+
+const NEW_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000;
+const isNew = (d: Date) => Date.now() - d.getTime() < NEW_THRESHOLD_MS;
 ---
 
 <Layout title={`Posts | ${config.site.title}`}>
@@ -68,6 +71,7 @@ const getReadTime = (body: string | undefined) =>
           readingTime={getReadTime(post.body)}
           description={post.data.description}
           eager={idx < 3}
+          isNew={isNew(post.data.pubDatetime)}
         />
       ))}
     </div>

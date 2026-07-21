@@ -185,6 +185,7 @@ const getReadTime = (body: string | undefined) =>
                 eager={i === 0}
                 readingTime={getReadTime(post.body)}
                 description={post.data.description}
+                isNew={isNew(post.data.pubDatetime)}
               />
             ))}
           </div>
@@ -204,6 +205,7 @@ const getReadTime = (body: string | undefined) =>
                 coverImage={post.data.coverImage}
                 readingTime={getReadTime(post.body)}
                 description={post.data.description}
+                isNew={isNew(post.data.pubDatetime)}
               />
             ))}
           </div>

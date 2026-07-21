@@ -14,9 +14,10 @@ interface Props {
   description?: string;
   /** Primeiras cartas acima do fold: eager loading para evitar flash de tela preta */
   eager?: boolean;
+  isNew?: boolean;
 }
 
-const { href, gradient, tag, title, date, ogImage, coverImage, tall = false, readingTime, description, eager = false } = Astro.props;
+const { href, gradient, tag, title, date, ogImage, coverImage, tall = false, readingTime, description, eager = false, isNew = false } = Astro.props;
 const cardImage = coverImage ?? (ogImage && ogImage !== '/default-og.jpg' ? ogImage : undefined);
 
 const fmtDate = (d: Date) =>
@@ -33,6 +34,7 @@ const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
     {cardImage && <img src={cardImage} alt="" loading={eager ? "eager" : "lazy"} decoding="async" onerror="this.style.display='none'" />}
     {!cardImage && <div class="sr-cutcard__noise"></div>}
     <div class="sr-cutcard__overlay"></div>
+    {isNew && <span class="sr-novo-badge" aria-label="Novo post">NOVO</span>}
 
     {/* Inset label — bottom-left of media */}
     <div class="sr-cutcard__inset">
@@ -75,3 +77,23 @@ const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
     </div>
   </div>
 </a>
+
+<style>
+  .sr-novo-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--magenta, #e040fb);
+    color: #fff;
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 4;
+  }
+</style>
