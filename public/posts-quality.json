@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T04:22:38.151Z",
+  "generated_at": "2026-07-22T18:34:55.084Z",
   "posts": [
     {
       "slug": "como-gerar-leads-qualificados-com-inteligencia-artificial",
@@ -176,6 +176,24 @@
       "has_lead_form": true,
       "has_dimus_help": true,
       "faq_count": 4,
+      "seo": 94,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 98
+    },
+    {
+      "slug": "giro-de-estoque-seminovos",
+      "title": "Giro de Estoque de Seminovos: Como Calcular e Qual é o Benchmark Real",
+      "pubDatetime": "2026-07-21T00:01:00-03:00",
+      "cluster": "automotivo-metricas",
+      "word_count": 911,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/og-giro-de-estoque-seminovos.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_dimus_help": true,
+      "faq_count": 3,
       "seo": 94,
       "geo": 100,
       "aeo": 100,
@@ -594,24 +612,6 @@
       "geo": 73,
       "aeo": 100,
       "composite": 84
-    },
-    {
-      "slug": "atribuicao-de-origem-qual-canal-vendeu",
-      "title": "De onde veio o cliente que comprou? Enquanto você não sabe, está pagando canal errado",
-      "pubDatetime": "2026-06-24T09:00:00-03:00",
-      "cluster": null,
-      "word_count": 834,
-      "has_cover": true,
-      "has_unique_og": true,
-      "og_path": "/og/og-atribuicao.png",
-      "has_answer_capsule": true,
-      "has_lead_form": true,
-      "has_dimus_help": true,
-      "faq_count": 3,
-      "seo": 72,
-      "geo": 73,
-      "aeo": 100,
-      "composite": 82
     },
     {
       "slug": "checklist-custo-do-lead-parado",
