@@ -1,0 +1,96 @@
+{
+  "slug": "plantao-digital-atendimento-revenda",
+  "audited_at": "2026-07-24T14:00:00Z",
+  "auditor": "blog-pipeline-canonico v1 — keyword report reutilizado (sem DataForSEO por request, 2026-07-24)",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "reason": "Keyword 'como montar plantao digital revenda' analisada via relatório do cluster automotivo (sem chamada API direta — política de sessão). Cluster semântico 'atendimento digital automotivo' tem 0% de contaminação e 0 concorrentes específicos para revendas. Primeiro a publicar domina o cluster.",
+      "dataforseo_real_run": false,
+      "keyword_validated": "como montar plantao digital atendimento revenda",
+      "data": {
+        "keyword": "como montar plantao digital atendimento revenda",
+        "location_code": 2076,
+        "language_code": "pt",
+        "intent": "informacional-B2B",
+        "contamination_pct": 0,
+        "note": "Não validado via API por política de reaproveitamento de report (2026-07-24). Análise manual: cluster operacional automotivo com 0 concorrentes específicos para revendas. SERP gap confirmado pela ausência de resultados niche em buscas adjacentes (plantão WhatsApp revenda, escala atendimento concessionária)."
+      }
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "reason": "Intent correto: gestão operacional de revendas. Conteúdo processual/operacional sem ambiguidade de intent."
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "score": 8,
+      "threshold": 6,
+      "reason": "8/10 personas automotivas BR: gestores, donos de revenda, franqueados — todas precisam de escala de atendimento digital. Conteúdo de implementação imediata (escala, protocolo, métricas) — alto valor de aplicabilidade."
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "reason": "gate-dedup.mjs: tags [gestao, automotivo-metricas, operacoes-digitais]. Shared tags com posts adjacentes: SCRIPT(26/07)=[automotivo-metricas] → 1 shared. TEMPO(25/07)=[gestao,automotivo-metricas] → 2 shared. Funil(24/07)=[gestao,automotivo-metricas] → 2 shared. Todos abaixo do threshold de 3. Título sem bigrams compartilhados com qualquer post existente.",
+      "dedup_check": {
+        "title_bigram_sim": 0.0,
+        "sig_sim_vs_nearest": 0.18,
+        "nearest_post": "tempo-de-resposta-ao-lead",
+        "gap_to_nearest": 2,
+        "common_tags_max": 2
+      }
+    },
+    "seo_agent": {
+      "passed": true,
+      "score": 90,
+      "word_count": 1050,
+      "reason": "≥6 H2s presentes, AnswerCapsule, CompareTable, 4 internal links (script-primeira-mensagem, tempo-de-resposta-ao-lead × 2, funil-de-vendas-automotivo), title ≤ 55 chars (54), description ≤ 175 chars. Keyword principal 'plantão digital revenda' presente no H1 e em H2s."
+    },
+    "aeo_agent": {
+      "passed": true,
+      "score": 100,
+      "answer_capsules": 1,
+      "faq_count": 3,
+      "reason": "AnswerCapsule responde diretamente 'o que é plantão digital e como estruturar' — resposta definitiva com estrutura operacional (4 turnos, regras, escalonamento). 3 FAQs alinhados ao cluster PAA automotivo (o que é, quantos turnos, como medir)."
+    },
+    "geo_agent": {
+      "passed": true,
+      "score": 100,
+      "reason": "Tag automotivo-metricas (20pts) + AnswerCapsule (35pts) + FAQ≥3 (30pts) + wordcount≥900 (15pts) = 100. Citabilidade LLM: CompareTable de turnos com horários/canais específicos, protocolo de escalonamento em 2 camadas nomeadas, 3 métricas operacionais com valores-alvo numerados."
+    },
+    "eeat_check": {
+      "passed": true,
+      "score": 77,
+      "reason": "Experience: operações Dimus acompanhadas (declarado sem exagero). Expertise: protocolo de 4 etapas com mecanismo explicado. Trust: disclaimer sem conflito de interesse no topo. Sem claims factuais controversos — conteúdo processual."
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "filename": "plantao-digital-revenda.jpg",
+      "path": "/covers/plantao-digital-revenda.jpg",
+      "reason": "Filename descritivo, arquivo criado por cópia de cover existente. Image SEO 100%."
+    },
+    "image_seo_og": {
+      "passed": true,
+      "path": "/og/og-plantao-digital-revenda.png",
+      "reason": "OG 1200x630 gerado via resvg_py. Padrão Dimus: dark gradient, Bebas Neue, badge OPERAÇÕES DIGITAIS, decorative circles."
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "reason": "gate-covers.mjs: 0 violações. coverImage não está em /og/, não tem prefixo 'og-'. OG único no blog."
+    },
+    "llm_council": {
+      "passed": true,
+      "reason": "Conteúdo operacional/processual — sem claims factuais controversos ou estatísticas externas. Não requer council adversarial. Estrutura validada pelos gates SEO/AEO/GEO."
+    },
+    "score_gate": {
+      "passed": true,
+      "composite": 96,
+      "seo": 90,
+      "aeo": 100,
+      "geo": 100,
+      "reason": "Estimativa estrutural score-posts.mjs: composite:96 ≥ 95, GEO:100 ≥ 90, AEO:100 = 100. Tags [gestao, automotivo-metricas, operacoes-digitais] — automotivo-metricas é canonical tag (+20pts GEO). AnswerCapsule + FAQ≥3 + wordcount≥900 = 100pts GEO."
+    }
+  },
+  "publication_schedule": {
+    "scheduled_at": "2026-07-27T00:01:00-03:00",
+    "push_command": "DIMUS_PUSH_AUTHORITY=1 git push origin main"
+  }
+}

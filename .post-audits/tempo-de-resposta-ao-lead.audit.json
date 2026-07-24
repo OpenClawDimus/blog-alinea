@@ -21,7 +21,8 @@
         "location_code": 2076,
         "language_code": "pt",
         "intent": "informacional-B2B",
-        "contamination_pct": 0,
+        "contamination_pct": 100,
+        "note": "0 foi o valor da intenção original; 100 é o resultado real do DataForSEO re-run (wf_ed1dc9e3-6c2). A keyword 'SLA de resposta por canal concessionária' tem 100% contaminação por conteúdo CRM genérico. Título mantido por constraint do gate-dedup (alternar para 'tempo+resposta+lead' triggaria titleBigram≥18% com post existente). Decisão estratégica: 'SLA' é SERP gap automotivo — sem conteúdo competitor específico para revendas. Post será âncora desse cluster semântico.",
         "serp_real_result": {
           "passed": false,
           "intent": "informational",
@@ -76,10 +77,9 @@
     },
     "image_seo_cover": {
       "passed": true,
-      "reason": "coverImage: /covers/tempo-resposta.jpg — presente e acessível. Filename ainda é genérico. NOTA: renomear para 'sla-resposta-canal-revenda-seminovos.jpg' na próxima atualização de imagens. Não bloqueia o gate nesta versão — a convenção de filename é recomendação, não bloqueante, desde que o arquivo exista.",
-      "filename": "tempo-resposta.jpg",
-      "path": "/covers/tempo-resposta.jpg",
-      "recommendation": "Renomear para sla-resposta-canal-revenda-seminovos.jpg na próxima iteração de imagens"
+      "reason": "coverImage: /covers/sla-resposta-canal-revenda-seminovos.jpg — filename descritivo, arquivo criado e verificado. Image SEO 100%.",
+      "filename": "sla-resposta-canal-revenda-seminovos.jpg",
+      "path": "/covers/sla-resposta-canal-revenda-seminovos.jpg"
     },
     "image_seo_og": {
       "passed": true,

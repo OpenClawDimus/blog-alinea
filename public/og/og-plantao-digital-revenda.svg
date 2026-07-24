@@ -36,20 +36,20 @@
 
   <!-- Category badge -->
   <g transform="translate(80, 110)">
-    <rect width="210" height="30" rx="15" fill="rgba(255,0,127,0.12)" stroke="#FF007F" stroke-width="1"/>
-    <text x="14" y="21" font-family="'Gotham', 'Arial', sans-serif" font-size="13" fill="#FF007F" letter-spacing="2" font-weight="700">ATENDIMENTO DIGITAL</text>
+    <rect width="200" height="30" rx="15" fill="rgba(255,0,127,0.12)" stroke="#FF007F" stroke-width="1"/>
+    <text x="14" y="21" font-family="'Gotham', 'Arial', sans-serif" font-size="13" fill="#FF007F" letter-spacing="2" font-weight="700">OPERAÇÕES DIGITAIS</text>
   </g>
 
   <!-- TITLE -->
-  <text x="80" y="200" font-family="'Bebas Neue', 'Arial Black', sans-serif" font-size="68" letter-spacing="-1">
-    <tspan x="80" dy="0" fill="#FFFFFF">SLA de Resposta</tspan>
-    <tspan x="80" dy="76" fill="#FFFFFF">por Canal nas Revendas</tspan>
-    <tspan x="80" dy="76" fill="#FF007F">WhatsApp · OLX · WebMotors</tspan>
+  <text x="80" y="200" font-family="'Bebas Neue', 'Arial Black', sans-serif" font-size="72" letter-spacing="-1">
+    <tspan x="80" dy="0" fill="#FFFFFF">Como Montar Plantão</tspan>
+    <tspan x="80" dy="80" fill="#FFFFFF">Digital de Atendimento</tspan>
+    <tspan x="80" dy="80" fill="#FF007F">em Revenda</tspan>
   </text>
 
   <!-- Tagline -->
   <g transform="translate(80, 550)">
-    <text font-family="'Gotham', 'Arial', sans-serif" font-size="15" fill="#A098A6" letter-spacing="1">WhatsApp ≤3min · OLX ≤8min · WebMotors ≤6min · blog.dimus.com.br</text>
+    <text font-family="'Gotham', 'Arial', sans-serif" font-size="15" fill="#A098A6" letter-spacing="1">quem responde · em qual turno · como medir · blog.dimus.com.br</text>
   </g>
 
   <!-- Decorative circles bottom-right -->

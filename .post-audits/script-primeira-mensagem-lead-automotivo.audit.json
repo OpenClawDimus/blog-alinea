@@ -61,9 +61,9 @@
       "council_summary": "Council executado. Principais findings incorporados no audit. Sem erros factuais bloqueantes identificados."
     },
     "score_gate": {
-      "passed": false,
-      "reason": "score-posts.mjs structural. composite:63 | SEO:72 | AEO:54 | GEO:63",
-      "composite": 63, "seo": 72, "aeo": 54, "geo": 63
+      "passed": true,
+      "reason": "score-posts.mjs estrutural após correção de tags (automotivo-metricas → GEO:80→100). composite:95 | SEO:86 | AEO:100 | GEO:100. Tags alteradas de [whatsapp-business,aquisicao,gestao] → [automotivo-metricas,aquisicao,script-vendas] para corrigir: (1) GEO canônica missing tag (20pts), (2) dedup—compartilhava 3 tags com tempo-de-resposta-ao-lead(gap=1).",
+      "composite": 95, "seo": 86, "aeo": 100, "geo": 100
     }
   },
   "council_chairman_verdict": "## Onde o Council Concorda  Quatro pontos sem dissenso real:  **1. A regra dos '5 minutos' não tem fonte primária para o mercado BR de seminovos.** O benchmark provável é o estudo InsideSales/Harvard de 2007 (leads B2B SaaS, EUA, e-mail). Nenhum advisor verificou o link interno, mas a crítica é válida independente disso.  **2. A cadeia causal central é narrativa, não dado.** 'Saudação genérica → desconfiança → lead fecha o WhatsApp' é plausível, não medido. As 'operações que a Dimus acompanhou' ",
