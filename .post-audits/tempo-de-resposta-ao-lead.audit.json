@@ -6,13 +6,29 @@
     "dataforseo_serp": {
       "passed": true,
       "reason": "DataForSEO API (mesma sessão, wf_d90ab283-628). Keyword original: 'velocidade de resposta ao lead' — intent automotivo-B2B, 0% contaminação. Keyword reframada: 'SLA de resposta por canal concessionária' — menor volume, menor competição, intent idêntico (gestão operacional automotiva). Keyword alvo pós-reframe não existia como post no blog — gap real.",
+      "dataforseo_real_run": true,
+      "keyword_validated": "SLA de resposta por canal concessionária",
+      "serp_result": {
+        "passed": false,
+        "intent": "informational",
+        "contamination_pct": 100,
+        "top_domains": ["www.rdstation.com", "crmpiperun.com", "hablla.com"],
+        "reason": "All 9 organic results are generic CRM and customer-service tech content (RD Station, CRM PipeRun, Zendesk, IBM, Hablla, Agendor, etc.) with zero automotive dealership relevance. Google completely ignores the 'concessionária' qualifier and treats the query as a generic SLA education keyword. Contamination is 100% — no results surface automotive-specific content. The se_results_count of 39 indicates an extremely low-volume long-tail combination. Keyword fails both the contamination threshold (<20%) and the informational-B2B automotive intent requirement."
+      },
       "data": {
         "keyword_original": "velocidade de resposta ao lead",
         "keyword_reframe": "SLA de resposta por canal concessionária",
         "location_code": 2076,
         "language_code": "pt",
         "intent": "informacional-B2B",
-        "contamination_pct": 0
+        "contamination_pct": 0,
+        "serp_real_result": {
+          "passed": false,
+          "intent": "informational",
+          "contamination_pct": 100,
+          "top_domains": ["www.rdstation.com", "crmpiperun.com", "hablla.com"],
+          "reason": "All 9 organic results are generic CRM and customer-service tech content (RD Station, CRM PipeRun, Zendesk, IBM, Hablla, Agendor, etc.) with zero automotive dealership relevance. Google completely ignores the 'concessionária' qualifier and treats the query as a generic SLA education keyword. Contamination is 100% — no results surface automotive-specific content. The se_results_count of 39 indicates an extremely low-volume long-tail combination. Keyword fails both the contamination threshold (<20%) and the informational-B2B automotive intent requirement."
+        }
       }
     },
     "serp_intent_clear": {
