@@ -783,3 +783,65 @@ Post está LIVE com erros. Composite 87, GEO 73. Aplicar ANTES da próxima sess�
 - `src/pages/index.astro`
 - `src/pages/posts/[...page].astro`
 
+---
+
+## #021 — Gate inviolável + 2 posts commitados SEM pipeline completo (2026-07-24)
+
+### O que foi feito
+- `tempo-de-resposta-ao-lead.mdx` → composite 100, pubDatetime 2026-07-25 ✅
+- `funil-de-vendas-automotivo.mdx` → composite 98, pubDatetime 2026-07-24 ✅ (tópico novo)
+- `carro-parado-quanto-custa.mdx` → pubDatetime revertido 2026-06-23 (intent mismatch SERP apreendido)
+- `scripts/gate-post-pipeline.mjs` → gate pré-commit 12 etapas canônicas ✅
+- `.git/hooks/pre-commit` → ativo, bloqueia sem `.post-audits/<slug>.audit.json` ✅
+- `scripts/run-post-pipeline.mjs` → contrato do pipeline documentado ✅
+- `AGENTS.md` → regras invioláveis registradas ✅
+
+### CRÍTICO — Posts NÃO validados pelo pipeline completo
+Commitados ANTES do gate. Sem `.post-audits/`. NÃO canonicamente validados.
+
+**PENDENTE obrigatório em sessão limpa:**
+```
+/blog-post-pipeline funil-de-vendas-automotivo
+/blog-post-pipeline tempo-de-resposta-ao-lead
+```
+
+Etapas não executadas: DataForSEO SERP, MiroFish ICP, SEO agent, AEO agent,
+GEO agent, EEAT check, Image SEO check, LLM Council.
+
+### Image SEO pendente
+`funil-de-vendas-automotivo` coverImage filename não descritivo:
+`/covers/image_0_dark_cin_20260715_133518.jpg` → renomear para `funil-vendas-automotivo-seminovos.jpg`
+
+### JSON-LD / Schema
+FAQPage schema (faq: frontmatter) presente nos 2 posts, 3 FAQs cada.
+JSON-LD rendering via Astro: NÃO verificado nesta sessão.
+Article schema + EEAT Author schema: DESCONHECIDO.
+
+### Studio SEO module
+NÃO tocado. Pendente thread separada.
+
+### Commits não pusheados (3 commits ahead)
+```
+3b9bf46  chore(gates): gate-post-pipeline inviolável + pre-commit hook
+6c3a192  feat(blog): post 24/07 funil-de-vendas-automotivo + reverte carro-parado
+cdc16e0  fix(posts): score 100/100 tempo-de-resposta (25/07)
+```
+
+### Push schedule
+- 24/07 11:00 BRT: `DIMUS_PUSH_AUTHORITY=1 git push origin main`
+- 25/07 15:00 BRT: idem (pubDatetime 25/07 garante exibição correta)
+
+### Próximas ações (ORDER OBRIGATÓRIA)
+1. /compact → sessão limpa
+2. Criar skill `/blog-post-pipeline` em `~/Downloads/_IA-Skills/blog-post-pipeline/SKILL.md`
+3. `/blog-post-pipeline funil-de-vendas-automotivo` (12 etapas completas)
+4. `/blog-post-pipeline tempo-de-resposta-ao-lead` (idem)
+5. Verificar JSON-LD schema no Astro (componente faq: → FAQPage JSON-LD)
+6. Studio SEO module → gate equivalente
+
+### Lições desta sessão (não repetir)
+- `score-posts.mjs` = checker estrutural, NÃO validação SEO real
+- Intent check OBRIGATÓRIO antes de qualquer pubDatetime (carro-parado = SERP veículo apreendido)
+- Gate só bloqueia commits futuros — posts existentes precisam do pipeline retroativo
+- Deduplication: blog tem posts duplicados (custo-parado + custo-estoque-parado, lead-fantasma x2)
+
