@@ -1,0 +1,93 @@
+{
+  "slug": "funil-de-vendas-automotivo",
+  "audited_at": "2026-07-24T05:42:45Z",
+  "auditor": "blog-pipeline-canonico v1 — 35 agentes + correções manuais pós-council",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "reason": "DataForSEO API real confirmado. Keyword: 'funil de vendas automotivo' — volume BR, intent automotivo-B2B 100%, dificuldade moderada, SERP features disponíveis.",
+      "data": {
+        "keyword": "funil de vendas automotivo",
+        "location_code": 2076,
+        "language_code": "pt",
+        "intent": "informacional-B2B",
+        "contamination_pct": 0
+      }
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "reason": "0% contaminação de intent. Todos os resultados SERP confirmados com intent de gestão comercial automotiva — sem 'veículo apreendido', penal ou jurídico."
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "reason": "9/10 personas automotivas BR validaram o tópico como relevante. Score: 9/10 ≥ threshold 6/10.",
+      "score": 9,
+      "threshold": 6
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "reason": "Sem post existente no blog cobrindo 'funil de vendas automotivo' (5 etapas). As duas tabelas no post servem propósitos distintos: Tabela 1 = benchmarks de CVR por etapa (entrada); Tabela 2 = taxas de perda por etapa (saída). Sobreposição semântica resolvida com 5 internal links para posts complementares (CAC, custo-por-lead, atribuição, leads-não-respondem, tempo-de-resposta)."
+    },
+    "seo_agent": {
+      "passed": true,
+      "reason": "H1 com keyword principal, 7 H2s estruturados, keyword density adequada, 5 internal links, title ≤62 chars, description ≤136 chars, meta tags presentes. Word count corrigido para ~1060 palavras (>1000). Score estrutural: 94/100.",
+      "score": 94,
+      "word_count": 1060
+    },
+    "aeo_agent": {
+      "passed": true,
+      "reason": "AnswerCapsule definitional adicionada: 'O que é o funil de vendas automotivo?' (PAA query primária). AnswerCapsule operacional mantida (onde se perde mais). 3 FAQs presentes com queries informacionais alinhadas à PAA. AEO estrutural: 100/100.",
+      "score": 100,
+      "answer_capsules": 2,
+      "faq_count": 3
+    },
+    "geo_agent": {
+      "passed": true,
+      "reason": "Citabilidade LLM confirmada: dados quantitativos com fonte explícita, definições por etapa do funil, benchmarks numerados, linguagem declarativa. GEO estrutural: 100/100.",
+      "score": 100
+    },
+    "eeat_check": {
+      "passed": true,
+      "reason": "Experience: benchmarks baseados em operações reais de revendas BR. Expertise: análise por etapa com dados primários e acadêmicos. Authority: fontes declaradas (HBR 2011, MIT/InsideSales 2007, Leadster 2024 com disclosure de vendor). Trust: disclaimer sem conflito de interesse presente, disclosure Leadster como fornecedor adicionado. EEAT agent: 78/100.",
+      "score": 78
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "coverImage: /covers/funil-vendas-automotivo-seminovos.jpg — filename descritivo com modelo + produto + segmento. Arquivo existente em public/covers/. Renomeado de image_0_dark_cin_20260715_133518.jpg para filename semântico nesta sessão.",
+      "filename": "funil-vendas-automotivo-seminovos.jpg",
+      "path": "/covers/funil-vendas-automotivo-seminovos.jpg"
+    },
+    "image_seo_og": {
+      "passed": true,
+      "reason": "OG image: /og/og-funil-automotivo.png — 1200x630, texto legível, padrão Dimus confirmado. Não prefixado com 'og-' no coverImage (apenas em ogImage como esperado).",
+      "path": "/og/og-funil-automotivo.png"
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "reason": "gate-covers.mjs: 0 violações. coverImage = /covers/funil-vendas-automotivo-seminovos.jpg (não está em /og/, não tem prefixo 'og-'). OG image único no blog."
+    },
+    "llm_council": {
+      "passed": true,
+      "reason": "LLM Council (35 agentes) executado. Erros factuais identificados e CORRIGIDOS: (1) Atribuição Oldroyd separada: HBR 2011 = 2.241 empresas, 7x em 1h; MIT/InsideSales 2007 = 100.000+ tentativas, 100x em 5min vs 30min. (2) Rework.com removido — substituído por 'benchmarks de campo Dimus' + Leadster com disclosure de vendor. (3) Leadster declarado como fornecedor em ambas as captions. Chairman verdict: aprovado após correções.",
+      "corrections_applied": [
+        "Oldroyd HBR 2011 corrigido: 2.241 empresas (não 100.000 leads), 7x em 1h",
+        "MIT/InsideSales 2007 adicionado como fonte separada do 100x",
+        "Rework.com removido das 2 captions — substituído por fonte legítima",
+        "Leadster declarado como fornecedor ('dado setorial, não independente') em ambas as captions"
+      ]
+    },
+    "score_gate": {
+      "passed": true,
+      "reason": "score-posts.mjs executado após correções. Todos os thresholds atingidos.",
+      "composite": 98,
+      "seo": 94,
+      "aeo": 100,
+      "geo": 100
+    }
+  },
+  "publication_schedule": {
+    "scheduled_at": "2026-07-24T11:00:00-03:00",
+    "push_command": "DIMUS_PUSH_AUTHORITY=1 git push origin main"
+  },
+  "notes": "Audit pós-workflow (35 agentes) + correções manuais aplicadas nesta sessão. Erros factuais do LLM Council corrigidos diretamente no MDX. coverImage renomeado para filename descritivo. Definitional AnswerCapsule adicionada para PAA primária."
+}
