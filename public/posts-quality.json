@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-24T03:30:11.301Z",
+  "generated_at": "2026-07-24T03:47:54.542Z",
   "posts": [
     {
       "slug": "carro-parado-quanto-custa",
       "title": "Carro parado no pátio: R$47 por dia que você não vê no caixa",
-      "pubDatetime": "2026-07-24T00:01:00-03:00",
+      "pubDatetime": "2026-06-23T00:01:00-03:00",
       "cluster": "automotivo-metricas",
       "word_count": 1241,
       "has_cover": true,
@@ -212,6 +212,24 @@
       "has_lead_form": true,
       "has_dimus_help": true,
       "faq_count": 4,
+      "seo": 94,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 98
+    },
+    {
+      "slug": "funil-de-vendas-automotivo",
+      "title": "Funil de Vendas Automotivo: As 5 Etapas e Onde Você Perde Mais",
+      "pubDatetime": "2026-07-24T00:01:00-03:00",
+      "cluster": "automotivo-metricas",
+      "word_count": 998,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/og-funil-automotivo.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_dimus_help": true,
+      "faq_count": 3,
       "seo": 94,
       "geo": 100,
       "aeo": 100,
