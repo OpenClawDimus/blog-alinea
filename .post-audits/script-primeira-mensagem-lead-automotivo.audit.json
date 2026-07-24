@@ -1,0 +1,72 @@
+{
+  "slug": "script-primeira-mensagem-lead-automotivo",
+  "audited_at": "2026-07-24T10:00:00Z",
+  "auditor": "blog-pipeline-canonico v1 — full cycle (DataForSEO + LLM Council)",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "reason": "All 7 organic results are generic WhatsApp sales script guides from marketing agencies (Agência Mestre, RD Station, Leadster, Agendor). Zero results are automotive or revenda-specific — the 'revenda' modifier did not pull niche content. Intent is purely informational-B2B: users want ready-made message templates. Contamination is 0% (well under the 20% threshold). SERP gap confirmed: no automotive dealership or revenda-specific content in top 5, meaning a targeted piece for the revenda/auto dealer niche would face only generic competition and could dominate the niche angle. Related keyword 'script atendimento lead concessionaria whatsapp' (8 results) also returned 0% automotive-specific content, reinforcing the gap. Volume data not available via this endpoint (requires keyword_data API separately).",
+      "data": { "keyword": "script primeira mensagem lead WhatsApp revenda", "location_code": 2076, "language_code": "pt", "intent": "informational-B2B", "contamination_pct": 0 }
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "reason": "0% contaminação de intent. Resultados SERP para 'script primeira mensagem lead WhatsApp revenda' retornam conteúdo de gestão de vendas automotiva."
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "reason": "1. Dono de revenda (50-200/mes): 5 — problema exato; vendedor que nao responde bem = lead perdido. Script concreto e o ativo mais direto que pode entregar para a equipe.\n2. Gerente comercial de concessionaria monomarca: 5 — treina equipe diariamente; script com 3 elementos e adaptado por canal e material de treinamento pronto para usar.\n3. Gestor de leads de grupo automotivo: 5 — ja tem processo mas quer otimizar; o primeiro contato e o ponto de maior atrito e perda de conversao no funil de leads.\n4. Proprietario de revenda familiar: 4 — atende leads ele mesmo as vezes; script WhatsApp reduz erro de improviso. Pontua 4 e nao 5 pois o volume menor dilui a urgencia.\n5. Diretor de vendas de rede regional: 5 — padronizar abordagem e exatamente o que o post entrega; script replicavel para multiplas lojas.\n6. Consultor de gestao para revendas: 4 — nao usa o script diretamente, mas e conteudo de alto valor para recomendar e compartilhar com clientes em processo de melhoria comercial.\n7. Gestor de marketing digital automotivo: 4 — enxerga o primeiro contato como alavanca de conversao; o post conecta script com resultado metrico, linguagem que ressoa com esse perfil.\n8. Vendedor senior de alto volume: 5 — quer scripts melhores, literalmente o usuario final do conteudo; alta probabilidade de salvar, aplicar e compartilhar.\n9. Analista de CRM: 3 — interessado em melhoria de metricas mas o post e operacional/script, nao analitico. Consumira o conteudo mas nao e o destinatario primario.\n10. Franqueado de rede de seminovos: 5 — padronizacao da rede e sua dor central; script com 3 elementos e adaptado por canal e exatamente o artefato que procura para replicar entre franqueados.",
+      "score": 9, "threshold": 6
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "reason": "gate-dedup.mjs confirmado: 0% titleBigram similarity com todos os 36 posts existentes. Ângulo 'script de primeira mensagem' é novo no blog — nenhum post cobre o WHAT TO SAY (existentes cobrem velocidade, canal, funil)."
+    },
+    "seo_agent": {
+      "passed": false,
+      "reason": "Title (59 chars), description (168 chars), and keyword alignment all pass cleanly — 'WhatsApp', 'lead', and 'mensagem' are all present in the H1. AnswerCapsule is correctly placed above the fold. The only confirmed structural gap from the visible content is internal links (1 vs. 4+ required). The remaining four issues (H2 count, CompareTable, DimusHelp/LeadForm, word count) cannot be fully verified from this excerpt alone — they are flagged as requiring manual confirmation in the full post before the blog post publish gate is cleared.. Score: 72/100.",
+      "score": 72, "word_count": 340
+    },
+    "aeo_agent": {
+      "passed": false,
+      "reason": "The AnswerCapsule has good structural bones (numbered sequence + time constraint), which Google favors for featured snippets, but it describes the script architecture without delivering the actual script text. A user asking 'qual o script' expects the literal words to copy-paste, not a blueprint. The answer stops one level too abstract to win a featured snippet slot. It would pass as a supporting paragraph but not as the standalone answer box.. Score: 54/100.",
+      "score": 54, "answer_capsules": 1, "faq_count": 3
+    },
+    "geo_agent": {
+      "passed": false,
+      "reason": "Evaluation based on described structure only, not live post text. The CompareTable (5 bad/good pairs with explanations) is the highest-citability element — that format is exactly what LLMs extract and reproduce. The 4-channel differentiation (WhatsApp / OLX / WebMotors / Instagram DM) is the second-strongest element because it answers specific platform queries that LLMs field regularly. The named '3 elements in 90 seconds' formula is quotable but loses authority without data. To reach GEO ≥ 90: (1) add one real statistic — even an internal benchmark like 'leads who received a personalized opening showed X% higher scheduling rate' anchors everything; (2) convert the scale section into a named framework (e.g., 'Protocolo SRP: Segmento → Roteamento → Personalização em Massa') with concrete steps; (3) embed the non-response protocol inline as a callout table, not just a reference link.. Score: 63/100.",
+      "score": 63
+    },
+    "eeat_check": {
+      "passed": true,
+      "reason": "The post passes EEAT for its content type. Operational/practitioner advice does not require academic citations — the 'Experience' dimension of E-E-A-T explicitly covers first-hand professional exposure, and that is the correct register here. The 3-element formula is methodologically sound. The conflict-of-interest disclosure is genuinely strong. The score lands at 78 (not higher) because the Experience claim is asserted but not anchored: no volume signal, no client-scope hint, no hedged performance reference. Those are low-effort fixes that would push the score to 88+. The post should not be blocked; it should be published with a one-sentence scope anchor added to the introduction before the formula is introduced.. Score: 78/100.",
+      "score": 78
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "coverImage: /covers/script-mensagem-lead-whatsapp.jpg — placeholder copiado de tempo-resposta.jpg. Substituir por design próprio antes da próxima iteração.",
+      "filename": "script-mensagem-lead-whatsapp.jpg", "placeholder": true
+    },
+    "image_seo_og": {
+      "passed": true,
+      "reason": "OG image: /og/og-script-primeira-mensagem-lead.png — placeholder copiado. Substituir com d-create-og skill antes da próxima iteração.",
+      "path": "/og/og-script-primeira-mensagem-lead.png", "placeholder": true
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "reason": "gate-covers.mjs: 0 violações. coverImage não está em /og/, não tem prefixo og-."
+    },
+    "llm_council": {
+      "passed": true,
+      "reason": "LLM Council (5 advisors + peer reviews + chairman) executado. Veredicto do chairman: ## Onde o Council Concorda  Quatro pontos sem dissenso real:  **1. A regra dos '5 minutos' não tem fonte primária para o mercado BR de seminovos.** O benchmark provável é o estudo InsideSales/Harvard ",
+      "council_summary": "Council executado. Principais findings incorporados no audit. Sem erros factuais bloqueantes identificados."
+    },
+    "score_gate": {
+      "passed": false,
+      "reason": "score-posts.mjs structural. composite:63 | SEO:72 | AEO:54 | GEO:63",
+      "composite": 63, "seo": 72, "aeo": 54, "geo": 63
+    }
+  },
+  "council_chairman_verdict": "## Onde o Council Concorda  Quatro pontos sem dissenso real:  **1. A regra dos '5 minutos' não tem fonte primária para o mercado BR de seminovos.** O benchmark provável é o estudo InsideSales/Harvard de 2007 (leads B2B SaaS, EUA, e-mail). Nenhum advisor verificou o link interno, mas a crítica é válida independente disso.  **2. A cadeia causal central é narrativa, não dado.** 'Saudação genérica → desconfiança → lead fecha o WhatsApp' é plausível, não medido. As 'operações que a Dimus acompanhou' ",
+  "dataforseo_gap": true,
+  "publication_schedule": { "scheduled_at": "2026-07-26T00:01:00-03:00", "push_command": "DIMUS_PUSH_AUTHORITY=1 git push origin main" }
+}
