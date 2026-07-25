@@ -40,8 +40,10 @@ const publisher = {
   logo: {
     "@type": "ImageObject",
     "@id": `${siteBase}#logo`,
-    url: new URL("favicon.svg", siteBase).href,
-    contentUrl: new URL("favicon.svg", siteBase).href,
+    url: new URL("logo-dimus.png", siteBase).href,
+    contentUrl: new URL("logo-dimus.png", siteBase).href,
+    width: 512,
+    height: 512,
   },
 };
 
@@ -72,7 +74,15 @@ const article = {
   "@id": `${pageUrl}#article`,
   headline: postTitle ?? title ?? site.title,
   ...(description && { description }),
-  ...(ogImage && { image: ogImage }),
+  ...(ogImage && {
+    image: {
+      "@type": "ImageObject",
+      url: new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, siteBase).href,
+      contentUrl: new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, siteBase).href,
+      width: 1200,
+      height: 630,
+    },
+  }),
   inLanguage: site.lang,
   url: pageUrl,
   mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
