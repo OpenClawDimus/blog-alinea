@@ -77,8 +77,8 @@ const article = {
   ...(ogImage && {
     image: {
       "@type": "ImageObject",
-      url: new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, siteBase).href,
-      contentUrl: new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, siteBase).href,
+      url: ogImage.startsWith("http") ? ogImage : new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, siteBase).href,
+      contentUrl: ogImage.startsWith("http") ? ogImage : new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, siteBase).href,
       width: 1200,
       height: 630,
     },
