@@ -2,6 +2,25 @@
 
 ---
 
+## SESSÃO 2026-07-25 — IDV Canônico + BlogPosting Schema Fix
+
+### S-IDV-01 — CF Pages git webhook quebrado (workaround: wrangler direct upload)
+Commits `5e71c4b` e `2a0348f` pushados para `origin/main` mas CF Pages não buildou (webhook não dispara). Fix: `npx wrangler pages deploy dist --project-name blog-dimus --branch main --commit-hash <SHA>`. Deploy completo confirma `✨ Deployment complete!`. **Regra permanente**: após todo push em blog-dimus, rodar wrangler deploy até webhook ser corrigido.
+
+### S-IDV-02 — max-image-preview:large LIVE em produção
+Commit `5e71c4b` adicionou `max-image-preview:large, max-snippet:-1, max-video-preview:-1` em `src/layouts/Layout.astro:130`. Confirmado via `curl -s https://blog.dimus.com.br/ | grep max-image-preview` → `max-image-preview:large`. Este sinal era o bloqueador principal para thumbnails grandes no Google Search.
+
+### S-IDV-03 — BlogPosting.image URL dupla corrigida (commit 2904d19)
+Bug: `[...slug]/index.astro:81` já converte ogImage para URL absoluta via `new URL(ogImageUrl, Astro.url.origin).href`. PostLayout recebia URL absoluta e ainda prefixava `/`, gerando `https://blog.dimus.com.br/https://blog.dimus.com.br/og/...`. Fix: `ogImage.startsWith("http") ? ogImage : new URL(...)` em `src/layouts/PostLayout.astro`. Confirmado ao vivo: `image.url = https://blog.dimus.com.br/og/og-giro-de-estoque-seminovos.png`.
+
+### S-IDV-04 — GSC: giro-de-estoque-seminovos indexação solicitada
+URL `https://blog.dimus.com.br/posts/giro-de-estoque-seminovos/` confirmada disponível e indexável via GSC "Teste em tempo real". SOLICITAR INDEXAÇÃO executado. Pendente: 4 outros posts automotivos + homepage.
+
+### S-IDV-05 — curl em posts retornava 0 bytes (falso problema)
+`curl -s https://blog.dimus.com.br/posts/<slug>` (sem trailing slash) retorna 308 Redirect. Com `-L` e trailing slash retorna conteúdo completo (41-63KB). Não era bug do servidor — era redirect sem follow.
+
+---
+
 ## SESSÃO 2026-07-17 — SEO Agency Audit + Secrets Fix + Fable 5 Audit
 
 ### S-NEW-01 — GitHub CI BLOQUEADO por billing (repo privado)
