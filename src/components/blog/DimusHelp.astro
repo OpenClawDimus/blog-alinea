@@ -2,15 +2,36 @@
 /**
  * DimusHelp — GATE obrigatório. Todo post insere este bloco: o que a Dimus faz + como ajuda,
  * traduzido para a dor do ICP (carro vendido, não lead). CTA → WhatsApp.
+ *
+ * Props aceitas em dois estilos:
+ *   Estilo legado : postSlug + cluster + variant
+ *   Estilo MDX    : title + sub + items (override o copy do variant)
+ * postSlug é auto-derivado da URL se não for passado explicitamente.
  */
 interface Props {
-  postSlug: string;
+  postSlug?: string;
   cluster?: string;
   variant?: "estoque" | "atribuicao" | "portal" | "atendimento" | "default";
+  // Override props (MDX style — sobrescrevem o copy do variant)
+  title?: string;
+  sub?: string;
+  items?: string[];
 }
-const { postSlug, cluster = "", variant = "default" } = Astro.props;
+const {
+  postSlug: postSlugProp,
+  cluster = "",
+  variant = "default",
+  title: titleOverride,
+  sub: subOverride,
+} = Astro.props;
 
-const copy = {
+// Auto-deriva slug da URL se não passado — evita post_slug vazio no D1.
+const postSlug =
+  postSlugProp ||
+  Astro.url.pathname.replace(/^\/posts\//, "").replace(/\/$/, "") ||
+  "";
+
+const variantCopy = {
   estoque: {
     title: "Como a Dimus destrava o giro do seu estoque",
     body: "A gente identifica a unidade que está travando seu caixa e dispara campanha dedicada por veículo — tráfego hiperlocal por modelo + atendimento instantâneo no WhatsApp. O foco não é gerar lead: é girar o carro certo antes do 60º dia, pelo preço certo, não pelo mais baixo.",
@@ -32,6 +53,12 @@ const copy = {
     body: "Marketing que mede carro vendido, não lead. Montamos seu canal próprio, rastreamos cada real até a venda e acoplamos atendimento por WhatsApp + IA — para você girar estoque e parar de depender do portal. Neutro de fornecedor: não vendemos portal nem CRM.",
   },
 }[variant];
+
+// MDX-style overrides têm prioridade sobre o copy do variant.
+const copy = {
+  title: titleOverride ?? variantCopy.title,
+  body: subOverride ?? variantCopy.body,
+};
 
 // Origem canônica (idTag) do gate: blog-gate-<cluster>. O lead.ts monta o
 // lead_ref completo (blog-gate-<cluster>-<tempo>-<rand>) e o [ID] no WhatsApp.

@@ -2,23 +2,30 @@
 /**
  * LeadForm — captura form-first → WhatsApp. Sempre presente quando o leitor está pronto p/ solução.
  * GA4 generate_lead + Pixel Lead + [ID] disparam no submit (src/scripts/lead.ts).
+ *
+ * Props em dois estilos:
+ *   Estilo canônico : idTag + postSlug + cluster
+ *   Estilo MDX      : id (alias de idTag) — postSlug/cluster auto-derivados da URL
+ * Sempre haverá um idTag legível no lead_ref. Nunca cai em "blog-lead" genérico.
  */
 interface Props {
-  idTag: string; // origem canônica = prefixo do lead_ref. blog-<calc|quiz|post>-<estoque|atribuicao|portal>. Ex.: blog-calc-estoque
-  postSlug: string;
-  cluster: string;
-  withCalc?: boolean; // anexa números da calculadora à mensagem
-  magnet?: string; // magnet_slug (opcional)
-  intent?: string; // frase de abertura na mensagem do WhatsApp
+  idTag?: string; // origem canônica
+  id?: string;    // alias MDX de idTag (ex.: "blog-tempo-resposta-form")
+  postSlug?: string;
+  cluster?: string;
+  withCalc?: boolean;
+  magnet?: string;
+  intent?: string;
   eyebrow?: string;
   title?: string;
   sub?: string;
   cta?: string;
 }
 const {
-  idTag,
-  postSlug,
-  cluster,
+  idTag: idTagProp,
+  id: idAlias,
+  postSlug: postSlugProp,
+  cluster = "",
   withCalc = false,
   magnet,
   intent,
@@ -27,6 +34,11 @@ const {
   sub = "A gente mostra, com os seus números, quanto cada carro parado custa e o que destrava o giro — sem queimar preço.",
   cta = "Quero o diagnóstico →",
 } = Astro.props;
+
+// idTag: prop explícita > alias id > slug derivado da URL > fallback
+const derivedSlug = Astro.url.pathname.replace(/^\/posts\//, "").replace(/\/$/, "");
+const idTag = idTagProp ?? idAlias ?? (derivedSlug ? `blog-post-${derivedSlug.slice(0, 24)}` : "blog-lead");
+const postSlug = postSlugProp ?? derivedSlug ?? "";
 ---
 
 <aside class="lead-card not-prose">

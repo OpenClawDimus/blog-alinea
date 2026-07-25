@@ -43,8 +43,10 @@ const globalSchema = {
       logo: {
         "@type": "ImageObject",
         "@id": `${siteBase}#logo`,
-        url: new URL("favicon.svg", siteBase).href,
-        contentUrl: new URL("favicon.svg", siteBase).href,
+        url: new URL("logo-dimus.png", siteBase).href,
+        contentUrl: new URL("logo-dimus.png", siteBase).href,
+        width: 512,
+        height: 512,
       },
       sameAs: [
         "https://instagram.com/dimus",
