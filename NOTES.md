@@ -2,6 +2,33 @@
 
 ---
 
+## SESSÃO 2026-07-27 — Pillar Page #1 + Favicon Fix + Cluster Automotivo
+
+### S-PL-01 — Favicon 32px → 48px + 192px para Google Search
+Google exige ≥48px. `public/favicon.png` era 32px → ícone cinza em resultados. Gerado `public/favicon-48.png` (48px, 3.863 bytes) e `public/favicon-192.png` (192px, 39.302 bytes) via `resvg_py`. `src/layouts/Layout.astro` atualizado com links rel="icon" sizes="48x48" e "192x192". Commit `d297aa9`. Cache Google leva dias/semanas para atualizar.
+
+### S-PL-02 — Pillar Page #1: marketing-automotivo-guia-completo (Jul 29)
+`src/content/posts/marketing-automotivo-guia-completo.mdx` criada. 3.200+ palavras. Hub semântico do cluster automotivo, âncora para head term "marketing automotivo". `pubDatetime: 2026-07-29T00:01:00-03:00` (futura — ativa na build do dia 29). 6 FAQs PAA-aligned, AnswerCapsule, CompareTable 5 canais, 2x LeadForm, DimusHelp. `idTag: blog-post-geral`. Audit: composite 96, GEO 92, AEO 100. Commit `4ed75d2`.
+
+### S-PL-03 — Retroactive internal links: 3 posts táticos → pillar
+`funil-de-vendas-automotivo.mdx`, `giro-de-estoque-seminovos.mdx`, `tempo-de-resposta-ao-lead.mdx` receberam parágrafo/blockquote de fechamento linkando para `/posts/marketing-automotivo-guia-completo/`. Fortalece cluster semântico para Google. Incluído no commit `4ed75d2`.
+
+### S-PL-04 — Build + Deploy: 90 páginas, gates OK
+`npx astro build` → 90 pages built in 7.01s. Gates: 35 idTags OK, 0 violations. Pillar não aparece no dist porque pubDatetime é futuro (esperado). Wrangler deploy completo: `https://e23aba86.blog-dimus.pages.dev`. Rollup native binary fix permanente: `npm install @rollup/rollup-darwin-x64 --no-save` antes de cada build quando rollup falla.
+
+### S-PL-05 — Calendário Interleaved Pillar+Tático (próximas semanas)
+| Data | Tipo | Slug |
+|------|------|------|
+| Jul 28 | Tático | `reengajamento-lead-sem-resposta-seminovos` |
+| Jul 29 | PILLAR #1 | `marketing-automotivo-guia-completo` (ativa) |
+| Jul 30 | Tático | `kpis-venda-seminovos-revenda` |
+| Jul 31 | Tático | `estoque-ideal-revenda-seminovos` |
+| Ago 01 | PILLAR #2 | `marketing-para-concessionarias` |
+| Ago 03 | Tático | `converter-leads-webmotors-seminovos` |
+| Ago 04 | PILLAR #3 | `agencia-marketing-automotivo` |
+
+---
+
 ## SESSÃO 2026-07-25 — IDV Canônico + BlogPosting Schema Fix
 
 ### S-IDV-01 — CF Pages git webhook quebrado (workaround: wrangler direct upload)
