@@ -125,14 +125,12 @@ const faqPage =
 
 const structuredData = {
   "@context": "https://schema.org",
-  "@graph": [article, breadcrumb, ...(faqPage ? [faqPage] : [])],
+  "@graph": [article, eeatAuthor, breadcrumb, ...(faqPage ? [faqPage] : [])],
 };
 ---
 
-<Layout {title} {description} {ogImage} {canonicalURL}>
+<Layout {title} {description} {ogImage} {canonicalURL} ogType="article">
   <Fragment slot="head">
-    <!-- Override og:type for article pages -->
-    <meta property="og:type" content="article" />
     <meta property="article:author" content="https://guilhermeribeiro.me" />
 
     {
