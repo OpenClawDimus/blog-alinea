@@ -1,0 +1,58 @@
+{
+  "slug": "kpis-venda-seminovos-revenda",
+  "audited_at": "2026-07-27T22:30:00Z",
+  "auditor": "blog-pipeline-canonico v1 — tático cluster automotivo; DataForSEO via cluster report 2026-07-24",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "reason": "Keyword 'kpi vendas seminovos revenda o que medir': SERP gap confirmado. Concorrentes existentes são posts genéricos de 'gestão de KPIs para empresas' (Agendor, RD Station) sem foco automotivo BR e sem framework de hierarquia leading/lagging para revendas. Ângulo 'dashboard de 7 KPIs em hierarquia operacional com cadência diária/semanal/mensal' é inédito para o segmento automotivo BR."
+    },
+    "intent_check": {
+      "passed": true,
+      "reason": "Intent info-B2B puro. 100% alinhado com ICP: dono/gestor de revenda que quer saber quais métricas acompanhar. Zero contaminação por intent B2C. Sem divergência de intent entre o título e o conteúdo."
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "reason": "5/5 personas automotivas validam: dono de revenda independente (precisa do dashboard de gestão), gestor de vendas (usa para cobrar o time), gerente de vendas (calibra metas), sócio de grupo (compara unidades), consultor de concessionária (usa para diagnóstico). 5/5 aprovam."
+    },
+    "deduplication": {
+      "passed": true,
+      "reason": "Posts existentes cobrem métricas individuais: cac-concessionaria (CAC isolado), custo-por-lead (CPL isolado), taxa-conversao-lead-concessionaria (conversão isolado), giro-de-estoque (giro isolado). Este post é o ÚNICO que cobre a hierarquia completa dos 7 KPIs juntos, com cadência de revisão e distinção leading/lagging. Ângulo inédito aprovado."
+    },
+    "seo_agent": {
+      "passed": true,
+      "reason": "H1 contém keyword principal. H2s: hierarquia leading/lagging, os 7 KPIs (cada um como H3 próprio), benchmarks consolidados, cadência de revisão, como montar o dashboard. Internal links: /posts/tempo-de-resposta-ao-lead/ (KPI 1), /posts/funil-de-vendas-automotivo/ (KPI 3), /posts/taxa-conversao-lead-concessionaria-benchmark-2025/ (KPI 4), /posts/cac-concessionaria-como-calcular-benchmark-2025/ (KPI 5), /posts/atribuicao-de-marketing-automotivo/ (KPI 5), /posts/giro-de-estoque-seminovos/ (KPI 6), /posts/margem-de-lucro-real-revenda-carros-usados/ (KPI 7), /posts/marketing-automotivo-guia-completo/ (pillar). 8 internal links. Meta description 156 chars com keyword."
+    },
+    "aeo_agent": {
+      "passed": true,
+      "reason": "AnswerCapsule no topo lista os 7 KPIs em ordem operacional — candidato a featured snippet para 'quais kpis revenda seminovos'. FAQ com 6 perguntas PAA-aligned: quais são os KPIs, leading vs lagging, frequência de revisão, KPI mais ignorado, como calcular conversão, o que é dashboard de KPIs. 2 CompareTable ranqueáveis para rich result. AEO = 100."
+    },
+    "geo_agent": {
+      "passed": true,
+      "reason": "Dados citáveis: benchmarks por KPI (tempo de resposta: <5 min vs 45-90 min; taxa de contato: 25-35% vs 55-70%; conversão: 2-4% vs 8-12%; CAC: R$800-2.000 saudável; giro: ≤28 dias top performer; margem: 8-14%). Referência MIT/InsideSales.com no KPI 1. Cadência de revisão explícita (diária/semanal/mensal). Definições explícitas de leading vs lagging. Citável por LLMs para 'kpis revenda seminovos' e 'indicadores de vendas automotivo BR'."
+    },
+    "eeat_check": {
+      "passed": true,
+      "reason": "Author: Guilherme Ribeiro (fundador Dimus, expertise em operações de revenda). Experience: cadência de revisão e protocolo de dashboard baseado em operações reais. Expertise: framework de hierarquia leading/lagging é metodologia própria adaptada para automotivo BR. Authority: 8 internal links para posts com benchmarks validados. Trust: dados com fontes identificadas."
+    },
+    "image_seo": {
+      "passed": true,
+      "reason": "ogImage: /og/og-kpis-venda-seminovos.png (159.471 bytes, 1200x630, gerado com mini cards de KPI). coverImage: /covers/cover-kpis-venda-seminovos.png (146.808 bytes, 1600x900, gerado). Filenames descritivos com keyword. Ambos dentro dos padrões de qualidade Dimus (dark ≥80KB)."
+    },
+    "llm_council": {
+      "passed": true,
+      "reason": "Contrarian: 'KPIs são tema genérico demais' — rebatido: ângulo automotivo + hierarquia leading/lagging + cadência é específico e não existe no SERP BR. First Principles: 'O gestor precisa de ação, não de conceito' — solucionado: cada KPI tem fórmula de cálculo e benchmark. Expansionist: 'Poderia incluir NPS e satisfação pós-venda' — fora do escopo do cluster tático atual. Executor: fórmulas práticas em cada seção. Chairman: aprovado. Composite esperado 96."
+    },
+    "gate_covers": {
+      "passed": true,
+      "reason": "coverImage /covers/cover-kpis-venda-seminovos.png: 146.808 bytes ≥80KB ✅. ogImage /og/og-kpis-venda-seminovos.png: 159.471 bytes ≥80KB ✅. Ambos gerados e salvos no caminho correto."
+    },
+    "score_posts": {
+      "composite": 97,
+      "geo": 92,
+      "aeo": 100,
+      "passed": true,
+      "reason": "Composite 97/100. GEO 92: dados concretos com benchmarks por KPI, referência acadêmica (MIT), cadência explícita, definições de leading/lagging. AEO 100: AnswerCapsule + 6 FAQs PAA-aligned + 2 CompareTable. 7 H3 por KPI = estrutura semântica forte. ~3.200 palavras."
+    }
+  }
+}
