@@ -1,0 +1,207 @@
+---
+title: "ROI de Marketing Automotivo: Fórmula, Benchmarks e Como Calcular por Canal"
+pubDatetime: 2026-08-06T00:01:00-03:00
+description: "Como calcular o ROI real de marketing para revendas e concessionárias: a fórmula correta, o que incluir no custo, os benchmarks por canal e como saber se o investimento está valendo."
+author: "Guilherme Ribeiro"
+featured: false
+tags:
+  - "automotivo-metricas"
+  - "gestao"
+  - "roi"
+
+ogImage: /og/og-roi-marketing-automotivo.png
+coverImage: /covers/cover-roi-marketing-automotivo.png
+idTag: blog-post-geral
+faq:
+  - q: "Qual a fórmula de ROI de marketing automotivo?"
+    a: "ROI = (Receita Gerada pelo Marketing − Custo de Marketing) ÷ Custo de Marketing × 100. Para uma revenda: se o marketing gerou 4 vendas com margem média de R$3.000 (total R$12.000) com custo de R$2.800 no mês, o ROI é (12.000 − 2.800) ÷ 2.800 × 100 = 329%. O segredo está em atribuir corretamente quais vendas vieram do marketing."
+  - q: "O que deve ser incluído no custo de marketing automotivo para calcular o ROI?"
+    a: "Custo total = investimento em mídia (portais + Meta + Google) + custo de agência ou time interno (horas × custo/hora) + ferramentas (CRM, automação, relatório). Muitas revendas calculam ROI só com custo de mídia e subestimam o custo real em 40–70%."
+  - q: "Qual o ROI mínimo aceitável para marketing automotivo?"
+    a: "Para revendas de seminovos: ROI ≥ 200% (ou seja, para cada R$1 investido, retorno de R$3). Com CPL de R$45, conversão de 8% e margem de R$3.000 por venda, o CAC é R$562 e o ROI é 434%. Abaixo de 150% a operação começa a competir com outras prioridades de alocação de capital."
+  - q: "Como calcular o ROI por canal de marketing automotivo?"
+    a: "1. Registre o investimento total por canal (portais, Meta, Google, indicação). 2. Rastreie qual canal originou cada lead. 3. Calcule conversão e número de vendas por canal. 4. Aplique a margem média. ROI por canal = (vendas × margem − custo do canal) ÷ custo do canal × 100."
+  - q: "Por que é difícil calcular ROI de marketing para concessionária?"
+    a: "Dois motivos: (1) lead começa online e fecha presencialmente — a jornada multicanal sem atribuição quebra o link entre investimento e venda; (2) o volume de portais, Meta e Google simultâneos cria sobreposição onde o mesmo cliente clicou em múltiplos canais. A solução é definir a regra de atribuição antes de medir."
+  - q: "Qual o benchmark de CAC para revendas de seminovos no Brasil?"
+    a: "Com processo estruturado de atendimento: CAC entre R$350 e R$600. Sem processo: R$1.200 a R$2.500. A diferença não está no custo de mídia — está na taxa de conversão de lead para venda. Uma revenda que converte 3% dos leads tem CAC 3× maior que uma que converte 9%, com o mesmo CPL."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import CompareTable from '@/components/blog/CompareTable.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+
+<AnswerCapsule title="ROI de Marketing Automotivo: Resposta Direta">
+
+**Fórmula:** ROI = (Receita Gerada − Custo Total de Marketing) ÷ Custo Total de Marketing × 100
+
+**Exemplo prático:** R$2.800 de custo total (mídia + agência) → 4 vendas × R$3.000 margem = R$12.000 → ROI = 329%
+
+**3 números que você precisa para calcular:**
+1. Custo total de marketing (mídia + time + ferramentas)
+2. Número de vendas atribuídas ao marketing
+3. Margem média por venda
+
+**Benchmark:** ROI ≥ 200% é o mínimo aceitável para revenda de seminovos. ROI > 400% indica processo eficiente de conversão.
+
+</AnswerCapsule>
+
+> **Sem conflito de interesse:** A Dimus é uma agência de marketing automotivo. Este guia foi escrito para que você possa calcular o ROI de qualquer canal — incluindo de trabalhar com a Dimus.
+
+O problema mais frequente nas revendas e concessionárias que passaram pela Dimus não é investimento insuficiente em marketing. É não saber se o investimento está gerando retorno. A pergunta "esse gasto está valendo?" fica sem resposta porque o ROI nunca foi calculado de forma estruturada.
+
+Este guia resolve isso: a fórmula correta, o que incluir no custo (e o que a maioria esquece), e como calcular por canal. O ROI de marketing automotivo é calculável — mesmo sem ferramentas sofisticadas.
+
+## Por que a maioria das revendas calcula o ROI errado
+
+O erro mais comum: calcular ROI usando só o custo de mídia no denominador. Uma revenda que paga R$800/mês em WebMotors e fecha 2 vendas com margem de R$3.000 cada calcula: (6.000 − 800) ÷ 800 = 650%. Parece ótimo.
+
+O problema é que esse cálculo ignora:
+- **Custo do vendedor que atende os leads** (se o vendedor dedica 30% do tempo a leads digitais e ganha R$3.500/mês, são R$1.050 adicionais de custo real)
+- **Custo do gestor que acompanha** (tempo de análise semanal, reunião de resultados)
+- **Ferramentas** (CRM, WhatsApp Business API, relatório de portais)
+- **Custo de oportunidade** do dinheiro parado no estoque enquanto os anúncios rodam
+
+O ROI real desse exemplo: (6.000 − 2.350) ÷ 2.350 = 155% — ainda positivo, mas bem diferente de 650%.
+
+## A fórmula completa
+
+```
+ROI = (Receita Gerada pelo Marketing − Custo Total de Marketing)
+       ÷ Custo Total de Marketing × 100
+```
+
+Onde:
+
+**Receita Gerada pelo Marketing** = número de vendas atribuídas ao marketing × margem média por venda
+
+**Custo Total de Marketing** = investimento em mídia + custo de time (horas × custo/hora) + ferramentas + agência
+
+<CompareTable
+  headers={["Item de Custo", "Revenda sem controle", "Revenda com processo"]}
+  rows={[
+    ["Portais (WebMotors, OLX)", "R$ 1.200/mês", "R$ 1.200/mês"],
+    ["Meta Ads (Facebook/Instagram)", "R$ 600/mês", "R$ 600/mês"],
+    ["Google Ads (palavras-chave)", "Não usa", "R$ 400/mês"],
+    ["Agência ou freelancer", "Não usa", "R$ 1.800/mês"],
+    ["CRM + ferramentas", "Não usa", "R$ 200/mês"],
+    ["**Custo total correto**", "**R$ 1.800/mês**", "**R$ 4.200/mês**"],
+    ["Leads gerados por mês", "35", "90"],
+    ["Taxa de conversão lead→venda", "2,5%", "8%"],
+    ["Vendas via marketing", "~1", "~7"],
+    ["Margem média por venda", "R$ 3.200", "R$ 3.200"],
+    ["Receita gerada", "R$ 3.200", "R$ 22.400"],
+    ["**ROI**", "**78%**", "**433%**"],
+  ]}
+  caption="O mesmo modelo de revenda pode ter ROI de 78% ou 433% dependendo do processo de atribuição e conversão."
+/>
+
+## Como atribuir vendas ao marketing
+
+A atribuição é o calcanhar de Aquiles do cálculo de ROI automotivo. Um cliente que clicou no anúncio do WebMotors, pesquisou no Google, entrou pelo WhatsApp e fechou pessoalmente — qual canal recebe crédito?
+
+A regra prática mais usada em revendas de médio porte:
+
+**Regra do primeiro contato:** o canal que gerou o primeiro registro do lead recebe 100% do crédito. Simples, mas subestima canais de reforço (como Google Ads de retargeting).
+
+**Regra do último contato (mais comum):** o canal pelo qual o lead entrou na última interação antes da compra recebe o crédito. Fácil de implementar com pergunta na abordagem: "Como você soube de nós hoje?".
+
+**Regra ponderada:** primeiro contato recebe 40%, último contato 40%, canais intermediários dividem 20%. Mais precisa, mas exige rastreamento mínimo de todos os pontos de contato.
+
+Para revendas que estão começando a medir: use **último contato** com pergunta explícita na abordagem. É o método mais simples de implementar sem CRM sofisticado — e o guia completo de [atribuição de marketing automotivo](/posts/atribuicao-de-marketing-automotivo/) explica como implementar cada modelo.
+
+## ROI por canal: benchmarks para 2025
+
+Com base em operações de revendas que a Dimus acompanha, os benchmarks por canal para o mercado automotivo BR:
+
+<CompareTable
+  headers={["Canal", "CPL médio", "Conversão lead→venda", "CAC estimado", "ROI (margem R$3k)"]}
+  rows={[
+    ["SEO / Blog orgânico", "R$ 0 (custo de produção)", "12–18%", "R$ 150–280", "970–1900%"],
+    ["Indicação estruturada", "R$ 0 (custo de ativação)", "25–40%", "R$ 80–150", "1900–3600%"],
+    ["WebMotors / OLX", "R$ 25–55", "5–12%", "R$ 210–1.100", "173–1328%"],
+    ["Google Ads (search)", "R$ 40–90", "8–15%", "R$ 267–1.125", "167–1023%"],
+    ["Meta Ads (feed)", "R$ 30–80", "4–9%", "R$ 333–2.000", "50–800%"],
+    ["WhatsApp (inbound)", "R$ 0 (custo de atendimento)", "20–35%", "R$ 120–250", "1100–2400%"],
+  ]}
+  caption="CPL e conversão variam por região, modelo do estoque e qualidade do atendimento. ROI calculado com margem média de R$3.000/venda."
+/>
+
+Dois insights que esses números revelam:
+
+1. **SEO e indicação têm o maior ROI** — mas exigem investimento no processo (conteúdo, sistema de indicação), não em mídia direta. São canais de médio prazo.
+2. **Meta Ads tem o maior range** — em operações sem processo de atendimento, converte 4% e o ROI pode ser negativo. Com processo, converte 9% e o ROI dispara. O canal não é bom ou ruim — o processo de atendimento é o amplificador.
+
+## Como calcular o ROI da sua revenda em 4 passos
+
+**Passo 1: Levante o custo total dos últimos 30 dias**
+Some: portais + Meta + Google + custo de agência (ou tempo interno estimado) + ferramentas. Se não tem esse número, comece com só o custo de mídia e assuma que o custo real é 1,5× esse valor (fator de ajuste conservador).
+
+**Passo 2: Levante as vendas dos últimos 30 dias com canal de origem**
+Pergunte ao time de vendas: "Qual foi o primeiro contato desse cliente com a revenda?" e registre. Mesmo sem CRM, uma planilha simples funciona para começar. Calcule quantas vendas vieram de cada canal.
+
+**Passo 3: Calcule a margem total gerada pelo marketing**
+Margem por venda × número de vendas atribuídas. Se não sabe a margem exata, use R$2.500 como referência conservadora para seminovos populares.
+
+**Passo 4: Aplique a fórmula**
+ROI = (Margem Total − Custo Total) ÷ Custo Total × 100
+
+Se o ROI ficou abaixo de 100%, o problema quase sempre está na conversão — não no canal. O [funil de vendas automotivo](/posts/funil-de-vendas-automotivo/) mostra onde estão as maiores perdas de conversão em cada etapa.
+
+## ROI vs CAC: qual métrica usar para decisão
+
+ROI e CAC medem coisas diferentes e servem para decisões diferentes:
+
+<CompareTable
+  headers={["Métrica", "O que mede", "Quando usar"]}
+  rows={[
+    ["ROI", "Retorno total sobre o investimento em marketing", "Decisão de aumentar ou reduzir orçamento total"],
+    ["CAC", "Custo de aquisição por cliente (por canal)", "Decisão de realocar budget entre canais"],
+    ["CPL", "Custo por lead gerado (por canal)", "Otimização de criativo e segmentação"],
+    ["Taxa de conversão", "Eficiência do processo de atendimento", "Identificação de gargalo no funil"],
+  ]}
+  caption="Cada métrica tem um nível de decisão. ROI é para o dono da revenda; CAC e CPL são para o gestor de marketing; taxa de conversão é para o gestor de vendas."
+/>
+
+O ROI responde: "vale continuar investindo em marketing?" O CAC responde: "em qual canal devo investir mais?" Ambos exigem atribuição — sem saber de onde veio cada venda, as duas métricas ficam imprecisas.
+
+## Marketing de concessionária vs revenda: o cálculo muda?
+
+Para concessionárias franqueadas, o cálculo de ROI tem uma camada extra: a verba cooperada da montadora.
+
+Se a Fiat aporta R$3.000/mês como co-op para anúncios de novos, esse valor deve ser somado ao numerador (reduz o custo líquido da concessionária) e documentado separadamente. O ROI do investimento próprio (sem co-op) é diferente do ROI total (com co-op). As duas métricas são úteis por razões diferentes — o ROI líquido mostra a eficiência do investimento próprio; o ROI total mostra a saúde da operação de marketing.
+
+O guia de [marketing para concessionárias](/posts/marketing-para-concessionarias/) detalha como estruturar o cálculo separando verba cooperada de investimento próprio por modelo (novos, seminovos, peças/serviços).
+
+<LeadForm
+  title="Quer calcular o ROI da sua revenda agora?"
+  description="Responda 4 perguntas e receba a análise de ROI por canal com os benchmarks do mercado automotivo BR."
+  fields={["name", "whatsapp", "monthly_leads", "conversion_rate"]}
+  cta="Calcular meu ROI →"
+  source="roi-marketing-automotivo"
+/>
+
+## Quando terceirizar faz sentido para o ROI
+
+Uma dúvida frequente: contratar agência aumenta ou diminui o ROI?
+
+Depende do estágio da operação. Uma revenda que gasta R$1.800/mês em portais sem processo de atendimento e converte 2,5% tem CAC de R$1.100. Se uma agência especializada custa R$1.800/mês mas aumenta a conversão para 7%, o CAC cai para R$393 — mesmo com custo de mídia + agência totalizando R$3.600.
+
+O ganho de ROI vem da multiplicação da taxa de conversão, não da redução do custo de mídia. Agências que prometem "mais leads pelo mesmo preço" raramente entregam o ROI que agências que prometem "mais conversões do mesmo lead" entregam.
+
+Para entender se o ROI de contratar uma agência faz sentido na sua operação, o guia de [como escolher uma agência de marketing automotivo](/posts/agencia-marketing-automotivo/) lista os 7 critérios que separam especialistas de generalistas — incluindo como pedir para a agência demonstrar o ROI histórico com operações similares.
+
+---
+
+<DimusHelp
+  title="A Dimus implanta o sistema de cálculo de ROI por canal"
+  sub="Da definição de atribuição ao relatório mensal — criamos o modelo de medição que transforma feeling em número e permite decisões de orçamento baseadas em retorno real."
+  items={[
+    "Audit inicial de canais e custo real de marketing atual",
+    "Definição do modelo de atribuição adequado à operação",
+    "Dashboard de ROI por canal com atualização semanal",
+    "Relatório mensal: ROI total, CAC por canal e recomendação de realocação",
+    "Benchmark contra operações similares do mesmo segmento",
+  ]}
+/>
