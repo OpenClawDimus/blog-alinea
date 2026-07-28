@@ -19,6 +19,46 @@ interface SiteConfig {
   dir?: "ltr" | "rtl" | "auto";
   /** Google Search Console verification meta tag value */
   googleVerification?: string;
+  /**
+   * Short brand name used as post title suffix: "[Post Title] | {blogShortTitle}"
+   * Defaults to the part of site.title before " — " if omitted.
+   * e.g. "Blog Dimus", "Blog Cliente", "Notícias Casa Verde"
+   */
+  blogShortTitle?: string;
+  /** Google Analytics 4 Measurement ID, e.g. "G-XXXXXXXXXX" */
+  ga4Id?: string;
+  /** Meta Pixel ID fallback (env PUBLIC_META_PIXEL_ID takes precedence) */
+  metaPixelId?: string;
+  /** WhatsApp contact number with country code, e.g. "5511999999999" */
+  whatsappNumber?: string;
+  /** Default WhatsApp pre-filled message */
+  whatsappMessage?: string;
+  /** article:section value for all posts, e.g. "Marketing Automotivo" */
+  articleSection?: string;
+  /** Brand/Organization identity for structured data */
+  organization?: {
+    /** Defaults to site.author */
+    name?: string;
+    /** Logo filename in /public, e.g. "logo.png" */
+    logo?: string;
+    /** Array of social profile URLs for sameAs */
+    sameAs?: string[];
+  };
+  /** Human author identity for EEAT structured data */
+  authorPerson?: {
+    /** Full name, e.g. "João Silva" */
+    name: string;
+    /** Personal website URL */
+    url: string;
+    /** Job title for schema.org */
+    jobTitle?: string;
+    /** Avatar filename in /public, e.g. "author.png" */
+    avatar?: string;
+    /** sameAs URLs (Instagram, LinkedIn, etc.) */
+    sameAs?: string[];
+    /** Topics this person is known for (knowsAbout) */
+    knowsAbout?: string[];
+  };
 }
 
 interface PostsConfig {

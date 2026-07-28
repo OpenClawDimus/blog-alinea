@@ -5,6 +5,7 @@ import { getPostSlug, getPostUrl } from "@/utils/getPostPaths";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
 import config from "@/config";
+import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -97,7 +98,7 @@ const fmtDate = (d: Date) =>
 ---
 
 <PostLayout
-  title={`${title} | Blog Dimus`}
+  title={`${title} | ${config.site.blogShortTitle ?? config.site.title.split(" — ")[0]}`}
   description={description}
   ogImage={ogImage}
   canonicalURL={canonicalURL}
@@ -115,7 +116,7 @@ const fmtDate = (d: Date) =>
       <a href="/about">Sobre</a>
     </div>
     <a
-      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      href={getWhatsAppUrl(config)}
       target="_blank"
       rel="noopener"
       class="sr-btn sr-btn-wa"
@@ -175,8 +176,10 @@ const fmtDate = (d: Date) =>
     <!-- Meta bar -->
     <div class="sr-post-meta">
       <div class="who">
-        <img src="/guilherme-ribeiro.png" alt="Guilherme Ribeiro" class="sr-avatar" style="object-fit:cover" aria-hidden="true" />
-        <span>Guilherme Ribeiro</span>
+        {config.site.authorPerson?.avatar && (
+          <img src={`/${config.site.authorPerson.avatar}`} alt={config.site.authorPerson.name} class="sr-avatar" style="object-fit:cover" />
+        )}
+        <span>{config.site.authorPerson?.name ?? config.site.author}</span>
       </div>
       <span class="sr-dotsep" aria-hidden="true"></span>
       {pubDatetime && (

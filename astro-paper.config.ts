@@ -12,6 +12,40 @@ export default defineAstroPaperConfig({
     lang: "pt-BR",
     timezone: "America/Sao_Paulo",
     dir: "ltr",
+
+    // ── Client-specific values — troque aqui ao criar um novo blog ──
+    blogShortTitle: "Blog Dimus",
+    ga4Id: "G-Y7PSFTCZJL",
+    metaPixelId: "998136448049534",
+    whatsappNumber: "5567991992882",
+    whatsappMessage: "Olá! Quero saber mais sobre marketing automotivo",
+    articleSection: "Marketing Automotivo",
+    organization: {
+      name: "Dimus",
+      logo: "logo-dimus.png",
+      sameAs: [
+        "https://instagram.com/dimus",
+        "https://www.linkedin.com/company/dimus/",
+      ],
+    },
+    authorPerson: {
+      name: "Guilherme Ribeiro",
+      url: "https://guilhermeribeiro.me",
+      jobTitle: "Fundador",
+      avatar: "guilherme-ribeiro.png",
+      sameAs: [
+        "https://www.instagram.com/guilhermeribeiro.me/",
+        "https://dimus.com.br",
+      ],
+      knowsAbout: [
+        "marketing automotivo",
+        "CRM para concessionárias",
+        "gestão de leads automotivos",
+        "atribuição de marketing digital",
+        "revenda de veículos seminovos",
+        "gestão de concessionárias",
+      ],
+    },
   },
   posts: {
     perPage: 12,

@@ -2,6 +2,7 @@
 import { getEntry, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import config from "@/config";
+import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 
 const about = await getEntry("pages", "about");
 if (!about) throw new Error("Missing src/content/pages/about.md");
@@ -19,7 +20,7 @@ const { Content } = await render(about);
       <a href="/about" data-active="">Sobre</a>
     </div>
     <a
-      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      href={getWhatsAppUrl(config)}
       target="_blank" rel="noopener"
       class="sr-btn sr-btn-wa"
       style="font-size:13px;padding:8px 18px"

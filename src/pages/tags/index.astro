@@ -6,6 +6,7 @@ import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyAll } from "@/utils/slugify";
 import { humanizeTag } from "@/utils/humanizeTag";
 import config from "@/config";
+import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 
 const posts = await getCollection("posts");
 const sorted = getSortedPosts(posts);
@@ -103,7 +104,7 @@ const otherTags = tags.filter(t => !CLUSTER_AUTOMOTIVO.includes(t.tag) && !CLUST
       <a href="/about">Sobre</a>
     </div>
     <a
-      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      href={getWhatsAppUrl(config)}
       target="_blank" rel="noopener"
       class="sr-btn sr-btn-wa"
       style="font-size:13px;padding:8px 18px"

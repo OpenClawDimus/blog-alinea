@@ -6,6 +6,7 @@ import CutoutCard from "@/components/blog/CutoutCard.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import config from "@/config";
+import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("posts", ({ data }) => !data.draft);
@@ -47,7 +48,7 @@ const isNew = (d: Date) => Date.now() - d.getTime() < NEW_THRESHOLD_MS;
       <a href="/about">Sobre</a>
     </div>
     <a
-      href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+      href={getWhatsAppUrl(config)}
       target="_blank"
       rel="noopener"
       class="sr-btn sr-btn-wa"

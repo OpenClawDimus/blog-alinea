@@ -34,26 +34,26 @@ const rssHref = getRelativeLocaleUrl(
 // E-E-A-T global: WebSite + Organization em todas as páginas
 const siteBase = (Astro.site ?? new URL(site.url)).href
 const orgId = `${siteBase}#organization`
+const orgName = site.organization?.name ?? site.author
+const orgLogo = site.organization?.logo ?? "logo.png"
+const orgSameAs = site.organization?.sameAs ?? []
 const globalSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
       "@id": orgId,
-      name: "Dimus",
+      name: orgName,
       url: site.profile || site.url,
       logo: {
         "@type": "ImageObject",
         "@id": `${siteBase}#logo`,
-        url: new URL("logo-dimus.png", siteBase).href,
-        contentUrl: new URL("logo-dimus.png", siteBase).href,
+        url: new URL(orgLogo, siteBase).href,
+        contentUrl: new URL(orgLogo, siteBase).href,
         width: 512,
         height: 512,
       },
-      sameAs: [
-        "https://instagram.com/dimus",
-        "https://www.linkedin.com/company/dimus/",
-      ],
+      ...(orgSameAs.length && { sameAs: orgSameAs }),
     },
     {
       "@type": "WebSite",
@@ -67,12 +67,9 @@ const globalSchema = {
   ],
 }
 
-// Meta Pixel ID — dataset Dimus (BM_MotherShip). PÚBLICO (client-side, ok commitar).
-// Só injeta em PRODUÇÃO (build) → dev local não polui o pixel real. Override por
-// PUBLIC_META_PIXEL_ID. HTML montado no frontmatter + <Fragment set:html> p/ o
-// esbuild não tentar compilar o snippet do pixel como módulo.
+// Meta Pixel — env PUBLIC_META_PIXEL_ID tem prioridade; fallback em config.site.metaPixelId
 const metaPixelId = import.meta.env.PROD
-  ? (import.meta.env.PUBLIC_META_PIXEL_ID ?? "998136448049534")
+  ? (import.meta.env.PUBLIC_META_PIXEL_ID ?? site.metaPixelId ?? "")
   : "";
 const metaPixelHtml = metaPixelId
   ? `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');</script><noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1"/></noscript>`
@@ -108,19 +105,10 @@ const metaPixelHtml = metaPixelId
     />
     <Font cssVariable="--font-jetbrains-mono" />
 
-    <!-- Google Analytics 4 — Dimus Blog (G-Y7PSFTCZJL) — property 543369220 conta [Ativo] Dimus -->
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-Y7PSFTCZJL"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-Y7PSFTCZJL");
-    </script>
+    <!-- Google Analytics 4 — ID em config.site.ga4Id -->
+    {site.ga4Id && (
+      <Fragment set:html={`<script async src="https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${site.ga4Id}');</script>`} />
+    )}
 
     {/* Meta Pixel base — injeta só se PUBLIC_META_PIXEL_ID estiver setado. */}
     {metaPixelHtml && <Fragment set:html={metaPixelHtml} />}

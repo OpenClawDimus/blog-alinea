@@ -6,6 +6,7 @@ import CutoutCard from "@/components/blog/CutoutCard.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { humanizeTag } from "@/utils/humanizeTag";
 import config from "@/config";
+import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const homePath = getRelativeLocaleUrl(locale, "");
@@ -122,7 +123,7 @@ const getReadTime = (body: string | undefined) =>
     </div>
     <div style="display:flex;align-items:center;gap:14px">
       <a
-        href="https://wa.me/5567991992882?text=Ol%C3%A1%21+Quero+saber+mais+sobre+marketing+automotivo"
+        href={getWhatsAppUrl(config)}
         target="_blank"
         rel="noopener"
         class="sr-btn sr-btn-wa"
@@ -162,8 +163,10 @@ const getReadTime = (body: string | undefined) =>
           </h1>
           <p style="color:var(--ink-2);font-size:17px;max-width:64ch;margin:0 0 16px">{featuredPost.data.description}</p>
           <div class="sr-datastrip">
-            <img src="/guilherme-ribeiro.png" alt="Guilherme Ribeiro" class="sr-avatar" style="width:26px;height:26px;object-fit:cover" aria-hidden="true" />
-            <span>Guilherme Ribeiro</span>
+            {config.site.authorPerson?.avatar && (
+              <img src={`/${config.site.authorPerson.avatar}`} alt={config.site.authorPerson.name} class="sr-avatar" style="width:26px;height:26px;object-fit:cover" />
+            )}
+            <span>{config.site.authorPerson?.name ?? config.site.author}</span>
             <span class="sr-dotsep"></span>
             <time datetime={featuredPost.data.pubDatetime.toISOString()}>
               {fmtDate(featuredPost.data.pubDatetime)}

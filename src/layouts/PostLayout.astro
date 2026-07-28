@@ -34,42 +34,38 @@ const orgUrl = site.profile || site.url;
 const siteBase = (Astro.site ?? new URL(site.url)).href
 const orgId = `${siteBase}#organization`
 
+const orgName = site.organization?.name ?? site.author
+const orgLogo = site.organization?.logo ?? "logo.png"
+const orgSameAs = site.organization?.sameAs ?? []
+
 const publisher = {
   "@type": "Organization",
   "@id": orgId,
-  name: "Dimus",
+  name: orgName,
   url: orgUrl,
   logo: {
     "@type": "ImageObject",
     "@id": `${siteBase}#logo`,
-    url: new URL("logo-dimus.png", siteBase).href,
-    contentUrl: new URL("logo-dimus.png", siteBase).href,
+    url: new URL(orgLogo, siteBase).href,
+    contentUrl: new URL(orgLogo, siteBase).href,
     width: 512,
     height: 512,
   },
+  ...(orgSameAs.length && { sameAs: orgSameAs }),
 };
 
-// E-E-A-T: autor real (Person) com expertise explícita — sinal de autoridade para Google e LLMs
-const eeatAuthor = {
+// E-E-A-T: autor real (Person) — dados em config.site.authorPerson
+const ap = site.authorPerson
+const eeatAuthor = ap ? {
   "@type": "Person",
-  "@id": "https://guilhermeribeiro.me/#person",
-  name: "Guilherme Ribeiro",
-  url: "https://guilhermeribeiro.me",
-  jobTitle: "Fundador",
+  "@id": `${ap.url}/#person`,
+  name: ap.name,
+  url: ap.url,
+  ...(ap.jobTitle && { jobTitle: ap.jobTitle }),
   worksFor: { "@id": orgId },
-  knowsAbout: [
-    "marketing automotivo",
-    "CRM para concessionárias",
-    "gestão de leads automotivos",
-    "atribuição de marketing digital",
-    "revenda de veículos seminovos",
-    "gestão de concessionárias",
-  ],
-  sameAs: [
-    "https://www.instagram.com/guilhermeribeiro.me/",
-    "https://dimus.com.br",
-  ],
-};
+  ...(ap.knowsAbout?.length && { knowsAbout: ap.knowsAbout }),
+  ...(ap.sameAs?.length && { sameAs: ap.sameAs }),
+} : null;
 
 const article = {
   "@type": "BlogPosting",
@@ -90,7 +86,7 @@ const article = {
   mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [eeatAuthor],
+  ...(eeatAuthor && { author: [eeatAuthor] }),
   publisher,
 };
 
@@ -127,14 +123,14 @@ const faqPage =
 
 const structuredData = {
   "@context": "https://schema.org",
-  "@graph": [article, eeatAuthor, breadcrumb, ...(faqPage ? [faqPage] : [])],
+  "@graph": [article, ...(eeatAuthor ? [eeatAuthor] : []), breadcrumb, ...(faqPage ? [faqPage] : [])],
 };
 ---
 
 <Layout {title} {description} {ogImage} {canonicalURL} ogType="article">
   <Fragment slot="head">
-    <meta property="article:author" content="https://guilhermeribeiro.me" />
-    <meta property="article:section" content="Marketing Automotivo" />
+    {site.authorPerson && <meta property="article:author" content={site.authorPerson.url} />}
+    {site.articleSection && <meta property="article:section" content={site.articleSection} />}
     {tags?.map(tag => <meta property="article:tag" content={tag} />)}
 
     {
@@ -170,7 +166,7 @@ const structuredData = {
     // de página (não em cada astro:after-swap re-render do mesmo slug).
     function fireViewContent() {
       if (!postSlug) return;
-      const key = "dimus_vc_" + postSlug;
+      const key = "blog_vc_" + postSlug;
       if (window.sessionStorage.getItem(key)) return;
       window.sessionStorage.setItem(key, "1");
       fetch("/tracker", {
