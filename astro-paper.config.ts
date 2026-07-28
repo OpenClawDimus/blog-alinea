@@ -3,9 +3,9 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://blog.dimus.com.br/",
-    title: "Blog Dimus",
+    title: "Blog Dimus — Marketing Automotivo",
     description:
-      "Marketing que mede carro vendido, não lead. Conteúdo neutro-de-fornecedor para donos e gerentes de revenda, seminovos e concessionária.",
+      "Blog de marketing automotivo para revendas de seminovos e concessionárias. Google Ads, Meta Ads, WhatsApp, CRM e como medir ROI real em carro vendido.",
     author: "Dimus",
     profile: "https://dimus.com.br",
     ogImage: "default-og.png",
