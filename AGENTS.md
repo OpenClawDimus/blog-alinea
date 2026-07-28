@@ -22,6 +22,22 @@ description: "Blog de marketing automotivo para revendas de seminovos e concessi
 - NUNCA editar `astro-paper.config.ts` ou `Layout.astro` sem garantir que o padrão se mantém
 - NUNCA remover o sufixo `| Blog Dimus` dos posts
 
+### Metadados estruturais — PADRÃO OBRIGATÓRIO (corrigido 2026-07-28)
+
+- **`og:type`**: posts = `"article"` (via `ogType` prop em PostLayout); demais = `"website"`
+- **`article:section`**: todo post DEVE ter `<meta property="article:section" content="Marketing Automotivo">` — já injetado em PostLayout automaticamente via prop `tags`
+- **`article:tag`**: uma `<meta property="article:tag">` por tag do post — gerado automaticamente pelo PostLayout
+- **`rel="prev"`/`rel="next"`**: páginas paginadas (`/posts/2`, `/posts/3`...) DEVEM ter esses links — já implementado em `[...page].astro`
+- **Cover image**: NUNCA usar `alt=""` ou `aria-hidden="true"` na cover do post — usar `alt={title}` para Google Images
+- **Home page**: DEVE ter `WebPage` no `@graph` do JSON-LD — já injetado via `<Fragment slot="head">` em `index.astro`
+
+### Transporte para novos blogs
+Este repositório É o template. Para novo blog Dimus:
+1. Fazer fork deste repo
+2. Atualizar `astro-paper.config.ts`: `title`, `description`, `site.url`
+3. Atualizar `AGENTS.md`: substituir "Marketing Automotivo" pelo nicho do novo blog
+4. O AGENTS.md chega junto com todos os padrões de código — nenhuma reconfiguração necessária
+
 ---
 
 ## ⛔ GATE INVIOLÁVEL — Todo novo post .mdx EXIGE pipeline completo
