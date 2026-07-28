@@ -1,6 +1,6 @@
 {
   "slug": "plantao-digital-atendimento-revenda",
-  "audited_at": "2026-07-24T14:00:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — keyword report reutilizado (sem DataForSEO por request, 2026-07-24)",
   "pipeline": {
     "dataforseo_serp": {
@@ -42,7 +42,7 @@
       "passed": true,
       "score": 90,
       "word_count": 1050,
-      "reason": "≥6 H2s presentes, AnswerCapsule, CompareTable, 4 internal links (script-primeira-mensagem, tempo-de-resposta-ao-lead × 2, funil-de-vendas-automotivo), title ≤ 55 chars (54), description ≤ 175 chars. Keyword principal 'plantão digital revenda' presente no H1 e em H2s."
+      "reason": "≥6 H2s presentes, AnswerCapsule, CompareTable, 4 internal links (script-primeira-mensagem, tempo-de-resposta-ao-lead × 2, funil-de-vendas-automotivo), title ≤ 55 chars (54), description ≤ 175 chars. Keyword principal 'plantão digital revenda' presente no H1 e em H2s. RETROACTIVE: links para PILLAR #1 (marketing-automotivo-guia-completo) e PILLAR #2 (marketing-para-concessionarias) adicionados 2026-07-27."
     },
     "aeo_agent": {
       "passed": true,
