@@ -1,0 +1,252 @@
+---
+title: "Google Ads para Revenda de Seminovos: Guia Prático com Estrutura e Bid"
+pubDatetime: 2026-08-07T00:01:00-03:00
+description: "Como estruturar campanhas de Google Ads para revenda de seminovos: tipos de campanha, palavras-chave certas, lances por intenção e quanto esperar de CPL e ROI para o mercado automotivo BR."
+author: "Guilherme Ribeiro"
+featured: false
+tags:
+  - "ads"
+  - "google-ads"
+  - "automotivo-metricas"
+
+ogImage: /og/og-google-ads-revenda-seminovos.png
+coverImage: /covers/cover-google-ads-revenda-seminovos.png
+idTag: blog-post-geral
+faq:
+  - q: "Quanto custa o Google Ads para revenda de seminovos?"
+    a: "CPL médio no mercado automotivo BR: R$40–90 para Search com palavras-chave de intenção de compra. Com orçamento de R$1.500/mês e CPL de R$60, você gera ~25 leads. Com conversão de 8%, são 2 vendas — ROI positivo para margem acima de R$1.500/venda. Abaixo de R$800/mês o volume é insuficiente para otimização."
+  - q: "Quais palavras-chave usar no Google Ads para venda de carros usados?"
+    a: "Três grupos: (1) intenção de compra direta — 'comprar HB20 2021 seminovo', 'HB20 usado [cidade]'; (2) intenção de pesquisa comparativa — 'preço HB20 seminovo', 'tabela FIPE HB20'; (3) marca da revenda — nome da loja. Evite palavras genéricas como 'carro usado' — volume alto, intenção baixa, CPL explodir."
+  - q: "Google Ads ou portais (WebMotors/OLX) para revenda de seminovos?"
+    a: "Não é ou/ou — são canais complementares. Portais capturam comprador ativo que já está filtrando por modelo/ano/preço: CPL mais baixo, menor custo de ativação, mas sem controle de marca. Google Ads captura comprador um estágio antes: pesquisa por intenção de compra, permite direcionar para o site da revenda e construir relacionamento. ROI é melhor nos portais no curto prazo; Google Ads ganha no médio prazo quando a revenda tem processo de conversão estruturado."
+  - q: "Qual o lance ideal para palavras-chave de carros seminovos no Google?"
+    a: "CPC médio de lances manuais em palavras-chave automotivas BR: R$1,50–4,50 para termos de alta intenção ('comprar + modelo + ano + cidade'), R$0,80–2,00 para termos de pesquisa ('preço + modelo'). Com Smart Bidding (tCPA), o sistema otimiza automaticamente — configure o tCPA como 80% do seu CAC aceitável."
+  - q: "Qual o melhor tipo de campanha do Google Ads para revenda de carros?"
+    a: "Para revendas menores (< R$3k/mês de orçamento): Search com match phrase nos modelos do estoque. Para revendas maiores: Search + Performance Max (PMax) para alcance adicional. Vehicle Listings (Google for Vehicles) para quem tem feed de estoque estruturado. Display e YouTube só fazem sentido com orçamento dedicado para branding."
+  - q: "Como medir se o Google Ads está funcionando para a revenda?"
+    a: "Três métricas semanais: (1) CPL por campanha — meta ≤ R$80 para Search de alta intenção; (2) taxa de lead qualificado (lead que responde à primeira mensagem / total de leads); (3) CAC real por canal — (custo Google Ads + custo de atendimento) ÷ vendas atribuídas ao Google Ads. Se o CPL está ok mas o CAC está alto, o problema está no atendimento, não no Google."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import CompareTable from '@/components/blog/CompareTable.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+
+<AnswerCapsule title="Google Ads para Revenda de Seminovos: Resposta Direta">
+
+**O que funciona:** Search com palavras-chave de alta intenção por modelo + cidade. CPL alvo: ≤ R$80. Orçamento mínimo para otimização: R$1.500/mês.
+
+**O que não funciona:** palavras genéricas ("carro usado", "seminovos"), lances muito baixos para aparecer, Display sem remarketing.
+
+**Estrutura básica:** 1 campanha por grupo de modelo (HB20, Onix, Gol separados), 3-5 anúncios por grupo, extensões de local + chamada + sitelinks.
+
+**Benchmark:** com processo de atendimento estruturado, Google Ads tem CPL de R$45–75 e conversão de 8–12% — ROI de 200–600% dependendo da margem do estoque.
+
+</AnswerCapsule>
+
+> **Sem conflito de interesse:** A Dimus gerencia Google Ads para revendas automotivas. Este guia foi escrito para que você possa avaliar, rodar ou auditar campanhas de qualquer agência — incluindo a Dimus.
+
+Google Ads para revenda de seminovos tem um problema estrutural claro: a maioria das campanhas está otimizando para cliques em palavras genéricas que nunca vão virar venda. O comprador que pesquisa "seminovos" no Google está no começo da jornada. O comprador que pesquisa "HB20 2021 semi novo curitiba" está a um passo de fechar negócio. A diferença de conversão entre esses dois perfis é de 4× ou mais — e o CPC é similar.
+
+Este guia cobre o que realmente muda o resultado: quais campanhas montar, quais palavras usar, como estruturar os anúncios e como medir se está funcionando.
+
+## Por que a maioria das campanhas de carros no Google Ads não converte
+
+Três erros sistemáticos em campanhas de revenda:
+
+**Erro 1: palavras-chave amplas demais.** "Carro semi novo" e "comprar carro usado" têm volume alto e intenção baixa — o usuário pode estar pesquisando para vender o carro, para comparar valores, ou para curiosidade. Palavras de intenção de compra têm menor volume mas conversão 3–5× maior.
+
+**Erro 2: landing page inexistente.** O anúncio manda para a página inicial do site da revenda, não para uma página de resultado de busca do modelo específico. O comprador clica num anúncio de HB20 e cai numa página cheia de Gol, Fox e Corolla — taxa de rejeição de 80%+.
+
+**Erro 3: orçamento mal distribuído.** R$30/dia dividido entre 8 grupos de anúncio resulta em menos de R$4/grupo/dia — volume insuficiente para aprendizado da campanha, dados insuficientes para otimização, CPL inflado por falta de competitividade no leilão.
+
+## Estrutura de campanha correta para revenda de seminovos
+
+A lógica de estrutura: uma campanha por família de modelo, não uma campanha para todo o estoque.
+
+<CompareTable
+  headers={["Estrutura", "Problema", "Estrutura correta"]}
+  rows={[
+    ["Uma campanha 'Seminovos' com todos os modelos", "Dados misturados, impossível otimizar por modelo, relatório não mostra o que funciona", "❌ Evitar"],
+    ["Uma campanha por modelo (HB20, Onix, Gol)", "Cada campanha tem seus próprios dados de conversão, permite ajustar lance por margem do modelo", "✅ Usar"],
+    ["Grupos por variação de intenção dentro de cada modelo", "Separa palavras de compra direta × pesquisa × marca da revenda — permite lances diferentes por intenção", "✅ Usar"],
+  ]}
+  caption="A estrutura certa tem mais campanhas menores com orçamentos específicos, não uma grande campanha genérica."
+/>
+
+**Estrutura recomendada para uma revenda com 3-5 modelos principais:**
+
+```
+Campanha 1: HB20 (orçamento: R$600/mês)
+  Grupo A: Compra direta ("comprar hb20 2021 semi novo curitiba")
+  Grupo B: Comparativo ("preço hb20 2021", "tabela fipe hb20 2021")
+  Grupo C: Marca da revenda + HB20 ("nome-revenda hb20")
+
+Campanha 2: Onix (orçamento: R$500/mês)
+  [mesma estrutura]
+
+Campanha 3: Marca da revenda (orçamento: R$200/mês)
+  Grupo A: Nome da loja exato + variações
+```
+
+O orçamento não é dividido igualmente — é proporcional à margem do modelo e ao volume de pesquisa da palavra-chave.
+
+## Palavras-chave: os grupos que funcionam
+
+### Grupo de alta intenção (bid mais alto, menor volume, maior conversão)
+
+- `comprar hb20 2021 seminovo [cidade]`
+- `hb20 2020 2021 2022 usado [cidade]`
+- `hb20 semi novo [cidade] preço`
+- `revenda hb20 [cidade]`
+
+Estas palavras têm busca mensual menor (50–200/mês dependendo da cidade), mas a intenção de compra é direta. CPL de R$40–60 e conversão de 10–15%.
+
+### Grupo comparativo (bid médio, volume médio)
+
+- `preço hb20 2021 seminovo`
+- `tabela fipe hb20 2021`
+- `hb20 2021 vale a pena comprar`
+
+O comprador ainda está pesquisando, mas avançou para um modelo específico. CPL de R$60–90, conversão de 5–8%.
+
+### Palavras a excluir (negativas obrigatórias)
+
+- `aluguel de carro`
+- `peça hb20`
+- `manual hb20`
+- `recall hb20`
+- `seguro hb20`
+- `reparo hb20`
+- `lançamento` (para evitar pesquisas de novo)
+- Qualquer cidade em que a revenda não atende
+
+Sem negativas robustas, 30–40% do orçamento vai para cliques que nunca vão virar lead qualificado.
+
+## Tipos de match: a diferença que define o CPL
+
+<CompareTable
+  headers={["Tipo de Match", "Como funciona", "Quando usar"]}
+  rows={[
+    ["Exato [comprar hb20 2021]", "Aparece apenas para essa busca exata (e variações próximas)", "Termos de alta conversão confirmados — máximo controle, menor volume"],
+    ["Frase \"comprar hb20\"", "Aparece quando a busca contém a frase como parte da query", "Termos de intenção intermediária — equilíbrio volume × relevância"],
+    ["Amplo modificado +comprar +hb20", "Aparece para buscas que contêm os termos marcados com +", "Exploração inicial antes de confirmar quais termos convertem"],
+    ["Amplo genérico", "Aparece para qualquer busca relacionada — decisão do Google", "❌ Nunca usar para campanha de desempenho — queima orçamento"],
+  ]}
+  caption="Para campanhas de revenda com orçamento limitado (< R$3k/mês): comece com Frase. Migre para Exato os termos que convertem. Evite Amplo genérico."
+/>
+
+## Quanto cobrar por clique: estratégia de lance
+
+Para revendas iniciando no Google Ads, dois cenários:
+
+**Cenário 1: Lance manual (CPC máximo)**
+Vantagem: controle total do gasto por clique. Desvantagem: exige monitoramento frequente.
+- Alta intenção de compra: CPC máximo R$3,00–5,00
+- Pesquisa comparativa: CPC máximo R$1,50–3,00
+- Marca da revenda: CPC máximo R$0,80–1,50
+
+**Cenário 2: Smart Bidding com tCPA**
+Vantagem: o Google otimiza os lances automaticamente para custo de conversão desejado.
+Configuração: tCPA = 70% do seu CAC aceitável (se CAC meta é R$600, configure tCPA como R$420).
+Requisito: mínimo de 30 conversões por mês registradas para o aprendizado funcionar. Abaixo disso, lance manual é mais previsível.
+
+Para a maioria das revendas pequenas (< 50 leads/mês), **lance manual por CPC com monitoramento semanal** é mais adequado que Smart Bidding.
+
+## Anúncios que funcionam para seminovos
+
+Os componentes de um anúncio de Search que converte:
+
+**Título 1:** Modelo + Ano + "Seminovo" + Cidade
+→ "HB20 2021 Seminovo em Curitiba"
+
+**Título 2:** Benefício diferenciador + prova
+→ "Revisado e Com Garantia 6 Meses"
+
+**Título 3:** CTA direto
+→ "Consulte Valor e Condições Agora"
+
+**Descrição 1:** Especificação + diferenciais
+→ "HB20 Sense 2021, 42.000km, único dono. Financiamos em até 60x. Resposta em 5 minutos via WhatsApp."
+
+**Descrição 2:** Urgência contextual
+→ "Estoque limitado. Agende sua visita hoje e receba proposta personalizada em até 10 minutos."
+
+Extensões obrigatórias:
+- **Sitelinks:** "Ver Estoque Completo", "Simular Financiamento", "Falar no WhatsApp", "Como Chegar"
+- **Chamada:** número da revenda com rastreamento
+- **Local:** endereço da revenda para campanhas de busca local
+- **Extensão de preço:** se tiver preço definido no anúncio, aumenta CTR em 15–20%
+
+<LeadForm
+  title="Quer auditar ou estruturar sua campanha de Google Ads?"
+  description="Responda 3 perguntas e receba uma análise do potencial de Google Ads para o seu estoque e orçamento atual."
+  fields={["name", "whatsapp", "monthly_budget", "city"]}
+  cta="Quero a análise →"
+  source="google-ads-revenda-seminovos"
+/>
+
+## Google Ads vs portais: quando usar cada um
+
+Uma dúvida frequente é se Google Ads substitui WebMotors e OLX. A resposta é: não substitui — são momentos diferentes da jornada do comprador.
+
+<CompareTable
+  headers={["Critério", "Google Ads (Search)", "Portais (WebMotors/OLX)"]}
+  rows={[
+    ["Estágio da jornada", "Pesquisa por intenção — comprador define o que quer", "Comparação ativa — comprador filtra por modelo/ano/preço/cidade"],
+    ["Onde o lead vai", "Site da revenda (landing page da revenda)", "Ficha do veículo no portal"],
+    ["CPL médio", "R$45–90", "R$25–55"],
+    ["Conversão lead→venda", "8–15% (com processo)", "5–12% (com processo)"],
+    ["Controle de marca", "Alto — revenda controla a experiência", "Baixo — comprador vê concorrentes na mesma tela"],
+    ["Tempo de setup", "2–3 semanas para campanha otimizada", "Imediato (posta o anúncio e aparece)"],
+    ["Quando faz sentido", "Revenda com site próprio e processo de atendimento digital", "Toda revenda — especialmente com estoque rotativo"],
+  ]}
+  caption="Portais têm CPL mais baixo e setup imediato. Google Ads tem maior controle de marca e complementa a estratégia no médio prazo."
+/>
+
+A estratégia ideal combina os dois canais com budgets distintos e tracking separado para medir o ROI de cada um independentemente. A metodologia de [atribuição de marketing automotivo](/posts/atribuicao-de-marketing-automotivo/) explica como separar o crédito quando o comprador passa pelos dois canais antes de fechar.
+
+## Como medir se o Google Ads está funcionando
+
+Três camadas de medição, em ordem de prioridade:
+
+**Camada 1 — rastreamento de conversão no Google Ads**
+Configure uma conversão para cada ação relevante: ligação via extensão de chamada, envio de formulário do site, clique no botão WhatsApp. Sem conversão configurada, o Google não sabe o que otimizar e o Smart Bidding funciona no escuro.
+
+**Camada 2 — fonte do lead no CRM**
+Todo lead de Google Ads precisa entrar no CRM com a tag de origem "Google Ads - [campanha]". A forma mais simples: UTM parameters na URL de destino do anúncio. `?utm_source=google&utm_medium=cpc&utm_campaign=hb20`.
+
+**Camada 3 — ROI real por campanha**
+Semanal: CPL por campanha × taxa de conversão por campanha = CAC por campanha. Compare com o CAC dos portais. Realoque orçamento para o canal com menor CAC mês a mês.
+
+O [cálculo de ROI de marketing automotivo](/posts/roi-marketing-automotivo-como-calcular/) tem o modelo completo para fazer essa comparação — incluindo como incluir o custo da agência no denominador.
+
+## Para concessionárias: Google for Vehicles e o feed de estoque
+
+Concessionárias franqueadas com sistemas de gestão de estoque (DMS) têm acesso ao **Google for Vehicles** (Google Vehicle Listing Ads), um formato de campanha que mostra diretamente os carros do estoque no Google Search — similar ao Shopping para e-commerce.
+
+Para usar, é necessário:
+- Feed de estoque no formato Google (VIN, modelo, ano, preço, imagem, disponibilidade)
+- Conta Google Merchant Center conectada ao Google Ads
+- O DMS da concessionária precisa suportar exportação de feed
+
+O CPL do Vehicle Listings é 20–35% mais baixo que Search tradicional para concessionárias com estoque acima de 50 unidades, porque o anúncio já mostra o veículo específico — o comprador que clica tem intenção muito mais alta.
+
+Para revendas menores sem DMS ou com estoque rotativo, o Search tradicional por modelo e ano é mais prático. O guia de [marketing para concessionárias](/posts/marketing-para-concessionarias/) tem a estrutura completa de campanhas para franqueadas, incluindo o uso de verba cooperada das montadoras para Google Ads.
+
+---
+
+<DimusHelp
+  title="A Dimus estrutura e gerencia Google Ads para revendas automotivas"
+  sub="Da estrutura de campanha ao relatório semanal de ROI — criamos e gerenciamos campanhas que complementam portais e têm tracking de resultado real."
+  items={[
+    "Audit da campanha atual (ou estrutura do zero)",
+    "Mapeamento de palavras-chave por modelo e intenção",
+    "Estrutura de campanhas + anúncios + extensões",
+    "Configuração de conversão e UTMs para tracking completo",
+    "Relatório semanal: CPL, taxa de qualificação, CAC por campanha",
+    "Integração com estratégia geral de marketing automotivo",
+  ]}
+/>
+
+> Para entender como o Google Ads se encaixa na estratégia completa de aquisição de leads, o [guia de marketing automotivo para revendas](/posts/marketing-automotivo-guia-completo/) mapeia todos os canais e como integrá-los. Se você está avaliando terceirizar, o guia sobre [como escolher uma agência de marketing automotivo](/posts/agencia-marketing-automotivo/) tem os critérios específicos para avaliar agências especializadas em performance automotiva.
