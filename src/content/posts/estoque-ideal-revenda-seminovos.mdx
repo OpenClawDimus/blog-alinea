@@ -1,0 +1,193 @@
+---
+title: "Estoque Ideal para Revenda de Seminovos: Quantos Carros e Qual Mix"
+pubDatetime: 2026-07-31T00:01:00-03:00
+description: "Quantos carros uma revenda de seminovos deve manter no pátio? A fórmula do estoque ideal por capacidade de vendas, o mix certo por segmento e por que mais estoque nem sempre é mais receita."
+author: "Guilherme Ribeiro"
+featured: false
+tags:
+  - "giro-de-estoque"
+  - "seminovos"
+  - "gestao"
+  - "automotivo-metricas"
+
+ogImage: /og/og-estoque-ideal-seminovos.png
+coverImage: /covers/cover-estoque-ideal-seminovos.png
+faq:
+  - q: "Quantos carros uma revenda de seminovos deve ter no estoque?"
+    a: "A fórmula padrão é: Estoque ideal = Vendas médias mensais × Dias-alvo no pátio ÷ 30. Uma revenda que vende 20 carros/mês com meta de 35 dias no pátio precisa de aproximadamente 23 veículos. Mais que isso significa capital imobilizado além da capacidade operacional; menos significa ruptura de mix e perda de oportunidade de venda."
+  - q: "Qual o mix ideal de seminovos por segmento para uma revenda?"
+    a: "Para revendas de porte médio (15–50 carros/mês), o mix equilibrado é: 50–60% de compactos populares (Onix, HB20, Polo, Virtus) — maior liquidez, menor ticket; 25–35% de SUVs e médios (Creta, T-Cross, Corolla) — maior margem, menor liquidez; 5–15% de pick-ups ou esportivos — nicho com alta margem mas longa permanência. Ajuste por praça: interior de SP tem perfil diferente de capital."
+  - q: "Quantos carros são necessários para abrir uma revenda de seminovos?"
+    a: "Para uma operação viável no varejo, o mínimo prático é 15–20 veículos: volume suficiente para cobrir diferentes faixas de preço e perfis de comprador, e para amortizar custos fixos (estrutura, funcionários) sobre um portfólio diversificado. Abaixo de 10 veículos, a operação depende de um único negócio para cobrir os custos do mês."
+  - q: "Por que aumentar o estoque nem sempre aumenta as vendas?"
+    a: "Porque a restrição de crescimento raramente é tamanho do estoque — é capacidade de atendimento. Uma revenda com 3 vendedores que atende 60 leads/mês com 30% de contato efetivo não vai vender mais com 50 carros no pátio. Vai apenas imobilizar mais capital. O gargalo precisa ser identificado: se for processo de atendimento, resolva o processo primeiro. Se for falta de diversidade de perfil de veículo, aí mais estoque ajuda."
+  - q: "Como calcular o capital necessário para montar o estoque de uma revenda?"
+    a: "Capital de giro para estoque = Número de veículos × Ticket médio de aquisição. Para uma revenda com 20 carros e ticket médio de compra de R$40.000, são R$800.000 em estoque. Adicione 15–20% para capital de giro operacional (preparação, despesas fixas, margem de segurança). Total: R$920.000–960.000. O Custo de Oportunidade desse capital (CDI atual) precisa estar na sua projeção de margem mínima exigida por veículo."
+  - q: "Quantos dias de estoque uma revenda deve manter como meta?"
+    a: "A meta depende do perfil da operação. Para compactos populares: 25–35 dias (alta liquidez). Para SUVs e médios: 35–45 dias (comprador mais exigente, negociação mais longa). Para pick-ups e premium: 45–60 dias (nicho com menor volume de compradores). Calcule a meta por segmento, não uma média geral — a média esconde que o popular está girando bem enquanto o SUV está encalhando."
+---
+
+import AnswerCapsule from "@/components/blog/AnswerCapsule.astro";
+import CompareTable from "@/components/blog/CompareTable.astro";
+import DimusHelp from "@/components/blog/DimusHelp.astro";
+import LeadForm from "@/components/blog/LeadForm.astro";
+
+<AnswerCapsule q="Quantos carros uma revenda de seminovos deve ter no pátio?">
+
+A fórmula: **Estoque ideal = Vendas mensais × Dias-alvo no pátio ÷ 30**. Uma revenda que vende 20 carros/mês com meta de 35 dias no pátio precisa de ~23 veículos. Acima disso: capital imobilizado além da capacidade operacional. Abaixo: ruptura de mix e perda de vendas por falta de opção. O problema mais comum não é quantidade errada — é **mix errado**: estoque cheio de modelos com baixa liquidez e vazio de compactos populares que giram em 25 dias.
+
+</AnswerCapsule>
+
+> **Sem conflito de interesse:** A Dimus não vende plataforma de gestão de estoque, sistema de consórcio nem serviço de avaliação de veículos. O que está aqui é metodologia para quem toma decisão de compra de estoque com o próprio capital.
+
+A maioria das perguntas sobre estoque vem embalada em volume: "quantos carros eu preciso ter?" — mas a pergunta certa é diferente: "quanta capacidade de vendas eu tenho, e qual é o estoque que suporta essa capacidade?" A resposta para a segunda pergunta às vezes é metade do que a revenda mantém hoje.
+
+## A fórmula do estoque ideal
+
+O ponto de partida não é o número de vagas no pátio — é a taxa de vendas da operação.
+
+**Fórmula do estoque ideal por capacidade operacional:**
+
+```
+Estoque ideal = Vendas médias mensais × Dias-alvo no pátio ÷ 30
+```
+
+**Exemplos práticos:**
+
+- Revenda que vende **15 carros/mês** com meta de **35 dias** no pátio:
+  15 × 35 ÷ 30 = **17,5 veículos** (arredondar para 18)
+
+- Revenda que vende **30 carros/mês** com meta de **30 dias** no pátio:
+  30 × 30 ÷ 30 = **30 veículos**
+
+- Revenda que vende **10 carros/mês** com meta de **40 dias** no pátio:
+  10 × 40 ÷ 30 = **13,3 veículos** (arredondar para 14)
+
+A lógica por trás da fórmula: se você vai vender 15 carros em 30 dias e cada carro fica em média 35 dias no pátio, você precisa de 35/30 de um "ciclo completo" de 15 carros disponíveis em qualquer dia — o que dá 17,5 veículos. Abaixo disso, alguns dias do mês você estará com o mix incompleto e perderá vendas por falta de opção.
+
+> ⚠️ **Use a média dos últimos 3 meses de vendas**, não o melhor mês. O estoque precisa ser sustentável na média — não no pico.
+
+## Por que mais estoque nem sempre é mais receita
+
+A intuição mais comum em revendas é: mais carros no pátio = mais vendas possíveis. Na prática, essa lógica falha em dois pontos.
+
+**Ponto 1: O gargalo raramente é o estoque**
+
+Uma revenda com 60 leads/mês, 30% de taxa de contato efetivo e 15% de fechamento está fechando 2,7 vendas por mês — independente de quantos carros tem no pátio. Se ela duplicar o estoque sem melhorar o processo de atendimento, vai vender a mesma coisa com o dobro do capital imobilizado. O [funil de vendas automotivo](/posts/funil-de-vendas-automotivo/) mostra onde estão os gargalos reais — e para a maioria das revendas, o problema está na taxa de contato e qualificação, não na falta de estoque.
+
+**Ponto 2: Cada carro adicional tem custo**
+
+O custo de manter um veículo no pátio é de R$30–45/dia (para ticket de R$50k). Uma revenda com 10 carros extras acima do ideal está gastando R$300–450/dia a mais em custo de pátio. Em 30 dias, são R$9.000–13.500 de custo invisível — sem vender um carro sequer a mais. O post sobre [custo diário de estoque parado](/posts/custo-estoque-parado-concessionaria-por-dia/) tem o cálculo completo por faixa de ticket.
+
+<CompareTable
+  headers={["Situação do estoque", "Impacto operacional", "Ação recomendada"]}
+  rows={[
+    ["Abaixo do ideal (< 80% da meta)", "Ruptura de mix — comprador não encontra o perfil que quer", "Acelerar aquisição no perfil com maior liquidez na praça"],
+    ["Na faixa ideal (80–110% da meta)", "Operação equilibrada — capital girando na velocidade certa", "Monitorar mix por segmento e giro por modelo"],
+    ["Acima do ideal (110–130%)", "Capital imobilizado além da capacidade operacional", "Priorizar venda dos modelos com maior dias no pátio"],
+    ["Muito acima do ideal (> 130%)", "Estoque encalhado — risco de margem negativa nos mais antigos", "Protocolo de repasse + revisão da política de aquisição"],
+  ]}
+  caption="Diagnóstico de posição de estoque por faixa em relação ao ideal calculado pela fórmula operacional."
+/>
+
+## Como definir o mix ideal por segmento
+
+Estoque com quantidade certa e mix errado não resolve o problema — é apenas capital imobilizado na composição errada.
+
+O mix ideal não é universal. Ele depende da sua praça, do perfil do seu comprador habitual e da sua capacidade de atendimento por perfil de ticket. Mas existe um padrão de referência para revendas generalistas de médio porte (15–50 carros/mês):
+
+<CompareTable
+  headers={["Segmento", "% do estoque", "Ticket médio", "Giro esperado", "Característica"]}
+  rows={[
+    ["Compactos populares (Onix, HB20, Polo, Virtus)", "50–60%", "R$40k–65k", "25–35 dias", "Alta liquidez, menor margem, maior volume"],
+    ["SUVs compactos (Creta, T-Cross, Tracker)", "20–30%", "R$65k–100k", "35–50 dias", "Margem maior, comprador mais exigente"],
+    ["Sedãs/hatches médios (Corolla, Civic, Focus)", "10–15%", "R$55k–90k", "40–55 dias", "Nicho específico, boa margem, público fiel"],
+    ["Pick-ups (S10, Hilux, Ranger)", "5–10%", "R$80k–140k", "40–65 dias", "Alta margem, comprador sazonal e regional"],
+    ["Premium/importados", "0–5%", "R$100k+", "45–90 dias", "Nicho com capital longo, para revendas especializadas"],
+  ]}
+  caption="Mix de estoque de referência para revendas de seminovos generalistas de médio porte. Ajustar por praça e histórico de vendas local."
+/>
+
+**O que o mix errado parece na prática:** uma revenda com 30 carros no pátio, sendo 10 populares e 20 SUVs/médios, vai ter o popular vendido em semanas enquanto os SUVs se acumulam acima de 50 dias. O capital está mal alocado — e a aparência de "estoque cheio" esconde que a categoria mais lucrativa em rotatividade está em falta.
+
+**Como corrigir:** ao adquirir novos veículos, compre primeiro o segmento que está abaixo do % ideal no mix. Não compre o que parece mais fácil de encontrar no leilão — compre o que está faltando no seu pátio.
+
+<LeadForm
+  id="blog-estoque-ideal-mid"
+  eyebrow="Diagnóstico gratuito"
+  title="Qual é o estoque ideal para a sua operação?"
+  sub="A Dimus calcula o estoque ideal, o mix correto e os modelos com giro acima da meta para a sua praça — com os seus números de vendas dos últimos 3 meses."
+  cta="Quero calcular meu estoque ideal →"
+/>
+
+## O capital de giro por trás do estoque
+
+Ter o número certo de carros implica ter o capital certo imobilizado. Esse cálculo é frequentemente subestimado — especialmente por quem está estruturando ou expandindo uma operação.
+
+**Fórmula do capital de giro para estoque:**
+
+```
+Capital de estoque = Número de veículos × Ticket médio de aquisição
+Capital operacional = Capital de estoque × 15–20%
+Total necessário = Capital de estoque + Capital operacional
+```
+
+**Exemplo:**
+- 20 veículos com ticket médio de compra de R$42.000 = R$840.000 em estoque
+- + 18% de capital operacional (preparação, impostos, custos fixos de 45 dias) = R$151.200
+- **Total necessário: R$991.200**
+
+Esse número precisa ser comparado ao custo de oportunidade: se o CDI está em 10,5% a.a., R$991.200 imobilizados têm um custo de oportunidade de ~R$104.076/ano — ou R$8.673/mês. Isso significa que a sua margem mínima necessária por veículo já começa com esse custo de oportunidade embutido antes de qualquer despesa operacional.
+
+**Por que isso importa para a decisão de tamanho do estoque:** ampliar de 20 para 30 veículos não é só "comprar 10 carros a mais". É imobilizar mais R$420.000 com custo de oportunidade de R$3.675/mês adicional — que precisa ser justificado pelo aumento de margem que os 10 carros extras vão gerar. Se a taxa de conversão não aumentar proporcionalmente, a expansão vai corroer a rentabilidade.
+
+## O estoque mínimo para uma operação viável
+
+Para revendas em fase de estruturação, existe um piso de viabilidade:
+
+**Mínimo prático: 15–20 veículos**
+
+Abaixo de 15 carros, a operação tem três fragilidades críticas:
+
+1. **Dependência de cada venda:** com 10 veículos e custo fixo de R$12.000/mês, cada carro não vendido representa 10% da pressão sobre o mês. Uma semana ruim compromete o mês.
+
+2. **Mix insuficiente para cobrir perfis:** um comprador de popular, um de SUV e um de pick-up simultâneos já demandam 3 categorias. Com 10 carros, é difícil ter mix relevante em mais de 2.
+
+3. **Dificuldade de escala do time:** com menos de 15 carros, o volume de leads é insuficiente para justificar um segundo vendedor — e sem segundo vendedor, o SLA de resposta cai quando o primeiro está em atendimento presencial.
+
+**Ponto de escala sustentável: 30–50 veículos**
+
+Com 30+ veículos, a operação suporta: 2–3 vendedores especializados por perfil, mix completo por segmento, e escala para investir em marketing pago sem depender de um único canal. O [custo por lead em concessionárias](/posts/custo-por-lead-concessionaria-benchmark-2025/) cai significativamente nessa faixa porque o investimento fixo em portal e mídia é diluído por mais veículos.
+
+## Como revisar o tamanho do estoque mensalmente
+
+O estoque ideal não é estático. Ele muda conforme a sazonalidade, o mix de vendas e as condições de crédito do mercado.
+
+**Revisão mensal (30 minutos):**
+
+1. **Recalcule a base:** atualize a média de vendas dos últimos 3 meses. Se o histórico inclui um mês atípico (alta ou baixa por evento específico), ajuste antes de usar.
+
+2. **Compare com o estoque atual:** quantos veículos no pátio vs ideal calculado? Onde está a diferença (volume total ou mix)?
+
+3. **Identifique os outliers:** qual modelo tem mais de 45 dias sem sair? Esse modelo está puxando o estoque total para cima da meta sem contribuir com rotatividade.
+
+4. **Planeje a reposição:** ao definir o que comprar no mês seguinte, priorize os segmentos abaixo do % ideal no mix. O giro de estoque no pátio e a [precificação por tempo de pátio](/posts/precificacao-seminovos-mercado-vs-fipe/) precisam estar alinhados com essa revisão — um modelo que está encalhando provavelmente precisa de ajuste de preço antes de ser substituído por outro igual.
+
+A revisão de estoque não é para ficar olhando o número total — é para identificar onde o capital está travado e onde a reposição vai gerar mais retorno.
+
+---
+
+<DimusHelp
+  title="A Dimus estrutura a política de estoque da sua revenda com dados reais"
+  sub="Do cálculo do estoque ideal ao mix correto por segmento — baseado nos seus números de vendas e na sua praça, não em benchmark genérico."
+  items={[
+    "Cálculo do estoque ideal pela fórmula de capacidade operacional",
+    "Análise de mix atual vs mix ideal por segmento para a sua praça",
+    "Identificação dos modelos com giro acima da meta (candidatos a repasse ou desconto)",
+    "Projeção de capital de giro necessário para expansão de estoque",
+    "Protocolo de revisão mensal: estoque, mix e política de reposição",
+    "Conexão entre gestão de estoque e estratégia de marketing automotivo completa",
+  ]}
+/>
+
+> A gestão de estoque é o motor financeiro da revenda. Para conectá-la com a estratégia de atração, conversão e atribuição de leads, o [guia completo de marketing automotivo para revendas](/posts/marketing-automotivo-guia-completo/) tem a visão integrada da operação — da geração de lead ao carro vendido.
