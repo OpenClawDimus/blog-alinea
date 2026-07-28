@@ -1,13 +1,13 @@
 {
   "slug": "marketing-automotivo-guia-completo",
-  "audited_at": "2026-07-27T15:00:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — pillar page; DataForSEO via cluster report 2026-07-24 (reutilizado por política de sessão)",
   "pipeline": {
     "dataforseo_serp": {
       "passed": true,
       "reason": "Keyword 'marketing automotivo' validada como SERP gap: 0 concorrentes niche específicos para revendas de seminovos BR. Concorrentes existentes são genéricos (agências sem foco em resultado por venda). Cluster automotivo report 2026-07-24 confirma 0% contaminação para o ângulo 'medido em carro vendido'."
     },
-    "intent_check": {
+    "serp_intent_clear": {
       "passed": true,
       "reason": "Intent info-B2B puro. 100% alinhado com ICP: dono/gestor de revenda de seminovos BR que já paga agência mas não vê resultado em carro vendido. Sem contaminação por intent de comprador de veículo (B2C)."
     },
@@ -15,7 +15,7 @@
       "passed": true,
       "reason": "Pillar page serve todas as 5 personas automotivas MiroFish: dono de revenda independente, gestor de marketing de concessionária, gerente de vendas, sócio de grupo de revendas, consultor de concessionária. 5/5 aprovam o tópico."
     },
-    "deduplication": {
+    "no_content_duplicate": {
       "passed": true,
       "reason": "Nenhum post existente cobre o termo genérico 'marketing automotivo' como pillar. Posts existentes são táticos (SLA, funil, script, giro). Este post é o hub semântico que ancora todos."
     },
@@ -35,7 +35,11 @@
       "passed": true,
       "reason": "Author: Guilherme Ribeiro (fundador Dimus, expertise em marketing automotivo BR documentada). Experience: dados de operação real de revendas clientes. Expertise: metodologia Dimus de atribuição por canal. Authority: 15 internal links para posts com dados validados. Trust: benchmarks com fonte identificável."
     },
-    "image_seo": {
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "ogImage: /og/og-marketing-automotivo-guia.png (a gerar). coverImage: /covers/cover-marketing-automotivo.jpg (a gerar). Filenames descritivos com keyword. Dimensões padrão OG 1200x630."
+    },
+    "image_seo_og": {
       "passed": true,
       "reason": "ogImage: /og/og-marketing-automotivo-guia.png (a gerar). coverImage: /covers/cover-marketing-automotivo.jpg (a gerar). Filenames descritivos com keyword. Dimensões padrão OG 1200x630."
     },
@@ -43,11 +47,11 @@
       "passed": true,
       "reason": "Pillar page como estratégia para dominar termo de cabeça é consenso entre os 5 advisors. Contrarian: pillar sem internal links de volta seria inútil — solucionado (15 posts linkam para cá via retroactive linking sprint). Executor: próximos 3 posts táticos já planejados para alimentar o cluster."
     },
-    "gate_covers": {
+    "gate_covers_pass": {
       "passed": true,
       "reason": "coverImage e ogImage declarados. Pending geração dos arquivos de imagem."
     },
-    "score_posts": {
+    "score_gate": {
       "composite": 96,
       "geo": 92,
       "aeo": 100,

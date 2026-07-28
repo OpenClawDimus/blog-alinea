@@ -16,16 +16,48 @@ Google exige ≥48px. `public/favicon.png` era 32px → ícone cinza em resultad
 ### S-PL-04 — Build + Deploy: 90 páginas, gates OK
 `npx astro build` → 90 pages built in 7.01s. Gates: 35 idTags OK, 0 violations. Pillar não aparece no dist porque pubDatetime é futuro (esperado). Wrangler deploy completo: `https://e23aba86.blog-dimus.pages.dev`. Rollup native binary fix permanente: `npm install @rollup/rollup-darwin-x64 --no-save` antes de cada build quando rollup falla.
 
-### S-PL-05 — Calendário Interleaved Pillar+Tático (próximas semanas)
-| Data | Tipo | Slug |
-|------|------|------|
-| Jul 28 | Tático | `reengajamento-lead-sem-resposta-seminovos` |
-| Jul 29 | PILLAR #1 | `marketing-automotivo-guia-completo` (ativa) |
-| Jul 30 | Tático | `kpis-venda-seminovos-revenda` |
-| Jul 31 | Tático | `estoque-ideal-revenda-seminovos` |
-| Ago 01 | PILLAR #2 | `marketing-para-concessionarias` |
-| Ago 03 | Tático | `converter-leads-webmotors-seminovos` |
-| Ago 04 | PILLAR #3 | `agencia-marketing-automotivo` |
+### S-PL-05 — Calendário Interleaved Pillar+Tático
+| Data | Tipo | Slug | Commit | Score |
+|------|------|------|--------|-------|
+| Jul 28 | Tático | `precificacao-seminovos-mercado-vs-fipe` | `703238a` | composite 96, GEO 91, AEO 100 |
+| Jul 29 | PILLAR #1 | `marketing-automotivo-guia-completo` | `4ed75d2` | composite 96, GEO 92, AEO 100 |
+| Jul 30 | Tático | `kpis-venda-seminovos-revenda` | `5fbf927` | composite 97, GEO 92, AEO 100 |
+| Jul 31 | Tático | `estoque-ideal-revenda-seminovos` | `f79e7f1` | composite 96, GEO 92, AEO 100 |
+| Ago 01 | PILLAR #2 | `marketing-para-concessionarias` | `de2fe9b` | composite 96, GEO 91, AEO 100 |
+| Ago 03 | Tático | `converter-leads-webmotors-seminovos` | `b4d83a7` | composite 96, GEO 91, AEO 100 |
+| Ago 04 | PILLAR #3 | `agencia-marketing-automotivo` | `48bf5f0` | composite 97, GEO 92, AEO 100 |
+
+### S-PL-06 — Pivot Jul 28: reengajamento → precificacao-seminovos-mercado-vs-fipe
+`leads-nao-respondem-protocolo-reengajamento.mdx` já existia no repo → dedup falharia.
+Pivot para `precificacao-seminovos-mercado-vs-fipe` — SERP gap confirmado: FIPE vs mercado ativo.
+Ângulo: protocolo de revisão por tempo de pátio (0/15/30/45/60d) + R$1.915 de margem extra. Commit `703238a`.
+
+### S-PL-07 — Jul 30: kpis-venda-seminovos-revenda (composite 97)
+7 KPIs em hierarquia leading→lagging (TCE, TAC, TAQ, conversão, CAC, giro, margem), cadência diária/semanal/mensal. Benchmarks por KPI. 8 internal links. SERP gap: nenhum concorrente trata hierarquia leading/lagging para revendas BR. Commit `5fbf927`.
+
+### S-PL-08 — Jul 31: estoque-ideal-revenda-seminovos (composite 96)
+Fórmula original `V×D÷30`, mix 5 segmentos (compactos 50-60%, SUVs 20-30%, médios 10-15%, pick-ups 5-10%, premium 0-5%), capital de giro com custo de oportunidade CDI (R$8.673/mês para 20 veículos × R$42k). 6 internal links. Commit `f79e7f1`.
+
+### S-PL-09 — Ago 01: PILLAR #2 marketing-para-concessionarias (composite 96)
+Hub do sub-cluster de concessionárias franqueadas — diferente do PILLAR #1 (revendas independentes).
+Diferenciação: verba cooperada, cotas de montadora, mix novos+usados+peças/serviços. 5 canais com CPL benchmark BR (Google R$40-90, Portais R$25-60, Meta R$30-80). CompareTable: concessionária vs revenda. Estrutura de time com custos. Sazonalidade mapeada. Commit `de2fe9b`.
+
+### S-PL-10 — Ago 03: converter-leads-webmotors-seminovos (composite 96)
+Protocolo M1-M3 com ancoragem no veículo específico + 5 erros fatais + benchmarks TCE (25-70%), TAV (15-28%), TCT (2-12%). CAC comparativo: sem processo R$1.500-2.250 vs com protocolo R$450-560. Cross-links para PILLAR #1 e PILLAR #2. Commit `b4d83a7`.
+
+### S-PL-11 — Ago 04: PILLAR #3 agencia-marketing-automotivo (composite 97)
+Hub para decision stage — quem está avaliando contratar agência. 7 critérios de avaliação + 5 sinais de alerta + briefing de 12 perguntas. CompareTable: especialista vs generalista. Conflito de interesse declarado explicitamente (E-E-A-T máximo). ROI da especialização: R$7.500/mês de resultado adicional com mesmo CPL. Commit `48bf5f0`.
+
+## Re-âncora pós-compact (2026-07-27 — sessão noturna)
+**Última ação:** Commit e deploy `48bf5f0` (PILLAR #3 agencia-marketing-automotivo Ago 04)
+**Estado atual:** Jul 28 ✅, Jul 29 ✅, Jul 30 ✅, Jul 31 ✅, Ago 01 ✅, Ago 03 ✅, Ago 04 ✅ — todos commitados e deployados.
+**3 PILLARs completos:** marketing-automotivo-guia-completo (Jul 29) + marketing-para-concessionarias (Ago 01) + agencia-marketing-automotivo (Ago 04)
+**Próximos passos no cluster:**
+- Ago 06 (Tático): `custo-por-lead-concessionaria-benchmark-2025` precisa de retroactive link para PILLAR #1
+- Ago 07 (Tático): `taxa-conversao-lead-concessionaria-benchmark-2025` — link para todos os 3 PILLARs
+- DataForSEO credential fix: `dimus-dataforseo-auth-b64` formato inválido (sem colon) → app.dataforseo.com → API Password → regenerar base64
+- CF Pages webhook ainda quebrado → wrangler deploy manual obrigatório após cada push
+**Prompt de retomada:** Leia o NOTES.md e continue o cluster automotivo. Próximo: post tático Ago 06 + retroactive links dos posts existentes para os 3 PILLARs.
 
 ---
 

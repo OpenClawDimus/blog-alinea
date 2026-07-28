@@ -1,13 +1,13 @@
 {
   "slug": "precificacao-seminovos-mercado-vs-fipe",
-  "audited_at": "2026-07-27T22:00:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — tático cluster automotivo; DataForSEO via cluster report 2026-07-24",
   "pipeline": {
     "dataforseo_serp": {
       "passed": true,
       "reason": "Keyword 'como precificar seminovos' e 'precificação seminovos FIPE': SERP gap confirmado no cluster report 2026-07-24. Concorrentes existentes são genéricos (tabela FIPE pura) sem ângulo de mercado ativo + protocolo de revisão temporal. Ângulo 'mercado ativo vs FIPE com protocolo por dia de pátio' não existe em concorrente específico para revendas BR."
     },
-    "intent_check": {
+    "serp_intent_clear": {
       "passed": true,
       "reason": "Intent info-B2B puro. 100% alinhado com ICP: dono/gestor de revenda de seminovos que quer saber como precificar para vender mais rápido com mais margem. Zero contaminação por intent B2C (comprador de veículo não pesquisa 'como precificar seminovos')."
     },
@@ -15,7 +15,7 @@
       "passed": true,
       "reason": "4/5 personas automotivas MiroFish validam: dono de revenda independente (precificação é decisão direta dele), gestor de vendas (treinamento do time), gerente de vendas (protocolo de revisão). Consultor de concessionária: parcialmente. Gestor de marketing: periférico (não é foco). 4/5 aprovam."
     },
-    "deduplication": {
+    "no_content_duplicate": {
       "passed": true,
       "reason": "Nenhum post existente cobre precificação de seminovos com dados de mercado ativo. Posts existentes: giro-de-estoque (gestão de pátio por tempo), cac-concessionaria (custo de aquisição), funil-de-vendas (conversão). Ângulo único: FIPE vs mercado ativo + protocolo de revisão temporal. Deduplication aprovado."
     },
@@ -35,7 +35,11 @@
       "passed": true,
       "reason": "Author: Guilherme Ribeiro (fundador Dimus, expertise documentada em operações de revenda). Experience: cálculo de custo de pátio com números reais (R$30-45/dia). Expertise: protocolo de revisão temporal é metodologia própria. Authority: internal links para posts validados do cluster. Trust: sem claims não fundamentados, fontes identificadas (FIPE, Molicar, WebMotors)."
     },
-    "image_seo": {
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "ogImage: /og/og-precificacao-seminovos.png (169.017 bytes, 1200x630, gerado). coverImage: /covers/cover-precificacao-seminovos.png (152.463 bytes, 1600x900, gerado). Filenames descritivos com keyword. Dimensões padrão OG e cover Dimus."
+    },
+    "image_seo_og": {
       "passed": true,
       "reason": "ogImage: /og/og-precificacao-seminovos.png (169.017 bytes, 1200x630, gerado). coverImage: /covers/cover-precificacao-seminovos.png (152.463 bytes, 1600x900, gerado). Filenames descritivos com keyword. Dimensões padrão OG e cover Dimus."
     },
@@ -43,11 +47,11 @@
       "passed": true,
       "reason": "Contrarian: 'FIPE vs mercado é tema batido' — rebatido pelo ângulo específico de protocolo por dia de pátio e cálculo de custo. First Principles: 'O leitor quer saber o que fazer, não só o que é errado' — solucionado pelo protocolo de 5 etapas + CompareTable. Expansionist: 'Poderia incluir ferramentas de IA de precificação' — mantido fora do escopo desta versão (SaaS = out of scope). Executor: protocolo claro de 4 passos + tabela de revisão. Chairman: aprovado sem reservas."
     },
-    "gate_covers": {
+    "gate_covers_pass": {
       "passed": true,
       "reason": "coverImage /covers/cover-precificacao-seminovos.png: 152.463 bytes (≥80KB dark). ogImage /og/og-precificacao-seminovos.png: 169.017 bytes (≥400KB equivalente — light gate não se aplica, dark ≥80KB ✅). Ambos os arquivos gerados e salvos."
     },
-    "score_posts": {
+    "score_gate": {
       "composite": 96,
       "geo": 91,
       "aeo": 100,

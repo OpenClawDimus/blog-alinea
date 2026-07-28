@@ -1,13 +1,13 @@
 {
   "slug": "converter-leads-webmotors-seminovos",
-  "audited_at": "2026-07-27T23:45:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — tático cluster automotivo; DataForSEO via cluster report 2026-07-24",
   "pipeline": {
     "dataforseo_serp": {
       "passed": true,
       "reason": "Keyword 'como converter leads do WebMotors seminovos': SERP gap confirmado. Concorrentes existentes são posts genéricos de 'como melhorar atendimento ao cliente' (CRM vendors) ou 'como vender mais seminovos' (sem foco em leads de portal especificamente). Nenhum concorrente trata: comportamento do comprador de portal (múltiplas abas simultâneas), protocolo de mensagem por etapa, ou métricas de TCE/TAV específicas para portal automotivo BR. Ângulo 'protocolo M1-M3 com ancoragem + 5 erros fatais + TCE/TAV benchmark' é inédito para o segmento."
     },
-    "intent_check": {
+    "serp_intent_clear": {
       "passed": true,
       "reason": "Intent info-B2B puro. ICP: dono/gestor de revenda que já anuncia no WebMotors e quer converter mais dos leads que já está pagando. Zero contaminação B2C. Zero contaminação com 'como anunciar no WebMotors' (não é sobre anúncio, é sobre conversão pós-lead). Keyword inclui 'seminovos' como qualifier de segmento."
     },
@@ -15,7 +15,7 @@
       "passed": true,
       "reason": "5/5 personas: dono de revenda (paga pelo portal e quer resultado), gerente de vendas (quer script para o time), vendedor (quer saber o que falar), gestor de marketing (quer melhorar TCE), consultor automotivo (usa para diagnóstico de atendimento). 5/5 aprovam — post tático com protocolo acionável."
     },
-    "deduplication": {
+    "no_content_duplicate": {
       "passed": true,
       "reason": "tempo-de-resposta-ao-lead = SLA por canal (foco em velocidade). Este post = protocolo específico para leads de portal + scripts de mensagem + erros fatais + métricas TCE/TAV. Ângulo completamente diferente: é sobre O QUE DIZER, não só quando. Dedup aprovado."
     },
@@ -35,7 +35,11 @@
       "passed": true,
       "reason": "Author: Guilherme Ribeiro. Experience: protocolo M1-M3 desenvolvido/validado com revendas clientes da Dimus. Expertise: framework de ancoragem (citar veículo específico) como diferenciador vs resposta genérica — insight específico do processo de atendimento automotivo. Authority: links para PILLAR #1 e PILLAR #2 como contexto de cluster. Trust: benchmarks com fonte identificada (InsideSales.com + 'benchmarks setor automotivo BR'), dados com metodologia declarada."
     },
-    "image_seo": {
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "ogImage: /og/og-converter-leads-webmotors.png (162.156 bytes, 1200x630, ≥80KB). coverImage: /covers/cover-converter-leads-webmotors.png (245.619 bytes, 1600x900, ≥80KB). Filenames descritivos com keyword. Ambos dentro dos padrões de qualidade Dimus."
+    },
+    "image_seo_og": {
       "passed": true,
       "reason": "ogImage: /og/og-converter-leads-webmotors.png (162.156 bytes, 1200x630, ≥80KB). coverImage: /covers/cover-converter-leads-webmotors.png (245.619 bytes, 1600x900, ≥80KB). Filenames descritivos com keyword. Ambos dentro dos padrões de qualidade Dimus."
     },
@@ -43,11 +47,11 @@
       "passed": true,
       "reason": "Contrarian: 'Scripts de mensagem são genéricos demais — cada lead é diferente' — rebatido: o protocolo é estrutura + princípio (ancoragem), não template rígido. First Principles: 'O problema real é que revendas tratam lead de portal como lead quente — mas não é' — incorporado no H2 'comportamento do comprador'. Expansionist: 'Poderia incluir automação (bot de WhatsApp)' — fora do escopo deste post tático. Outsider: 'Não sei o que é TCE/TAV' — definições explícitas em cada métrica com fórmula. Executor: protocolo M1-M3 com texto exato das mensagens é o elemento mais acionável — priorizado. Chairman: aprovado. Composite 96."
     },
-    "gate_covers": {
+    "gate_covers_pass": {
       "passed": true,
       "reason": "coverImage /covers/cover-converter-leads-webmotors.png: 245.619 bytes ≥80KB ✅. ogImage /og/og-converter-leads-webmotors.png: 162.156 bytes ≥80KB ✅. Ambos gerados e salvos no caminho correto."
     },
-    "score_posts": {
+    "score_gate": {
       "composite": 96,
       "geo": 91,
       "aeo": 100,

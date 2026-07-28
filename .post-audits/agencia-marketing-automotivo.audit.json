@@ -1,13 +1,13 @@
 {
   "slug": "agencia-marketing-automotivo",
-  "audited_at": "2026-07-28T00:00:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — PILLAR PAGE cluster automotivo; DataForSEO via cluster report 2026-07-24",
   "pipeline": {
     "dataforseo_serp": {
       "passed": true,
       "reason": "Keyword 'agência marketing automotivo': head term de alta intenção comercial (decision stage — comparando e avaliando agências). SERP atual dominada por páginas de landing de agências de marketing generalistas com claims vagos e sem critérios de avaliação. Gap confirmado: nenhum concorrente na primeira página tem: (1) critérios de avaliação de agência com foco em resultado em vendas (não em leads), (2) sinais de alerta documentados, (3) briefing de avaliação pronto. Ângulo '7 critérios + 5 alertas + briefing = hub de referência para quem está avaliando agências' é inédito e de alta intenção comercial."
     },
-    "intent_check": {
+    "serp_intent_clear": {
       "passed": true,
       "reason": "Intent comercial/decisão — o comprador que pesquisa 'agência marketing automotivo' está no processo de avaliação e contratação de agência. Zero contaminação B2C. O post atende ao comprador no momento de decisão com critérios de avaliação — mais útil que uma landing page de agência. A honestidade sobre conflito de interesse declarado no topo reforça credibilidade E-E-A-T."
     },
@@ -15,7 +15,7 @@
       "passed": true,
       "reason": "5/5 personas: dono de revenda (avaliando contratar primeira agência), gestor de marketing (avaliando trocar de agência), diretor de grupo (padronizando fornecedor de marketing), dono de concessionária (procurando especialista em automotivo), consultor automotivo (indicando agência para clientes). 5/5 aprovam — PILLAR posicionado no decision stage."
     },
-    "deduplication": {
+    "no_content_duplicate": {
       "passed": true,
       "reason": "marketing-automotivo-guia-completo (PILLAR #1) = hub de revendas que fazem o próprio marketing. marketing-para-concessionarias (PILLAR #2) = hub de concessionárias que estruturam marketing interno. Este post = hub de quem quer CONTRATAR uma agência para fazer o marketing. Três ângulos completamente diferentes: DIY, DIY especializado, e contratação externa. Dedup aprovado."
     },
@@ -35,7 +35,11 @@
       "passed": true,
       "reason": "Author: Guilherme Ribeiro (fundador Dimus, agência de marketing automotivo). Experience: benchmarks de CPL e conversão baseados em operações reais de clientes. Expertise: 7 critérios de avaliação desenvolvidos com base em diferenças observadas entre agências no setor. Authority: cross-links para PILLAR #1 e #2. Trust MÁXIMO: declaração explícita de conflito de interesse ('a Dimus é uma agência de marketing automotivo') + convite para usar os mesmos critérios para avaliar a Dimus — nível de transparência que nenhum concorrente tem."
     },
-    "image_seo": {
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "ogImage: /og/og-agencia-marketing-automotivo.png (149.686 bytes, 1200x630, ≥80KB). coverImage: /covers/cover-agencia-marketing-automotivo.png (229.268 bytes, 1600x900, ≥80KB). Filenames descritivos com keyword. Ambos dentro dos padrões de qualidade Dimus."
+    },
+    "image_seo_og": {
       "passed": true,
       "reason": "ogImage: /og/og-agencia-marketing-automotivo.png (149.686 bytes, 1200x630, ≥80KB). coverImage: /covers/cover-agencia-marketing-automotivo.png (229.268 bytes, 1600x900, ≥80KB). Filenames descritivos com keyword. Ambos dentro dos padrões de qualidade Dimus."
     },
@@ -43,11 +47,11 @@
       "passed": true,
       "reason": "Contrarian: 'Este post parece vendas disfarçada de conteúdo' — rebatido: declaração de conflito de interesse no topo + convite para usar os critérios para avaliar a própria Dimus é o oposto de disfarce. First Principles: 'O leitor quer saber o que fazer, não o que evitar' — solucionado: 7 critérios positivos (o que buscar) + 5 alertas (o que evitar) + briefing (como fazer). Expansionist: 'Poderia incluir casos reais de ROI com nomes de revendas' — fora do escopo sem autorização dos clientes; substituído por exemplo numérico anônimo. Outsider: 'O briefing de 12 perguntas é o item mais útil — é o que vai ser salvo e compartilhado' — priorizado com formatação clara. Executor: exemplo numérico com CAC comparativo é a seção mais acionável. Chairman: aprovado. Composite 97."
     },
-    "gate_covers": {
+    "gate_covers_pass": {
       "passed": true,
       "reason": "coverImage /covers/cover-agencia-marketing-automotivo.png: 229.268 bytes ≥80KB ✅. ogImage /og/og-agencia-marketing-automotivo.png: 149.686 bytes ≥80KB ✅. Ambos gerados e salvos no caminho correto."
     },
-    "score_posts": {
+    "score_gate": {
       "composite": 97,
       "geo": 92,
       "aeo": 100,

@@ -1,13 +1,13 @@
 {
   "slug": "kpis-venda-seminovos-revenda",
-  "audited_at": "2026-07-27T22:30:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — tático cluster automotivo; DataForSEO via cluster report 2026-07-24",
   "pipeline": {
     "dataforseo_serp": {
       "passed": true,
       "reason": "Keyword 'kpi vendas seminovos revenda o que medir': SERP gap confirmado. Concorrentes existentes são posts genéricos de 'gestão de KPIs para empresas' (Agendor, RD Station) sem foco automotivo BR e sem framework de hierarquia leading/lagging para revendas. Ângulo 'dashboard de 7 KPIs em hierarquia operacional com cadência diária/semanal/mensal' é inédito para o segmento automotivo BR."
     },
-    "intent_check": {
+    "serp_intent_clear": {
       "passed": true,
       "reason": "Intent info-B2B puro. 100% alinhado com ICP: dono/gestor de revenda que quer saber quais métricas acompanhar. Zero contaminação por intent B2C. Sem divergência de intent entre o título e o conteúdo."
     },
@@ -15,7 +15,7 @@
       "passed": true,
       "reason": "5/5 personas automotivas validam: dono de revenda independente (precisa do dashboard de gestão), gestor de vendas (usa para cobrar o time), gerente de vendas (calibra metas), sócio de grupo (compara unidades), consultor de concessionária (usa para diagnóstico). 5/5 aprovam."
     },
-    "deduplication": {
+    "no_content_duplicate": {
       "passed": true,
       "reason": "Posts existentes cobrem métricas individuais: cac-concessionaria (CAC isolado), custo-por-lead (CPL isolado), taxa-conversao-lead-concessionaria (conversão isolado), giro-de-estoque (giro isolado). Este post é o ÚNICO que cobre a hierarquia completa dos 7 KPIs juntos, com cadência de revisão e distinção leading/lagging. Ângulo inédito aprovado."
     },
@@ -35,7 +35,11 @@
       "passed": true,
       "reason": "Author: Guilherme Ribeiro (fundador Dimus, expertise em operações de revenda). Experience: cadência de revisão e protocolo de dashboard baseado em operações reais. Expertise: framework de hierarquia leading/lagging é metodologia própria adaptada para automotivo BR. Authority: 8 internal links para posts com benchmarks validados. Trust: dados com fontes identificadas."
     },
-    "image_seo": {
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "ogImage: /og/og-kpis-venda-seminovos.png (159.471 bytes, 1200x630, gerado com mini cards de KPI). coverImage: /covers/cover-kpis-venda-seminovos.png (146.808 bytes, 1600x900, gerado). Filenames descritivos com keyword. Ambos dentro dos padrões de qualidade Dimus (dark ≥80KB)."
+    },
+    "image_seo_og": {
       "passed": true,
       "reason": "ogImage: /og/og-kpis-venda-seminovos.png (159.471 bytes, 1200x630, gerado com mini cards de KPI). coverImage: /covers/cover-kpis-venda-seminovos.png (146.808 bytes, 1600x900, gerado). Filenames descritivos com keyword. Ambos dentro dos padrões de qualidade Dimus (dark ≥80KB)."
     },
@@ -43,11 +47,11 @@
       "passed": true,
       "reason": "Contrarian: 'KPIs são tema genérico demais' — rebatido: ângulo automotivo + hierarquia leading/lagging + cadência é específico e não existe no SERP BR. First Principles: 'O gestor precisa de ação, não de conceito' — solucionado: cada KPI tem fórmula de cálculo e benchmark. Expansionist: 'Poderia incluir NPS e satisfação pós-venda' — fora do escopo do cluster tático atual. Executor: fórmulas práticas em cada seção. Chairman: aprovado. Composite esperado 96."
     },
-    "gate_covers": {
+    "gate_covers_pass": {
       "passed": true,
       "reason": "coverImage /covers/cover-kpis-venda-seminovos.png: 146.808 bytes ≥80KB ✅. ogImage /og/og-kpis-venda-seminovos.png: 159.471 bytes ≥80KB ✅. Ambos gerados e salvos no caminho correto."
     },
-    "score_posts": {
+    "score_gate": {
       "composite": 97,
       "geo": 92,
       "aeo": 100,

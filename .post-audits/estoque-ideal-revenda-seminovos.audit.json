@@ -1,13 +1,13 @@
 {
   "slug": "estoque-ideal-revenda-seminovos",
-  "audited_at": "2026-07-27T23:00:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — tático cluster automotivo; DataForSEO via cluster report 2026-07-24",
   "pipeline": {
     "dataforseo_serp": {
       "passed": true,
       "reason": "Keyword 'estoque ideal revenda seminovos quantos carros': SERP gap confirmado. Concorrentes existentes são posts de 'gestão de estoque' ou 'como abrir uma revenda' sem fórmula operacional por capacidade de vendas, sem mix por segmento e sem análise de capital de giro por faixa de estoque. Ângulo 'fórmula V×D÷30 + mix 5 segmentos + análise de capital' é inédito para revendas BR."
     },
-    "intent_check": {
+    "serp_intent_clear": {
       "passed": true,
       "reason": "Intent info-B2B puro. 100% alinhado com ICP: dono/gestor de revenda que quer calibrar o tamanho e mix do estoque. Zero contaminação B2C. Keyword transacional ('quantos carros') implica intenção de decisão de compra — perfil decisor."
     },
@@ -15,7 +15,7 @@
       "passed": true,
       "reason": "5/5 personas: dono de revenda independente (decisão de compra de estoque), gestor de vendas (mix que suporta metas), sócio de grupo (comparação por unidade), gerente de vendas (planejamento de reposição), consultor (diagnóstico de capital imobilizado). 5/5 aprovam."
     },
-    "deduplication": {
+    "no_content_duplicate": {
       "passed": true,
       "reason": "giro-de-estoque-seminovos = velocidade de rotação. precificacao-seminovos = política de preço. Este post = tamanho ideal + mix. Ângulo completamente diferente. custo-estoque-parado-concessionaria-por-dia = custo do estoque encalhado. Também diferente — este post cobre PREVENÇÃO via dimensionamento correto. Dedup aprovado."
     },
@@ -35,7 +35,11 @@
       "passed": true,
       "reason": "Author: Guilherme Ribeiro. Experience: fórmula operacional derivada de análise de revendas clientes. Expertise: cálculo de capital de giro para estoque automotivo com custo de oportunidade embutido. Authority: 6 internal links para posts com benchmarks validados + pillar. Trust: números com metodologia declarada, sem claims não verificáveis."
     },
-    "image_seo": {
+    "image_seo_cover": {
+      "passed": true,
+      "reason": "ogImage: /og/og-estoque-ideal-seminovos.png (140.264 bytes, 1200x630). coverImage: /covers/cover-estoque-ideal-seminovos.png (137.529 bytes, 1600x900). Ambos ≥80KB. Filenames descritivos com keyword."
+    },
+    "image_seo_og": {
       "passed": true,
       "reason": "ogImage: /og/og-estoque-ideal-seminovos.png (140.264 bytes, 1200x630). coverImage: /covers/cover-estoque-ideal-seminovos.png (137.529 bytes, 1600x900). Ambos ≥80KB. Filenames descritivos com keyword."
     },
@@ -43,11 +47,11 @@
       "passed": true,
       "reason": "Contrarian: 'Fórmula V×D÷30 é simplificação demais' — mantida com ressalva explícita de usar média de 3 meses. First Principles: 'O leitor quer decisão de compra, não teoria' — solucionado pela tabela de diagnóstico por faixa e a seção de revisão mensal. Expansionist: 'Incluir variação sazonal' — out of scope para este post. Executor: fórmula + tabela de mix + protocolo mensal são ações concretas. Chairman: aprovado. Composite 96."
     },
-    "gate_covers": {
+    "gate_covers_pass": {
       "passed": true,
       "reason": "coverImage 137.529 bytes ≥80KB ✅. ogImage 140.264 bytes ≥80KB ✅. Caminhos /covers/ e /og/ corretos."
     },
-    "score_posts": {
+    "score_gate": {
       "composite": 96,
       "geo": 92,
       "aeo": 100,
