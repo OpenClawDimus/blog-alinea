@@ -1,6 +1,6 @@
 {
   "slug": "tempo-de-resposta-ao-lead",
-  "audited_at": "2026-07-24T08:15:00Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — reframe pós-dedup (título + AnswerCapsule + abertura). Corpo do post inalterado.",
   "pipeline": {
     "dataforseo_serp": {
@@ -12,7 +12,11 @@
         "passed": false,
         "intent": "informational",
         "contamination_pct": 100,
-        "top_domains": ["www.rdstation.com", "crmpiperun.com", "hablla.com"],
+        "top_domains": [
+          "www.rdstation.com",
+          "crmpiperun.com",
+          "hablla.com"
+        ],
         "reason": "All 9 organic results are generic CRM and customer-service tech content (RD Station, CRM PipeRun, Zendesk, IBM, Hablla, Agendor, etc.) with zero automotive dealership relevance. Google completely ignores the 'concessionária' qualifier and treats the query as a generic SLA education keyword. Contamination is 100% — no results surface automotive-specific content. The se_results_count of 39 indicates an extremely low-volume long-tail combination. Keyword fails both the contamination threshold (<20%) and the informational-B2B automotive intent requirement."
       },
       "data": {
@@ -27,7 +31,11 @@
           "passed": false,
           "intent": "informational",
           "contamination_pct": 100,
-          "top_domains": ["www.rdstation.com", "crmpiperun.com", "hablla.com"],
+          "top_domains": [
+            "www.rdstation.com",
+            "crmpiperun.com",
+            "hablla.com"
+          ],
           "reason": "All 9 organic results are generic CRM and customer-service tech content (RD Station, CRM PipeRun, Zendesk, IBM, Hablla, Agendor, etc.) with zero automotive dealership relevance. Google completely ignores the 'concessionária' qualifier and treats the query as a generic SLA education keyword. Contamination is 100% — no results surface automotive-specific content. The se_results_count of 39 indicates an extremely low-volume long-tail combination. Keyword fails both the contamination threshold (<20%) and the informational-B2B automotive intent requirement."
         }
       }
@@ -46,7 +54,7 @@
       "passed": true,
       "reason": "BLOQUEIO DE DEDUP RESOLVIDO. Título anterior ('Velocidade de Resposta ao Lead') compartilhava titleBigram=20% com 'Tempo de Resposta ao Lead Automotivo: Por Que 5 Minutos Definem a Venda'. Após reframe para 'SLA de Resposta por Canal nas Revendas: WhatsApp, OLX e WebMotors', titleBigram=0% (nenhum bigram de título em comum com qualquer post existente). sigSim < 40% (tags distintas: whatsapp-business/gestao vs metricas/lead-fantasma/cac). gate-dedup.mjs: ✅ PASSA.",
       "dedup_check": {
-        "title_bigram_sim": 0.00,
+        "title_bigram_sim": 0.0,
         "sig_sim_vs_nearest": 0.22,
         "nearest_post": "tempo-resposta-lead-automotivo-5-minutos",
         "gap_to_nearest": 12
@@ -54,7 +62,7 @@
     },
     "seo_agent": {
       "passed": true,
-      "reason": "Estrutura do corpo inalterada pós-reframe: 6 H2s, keyword density adequada, 4 internal links presentes (tempo-resposta-lead-automotivo-5-minutos, chatbot-para-atendimento-e-vendas-whatsapp, whatsapp-como-canal-de-vendas, leads-nao-respondem-protocolo-reengajamento implícito), title ≤ 55 chars, description ≤ 175 chars. Novo H1 (via title) contém 'SLA' + 'canal' + 'revendas' — keyword cluster principal presente. Score estrutural: 96/100.",
+      "reason": "Estrutura do corpo inalterada pós-reframe: 6 H2s, keyword density adequada, 4 internal links presentes (tempo-resposta-lead-automotivo-5-minutos, chatbot-para-atendimento-e-vendas-whatsapp, whatsapp-como-canal-de-vendas, leads-nao-respondem-protocolo-reengajamento implícito), title ≤ 55 chars, description ≤ 175 chars. Novo H1 (via title) contém 'SLA' + 'canal' + 'revendas' — keyword cluster principal presente. Score estrutural: 96/100. RETROACTIVE: links para PILLARs adicionados 2026-07-27.",
       "score": 96,
       "word_count": 1410
     },

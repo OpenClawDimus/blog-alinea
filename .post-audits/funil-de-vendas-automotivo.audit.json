@@ -1,6 +1,6 @@
 {
   "slug": "funil-de-vendas-automotivo",
-  "audited_at": "2026-07-24T05:42:45Z",
+  "audited_at": "2026-07-27T23:30:00Z",
   "auditor": "blog-pipeline-canonico v1 — 35 agentes + correções manuais pós-council",
   "pipeline": {
     "dataforseo_serp": {
@@ -30,7 +30,7 @@
     },
     "seo_agent": {
       "passed": true,
-      "reason": "H1 com keyword principal, 7 H2s estruturados, keyword density adequada, 5 internal links, title ≤62 chars, description ≤136 chars, meta tags presentes. Word count corrigido para ~1060 palavras (>1000). Score estrutural: 94/100.",
+      "reason": "H1 com keyword principal, 7 H2s estruturados, keyword density adequada, 5 internal links, title ≤62 chars, description ≤136 chars, meta tags presentes. Word count corrigido para ~1060 palavras (>1000). Score estrutural: 94/100. RETROACTIVE: links para PILLARs adicionados 2026-07-27.",
       "score": 94,
       "word_count": 1060
     },
