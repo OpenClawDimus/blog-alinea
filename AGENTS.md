@@ -1,3 +1,29 @@
+## ⛔ PADRÃO SEO DE SITE — LEIA ANTES DE QUALQUER MUDANÇA (corrigido 2026-07-28)
+
+### Title tag — padrão OBRIGATÓRIO em todos os posts:
+```
+[Título do post com keyword principal] | Blog Dimus
+```
+Implementado em `src/pages/posts/[...slug]/index.astro`:
+```js
+title={`${title} | Blog Dimus`}
+```
+
+### Site title e description (astro-paper.config.ts):
+```js
+title: "Blog Dimus — Marketing Automotivo"
+description: "Blog de marketing automotivo para revendas de seminovos e concessionárias. Google Ads, Meta Ads, WhatsApp, CRM e como medir ROI real em carro vendido."
+```
+
+**Regras invioláveis:**
+- `title` do site SEMPRE com keyword de nicho após `—`
+- `description` do site com keywords: "marketing automotivo", "revendas de seminovos", "concessionárias"
+- `description` de cada post: benefício concreto + dado numérico, 130–160 chars
+- NUNCA editar `astro-paper.config.ts` ou `Layout.astro` sem garantir que o padrão se mantém
+- NUNCA remover o sufixo `| Blog Dimus` dos posts
+
+---
+
 ## ⛔ GATE INVIOLÁVEL — Todo novo post .mdx EXIGE pipeline completo
 
 **PROIBIDO commitar qualquer post sem que `.post-audits/<slug>.audit.json` exista e esteja passando.**
