@@ -36,6 +36,10 @@ const isNew = (d: Date) => Date.now() - d.getTime() < NEW_THRESHOLD_MS;
 ---
 
 <Layout title={`Posts | ${config.site.title}`}>
+  <Fragment slot="head">
+    {page.url.prev && <link rel="prev" href={new URL(page.url.prev, Astro.site).href} />}
+    {page.url.next && <link rel="next" href={new URL(page.url.next, Astro.site).href} />}
+  </Fragment>
   <nav class="sr-topbar" aria-label="Navegação principal">
     <div class="sr-topnav">
       <a href="/posts" data-active="">Posts</a>

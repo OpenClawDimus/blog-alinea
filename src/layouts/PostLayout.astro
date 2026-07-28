@@ -11,6 +11,7 @@ type Props = {
   modDatetime?: Date | null;
   postTitle?: string;
   faq?: { q: string; a: string }[];
+  tags?: string[];
 };
 
 const { site } = config;
@@ -24,6 +25,7 @@ const {
   modDatetime,
   postTitle,
   faq,
+  tags,
 } = Astro.props;
 
 const pageUrl =
@@ -132,6 +134,8 @@ const structuredData = {
 <Layout {title} {description} {ogImage} {canonicalURL} ogType="article">
   <Fragment slot="head">
     <meta property="article:author" content="https://guilhermeribeiro.me" />
+    <meta property="article:section" content="Marketing Automotivo" />
+    {tags?.map(tag => <meta property="article:tag" content={tag} />)}
 
     {
       pubDatetime && (

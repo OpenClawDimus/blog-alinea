@@ -101,6 +101,18 @@ const getReadTime = (body: string | undefined) =>
 ---
 
 <Layout>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${(Astro.site ?? new URL(config.site.url)).href}#webpage`,
+      "url": (Astro.site ?? new URL(config.site.url)).href,
+      "name": config.site.title,
+      "description": config.site.description,
+      "isPartOf": { "@id": `${(Astro.site ?? new URL(config.site.url)).href}#website` },
+      "inLanguage": config.site.lang,
+    })} />
+  </Fragment>
   <!-- Topbar -->
   <nav class="sr-topbar" aria-label="Navegação principal">
     <div class="sr-topnav">

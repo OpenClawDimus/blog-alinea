@@ -105,6 +105,7 @@ const fmtDate = (d: Date) =>
   modDatetime={modDatetime}
   postTitle={title}
   faq={faq}
+  tags={tags}
 >
   <!-- ── Topbar ── -->
   <nav class="sr-topbar" aria-label="Navegação principal">
@@ -133,8 +134,7 @@ const fmtDate = (d: Date) =>
     {(coverImage || typeof initOgImage === "string") ? (
       <img
         src={coverImage ?? ogImageUrl}
-        alt=""
-        aria-hidden="true"
+        alt={title}
         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top"
         loading="eager"
         decoding="async"
