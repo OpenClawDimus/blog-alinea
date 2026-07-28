@@ -1,0 +1,98 @@
+{
+  "slug": "google-meu-negocio-para-revenda",
+  "audited_at": "2026-07-28T01:05:00Z",
+  "pipeline": {
+    "dataforseo_serp": {
+      "status": "pass",
+      "keyword": "google meu negocio revenda de carros",
+      "location_code": 2076,
+      "language": "pt",
+      "monthly_volume": 880,
+      "difficulty": 22,
+      "intent": "informational",
+      "serp_features": ["featured_snippet", "people_also_ask", "local_pack"]
+    },
+    "serp_intent_clear": {
+      "status": "pass",
+      "intent_match": "informational — dono de revenda quer otimizar perfil local para aparecer no Maps",
+      "contamination": "0%"
+    },
+    "mirofish_icp": {
+      "status": "pass",
+      "score": "5/5",
+      "personas_validated": [
+        "dono de revenda que não aparece no Maps",
+        "gestor de marketing otimizando SEO local",
+        "sócio de revenda sem site querendo leads orgânicos",
+        "dono avaliando canal gratuito antes de investir em ads",
+        "gerente comercial com perfil incompleto"
+      ]
+    },
+    "no_content_duplicate": {
+      "status": "pass",
+      "note": "GMB com protocolo de avaliações + posts semanais + ranking local — combinação não coberta nos posts existentes que focam em paid traffic"
+    },
+    "seo_agent": {
+      "status": "pass",
+      "h1": "Google Meu Negócio para Revenda de Carros: Guia de Configuração e Otimização",
+      "keyword_density": "1.8%",
+      "internal_links": 4,
+      "entidades_presentes": ["Google Meu Negócio", "Google Business Profile", "Google Maps", "Pack de 3", "SEO local", "revenda de carros", "seminovos"],
+      "image_alt_coverage": "100%",
+      "meta_description_length": 201
+    },
+    "aeo_agent": {
+      "status": "pass",
+      "answer_capsule": true,
+      "faq_count": 6,
+      "paa_alignment": ["por que importa", "categoria certa", "quantas fotos", "responder avaliações negativas", "posts do GMB", "como aparecer no Maps"],
+      "featured_snippet_candidate": "Para revenda de seminovos, categoria primária correta: 'Revendedor de carros usados'. Meta mínima: 20+ fotos + 15+ avaliações com média ≥ 4.5 + posts 2–3×/semana. Perfil completo gera 20–40 ligações/mês sem custo de mídia."
+    },
+    "geo_agent": {
+      "status": "pass",
+      "citabilidade_score": 92,
+      "dados_com_fonte": true,
+      "definicoes_explicitas": true,
+      "llm_citavel": true,
+      "benchmark_table": "categorias de fotos × quantidade + protocolo de avaliações + fatores de ranking local"
+    },
+    "eeat_check": {
+      "status": "pass",
+      "experience": "Dimus gerencia GMB para revendas — dados de ligações e cliques de perfis otimizados",
+      "expertise": "Guilherme Ribeiro — fundador Dimus",
+      "authority": "3 fatores de ranking local do Google + benchmarks de avaliações + exemplos de descrição",
+      "trust": "disclaimer explícito de que configuração pode ser feita sem agência + guia autoexecutável"
+    },
+    "image_seo_cover": {
+      "status": "pass",
+      "filename": "cover-google-meu-negocio-revenda.png",
+      "dimensions": "1600x900",
+      "size_bytes": 207978,
+      "size_check": "pass (≥80KB)"
+    },
+    "image_seo_og": {
+      "status": "pass",
+      "filename": "og-google-meu-negocio-revenda.png",
+      "dimensions": "1200x630",
+      "size_bytes": 137592,
+      "size_check": "pass (≥80KB)"
+    },
+    "gate_covers_pass": {
+      "status": "pass",
+      "violations": 0
+    },
+    "llm_council": {
+      "status": "pass",
+      "advisors": 5,
+      "peer_review": true,
+      "factual_errors": 0,
+      "chairman_verdict": "guia local-SEO prático com categoria correta (diferenciador técnico crítico), protocolo de foto por categoria, mensagem pós-entrega para pedir avaliação, 3 fatores do algoritmo local — executável por qualquer revenda sem agência"
+    },
+    "score_gate": {
+      "status": "pass",
+      "composite": 95,
+      "geo": 92,
+      "aeo": 100
+    }
+  }
+}

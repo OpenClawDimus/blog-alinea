@@ -1,0 +1,98 @@
+{
+  "slug": "quanto-custa-agencia-marketing-automotivo",
+  "audited_at": "2026-07-28T01:00:00Z",
+  "pipeline": {
+    "dataforseo_serp": {
+      "status": "pass",
+      "keyword": "quanto custa agencia marketing automotivo",
+      "location_code": 2076,
+      "language": "pt",
+      "monthly_volume": 720,
+      "difficulty": 28,
+      "intent": "informational",
+      "serp_features": ["featured_snippet", "people_also_ask"]
+    },
+    "serp_intent_clear": {
+      "status": "pass",
+      "intent_match": "informational — pessoa pesquisando preço antes de contratar agência especializada",
+      "contamination": "0%"
+    },
+    "mirofish_icp": {
+      "status": "pass",
+      "score": "5/5",
+      "personas_validated": [
+        "dono de revenda avaliando primeira agência",
+        "gestor de marketing comparando propostas",
+        "sócio insatisfeito com agência atual",
+        "dono de concessionária avaliando ROI de marketing",
+        "gerente financeiro validando custo-benefício"
+      ]
+    },
+    "no_content_duplicate": {
+      "status": "pass",
+      "note": "Preço com faixas reais + critérios de avaliação de proposta + perguntas certas para fazer — ângulo de comprador racional não coberto nos posts existentes"
+    },
+    "seo_agent": {
+      "status": "pass",
+      "h1": "Quanto Custa uma Agência de Marketing Automotivo: Preços e o Que Está Incluído",
+      "keyword_density": "1.9%",
+      "internal_links": 5,
+      "entidades_presentes": ["agência de marketing automotivo", "revenda", "concessionária", "CPL", "ROI", "Meta Ads", "Google Ads"],
+      "image_alt_coverage": "100%",
+      "meta_description_length": 196
+    },
+    "aeo_agent": {
+      "status": "pass",
+      "answer_capsule": true,
+      "faq_count": 6,
+      "paa_alignment": ["quanto custa", "o que deve entregar", "generalista vs especialista", "como comparar propostas", "performance vs mensalidade", "quando trocar"],
+      "featured_snippet_candidate": "Faixas de mercado BR 2025: gestão básica R$800–1.500/mês; intermediária R$1.500–3.000/mês; completa R$3.000–6.000/mês. Custo de mídia (Meta/Google Ads) é separado da mensalidade da agência."
+    },
+    "geo_agent": {
+      "status": "pass",
+      "citabilidade_score": 91,
+      "dados_com_fonte": true,
+      "definicoes_explicitas": true,
+      "llm_citavel": true,
+      "benchmark_table": "faixas de preço por serviço + modelos de contrato + CPL benchmarks"
+    },
+    "eeat_check": {
+      "status": "pass",
+      "experience": "Dimus é agência de marketing automotivo — dados de CPL e ROI de operações reais",
+      "expertise": "Guilherme Ribeiro — fundador Dimus",
+      "authority": "disclosure explícito de conflito de interesse + critérios objetivos de avaliação",
+      "trust": "disclaimer de conflito de interesse no início + instrução para avaliar a própria Dimus pelos mesmos critérios"
+    },
+    "image_seo_cover": {
+      "status": "pass",
+      "filename": "cover-quanto-custa-agencia-marketing-automotivo.png",
+      "dimensions": "1600x900",
+      "size_bytes": 204415,
+      "size_check": "pass (≥80KB)"
+    },
+    "image_seo_og": {
+      "status": "pass",
+      "filename": "og-quanto-custa-agencia-marketing-automotivo.png",
+      "dimensions": "1200x630",
+      "size_bytes": 138799,
+      "size_check": "pass (≥80KB)"
+    },
+    "gate_covers_pass": {
+      "status": "pass",
+      "violations": 0
+    },
+    "llm_council": {
+      "status": "pass",
+      "advisors": 5,
+      "peer_review": true,
+      "factual_errors": 0,
+      "chairman_verdict": "guia com faixas reais de preço, disclosure de conflito de interesse (diferenciador de autoridade), 7 perguntas certas para contratar, e critério decisivo de troca baseado em CPL real — não em percepção"
+    },
+    "score_gate": {
+      "status": "pass",
+      "composite": 96,
+      "geo": 91,
+      "aeo": 100
+    }
+  }
+}
