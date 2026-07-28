@@ -31,12 +31,41 @@ description: "Blog de marketing automotivo para revendas de seminovos e concessi
 - **Cover image**: NUNCA usar `alt=""` ou `aria-hidden="true"` na cover do post — usar `alt={title}` para Google Images
 - **Home page**: DEVE ter `WebPage` no `@graph` do JSON-LD — já injetado via `<Fragment slot="head">` em `index.astro`
 
-### Transporte para novos blogs
-Este repositório É o template. Para novo blog Dimus:
-1. Fazer fork deste repo
-2. Atualizar `astro-paper.config.ts`: `title`, `description`, `site.url`
-3. Atualizar `AGENTS.md`: substituir "Marketing Automotivo" pelo nicho do novo blog
-4. O AGENTS.md chega junto com todos os padrões de código — nenhuma reconfiguração necessária
+### Transporte para novos blogs (Dimus OU clientes)
+
+Este repositório É o template. Para qualquer novo blog, **editar APENAS `astro-paper.config.ts`**:
+
+```ts
+site: {
+  url: "https://blog.CLIENTE.com.br/",
+  title: "Blog CLIENTE — Nicho Principal",
+  description: "...",
+  author: "Nome da Empresa",
+  profile: "https://CLIENTE.com.br",
+  blogShortTitle: "Blog CLIENTE",        // sufixo do <title> dos posts
+  ga4Id: "G-XXXXXXXX",                  // GA4 do cliente
+  metaPixelId: "XXXXXXXXX",             // Pixel Meta do cliente (ou via env)
+  whatsappNumber: "55XXXXXXXXXXX",      // número com DDD
+  whatsappMessage: "Mensagem padrão",
+  articleSection: "Nicho do cliente",   // ex: "Decoração", "Saúde"
+  organization: {
+    name: "Nome da Empresa",
+    logo: "logo-cliente.png",           // arquivo em /public
+    sameAs: ["https://instagram.com/cliente", ...],
+  },
+  authorPerson: {
+    name: "Nome do Autor",
+    url: "https://autorpessoal.com",
+    jobTitle: "Fundador",
+    avatar: "foto-autor.png",           // arquivo em /public
+    sameAs: ["https://instagram.com/autor"],
+    knowsAbout: ["tema1", "tema2"],
+  },
+}
+```
+
+Tudo mais (Layout, PostLayout, schemas, hooks, pipeline) chega junto automaticamente via fork.
+NUNCA editar os arquivos de layout para mudar dados de cliente — sempre via config.
 
 ---
 
