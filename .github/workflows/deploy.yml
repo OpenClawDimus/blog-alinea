@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -39,7 +40,7 @@ jobs:
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
 
       - name: "☁️ Deploy to Cloudflare Pages"
-        run: npx --yes wrangler@4.95.0 pages deploy dist --project-name=blog-dimus --commit-dirty=true
+        run: npx --yes wrangler@4.95.0 pages deploy dist --project-name=blog-monumental --commit-dirty=true
         env:
           CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_GLOBAL_KEY }}
           CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
