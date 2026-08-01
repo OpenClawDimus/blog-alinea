@@ -1,68 +1,95 @@
 /* ============================================================
-   Revista Showroom — design tokens (blog.dimus.com.br)
-   Dark-first. Magenta é evento, não ambiente (<5% da tela).
-   Portado do mockup validado blog/v2.2.0.
+   Monumental Contabilidade — design tokens
+   Navy + Gold. Light-first, dark mode via [data-theme=dark].
+   Mockup aprovado: monumental_blog_mockup.html (Navy + Gold DS).
    ============================================================ */
 @theme inline {
-  /* AstroPaper canonical tokens (mapeados p/ Showroom) */
-  --color-background: var(--bg);
-  --color-foreground: var(--ink);
-  --color-accent: var(--magenta);
+  /* AstroPaper canonical tokens */
+  --color-background:        var(--bg);
+  --color-foreground:        var(--ink);
+  --color-accent:            var(--navy);
   --color-accent-foreground: #ffffff;
-  --color-muted: var(--surface-2);
-  --color-muted-foreground: var(--muted);
-  --color-border: var(--hair);
+  --color-muted:             var(--surface-2);
+  --color-muted-foreground:  var(--ink-3);
+  --color-border:            var(--hair);
 
-  /* Paleta estendida Showroom */
-  --color-bg-2: var(--bg-2);
-  --color-surface: var(--surface);
+  /* Paleta estendida Monumental */
+  --color-bg-2:      var(--bg-2);
+  --color-surface:   var(--surface);
   --color-surface-2: var(--surface-2);
-  --color-ink-2: var(--ink-2);
-  --color-dim: var(--dim);
-  --color-magenta: var(--magenta);
-  --color-magenta-deep: var(--magenta-deep);
-  --color-pink: var(--pink);
-  --color-hair-mag: var(--hair-mag);
-  --color-hair-strong: var(--hair-strong);
+  --color-ink-2:     var(--ink-2);
+  --color-dim:       var(--ink-3);
+  --color-navy:      var(--navy);
+  --color-gold:      var(--gold);
+  --color-gold-bg:   var(--gold-bg);
+
+  /* Aliases de compatibilidade para componentes herdados */
+  --color-magenta:      var(--navy);
+  --color-magenta-deep: #1e2255;
+  --color-pink:         var(--gold);
+  --color-hair-mag:     rgba(40, 46, 105, 0.12);
+  --color-hair-strong:  rgba(40, 46, 105, 0.25);
+  --color-muted-old:    var(--ink-3);
 
   /* Fontes */
-  --font-app: var(--font-hanken-grotesk);
-  --font-display: var(--font-fraunces);
-  --font-body: var(--font-hanken-grotesk);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-app:     var(--font-hanken-grotesk);
+  --font-display: var(--font-fraunces);   /* Playfair Display */
+  --font-body:    var(--font-fraunces);   /* corpo editorial = serif */
+  --font-mono:    var(--font-jetbrains-mono);
 }
 
-/* Dark-first: valores iguais em :root e [data-theme=dark].
-   lightAndDarkMode está OFF — o blog é sempre escuro (design validado). */
-:root,
-[data-theme="light"],
-[data-theme="dark"] {
-  --bg: #0b0a0d;
-  --bg-2: #0e0c11;
-  --surface: #131017;
-  --surface-2: #181420;
+/* ── Light mode (default) ──────────────────────────────────── */
+:root {
+  --bg:       #f9f8f4;
+  --bg-2:     #f2f0ea;
+  --surface:  #ffffff;
+  --surface-2:#ece9e1;
 
-  --hair: rgba(255, 255, 255, 0.07);
-  --hair-mag: rgba(225, 55, 158, 0.16);
-  --hair-strong: rgba(225, 55, 158, 0.3);
+  --hair: #e8e6e0;
 
-  --ink: #f4f1f5;
-  --ink-2: #cbc4d2;
-  --muted: #9a8fa3;
-  --dim: #6e6678;
+  --ink:   #1a1a1a;
+  --ink-2: #4a4a52;
+  --ink-3: #8d8d8e;
 
-  --magenta: #e1379e;
-  --magenta-deep: #b21e97;
-  --pink: #ff53c8;
+  --navy:    #282e69;
+  --gold:    #cfaf75;
+  --gold-bg: rgba(207, 175, 117, 0.12);
 
-  /* Movimento */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Compat vars */
+  --muted:        var(--ink-3);
+  --dim:          #a8a5b4;
+  --magenta:      var(--navy);
+  --magenta-deep: #1e2255;
+  --pink:         var(--gold);
+  --hair-mag:     rgba(40, 46, 105, 0.12);
+  --hair-strong:  rgba(40, 46, 105, 0.25);
+
+  --ease:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-s: cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  /* Layout */
-  --rail-w: 288px;
+  --rail-w:  288px;
   --measure: 760px;
 
-  --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.35),
-    0 22px 60px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.07);
+  --shadow-md:   0 2px 6px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.10);
+}
+
+/* ── Dark mode ──────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:       #131420;
+  --bg-2:     #1a1c2e;
+  --surface:  #1d1f32;
+  --surface-2:#232540;
+
+  --hair: #262840;
+
+  --ink:   #e8e6e0;
+  --ink-2: #a8a5b4;
+  --ink-3: #6b6875;
+
+  --muted: var(--ink-3);
+  --dim:   #6b6875;
+
+  --shadow-card: 0 1px 3px rgba(0,0,0,.25), 0 4px 12px rgba(0,0,0,.35);
+  --shadow-md:   0 2px 6px rgba(0,0,0,.3),  0 8px 24px rgba(0,0,0,.45);
 }
