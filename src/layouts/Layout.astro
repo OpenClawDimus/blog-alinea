@@ -72,7 +72,7 @@ const metaPixelId = import.meta.env.PROD
   ? (import.meta.env.PUBLIC_META_PIXEL_ID ?? site.metaPixelId ?? "")
   : "";
 const metaPixelHtml = metaPixelId
-  ? `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');</script><noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1"/></noscript>`
+  ? `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');window.__fbpid='${metaPixelId}';</script><noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1"/></noscript>`
   : "";
 ---
 
@@ -86,6 +86,7 @@ const metaPixelHtml = metaPixelId
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google-site-verification" content="-oEQ5PHjTYRgo6RDLGStkCFD-euvac18kLxswbSRTHE" />
     <link rel="icon" href={getAssetPath("favicon.ico")} sizes="any" />
     <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} />
     <link rel="icon" type="image/png" href={getAssetPath("favicon-48.png")} sizes="48x48" />
@@ -206,30 +207,33 @@ const metaPixelHtml = metaPixelId
     <div class="sr-shell">
       <!-- ── Rail ── -->
       <aside class="sr-rail" aria-label="Navegação do blog">
-        <a href="/" class="sr-brand">
-          <div class="mark" aria-hidden="true">
-            <img src="/dimus-symbol.png" alt="" width="22" height="22" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1)" />
-          </div>
-          <span class="name">Blog Dimus</span>
+        <a href="/" class="sr-brand" aria-label="Monumental Contabilidade — Blog">
+          <img
+            src="/logo-monumental.svg"
+            alt="Monumental Contabilidade"
+            width="180"
+            height="36"
+            style="height:36px;width:auto;max-width:180px;object-fit:contain;flex-shrink:0"
+          />
         </a>
 
         <nav aria-label="Clusters editoriais">
           <p class="sr-rail-label" style="margin-bottom:10px">Clusters</p>
           <ul class="sr-clusters" id="sr-clusters">
-            <li><a href="/tags/giro-de-estoque"><span>Giro de Estoque</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/seminovos"><span>Seminovos</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/gestao"><span>Gestão</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/aquisicao"><span>Aquisição</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/atribuicao"><span>Atribuição</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/metricas"><span>Métricas</span><span class="ct">→</span></a></li>
-            <li><a href="/posts"><span>Todos os posts</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/planejamento-tributario"><span>Planejamento Tributário</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/reforma-tributaria"><span>Reforma Tributária 2026</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/contabilidade-brasilia"><span>Contabilidade em Brasília</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/fornecedores-governo"><span>Fornecedores do Governo</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/simples-nacional"><span>Simples Nacional</span><span class="ct">→</span></a></li>
+            <li><a href="/tags/abertura-empresa"><span>Abertura de Empresa</span><span class="ct">→</span></a></li>
+            <li><a href="/posts"><span>Todos os artigos</span><span class="ct">→</span></a></li>
           </ul>
         </nav>
 
         <!-- Newsletter widget no rail -->
         <div class="sr-rail-bottom">
-          <h4>Sem enrolação, toda semana</h4>
-          <p>Marketing que mede carro vendido. Sem portal, sem CRM, sem bullshit.</p>
+          <h4>Toda semana na sua caixa</h4>
+          <p>Reforma Tributária, planejamento fiscal e contabilidade consultiva para empresas em Brasília.</p>
           <form id="rail-nl-form" onsubmit="submitRailNewsletter(event)">
             <div class="sr-field">
               <input type="text" name="nome" placeholder="Seu nome" autocomplete="given-name" required />
@@ -259,11 +263,17 @@ const metaPixelHtml = metaPixelId
     <script>
       import gsap from "gsap";
       import ScrollTrigger from "gsap/ScrollTrigger";
-      gsap.registerPlugin(ScrollTrigger);
+      import SplitText from "gsap/SplitText";
+      gsap.registerPlugin(ScrollTrigger, SplitText);
+
+      let _splits: any[] = [];
 
       function initShowroom() {
         // Kill stale triggers from previous page
         ScrollTrigger.getAll().forEach(t => t.kill());
+        // Revert stale SplitText DOM mutations (ViewTransition cleanup)
+        _splits.forEach(s => { try { s.revert(); } catch { /* noop */ } });
+        _splits = [];
 
         const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -368,6 +378,47 @@ const metaPixelHtml = metaPixelId
               });
             });
           }
+
+          // ── Eyebrow + brand-sub entrance (home) ─────────────────
+          const eyebrow = document.querySelector<HTMLElement>(".sr-eyebrow:first-of-type");
+          const brandSub = document.querySelector<HTMLElement>(".sr-brand-sub");
+          const headerEls = [eyebrow, brandSub].filter(Boolean) as HTMLElement[];
+          if (headerEls.length) {
+            gsap.from(headerEls, {
+              y: 14,
+              opacity: 0,
+              duration: 0.55,
+              stagger: 0.12,
+              ease: "power2.out",
+            });
+          }
+
+          // ── SplitText: post h1 word-by-word reveal ───────────────
+          const postH1 = document.querySelector<HTMLElement>(".sr-post-h1");
+          if (postH1) {
+            postH1.classList.add("sr-visible"); // cancel CSS fallback
+            gsap.set(postH1, { opacity: 1, y: 0 });
+            const split = new SplitText(postH1, { type: "words" });
+            _splits.push(split);
+            gsap.from(split.words, {
+              y: 20,
+              opacity: 0,
+              duration: 0.6,
+              stagger: 0.04,
+              ease: "power3.out",
+              onComplete() { split.revert(); },
+            });
+          }
+
+          // ── CutoutCard hover lift ────────────────────────────────
+          document.querySelectorAll<HTMLElement>(".sr-cutcard").forEach(card => {
+            card.addEventListener("mouseenter", () =>
+              gsap.to(card, { y: -4, duration: 0.2, ease: "power2.out", overwrite: "auto" })
+            );
+            card.addEventListener("mouseleave", () =>
+              gsap.to(card, { y: 0, duration: 0.3, ease: "power2.inOut", overwrite: "auto" })
+            );
+          });
         }
 
         // ── Rail newsletter ──────────────────────────────────────
@@ -385,13 +436,33 @@ const metaPixelHtml = metaPixelId
               body: JSON.stringify({ nome, email }),
             });
             const result = await resp.json().catch(() => ({}));
-            // GA4 (estudo de tracking wf_f26e1b8f-44a) -- achado ao vivo
-            // 2026-07-15: este é o form REAL renderizado (rail-nl-form), não
-            // o componente NewsletterForm.astro (nunca importado em lugar
-            // nenhum -- código morto). generate_lead nunca disparava aqui.
             if (resp.ok && (result as any).ok) {
+              // Ref único para dedup pixel ↔ CAPI (mesmo padrão de lead.ts)
+              let ref = "nl-" + Date.now().toString(36);
+              try {
+                const a = new Uint8Array(3);
+                crypto.getRandomValues(a);
+                ref += "-" + Array.from(a, b => b.toString(36)).join("").slice(0, 5);
+              } catch { /* noop */ }
+
+              // GA4 — recommended event (funil) + evento específico p/ Google Ads import
               const gtag = (window as any).gtag;
-              if (gtag) gtag("event", "generate_lead", { lead_source: "blog", lead_type: "newsletter" });
+              if (gtag) {
+                gtag("event", "generate_lead", { lead_source: "blog", lead_type: "newsletter", lead_ref: ref });
+                gtag("event", "blog_newsletter_signup", { lead_source: "blog", lead_ref: ref });
+              }
+
+              // Meta Pixel — Advanced Matching (email hashed) + Lead event
+              const fbq = (window as any).fbq;
+              const pid = (window as any).__fbpid;
+              if (fbq && pid) {
+                try {
+                  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(email.toLowerCase().trim()));
+                  const em = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+                  fbq("init", pid, { em });
+                } catch { /* noop — Advanced Matching opcional */ }
+                fbq("track", "Lead", { content_name: "blog-newsletter" }, { eventID: ref });
+              }
             }
           } catch {}
           form.reset();
@@ -408,6 +479,116 @@ const metaPixelHtml = metaPixelId
       } else {
         initShowroom();
       }
+    </script>
+
+    <!-- GA4 World-Class Events + Meta Pixel Contact — scroll_depth · time_on_page · article_read · outbound_click · whatsapp_click · share_click · search -->
+    <script is:inline define:vars={{ ga4Id: site.ga4Id, pixelId: site.metaPixelId ?? "" }}>
+      if (ga4Id) (function () {
+        var cleanups = [];
+
+        function fire(name, params) {
+          if (typeof window.gtag === "function")
+            window.gtag("event", name, Object.assign({ send_to: ga4Id }, params));
+        }
+
+        function teardown() { cleanups.forEach(function (fn) { fn(); }); cleanups = []; }
+
+        function init() {
+          teardown();
+          var path = location.pathname;
+          var isArt = /^\/posts\/[^\/]+/.test(path);
+          var ptype = isArt ? "article" : "other";
+          var slug = isArt ? ((path.match(/\/posts\/([^\/]+)/) || [])[1] || "") : "";
+
+          /* 1 — Scroll depth 25 / 50 / 75 / 100 % */
+          var milestones = [25, 50, 75, 100], hit = {};
+          function onScroll() {
+            var h = document.documentElement;
+            var max = h.scrollHeight - h.clientHeight;
+            if (max <= 0) return;
+            var pct = Math.round(window.scrollY / max * 100);
+            milestones.forEach(function (m) {
+              if (pct >= m && !hit[m]) { hit[m] = true; fire("scroll_depth", { percent_scrolled: m, page_type: ptype }); }
+            });
+          }
+          window.addEventListener("scroll", onScroll, { passive: true });
+          cleanups.push(function () { window.removeEventListener("scroll", onScroll); });
+
+          /* 2 — Time on page heartbeat every 60 s */
+          var elapsed = 0;
+          var tTimer = setInterval(function () {
+            elapsed += 60; fire("time_on_page", { seconds: elapsed, page_type: ptype });
+          }, 60000);
+          cleanups.push(function () { clearInterval(tTimer); });
+
+          /* 3 — Article read = 75 % scroll + 30 s dwell (articles only) */
+          if (isArt) {
+            var dwell = 0, past75 = false, didRead = false;
+            var arKey = "ar_" + slug;
+            function tick75() {
+              var h = document.documentElement;
+              var max = h.scrollHeight - h.clientHeight;
+              if (max > 0 && window.scrollY / max >= 0.75) past75 = true;
+            }
+            window.addEventListener("scroll", tick75, { passive: true });
+            cleanups.push(function () { window.removeEventListener("scroll", tick75); });
+            var dTimer = setInterval(function () {
+              dwell += 5;
+              if (past75 && dwell >= 30 && !didRead && !sessionStorage.getItem(arKey)) {
+                didRead = true; sessionStorage.setItem(arKey, "1");
+                fire("article_read", { article_slug: slug, dwell_seconds: dwell });
+              }
+            }, 5000);
+            cleanups.push(function () { clearInterval(dTimer); });
+          }
+
+          /* 4 — Outbound + WhatsApp clicks */
+          function onClickLink(e) {
+            var a = e.target && e.target.closest("a");
+            if (!a || !a.href) return;
+            try {
+              var u = new URL(a.href);
+              if (u.hostname === location.hostname) return;
+              if (/wa\.me|whatsapp\.com/.test(u.hostname)) {
+                fire("whatsapp_click", { page_type: ptype });
+                // Meta Pixel — Contact event para clique direto no WhatsApp
+                if (typeof window.fbq === "function" && pixelId) {
+                  window.fbq("track", "Contact", { content_name: "whatsapp-direto", page_type: ptype });
+                }
+              }
+              fire("outbound_click", { link_url: a.href, link_domain: u.hostname, link_text: (a.textContent || "").trim().slice(0, 100), page_type: ptype });
+            } catch (_) {}
+          }
+          document.addEventListener("click", onClickLink);
+          cleanups.push(function () { document.removeEventListener("click", onClickLink); });
+
+          /* 5 — Share clicks */
+          function onShare(e) {
+            var btn = e.target && (e.target.closest("[data-share]") || e.target.closest(".sr-share a"));
+            if (!btn) return;
+            fire("share_click", { method: (btn.dataset && btn.dataset.share) ? btn.dataset.share : "link", content_type: ptype });
+          }
+          document.addEventListener("click", onShare);
+          cleanups.push(function () { document.removeEventListener("click", onShare); });
+
+          /* 6 — Pagefind search queries */
+          function onSearch(e) {
+            var q = e.detail && (e.detail.query || e.detail.term);
+            if (q) fire("search", { search_term: q, search_source: "pagefind" });
+          }
+          document.addEventListener("pagefind:search", onSearch);
+          document.addEventListener("pagefind-search", onSearch);
+          cleanups.push(function () {
+            document.removeEventListener("pagefind:search", onSearch);
+            document.removeEventListener("pagefind-search", onSearch);
+          });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init, { once: true });
+        } else { init(); }
+        document.addEventListener("astro:page-load", init);
+      })();
     </script>
   </body>
 </html>

@@ -81,15 +81,15 @@ const row3Posts = mainPosts.filter(p => p.id !== featuredPost?.id).slice(2, 5);
 const NEW_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000;
 const isNew = (d: Date) => Date.now() - d.getTime() < NEW_THRESHOLD_MS;
 
-// Gradient por cluster de tags (sem foto = sem stock-photo genérico)
+// Gradient por cluster de tags
 const TAG_GRADIENT: Record<string, string> = {
-  "giro-de-estoque": "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 45%,#4a1060 100%)",
-  "carro-parado":    "linear-gradient(135deg,#0d1a22 0%,#0f2d3d 45%,#103a4a 100%)",
-  "lead-fantasma":   "linear-gradient(135deg,#220d1a 0%,#3d0f2a 45%,#5a1040 100%)",
-  "seminovos":       "linear-gradient(135deg,#1a1a0d 0%,#2d2d0f 45%,#3d3010 100%)",
-  "gestao":          "linear-gradient(135deg,#0d220d 0%,#0f3d0f 45%,#103a10 100%)",
-  "aquisicao":       "linear-gradient(135deg,#22100d 0%,#3d1f0f 45%,#4a2010 100%)",
-  default:           "linear-gradient(135deg,#13101a 0%,#1e1528 45%,#2a1940 100%)",
+  "reforma-tributaria":       "linear-gradient(135deg,#0d1a22 0%,#0f2d3d 45%,#103a4a 100%)",
+  "planejamento-tributario":  "linear-gradient(135deg,#0d220d 0%,#0f3d0f 45%,#103a10 100%)",
+  "fornecedor-governo":       "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 45%,#4a1060 100%)",
+  "contabilidade-consultiva": "linear-gradient(135deg,#22100d 0%,#3d1f0f 45%,#4a2010 100%)",
+  "holding":                  "linear-gradient(135deg,#1a1a0d 0%,#2d2d0f 45%,#3d3010 100%)",
+  "tributario":               "linear-gradient(135deg,#220d1a 0%,#3d0f2a 45%,#5a1040 100%)",
+  default:                    "linear-gradient(135deg,#13101a 0%,#1e1528 45%,#2a1940 100%)",
 };
 const getGrad = (tags: string[]) =>
   TAG_GRADIENT[tags[0]] ?? TAG_GRADIENT.default;
@@ -138,8 +138,18 @@ const getReadTime = (body: string | undefined) =>
   <main id="main-content" data-layout="index" data-home-path={homePath} class="sr-wrap">
 
     <!-- Eyebrow + Brand Statement -->
-    <p class="sr-eyebrow" style="margin-bottom:8px">Marketing automotivo · medido em carro vendido</p>
-    <p class="sr-brand-sub">Análises, benchmarks e estratégias para quem responde pelo resultado — não pela quantidade de leads gerados.</p>
+    <p class="sr-eyebrow" style="margin-bottom:8px">Contabilidade consultiva · para empresas em Brasília</p>
+    <p class="sr-brand-sub">Planejamento tributário, Reforma Tributária 2026 e gestão fiscal para quem precisa de número — não de generalidade.</p>
+
+    <!-- ── Filtro por cluster ── -->
+    <nav class="sr-filter-tabs" aria-label="Filtrar por tema">
+      <a href="/" class="sr-ftab" data-active="">Todos</a>
+      <a href="/tags/reforma-tributaria" class="sr-ftab">Reforma Tributária</a>
+      <a href="/tags/planejamento-tributario" class="sr-ftab">Planejamento Fiscal</a>
+      <a href="/tags/holding" class="sr-ftab">Holdings</a>
+      <a href="/tags/simples-nacional" class="sr-ftab">Simples Nacional</a>
+      <a href="/tags/abertura-empresa" class="sr-ftab">Abertura de Empresa</a>
+    </nav>
 
     <!-- ── HERO (post em destaque) ── -->
     {featuredPost && (
@@ -180,7 +190,7 @@ const getReadTime = (body: string | undefined) =>
     {sortedPosts.length > 1 && (
       <>
         <div class="sr-section-head">
-          <h2>Últimas análises</h2>
+          <h2>Últimas publicações</h2>
           <a href="/posts">Ver todas <span aria-hidden="true">→</span></a>
         </div>
 
@@ -232,11 +242,11 @@ const getReadTime = (body: string | undefined) =>
     <section class="sr-news-fold sr-reveal" aria-labelledby="nl-heading">
       <p class="sr-eyebrow">Newsletter</p>
       <h2 id="nl-heading">
-        Toda semana: a análise que o <em>portal não te conta</em>
+        Toda semana: o que muda na <em>sua carga tributária</em>
       </h2>
       <p>
-        Marketing automotivo sem enrolação. Sem portal, sem CRM, sem bullshit.
-        Para dono e gerente de revenda.
+        Reforma Tributária, planejamento fiscal e contabilidade consultiva.
+        Direto para o sócio e gestor financeiro que toma decisão.
       </p>
       <form id="home-nl-form" onsubmit="submitHomeNewsletter(event)" style="display:flex;gap:10px;width:min(520px,100%)">
         <div class="sr-field" style="flex:1">
@@ -258,7 +268,7 @@ const getReadTime = (body: string | undefined) =>
         <span>·</span>
         <span>Cancelar a qualquer momento</span>
         <span>·</span>
-        <span><b>blog.dimus.com.br</b></span>
+        <span><b>blog.monumentalcontabilidade.com.br</b></span>
       </div>
     </section>
 
