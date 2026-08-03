@@ -63,12 +63,18 @@ importers:
       '@astrojs/markdown-remark':
         specifier: ^7.2.0
         version: 7.2.0
+      '@esbuild/darwin-x64':
+        specifier: ^0.27.7
+        version: 0.27.7
       '@pagefind/default-ui':
         specifier: ^1.5.2
         version: 1.5.2
       '@shikijs/transformers':
         specifier: ^4.1.0
         version: 4.1.0
+      '@tailwindcss/oxide-darwin-x64':
+        specifier: ^4.3.3
+        version: 4.3.3
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.3.0)
@@ -84,6 +90,9 @@ importers:
       eslint-plugin-astro:
         specifier: ^1.7.0
         version: 1.7.0(eslint@10.4.1(jiti@2.6.1))
+      lightningcss-darwin-x64:
+        specifier: ^1.32.0
+        version: 1.32.0
       pagefind:
         specifier: ^1.5.2
         version: 1.5.2
@@ -866,6 +875,12 @@ packages:
 
   '@tailwindcss/oxide-darwin-x64@4.3.0':
     resolution: {integrity: sha512-N6CUmu4a6bKVADfw77p+iw6Yd9Q3OBhe0veaDX+QazfuVYlQsHfDgxBrsjQ/IW+zywL8mTrNd0SdJT/zgtvMdA==}
+    engines: {node: '>= 20'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@tailwindcss/oxide-darwin-x64@4.3.3':
+    resolution: {integrity: sha512-fAeUqfV5ndhxRwai8cXGzdLvul9utWOmeTkv69unv4ZXixjn61Z+p9lCWdwOwA3TYboG3BwdVuN/RDjhBRl0mw==}
     engines: {node: '>= 20'}
     cpu: [x64]
     os: [darwin]
@@ -3110,8 +3125,7 @@ snapshots:
   '@esbuild/darwin-arm64@0.27.7':
     optional: true
 
-  '@esbuild/darwin-x64@0.27.7':
-    optional: true
+  '@esbuild/darwin-x64@0.27.7': {}
 
   '@esbuild/freebsd-arm64@0.27.7':
     optional: true
@@ -3559,6 +3573,8 @@ snapshots:
 
   '@tailwindcss/oxide-darwin-x64@4.3.0':
     optional: true
+
+  '@tailwindcss/oxide-darwin-x64@4.3.3': {}
 
   '@tailwindcss/oxide-freebsd-x64@4.3.0':
     optional: true
@@ -4647,8 +4663,7 @@ snapshots:
   lightningcss-darwin-arm64@1.32.0:
     optional: true
 
-  lightningcss-darwin-x64@1.32.0:
-    optional: true
+  lightningcss-darwin-x64@1.32.0: {}
 
   lightningcss-freebsd-x64@1.32.0:
     optional: true
