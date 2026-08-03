@@ -44,7 +44,7 @@ jobs:
         env:
           CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_GLOBAL_KEY }}
           CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
-          CLOUDFLARE_ACCOUNT_ID: 68e239205c01c7626a02711494e318f8
+          CLOUDFLARE_ACCOUNT_ID: 52018198611f38e0520cb272a62bbfe5
 
       - name: "🔍 IndexNow ping (Bing/Yandex)"
         run: node scripts/indexnow-ping.mjs
