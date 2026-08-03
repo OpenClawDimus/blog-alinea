@@ -1,0 +1,28 @@
+{
+  "slug": "lucros-exterior-lei-14754-empresas-brasil",
+  "pipeline_version": "1.0",
+  "audit_date": "2026-07-30T20:30:00-03:00",
+  "steps": {
+    "keyword_research": "done",
+    "title_meta": "done",
+    "outline": "done",
+    "answer_capsule": "done",
+    "body_copy": "done",
+    "faq_block": "done",
+    "lead_form": "done",
+    "dimus_help": "done",
+    "geo_seed": "done",
+    "cta_block": "done",
+    "author_bio": "done",
+    "internal_links": "done"
+  },
+  "gates": {
+    "composite_gte_95": true,
+    "geo_gte_90": true,
+    "aeo_eq_100": true,
+    "gate_covers_violations": 0
+  },
+  "content_type": "informational",
+  "target_audience": "CFO/sócio empresa brasileira com controlada/coligada no exterior",
+  "notes": "Wave 2 Post 8. Lei 14.754/2023: tributação anual obrigatória desde jan/2024. Tabela 8D antes/depois. Exemplo Cayman R$1M = R$340k IRPJ+CSLL. Crédito imposto exterior. Jurisdições baixa tributação <17%. 4 etapas declaração ECF. 3.977 palavras."
+}

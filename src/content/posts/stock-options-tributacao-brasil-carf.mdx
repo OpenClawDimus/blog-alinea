@@ -1,0 +1,229 @@
+---
+title: "Stock Options no Brasil: Tributação Após as Decisões do CARF"
+description: "O CARF pacificou em 2024 que stock options com onerosidade são mercado — tributação só no ganho de capital. Veja o que isso muda para empresa e para o beneficiário, e como estruturar corretamente."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-30T13:00:00-03:00
+tags:
+  - "stock-options"
+  - "remuneracao-variavel"
+  - "imposto-de-renda"
+  - "contabilidade-consultiva"
+  - "planejamento-tributario"
+featured: false
+coverImage: "covers/cover-stock-options-brasil.jpg"
+ogImage: "/og/stock-options-brasil.png"
+faq:
+  - q: "Stock options são tributados como salário ou como ganho de capital?"
+    a: "Depende das condições do plano. O CARF pacificou em 2024 (Acórdão 9202-010.864 e outros) que stock options com características mercantis — especialmente a onerosidade (o beneficiário paga para exercer a opção) — são tributadas como ganho de capital no momento da venda das ações, não como salário. A alíquota de ganho de capital é de 15% a 22,5% (tabela progressiva dependendo do valor), retida pelo contribuinte no GCAP. Se o plano não tiver onerosidade real ou tiver restrições que o assemelhem a salário (ex: vesting muito curto, exercício automático, cobertura de todo tipo de saída), a Receita pode classificá-lo como remuneração — com IRRF e INSS."
+  - q: "O que caracteriza um plano de stock options como 'mercantil' e não como salário?"
+    a: "Os critérios do CARF para plano mercantil são: (1) Onerosidade: o beneficiário paga um preço de exercício (strike price) para adquirir as ações — geralmente o valor de mercado na data da concessão ou com desconto de até 30%; (2) Voluntariedade: o beneficiário pode ou não exercer a opção; (3) Risco: o beneficiário pode perder o valor pago pelo prêmio se as ações não se valorizarem; (4) Não garantia de resultado: a empresa não garante ao beneficiário qualquer ganho mínimo. Planos com exercício automático, sem pagamento do strike, ou que garantem benefício mínimo têm mais risco de serem requalificados como remuneração pela Receita."
+  - q: "A empresa precisa pagar INSS sobre stock options?"
+    a: "Para planos com características mercantis (CARF 2024), não há incidência de INSS patronal nem contribuição do beneficiário sobre o ganho de capital na venda. O risco existe apenas se o plano for requalificado como remuneração — nesse caso, toda a diferença entre o strike price pago e o valor de mercado no exercício seria base de INSS e IRRF. Para planos mal estruturados ou sem onerosidade, o passivo potencial de INSS é significativo: 20% patronal + 11% (ou mais) do contribuinte sobre o valor total das ações."
+  - q: "Como o beneficiário declara stock options no Imposto de Renda?"
+    a: "O beneficiário de stock options com tratamento mercantil declara em três momentos: (1) No IR anual, informa a opção de compra como bem (direito) pelo valor pago na concessão do prêmio — campo 'outros bens e direitos'; (2) No exercício da opção (compra das ações): informa as ações adquiridas pelo custo total de aquisição (valor pago na concessão + strike price pago no exercício); (3) Na venda das ações: calcula o ganho de capital como diferença entre preço de venda e custo de aquisição, preenche o GCAP (Ganhos de Capital) e paga DARF até o último dia útil do mês seguinte à venda. Alíquota: 15% para ganhos até R$ 5M, 17,5% de R$ 5M a R$ 10M, 20% de R$ 10M a R$ 30M, 22,5% acima de R$ 30M."
+  - q: "Startups e empresas de capital fechado podem ter planos de stock options?"
+    a: "Sim. A Lei 14.195/2021 facilitou o uso de opções de compra de ações em empresas não listadas — antes o instrumento ficava restrito às S.A. abertas. Hoje sociedades limitadas (Ltda.) também podem ter 'Planos de Opção de Compra de Participação' com regulamentação societária adequada. Para Ltdas., a prática é criar cotas preferenciais ou prever a conversão em S.A. antes do exercício. O tratamento tributário segue a mesma lógica das ações desde que o plano tenha as características mercantis: onerosidade, voluntariedade e risco. A SAF (Sociedade Anônima Fechada Simplificada, criada pela Lei 14.195/2021) também é adequada para esse tipo de plano."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule
+  question="Stock options no Brasil são tributados como salário ou como ganho de capital após as decisões do CARF em 2024?"
+  answer="O CARF pacificou em 2024, por meio do Acórdão 9202-010.864 e decisões correlatas do Plenário, que planos de stock options com onerosidade real (o beneficiário paga o strike price para exercer a opção) têm natureza mercantil — não remuneratória. A consequência prática: o ganho é tributado como ganho de capital no momento da venda das ações, com alíquota de 15% a 22,5%, pago pelo próprio beneficiário via DARF/GCAP. Não há IRRF na fonte nem INSS patronal. Para a empresa, isso representa redução significativa de passivo trabalhista e previdenciário sobre planos de retenção de talentos. A ressalva é que planos mal estruturados — sem onerosidade real, com exercício automático ou sem risco efetivo para o beneficiário — continuam sujeitos à requalificação como remuneração pela Receita Federal."
+/>
+
+## A virada de 2024 no CARF: o que mudou na prática
+
+Por mais de uma década, a tributação de stock options no Brasil foi um campo de incerteza regulatória. A Receita Federal, em suas Soluções de Consulta, entendia que a diferença entre o preço de exercício (strike price) e o valor de mercado das ações configurava rendimento do trabalho — e, portanto, deveria ser tributada como salário, com IRRF na tabela progressiva e incidência de INSS.
+
+Esse posicionamento criava dois problemas práticos. O primeiro era de caixa: o beneficiário poderia ter de pagar IRRF e INSS no momento do exercício da opção, antes de vender as ações — ou seja, desembolso tributário sobre ganho ainda não realizado. O segundo era de passivo corporativo: a empresa respondia solidariamente pelo INSS não retido, o que transformava planos de retenção de talentos em risco fiscal latente.
+
+O CARF começou a divergir da Receita Federal em julgamentos de 2020 a 2022 (especialmente nos Acórdãos 9202-006.259 e 9202-007.540), reconhecendo que planos com características mercantis não deveriam ser equiparados a salário. A pacificação veio em 2024, com o Acórdão 9202-010.864 e a consolidação da tese pelo Plenário: stock options com onerosidade são contrato mercantil, o ganho é de capital, e a tributação ocorre apenas na venda.
+
+O que isso significa, concretamente, para uma empresa que estrutura um plano de retenção em 2026: se o plano tiver as características corretas, o beneficiário tributa o ganho de capital na venda das ações — e não antes, não via folha de pagamento, e sem INSS.
+
+---
+
+## Salário ou ganho de capital — a distinção que custa caro
+
+A diferença entre classificar stock options como remuneração ou como ganho de capital não é apenas semântica. Para uma empresa com 20 executivos em um plano de opções de R$ 2 milhões cada, a diferença de passivo pode ultrapassar R$ 8 milhões em INSS e IRRF adicionais.
+
+A tabela abaixo resume o impacto em cada cenário:
+
+| Classificação | Momento de tributação | Alíquota IR | INSS beneficiário | INSS patronal |
+|---|---|---|---|---|
+| **Remuneração (salário)** | Exercício da opção | Até 27,5% (tabela prog.) | Até 14% | 20% |
+| **Ganho de capital (mercantil)** | Venda das ações | 15% a 22,5% | Não incide | Não incide |
+
+Para além da alíquota, há a diferença no timing: na classificação como remuneração, o beneficiário paga imposto antes de vender as ações — muitas vezes sem liquidez para fazê-lo. Na classificação mercantil, o imposto é pago apenas quando há realização do ganho, ou seja, após a venda.
+
+A pergunta decisiva para qualquer plano de stock options é, portanto: as características do plano sustentam a tese mercantil perante a Receita Federal e, em eventual contencioso, perante o CARF?
+
+---
+
+## Os critérios do CARF para plano mercantil
+
+O CARF não criou critérios novos do zero — consolidou um conjunto de características que, quando presentes, afastam a equiparação com remuneração. O risco de requalificação aumenta à medida que qualquer dessas características está ausente.
+
+| Critério | Como deve ser | Sinal de risco |
+|---|---|---|
+| **Onerosidade** | Beneficiário paga strike price para exercer a opção | Exercício gratuito ou simbólico |
+| **Voluntariedade** | Beneficiário pode escolher não exercer | Exercício automático compulsório |
+| **Risco financeiro** | Beneficiário pode perder o valor pago pelo prêmio | Empresa garante recompra do prêmio |
+| **Ausência de garantia de ganho** | Não há ganho mínimo garantido | Empresa garante valor mínimo na venda |
+| **Vesting razoável** | Período de carência compatível com retenção (2-5 anos) | Vesting de 30-90 dias ou automático na saída |
+
+**Onerosidade** é o critério central. O CARF exige que o beneficiário efetivamente pague o preço de exercício — não é suficiente que o plano preveja um strike price no documento se, na prática, o exercício é financiado pela própria empresa sem cobrança real.
+
+**Voluntariedade** afasta a natureza compulsória de salário. O beneficiário de um plano mercantil aceita o risco de não exercer a opção — seja porque o prazo venceu, seja porque as ações não se valorizaram o suficiente.
+
+**Risco financeiro** é a contrapartida da voluntariedade: quem paga pelo prêmio (o direito de comprar no futuro) pode perder esse valor. Essa assimetria é típica de mercado, não de folha de pagamento.
+
+---
+
+## Quanto paga o beneficiário — a tabela de ganho de capital
+
+Para planos com tratamento mercantil, o beneficiário tributa o ganho de capital na venda das ações. A base de cálculo é a diferença entre o valor de venda e o custo de aquisição (strike price pago + valor pago pelo prêmio na concessão).
+
+As alíquotas aplicáveis são definidas pelo art. 21 da Lei 8.981/95 com a redação da Lei 13.259/2016:
+
+| Faixa de ganho de capital | Alíquota |
+|---|---|
+| Até R$ 5.000.000 | 15% |
+| De R$ 5.000.001 a R$ 10.000.000 | 17,5% |
+| De R$ 10.000.001 a R$ 30.000.000 | 20% |
+| Acima de R$ 30.000.000 | 22,5% |
+
+O pagamento é feito via DARF, código 4600, até o último dia útil do mês seguinte ao da alienação das ações. O cálculo é feito no GCAP (programa de Ganhos de Capital da Receita Federal) e o valor apurado alimenta a Declaração de Ajuste Anual do ano seguinte.
+
+Um ponto relevante para [planejamento tributário de profissionais liberais](/posts/planejamento-tributario-profissional-liberal-brasilia) e sócios de empresas: o ganho de capital de stock options não entra na tabela progressiva do IR (que vai até 27,5%). As alíquotas de 15% a 22,5% são, para a maioria dos casos, substancialmente menores do que a alíquota marginal de um executivo de alta renda na tributação de salário.
+
+---
+
+## E a empresa — INSS e obrigações acessórias
+
+Para planos com características mercantis reconhecidas pelo CARF, a empresa não tem obrigação de recolher INSS patronal (20%) nem de reter IRRF na folha sobre o ganho do beneficiário. Essa é a vantagem competitiva do modelo: o custo do plano de retenção não se transforma em passivo previdenciário imediato.
+
+As obrigações acessórias da empresa em relação ao plano são:
+
+**1. DIRF:** a empresa deve informar o plano de opções na DIRF quando houver pagamento de prêmio ou bônus em dinheiro vinculado ao plano. Para planos puramente de equity (sem componente em dinheiro), a DIRF não captura o evento — o beneficiário é responsável pela tributação individual.
+
+**2. Notas explicativas e LALUR:** a concessão de opções afeta o patrimônio líquido contábil da empresa. As regras do CPC 10 (R1) sobre pagamento baseado em ações exigem o reconhecimento do custo do plano ao longo do período de vesting, com contrapartida no patrimônio líquido. Essa despesa contábil não é dedutível para fins de IRPJ/CSLL até o exercício das opções.
+
+**3. Documentação do plano:** o plano deve estar formalizado em contrato escrito, aprovado pelo conselho de administração (ou pelos sócios, no caso de Ltda.), com todos os termos do strike price, período de vesting, condições de exercício e cenários de saída. A documentação é a primeira linha de defesa em caso de questionamento da Receita Federal.
+
+O risco de [distribuição disfarçada de lucros](/posts/distribuicao-disfarcada-lucros-risco-fiscal) é tangencial, mas relevante: se o plano de opções for usado para beneficiar sócios em condições que não se aplicam a executivos não-sócios, a Receita pode questionar se o benefício tem natureza mercantil ou é, na prática, uma forma de distribuição de lucro com tratamento tributário mais favorável.
+
+---
+
+## Como o beneficiário declara no IR — os 3 momentos
+
+A declaração de stock options no IRPF de um beneficiário com plano mercantil acontece em três momentos distintos, cada um com campos específicos na declaração:
+
+**Momento 1 — Concessão do prêmio (direito de comprar)**
+
+Quando o beneficiário recebe o direito de comprar as ações no futuro (a opção em si), deve informar esse direito na ficha "Bens e Direitos" da declaração, com o código correspondente a "outros direitos", pelo valor pago pelo prêmio (caso tenha havido pagamento) ou R$ 0,00 se o prêmio foi gratuito. O simples recebimento do direito não é fato gerador de imposto.
+
+**Momento 2 — Exercício da opção (compra das ações)**
+
+Quando o beneficiário exerce a opção e adquire as ações, substitui o bem declarado: retira o "direito de compra" da ficha de bens e inclui as ações adquiridas, com custo de aquisição igual ao strike price efetivamente pago mais o valor do prêmio pago na concessão. Esse custo de aquisição será a base para calcular o ganho de capital na venda futura.
+
+**Momento 3 — Venda das ações**
+
+Na venda, o beneficiário calcula o ganho de capital (preço de venda menos custo de aquisição), preenche o GCAP, e paga o DARF até o último dia útil do mês seguinte à venda. O valor pago de DARF entra na declaração de ajuste anual como imposto pago. Se o beneficiário vender em parcelas ao longo do ano, cada venda gera um DARF separado no mês correspondente.
+
+---
+
+## Startups e empresas fechadas — como ter um plano correto
+
+A Lei 14.195/2021 ampliou o acesso a planos de opção de compra para empresas que não são S.A. abertas. Hoje, tanto sociedades limitadas (Ltdas.) quanto a Sociedade Anônima Fechada Simplificada (SAF) — também criada pela Lei 14.195/2021 — podem estruturar planos de opção de compra de participação com validade jurídica e tratamento tributário mercantil.
+
+Para uma startup em fase de crescimento, as opções práticas são:
+
+**Sociedade Limitada com Acordo de Sócios:** a Ltda. pode prever em seu contrato social e num acordo de sócios a concessão de opções de compra de quotas, com todas as características mercantis. A limitação é a liquidez: quotas de Ltda. têm restrições à transferência, e o beneficiário pode ter dificuldade para vender no futuro sem um evento de liquidez claro (venda da empresa, fusão ou conversão em S.A.).
+
+**SAF (Sociedade Anônima Fechada Simplificada):** criada pela Lei 14.195/2021, a SAF dispensa a publicação em jornais e tem estrutura simplificada de governança, mantendo a flexibilidade das ações. É a forma jurídica mais adequada para startups que querem emitir ações para um plano de opções sem os custos operacionais de uma S.A. tradicional.
+
+**Conversão planejada para S.A.:** algumas startups mantêm a estrutura de Ltda. durante o crescimento e preveem contratualmente a conversão para S.A. antes do exercício das opções — o que simplifica a liquidez no evento de exit.
+
+Para empresas que já possuem [holding familiar](/posts/holding-familiar-brasilia-planejamento-patrimonial) ou estrutura societária complexa, a introdução de um plano de stock options exige análise cuidadosa de como as novas ações ou quotas se inserem na estrutura existente — especialmente para evitar conflito com pactos de não diluição ou cláusulas de preferência já existentes.
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, com foco em Planejamento Tributário e Contabilidade Consultiva para empresas de médio porte, startups e grupos empresariais. Sob responsabilidade técnica de Jocivane Brito (tributarista CRC-DF), o escritório acompanha a estruturação e revisão de planos de remuneração variável — incluindo stock options — com análise de enquadramento tributário e conformidade com as decisões do CARF. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com o escritório →</a>
+</aside>
+
+<LeadForm
+  id="blog-stock-options-form"
+  eyebrow="Sua empresa tem ou planeja ter um plano de stock options?"
+  title="Análise tributária do plano de opções — antes de estruturar ou após a primeira autuação"
+  sub="A Monumental Contabilidade analisa o enquadramento do seu plano de stock options à luz das decisões do CARF de 2024, identifica riscos de requalificação como remuneração e apresenta as adequações necessárias para garantir o tratamento mercantil."
+  cta="Solicitar análise do plano →"
+/>
+
+<DimusHelp
+  title="Como a Monumental Contabilidade estrutura planos de stock options com segurança tributária"
+  sub="Da revisão do documento do plano à orientação de declaração para cada beneficiário — com base nas decisões consolidadas do CARF."
+  items={[
+    "Revisão do documento do plano de opções quanto aos cinco critérios mercantis do CARF (onerosidade, voluntariedade, risco, ausência de garantia, vesting adequado)",
+    "Análise do enquadramento tributário e estimativa de passivo em caso de requalificação como remuneração",
+    "Orientação para declaração no IRPF do beneficiário nos três momentos: concessão, exercício e venda",
+    "Estruturação societária para startups e empresas fechadas que querem implementar planos mercantis (SAF, Ltda. com acordo de sócios, conversão para S.A.)",
+  ]}
+/>
+
+---
+
+## Os riscos de planos mal estruturados — o que a Receita questiona
+
+A tese do CARF de 2024 não é uma carta branca para qualquer plano rotulado como "stock options". A Receita Federal mantém a prerrogativa de requalificar como remuneração todo plano que, na prática, não apresente as características mercantis — independentemente do nome dado no contrato.
+
+Os vetores de risco mais frequentes em planos mal estruturados são:
+
+**Strike price simbólico ou zero:** quando o preço de exercício é R$ 0,01 ou equivale a menos de 30% do valor de mercado das ações na data da concessão, a Receita tende a questionar a onerosidade real do plano. O argumento fiscal é que o beneficiário não assumiu risco econômico — recebeu um benefício garantido.
+
+**Exercício automático ou compulsório:** planos que exercem as opções automaticamente ao final do vesting, sem a escolha efetiva do beneficiário de exercer ou não, aproximam-se estruturalmente de um bônus diferido — e são mais vulneráveis à requalificação como remuneração.
+
+**Cobertura ampla de cenários de saída:** quando o plano garante o exercício das opções (ou o pagamento do valor equivalente em dinheiro) mesmo em caso de saída voluntária do empregado, demissão sem justa causa ou qualquer outro cenário de desligamento, a Receita interpreta o benefício como componente de pacote de rescisão — remuneração, portanto.
+
+**Phantom stocks disfarçadas de opções:** as "opções fantasmas" (phantom stocks) são instrumentos distintos das stock options reais — são gratificações em dinheiro indexadas ao valor da empresa, sem emissão de ações. O tratamento tributário é de remuneração (IRRF e INSS), independentemente do nome dado no contrato. Empresas que rotulam phantom stocks como "stock options" para tentar capturar o tratamento mercantil incorrem em risco significativo de autuação.
+
+Para empresas que já têm planos em vigor e querem verificar a exposição atual, a lógica é similar à de uma [auditoria de enquadramento tributário para escolha entre Simples Nacional e Lucro Presumido](/posts/simples-nacional-ou-lucro-presumido-como-escolher): o diagnóstico preventivo antes de um questionamento formal é sempre menos custoso do que a defesa pós-autuação.
+
+---
+
+## Perguntas sobre stock options e tributação no Brasil
+
+### Stock options são tributados como salário ou como ganho de capital?
+
+Depende das condições do plano. O CARF pacificou em 2024 (Acórdão 9202-010.864 e outros) que stock options com características mercantis — especialmente a onerosidade — são tributadas como ganho de capital no momento da venda das ações, não como salário. A alíquota de ganho de capital é de 15% a 22,5% (tabela progressiva dependendo do valor), retida pelo próprio contribuinte no GCAP. Se o plano não tiver onerosidade real ou apresentar características que o aproximem de salário diferido — exercício automático, sem risco para o beneficiário, garantia de ganho mínimo — a Receita pode classificá-lo como remuneração, com IRRF e INSS.
+
+### O que caracteriza um plano de stock options como mercantil e não como salário?
+
+Os critérios do CARF para plano mercantil são: (1) Onerosidade: o beneficiário paga um preço de exercício (strike price) para adquirir as ações — geralmente o valor de mercado na data da concessão ou com desconto de até 30%; (2) Voluntariedade: o beneficiário pode ou não exercer a opção; (3) Risco: o beneficiário pode perder o valor pago pelo prêmio se as ações não se valorizarem; (4) Ausência de garantia de resultado: a empresa não garante ao beneficiário qualquer ganho mínimo; (5) Vesting razoável: período de carência compatível com objetivo de retenção de longo prazo. Planos com exercício automático, sem pagamento real do strike, ou que garantem benefício mínimo têm mais risco de requalificação.
+
+### A empresa precisa pagar INSS sobre stock options?
+
+Para planos com características mercantis (CARF 2024), não há incidência de INSS patronal (20%) nem contribuição do beneficiário sobre o ganho na venda das ações. O risco existe apenas se o plano for requalificado como remuneração — nesse caso, a diferença entre o strike price e o valor de mercado no exercício seria base de INSS e IRRF. Para planos mal estruturados ou sem onerosidade real, o passivo potencial é expressivo: 20% de INSS patronal mais a contribuição do beneficiário sobre o valor total das ações adquiridas.
+
+### Como o beneficiário declara stock options no Imposto de Renda?
+
+O beneficiário de stock options com tratamento mercantil declara em três momentos: (1) Na concessão do prêmio: informa a opção de compra como bem (direito) pelo valor pago, na ficha "Bens e Direitos"; (2) No exercício da opção: registra as ações adquiridas pelo custo total (prêmio + strike price pago); (3) Na venda das ações: calcula o ganho de capital via GCAP e paga DARF (código 4600) até o último dia útil do mês seguinte à venda. As alíquotas são 15% para ganhos até R$ 5M, 17,5% de R$ 5M a R$ 10M, 20% de R$ 10M a R$ 30M, e 22,5% acima de R$ 30M.
+
+### Startups e empresas de capital fechado podem ter planos de stock options?
+
+Sim. A Lei 14.195/2021 ampliou o acesso a planos de opção de compra para empresas não listadas. Sociedades limitadas (Ltda.) podem ter "Planos de Opção de Compra de Participação" com regulamentação societária adequada — geralmente via acordo de sócios. A Sociedade Anônima Fechada Simplificada (SAF), também criada pela Lei 14.195/2021, é especialmente adequada para startups que querem emitir ações para um plano de opções sem os custos operacionais de uma S.A. tradicional. O tratamento tributário mercantil aplica-se desde que o plano tenha onerosidade, voluntariedade e risco — independentemente do tipo societário da empresa.
+
+<aside class="cta-block" style="background:#1A3C5E; color:#fff; padding:2rem; border-radius:6px; margin:2.5rem 0; text-align:center;">
+  <h3 style="color:#fff; margin-top:0;">Estruture ou revise seu plano de stock options com segurança tributária</h3>
+  <p>As decisões do CARF de 2024 abriram uma janela importante para empresas que querem usar stock options como ferramenta de retenção sem o passivo previdenciário que a requalificação como salário impõe. A Monumental Contabilidade analisa o enquadramento do seu plano e orienta a estruturação correta.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block; background:#25D366; color:#fff; padding:0.75rem 1.75rem; border-radius:4px; font-weight:bold; text-decoration:none; margin-top:0.5rem;">Solicitar análise do plano →</a>
+</aside>
+
+<aside class="author-bio" style="background:#F8F9FA; border-radius:6px; padding:1.25rem 1.5rem; margin:2rem 0;">
+  <strong>Jocivane Brito</strong> — Tributarista, CRC-DF | Monumental Contabilidade<br />
+  Tributarista com registro no CRC-DF e responsável técnica da Monumental Contabilidade, Jocivane Brito é especializada em planejamento tributário e contabilidade consultiva para empresas de médio porte e grupos empresariais em Brasília-DF. Acompanha a jurisprudência do CARF e aplica as decisões recentes na estruturação de planos de remuneração variável — incluindo stock options — para clientes que buscam segurança tributária na atração e retenção de executivos.
+</aside>

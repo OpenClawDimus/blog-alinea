@@ -33,24 +33,24 @@ const postSlug =
 
 const variantCopy = {
   estoque: {
-    title: "Como a Dimus destrava o giro do seu estoque",
-    body: "A gente identifica a unidade que está travando seu caixa e dispara campanha dedicada por veículo — tráfego hiperlocal por modelo + atendimento instantâneo no WhatsApp. O foco não é gerar lead: é girar o carro certo antes do 60º dia, pelo preço certo, não pelo mais baixo.",
+    title: "Como a Monumental estrutura o planejamento tributário da sua empresa",
+    body: "Analisamos o enquadramento atual — Simples, Presumido ou Real — e simulamos com os seus números reais qual regime gera menor carga fiscal. O foco não é relatório: é economia documentada e segura, dentro da lei.",
   },
   atribuicao: {
-    title: "Como a Dimus mede o carro vendido (não o lead)",
-    body: "Rastreamos cada real de mídia até a chave na mão do cliente: Pixel + CAPI + atribuição ponta-a-ponta num painel que mostra custo-por-carro-vendido por canal e criativo. Você para de pagar relatório de CTR e passa a ver o que vende.",
+    title: "Como a Monumental calcula sua economia tributária real",
+    body: "Mapeamos toda a estrutura fiscal da empresa: regime, pró-labore, distribuição de lucros e créditos recuperáveis. O resultado é um número concreto de quanto você pode deixar de pagar — antes de qualquer mudança.",
   },
   portal: {
-    title: "Como a Dimus tira você da prateleira do portal",
-    body: "Montamos seu canal de aquisição próprio (criativo + tráfego hiperlocal + rastreio) para você parar de comprar o mesmo lead que a loja do lado e de pagar por lead-fantasma. Neutro de fornecedor: não vendemos portal nem CRM, então falamos a verdade.",
+    title: "Como a Monumental posiciona sua empresa para o novo sistema tributário",
+    body: "A Reforma Tributária 2026 (IBS, CBS, Split Payment) muda o fluxo de caixa de toda empresa. Mapeamos o impacto no seu negócio e ajustamos o planejamento antes que a mudança chegue na nota fiscal.",
   },
   atendimento: {
-    title: "Como a Dimus mata o lead que esfria dentro da loja",
-    body: "Acoplamos um loop de WhatsApp + IA que faz o primeiro contato em segundos e cadencia o follow-up (D+1, D+3) automático. A métrica que cobramos é tempo-até-1º-contato e lead→visita→venda — não volume de contato.",
+    title: "Como a Monumental atende empresas em Brasília-DF",
+    body: "Contabilidade consultiva presencial e digital para empresas no DF. Cada cliente tem um contador dedicado com acesso direto — não um atendente. Da abertura à gestão mensal, com foco em redução legal de carga tributária.",
   },
   default: {
-    title: "Como a Dimus ajuda sua revenda",
-    body: "Marketing que mede carro vendido, não lead. Montamos seu canal próprio, rastreamos cada real até a venda e acoplamos atendimento por WhatsApp + IA — para você girar estoque e parar de depender do portal. Neutro de fornecedor: não vendemos portal nem CRM.",
+    title: "Como a Monumental Contabilidade pode ajudar sua empresa",
+    body: "Contabilidade consultiva em Brasília-DF: planejamento tributário, escolha de regime, abertura de empresa e gestão mensal com foco em reduzir legalmente a carga fiscal. Sem robô, com contador dedicado.",
   },
 }[variant];
 
@@ -67,11 +67,11 @@ const copy = {
 const gateCluster = variant === "default" ? "geral" : variant;
 const gateOrigin = "blog-gate-" + gateCluster;
 const intent =
-  "Vim do blog e quero entender como a Dimus pode ajudar meu negócio a vender mais.";
+  "Vim do blog da Monumental e quero entender como estruturar melhor o planejamento tributário da minha empresa.";
 ---
 
 <aside class="dimus-help not-prose" data-cluster={cluster}>
-  <p class="dh-eyebrow">Dimus · marketing que mede carro vendido</p>
+  <p class="dh-eyebrow">Monumental Contabilidade · Brasília-DF</p>
   <h3 class="dh-title">{copy.title}</h3>
   <p class="dh-body">{copy.body}</p>
   <form
@@ -99,7 +99,7 @@ const intent =
       autocomplete="tel"
       required
     />
-    <button type="submit" class="dh-cta">Falar com a Dimus →</button>
+    <button type="submit" class="dh-cta">Falar com a Monumental →</button>
   </form>
   <p class="dh-fine">Deixe seu contato — retornamos no WhatsApp. Sem robô.</p>
 </aside>

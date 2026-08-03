@@ -1,0 +1,284 @@
+---
+title: "Lucro Real ou Lucro Presumido: Quando Vale Migrar de Regime?"
+description: "Quando a mudança do Lucro Presumido para o Lucro Real compensa — e quando não. Simulação com margens reais, créditos de PIS/COFINS e o impacto da Reforma Tributária na decisão."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-30T10:00:00-03:00
+tags:
+  - "lucro-real"
+  - "lucro-presumido"
+  - "regime-tributario"
+  - "contabilidade-consultiva"
+  - "planejamento-tributario"
+featured: false
+coverImage: "covers/cover-lucro-real-migrar.jpg"
+ogImage: "/og/lucro-real-migrar.png"
+faq:
+  - q: "Quais empresas são obrigadas ao Lucro Real?"
+    a: "São obrigadas ao Lucro Real: (1) empresas com faturamento anual acima de R$ 78 milhões (desde 01/01/2014); (2) bancos, seguradoras, factoring e demais instituições financeiras; (3) empresas que tiveram lucros, rendimentos ou ganhos de capital oriundos do exterior; (4) empresas que usufruírem de benefícios fiscais relativos à isenção ou redução de IRPJ. Para os demais, Lucro Real é opcional — e pode ser a escolha mais eficiente quando a margem de lucro real é inferior à margem presumida do setor."
+  - q: "Em que situações o Lucro Real é mais vantajoso que o Lucro Presumido?"
+    a: "O Lucro Real tende a ser mais vantajoso quando: (1) a margem de lucro real da empresa é inferior à margem presumida — 8% para comércio, 32% para serviços; (2) a empresa tem altos custos dedutíveis (mão de obra intensiva, insumos tributados, aluguéis); (3) a empresa tem direito a créditos de PIS/COFINS no regime não cumulativo (7,6%+1,65% sobre entradas) que excedem o custo de 3%+0,65% do Lucro Presumido; (4) a empresa tem prejuízos acumulados que podem ser compensados com lucros futuros (somente no Lucro Real)."
+  - q: "Quando o Lucro Presumido ainda é mais vantajoso que o Lucro Real?"
+    a: "O Lucro Presumido é mais vantajoso quando: (1) a margem de lucro real é superior à margem presumida do setor (ex: empresa de serviços com margem de 45% — a presunção é de 32%, então paga IRPJ sobre 32% mesmo ganhando 45%); (2) a empresa tem poucos insumos tributados na entrada (serviços puros, sem cadeia de fornecedores tributados); (3) a complexidade adicional da escrituração contábil completa do Lucro Real não compensa a economia gerada; (4) a empresa tem faturamento entre R$ 4,8M e R$ 78M e margem acima da presunção."
+  - q: "A Reforma Tributária muda a lógica da escolha entre Lucro Real e Lucro Presumido?"
+    a: "Sim. Com a extinção do PIS/COFINS em dezembro de 2026 e a criação da CBS (não cumulativa independente do regime de IRPJ), um dos principais argumentos para o Lucro Real — acesso ao regime não cumulativo do PIS/COFINS (7,6%+1,65% com crédito vs. 3%+0,65% cumulativo no LP) — perde parte de sua lógica. Em 2027, CBS e IBS são iguais para Lucro Real e Lucro Presumido. A decisão de regime voltará a ser basicamente sobre IRPJ e CSLL: qual a margem real vs. a presumida."
+  - q: "Como simular se devo migrar para o Lucro Real?"
+    a: "A simulação envolve quatro passos: (1) levantar o lucro contábil real dos últimos 3 exercícios; (2) calcular o IRPJ/CSLL que teria sido pago no Lucro Real vs. o que foi pago no Lucro Presumido; (3) levantar os créditos de PIS/COFINS que teriam sido aproveitados no regime não cumulativo (Lucro Real) vs. o custo cumulativo (Lucro Presumido); (4) calcular o custo adicional da escrituração contábil completa. Se (2)+(3) > (4), o Lucro Real é mais eficiente. A janela de mudança é janeiro de cada ano — decisão deve ser tomada em outubro/novembro do ano anterior."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule
+  question="Quando vale migrar do Lucro Presumido para o Lucro Real?"
+  answer="Vale migrar quando a margem de lucro real da empresa é inferior à margem presumida do setor (8% para comércio, 32% para serviços), quando a empresa tem custos dedutíveis altos, ou quando os créditos de PIS/COFINS no regime não cumulativo superam o custo adicional da escrituração. Para uma empresa de serviços com margem abaixo de 32%, a economia pode ultrapassar R$ 100 mil anuais. Para empresas com margem acima da presunção, o Lucro Presumido é melhor — e continuar nele é a decisão correta. A Reforma Tributária adiciona uma variável importante: com a extinção do PIS/COFINS em dezembro de 2026, o argumento do regime não cumulativo perde peso e a decisão volta a girar quase exclusivamente sobre IRPJ e CSLL."
+/>
+
+A maioria das empresas elegeu seu regime tributário uma vez — na abertura — e nunca mais revisou a decisão. Isso é um problema contábil concreto. Entre 2022 e 2025, pelo menos um ciclo econômico completo passou com margens pressionadas por custos de pessoal, energia e insumos. Empresas que estão no Lucro Presumido com margem real abaixo da presunção estão pagando IRPJ e CSLL sobre um lucro que nunca existiu.
+
+O problema inverso também ocorre: empresas que migraram para o Lucro Real buscando créditos de PIS/COFINS — mas com estrutura de custos baseada em mão de obra — descobriram que o crédito esperado não existia porque folha de pagamento não gera crédito de PIS/COFINS no regime não cumulativo.
+
+Este artigo resolve as duas questões: quando migrar para o Lucro Real compensa e quando não compensa — com o exemplo numérico de uma empresa de consultoria em Brasília faturando R$ 5 milhões ao ano.
+
+---
+
+## Quem é obrigado ao Lucro Real — e quem pode escolher
+
+O Lucro Real deixou de ser universal em 1997. Hoje, é obrigatório apenas para:
+
+- **Empresas com faturamento acima de R$ 78 milhões anuais** (art. 14 da Lei 9.718/98, atualizado). Esse limite é calculado sobre a receita total do ano-calendário anterior.
+- **Instituições financeiras e equiparadas**: bancos, financeiras, distribuidoras de títulos, seguradoras, sociedades de capitalização e entidades de previdência privada.
+- **Empresas com lucros do exterior**: qualquer empresa que tenha tido rendimentos, lucros ou ganhos de capital oriundos de fontes no exterior.
+- **Beneficiárias de incentivos fiscais**: empresas que usufruam de redução ou isenção de IRPJ (como as do regime de SUDAM/SUDENE ou de zonas de processamento de exportações).
+
+Para todas as demais — e isso inclui a grande maioria das empresas entre R$ 4,8 milhões e R$ 78 milhões de faturamento —, o Lucro Real é **opcional**. Optar por ele é uma decisão de planejamento tributário, não de conformidade legal.
+
+Empresas no Simples Nacional que desejam migrar para o Lucro Presumido ou Real têm um passo anterior obrigatório: a exclusão do Simples, que deve ocorrer até 31 de janeiro do ano em que se deseja a mudança. Saiba mais em [como escolher entre Simples Nacional e Lucro Presumido](/posts/simples-nacional-ou-lucro-presumido-como-escolher).
+
+---
+
+## Lucro Presumido — quando é a escolha certa
+
+O Lucro Presumido funciona com margens de lucro fixadas por setor. A Receita Federal presume que a empresa lucrou uma determinada porcentagem da receita bruta — independentemente do lucro real apurado — e aplica as alíquotas de IRPJ e CSLL sobre essa base.
+
+| Atividade | Percentual de presunção (IRPJ) | Percentual de presunção (CSLL) |
+|---|---|---|
+| Comércio (revenda de mercadorias) | 8% | 12% |
+| Indústria (fabricação) | 8% | 12% |
+| Transporte de carga | 8% | 12% |
+| Serviços hospitalares e de saúde | 8% | 12% |
+| Transporte de passageiros | 16% | 12% |
+| Serviços em geral | 32% | 32% |
+| Prestação de serviços de qualquer natureza | 32% | 32% |
+| Representação comercial | 32% | 32% |
+
+A lógica é direta: se sua empresa realmente lucra **mais** do que o percentual de presunção do setor, o Lucro Presumido é vantajoso. Você paga IRPJ e CSLL sobre uma base menor do que o lucro verdadeiro.
+
+**Exemplo:** uma clínica de estética fatura R$ 3 milhões por ano com margem real de 45%. A presunção para serviços é 32%. O IRPJ e CSLL serão calculados sobre 32% × R$ 3M = R$ 960.000 — mesmo que o lucro real tenha sido R$ 1.350.000. A economia tributária nesse caso é considerável.
+
+O Lucro Presumido também tem vantagem operacional: a escrituração é simplificada. Não há exigência de Escrituração Contábil Digital (ECD) completa, Livro de Apuração do Lucro Real (LALUR) ou demonstrações financeiras auditadas. Para escritórios menores, essa redução de custo contábil pode ser relevante.
+
+---
+
+## Lucro Real — quando compensa migrar
+
+O Lucro Real é calculado sobre o lucro efetivamente apurado pela contabilidade, com as adições e exclusões previstas pela legislação do IRPJ. Os critérios que indicam que a migração compensa:
+
+**1. Margem real abaixo da presunção do setor**
+
+Se uma empresa de serviços tem margem real de 20% e a presunção é 32%, ela paga IRPJ e CSLL sobre 32% da receita — mas lucrou apenas 20%. No Lucro Real, a base tributável seria o lucro real de 20%, gerando economia direta.
+
+**2. Custos dedutíveis expressivos**
+
+No Lucro Real, todos os gastos necessários à atividade são dedutíveis: salários e encargos, aluguéis, depreciação de equipamentos, despesas financeiras, serviços contratados, insumos. Para empresas com estrutura de custos fixos relevante, essa dedutibilidade integral pode ser mais vantajosa do que a presunção simplificada.
+
+**3. Créditos de PIS/COFINS no regime não cumulativo**
+
+No Lucro Real, PIS e COFINS são apurados no regime não cumulativo (1,65% + 7,6% = 9,25%) — mas com direito a crédito sobre as entradas tributadas. No Lucro Presumido, as alíquotas são cumulativas (0,65% + 3% = 3,65%) sem crédito. Mais detalhes sobre essa conta estão na [análise de recuperação de créditos de PIS/COFINS](/posts/recuperacao-creditos-pis-cofins-2026).
+
+**4. Prejuízos acumulados a compensar**
+
+Somente no Lucro Real é possível compensar prejuízos fiscais de períodos anteriores com lucros futuros. A compensação é limitada a 30% do lucro real de cada período, mas pode representar economia relevante para empresas que atravessaram ciclos negativos recentes.
+
+**5. Planejamento do impacto da Reforma Tributária**
+
+Com a extinção do PIS/COFINS em dezembro de 2026, a decisão de regime nos próximos anos passa a depender quase exclusivamente do IRPJ e CSLL. Empresas que migrariam para o Lucro Real apenas pelos créditos de PIS/COFINS devem recalcular o benefício líquido considerando que esse diferencial desaparece em 2027. Veja o impacto completo em [Reforma Tributária: o que muda para empresas em Brasília em 2026](/posts/reforma-tributaria-impacto-empresas-brasilia-2026).
+
+---
+
+## O exemplo numérico — empresa de serviços com R$ 5M em Brasília
+
+Para ilustrar a decisão, usamos uma empresa de consultoria em Brasília com R$ 5 milhões de faturamento anual. Vamos comparar os dois regimes em dois cenários de margem.
+
+### Cenário 1 — Margem real de 35% (LP é melhor)
+
+**Lucro Presumido:**
+- Base IRPJ = 32% × R$ 5.000.000 = **R$ 1.600.000**
+- IRPJ = 15% × R$ 1.600.000 = R$ 240.000
+- Adicional de IRPJ = 10% × (R$ 1.600.000 − R$ 240.000) = 10% × R$ 1.360.000 = R$ 136.000
+- IRPJ total = **R$ 376.000**
+- CSLL = 9% × R$ 1.600.000 = **R$ 144.000**
+- **Total IRPJ + CSLL no LP = R$ 520.000**
+
+**Lucro Real:**
+- Lucro real = 35% × R$ 5.000.000 = **R$ 1.750.000**
+- IRPJ = 15% × R$ 1.750.000 = R$ 262.500
+- Adicional de IRPJ = 10% × (R$ 1.750.000 − R$ 240.000) = 10% × R$ 1.510.000 = R$ 151.000
+- IRPJ total = **R$ 413.500**
+- CSLL = 9% × R$ 1.750.000 = **R$ 157.500**
+- **Total IRPJ + CSLL no LR = R$ 571.000**
+
+**Resultado:** com margem real de 35%, o Lucro Presumido é R$ 51.000 mais eficiente por ano. A empresa paga imposto sobre 32% da receita mesmo tendo lucrado 35% — um benefício fiscal concreto embutido na presunção.
+
+### Cenário 2 — Margem real de 25% (LR é melhor)
+
+**Lucro Presumido:** mesmos R$ 520.000 calculados acima (a base presumida não muda).
+
+**Lucro Real:**
+- Lucro real = 25% × R$ 5.000.000 = **R$ 1.250.000**
+- IRPJ = 15% × R$ 1.250.000 = R$ 187.500
+- Adicional de IRPJ = 10% × (R$ 1.250.000 − R$ 240.000) = 10% × R$ 1.010.000 = R$ 101.000
+- IRPJ total = **R$ 288.500**
+- CSLL = 9% × R$ 1.250.000 = **R$ 112.500**
+- **Total IRPJ + CSLL no LR = R$ 401.000**
+
+**Resultado:** com margem real de 25%, o Lucro Real economiza R$ 119.000 por ano em IRPJ e CSLL. Essa diferença precisa ser confrontada com o custo adicional da escrituração contábil completa do Lucro Real — que, para uma empresa nesse porte, varia entre R$ 15.000 e R$ 40.000 anuais dependendo do volume de operações. O saldo líquido favorável ao Lucro Real ainda seria de R$ 79.000 a R$ 104.000 por ano.
+
+**O limiar de indiferença para serviços** está exatamente na margem presumida: 32%. Abaixo disso, o Lucro Real ganha. Acima disso, o Lucro Presumido ganha. Para o comércio, o limiar é 8% — um patamar raramente atingido como margem líquida contábil após todas as despesas.
+
+---
+
+## PIS/COFINS cumulativo vs. não cumulativo — a conta que ninguém faz
+
+A diferença entre os regimes de PIS/COFINS é frequentemente citada, mas raramente calculada corretamente. Vamos à aritmética real.
+
+**Regime cumulativo (Lucro Presumido):**
+- PIS: 0,65% sobre a receita bruta
+- COFINS: 3,00% sobre a receita bruta
+- Total: **3,65% sobre a receita bruta, sem crédito sobre entradas**
+
+**Regime não cumulativo (Lucro Real):**
+- PIS: 1,65% sobre a receita bruta
+- COFINS: 7,60% sobre a receita bruta
+- Total: **9,25% sobre a receita bruta, com crédito sobre entradas tributadas**
+
+A diferença de alíquota é de 5,60 pontos percentuais a mais no regime não cumulativo. Para que o regime não cumulativo (Lucro Real) compense, os créditos de PIS/COFINS sobre as entradas precisam superar esses 5,60% da receita.
+
+**O ponto crítico:** folha de pagamento, pró-labore e encargos trabalhistas **não geram crédito de PIS/COFINS**. Para empresas de serviços onde a mão de obra representa 60% ou mais dos custos, o regime não cumulativo raramente compensa via PIS/COFINS — a base de crédito é pequena demais para cobrir o diferencial de alíquota.
+
+**Exemplo com a consultoria de R$ 5M:**
+- PIS/COFINS no LP: 3,65% × R$ 5.000.000 = **R$ 182.500**
+- PIS/COFINS no LR (bruto): 9,25% × R$ 5.000.000 = R$ 462.500
+- Créditos de entrada necessários para empatar: R$ 462.500 − R$ 182.500 = **R$ 280.000**
+- Isso equivale a R$ 280.000 ÷ 9,25% = **R$ 3.027.027 em compras com PIS/COFINS destacado**
+- Para uma consultoria com 65% dos custos em pessoal, as compras tributadas raramente ultrapassam R$ 500.000 a R$ 700.000 — gerando crédito de R$ 46.250 a R$ 64.750, muito abaixo dos R$ 280.000 necessários
+
+Nesse cenário, o regime não cumulativo **piora** a posição de PIS/COFINS para a empresa de consultoria. A vantagem do Lucro Real, quando existe, vem exclusivamente da economia em IRPJ e CSLL — não do PIS/COFINS.
+
+Empresas com estrutura de custos diferente — como distribuidoras, indústrias ou varejistas com alta proporção de compras tributadas — têm um cálculo distinto. Para elas, o crédito de PIS/COFINS pode ser o principal argumento para o Lucro Real. Veja como isso se relaciona com a [recuperação de créditos de PIS/COFINS acumulados](/posts/recuperacao-creditos-pis-cofins-2026).
+
+---
+
+## A Reforma Tributária muda o cálculo?
+
+Sim — e de forma relevante. A Reforma Tributária (Emenda Constitucional 132/2023 + Lei Complementar 214/2025) extingue o PIS e a COFINS em **31 de dezembro de 2026** e os substitui pela Contribuição sobre Bens e Serviços (CBS).
+
+A mudança crítica para o planejamento de regime: **a CBS é não cumulativa independentemente do regime de IRPJ**. Tanto no Lucro Real quanto no Lucro Presumido, a CBS funcionará com crédito sobre entradas — eliminando um dos principais argumentos que justificavam o Lucro Real para empresas com entradas tributadas.
+
+A partir de 2027, a decisão entre Lucro Real e Lucro Presumido volta a ser essencialmente sobre **IRPJ e CSLL**: qual a margem real da empresa versus a margem presumida do setor. A análise fica mais limpa — e mais parecida com o que era antes do PIS/COFINS não cumulativo entrar em vigor nos anos 2000.
+
+Para empresas que hoje estão avaliando migrar para o Lucro Real **principalmente pelos créditos de PIS/COFINS**, a janela de benefício é curta — até dezembro de 2026. A migração de regime exige opção em janeiro. Para os anos seguintes, o argumento do PIS/COFINS desaparece e a decisão precisa ser recalculada com base em IRPJ/CSLL e CBS.
+
+O impacto completo da Reforma Tributária para empresas brasilienses está detalhado em [Reforma Tributária 2026: IBS, CBS e split payment](/posts/reforma-tributaria-impacto-empresas-brasilia-2026).
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, especializado em Planejamento Tributário e Auditoria, Contabilidade Consultiva com Controladoria e Planejamento Patrimonial para empresas de médio porte, holdings familiares e empreendedores. Sob responsabilidade técnica de Jocivane Brito (tributarista CRC-DF) e Suzana Almeida, o escritório aplica o conceito proprietário de Inteligência Tributária. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com um tributarista →</a>
+</aside>
+
+<LeadForm
+  id="blog-lucro-real-form"
+  eyebrow="Qual regime economiza mais para a sua empresa?"
+  title="Simulação gratuita: Lucro Real vs Lucro Presumido"
+  sub="A Monumental Contabilidade calcula IRPJ, CSLL e PIS/COFINS nos dois regimes com os seus números reais — e projeta a economia anual antes de qualquer mudança."
+  cta="Quero minha simulação gratuita →"
+/>
+
+<DimusHelp
+  title="Como a Monumental Contabilidade analisa a troca de regime"
+  sub="A análise de regime tributário envolve quatro variáveis simultâneas. Calculamos todas antes de qualquer recomendação."
+  items={[
+    "Levantamento do lucro contábil real dos últimos 3 exercícios",
+    "Simulação de IRPJ+CSLL no Lucro Real vs. Lucro Presumido",
+    "Cálculo dos créditos de PIS/COFINS aproveitáveis no regime não cumulativo",
+    "Estimativa do custo adicional de escrituração do Lucro Real",
+  ]}
+/>
+
+## Como fazer a simulação — o processo em 4 passos
+
+A decisão de regime não pode ser feita com base em regras de bolso ou médias de setor. O processo correto envolve quatro etapas com os dados reais da empresa:
+
+**Passo 1 — Levantar o lucro contábil real dos últimos 3 exercícios**
+
+O ponto de partida é o DRE (Demonstração do Resultado do Exercício) dos últimos 3 anos. Não é suficiente olhar um único exercício — margens variam. O objetivo é identificar a margem média real e verificar se houve anos com prejuízo fiscal (que só podem ser compensados no Lucro Real).
+
+**Passo 2 — Calcular IRPJ e CSLL nos dois regimes**
+
+Com o lucro real médio em mãos, calcula-se o IRPJ e CSLL que teria sido pago no Lucro Real (sobre o lucro efetivo) versus o que foi pago no Lucro Presumido (sobre a margem presumida). A diferença é o ganho ou perda tributária pela mudança.
+
+**Passo 3 — Levantar os créditos de PIS/COFINS aproveitáveis**
+
+No regime não cumulativo (Lucro Real), é necessário mapear quais entradas geram crédito de PIS/COFINS: matérias-primas, energia elétrica, serviços contratados, aluguéis de imóveis e máquinas, fretes. Folha de pagamento e encargos previdenciários **não** geram crédito. A diferença entre o crédito calculado e o custo adicional do regime não cumulativo (5,60% da receita) determina se o PIS/COFINS favorece ou não a mudança.
+
+**Passo 4 — Calcular o custo adicional de escrituração**
+
+O Lucro Real exige escrituração contábil completa com ECD (Escrituração Contábil Digital), ECF (Escrituração Contábil Fiscal) e LALUR (Livro de Apuração do Lucro Real). O custo adicional para escritórios de contabilidade varia conforme o volume de operações, mas pode ser estimado entre R$ 15.000 e R$ 40.000 por ano para empresas de médio porte. Esse custo deve ser subtraído da economia tributária projetada para obter o benefício líquido real.
+
+**Se (economia IRPJ/CSLL) + (economia PIS/COFINS) > (custo adicional de escrituração), o Lucro Real é mais eficiente.** A janela de mudança abre em janeiro — a decisão deve ser tomada e validada com o contador entre outubro e novembro do ano anterior.
+
+Se sua empresa está passando por reestruturação societária ou avaliando uma holding, o planejamento de regime tributário faz parte de um conjunto mais amplo de decisões. Veja como iniciá-lo corretamente em [como abrir empresa em Brasília](/posts/como-abrir-empresa-em-brasilia).
+
+---
+
+## Perguntas Frequentes
+
+### Quais empresas são obrigadas ao Lucro Real?
+
+São obrigadas ao Lucro Real empresas com faturamento anual acima de R$ 78 milhões (desde 01/01/2014), bancos, seguradoras, factoring e demais instituições financeiras, empresas com lucros oriundos do exterior e empresas beneficiárias de isenção ou redução de IRPJ. Para os demais, o Lucro Real é opcional — e pode ser a escolha mais eficiente quando a margem real é inferior à margem presumida do setor.
+
+### Em que situações o Lucro Real é mais vantajoso que o Lucro Presumido?
+
+O Lucro Real tende a ser mais vantajoso quando a margem de lucro real da empresa é inferior à margem presumida — 8% para comércio e 32% para serviços em geral —, quando a empresa tem altos custos dedutíveis como mão de obra intensiva, insumos tributados e aluguéis, quando os créditos de PIS/COFINS no regime não cumulativo excedem o custo do regime cumulativo, ou quando há prejuízos acumulados a compensar com lucros futuros. No Lucro Presumido não é possível compensar prejuízos.
+
+### Quando o Lucro Presumido ainda é mais vantajoso que o Lucro Real?
+
+O Lucro Presumido é mais vantajoso quando a margem de lucro real supera a margem presumida do setor, quando a empresa tem poucos insumos tributados na entrada — tornando o regime não cumulativo de PIS/COFINS desvantajoso —, quando a complexidade adicional da escrituração completa do Lucro Real não compensa a economia gerada, ou quando a empresa tem faturamento entre R$ 4,8 milhões e R$ 78 milhões e margem real acima da presunção.
+
+### A Reforma Tributária muda a lógica da escolha entre Lucro Real e Lucro Presumido?
+
+Sim. Com a extinção do PIS/COFINS em dezembro de 2026 e a criação da CBS não cumulativa independente de regime, um dos principais argumentos para o Lucro Real perde força. Em 2027, a decisão de regime volta a girar quase exclusivamente sobre IRPJ e CSLL: qual a margem real da empresa versus a presumida do setor. Empresas que hoje estão avaliando migrar para o Lucro Real pelos créditos de PIS/COFINS têm uma janela curta — até dezembro de 2026 — para capturar esse benefício.
+
+### Como simular se devo migrar para o Lucro Real?
+
+A simulação envolve quatro passos: levantar o lucro contábil real dos últimos 3 exercícios; calcular o IRPJ/CSLL nos dois regimes; levantar os créditos de PIS/COFINS aproveitáveis no regime não cumulativo; e calcular o custo adicional da escrituração contábil completa. Se a soma das economias de IRPJ/CSLL e PIS/COFINS superar o custo adicional de escrituração, o Lucro Real é mais eficiente. A janela de mudança é janeiro de cada ano — a decisão deve ser tomada em outubro ou novembro do ano anterior para haver tempo hábil de preparação.
+
+---
+
+A decisão de regime tributário é recorrente, não permanente. Margens mudam, estruturas de custo mudam e — como a Reforma Tributária está demonstrando — a própria arquitetura do sistema tributário muda. Uma empresa que avaliou o regime em 2020 e nunca revisou pode estar pagando R$ 50.000 a R$ 150.000 a mais por ano do que deveria.
+
+O momento certo para fazer essa análise é sempre antes de janeiro — quando a janela ainda está aberta.
+
+Veja também: [Simples Nacional ou Lucro Presumido — como escolher](/posts/simples-nacional-ou-lucro-presumido-como-escolher), [Recuperação de créditos de PIS/COFINS antes de dezembro de 2026](/posts/recuperacao-creditos-pis-cofins-2026), [Reforma Tributária e o impacto para empresas em Brasília](/posts/reforma-tributaria-impacto-empresas-brasilia-2026) e [Como abrir empresa em Brasília](/posts/como-abrir-empresa-em-brasilia).
+
+<aside class="cta-block" style="background:#1A3C5E; color:#fff; padding:2rem; border-radius:6px; margin:2.5rem 0; text-align:center;">
+  <h3 style="color:#fff; margin-top:0;">Descubra se sua empresa está pagando imposto a mais</h3>
+  <p>Em uma reunião com Jocivane Brito (tributarista CRC-DF), você recebe a simulação real de Lucro Presumido vs Lucro Real — com seus números, com projeção de economia anual e sem generalização de setor.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block; background:#25D366; color:#fff; padding:0.75rem 1.75rem; border-radius:4px; font-weight:bold; text-decoration:none; margin-top:0.5rem;">Quero minha simulação gratuita →</a>
+</aside>
+
+<aside class="author-bio" style="background:#F8F9FA; border-radius:6px; padding:1.25rem 1.5rem; margin:2rem 0;">
+  <strong>Jocivane Brito</strong> — Tributarista, CRC-DF | Monumental Contabilidade<br />
+  Tributarista com registro no CRC-DF e responsável técnica da Monumental Contabilidade, Jocivane Brito é especializada no planejamento tributário e recuperação de créditos para empresas de médio porte em Brasília-DF. Fundadora do conceito de Inteligência Tributária, atua na identificação de oportunidades fiscais que escritórios convencionais raramente mapeiam.
+</aside>

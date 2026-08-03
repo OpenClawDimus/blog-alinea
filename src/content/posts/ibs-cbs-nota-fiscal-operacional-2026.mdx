@@ -1,0 +1,208 @@
+---
+title: "IBS e CBS nas Notas Fiscais: O Que Muda a Partir de Agosto de 2026"
+description: "Os campos obrigatórios IBS e CBS em notas fiscais entram em vigor em julho/agosto de 2026. O que parametrizar no ERP, prazos e penalidades por erro de classificação."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-30T09:00:00-03:00
+tags:
+  - "reforma-tributaria-2026"
+  - "ibs-cbs"
+  - "nota-fiscal-eletronica"
+  - "contabilidade-consultiva"
+  - "planejamento-tributario"
+featured: false
+coverImage: "covers/cover-ibs-cbs-nota-fiscal-2026.jpg"
+ogImage: "/og/ibs-cbs-nota-fiscal-2026.png"
+faq:
+  - q: "A partir de quando os campos IBS e CBS são obrigatórios na NF-e?"
+    a: "Os campos CBS (0,9% federal) e IBS (0,1% estadual/municipal) passam a ser exigidos em nota fiscal eletrônica a partir de julho de 2026 para os campos básicos de destaque, e a partir de agosto de 2026 para os campos CST-IBS/CBS e cClassTrib — classificação tributária por item. O PIS e COFINS continuam existindo paralelamente até 31 de dezembro de 2026."
+  - q: "O que é o campo cClassTrib e por que ele importa?"
+    a: "O cClassTrib é o campo de classificação tributária do IBS/CBS inserido no layout da NF-e 4.0.1. Ele identifica o tratamento fiscal de cada item: tributação normal, redução de alíquota, imunidade, isenção, diferimento, entre outros. Erro de classificação no cClassTrib gera perda do crédito do comprador e pode resultar em autuação do emitente por nota fiscal com informação incorreta — penalidade de 1% a 2% do valor da operação."
+  - q: "Quais sistemas ERP precisam ser atualizados para suportar IBS/CBS?"
+    a: "Qualquer ERP que emita NF-e precisa suportar o novo layout 4.0.1. Os campos a parametrizar são: alíquota CBS por item (0,9% padrão para maioria dos regimes), alíquota IBS por item (0,1% em 2026), CST-IBS/CBS por item, cClassTrib por item, e o destaque separado de cada tributo nos totais da nota. ERPs como TOTVS Protheus, SAP, Linx, e a maioria dos sistemas de pequeno porte já possuem atualizações disponíveis — o problema é a parametrização item a item."
+  - q: "O que acontece se minha empresa emitir notas sem os campos IBS/CBS após o prazo?"
+    a: "A emissão de NF-e com layout incorreto após o prazo de obrigatoriedade resulta em nota fiscal inválida — a SEFAZ pode rejeitar a autorização da nota. Para notas emitidas com campos incorretos que não foram rejeitadas (janela de tolerância inicial), a penalidade é de 1% do valor da operação para o emitente e perda do crédito de IBS/CBS para o destinatário. A penalidade por falta de destaque de tributo federal prevista na Lei 10.925/2004 também pode ser aplicada."
+  - q: "Como funciona o crédito de IBS e CBS para empresas no regime regular?"
+    a: "No regime regular de IBS/CBS (equivalente ao regime não cumulativo do PIS/COFINS), o comprador tem direito ao crédito do IBS e CBS destacados na nota fiscal de entrada — desde que o item seja utilizado na produção ou venda de bens ou serviços tributados. O crédito é aproveitado contra o IBS/CBS devido nas saídas. Para empresas que compram de fornecedores do Simples Nacional (que não destacam IBS/CBS), o crédito é estimado com base nas alíquotas simplificadas. A escrituração dos créditos é feita no EFD-IBS/CBS que substitui o EFD-Contribuições a partir de janeiro de 2027."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule>
+A partir de julho de 2026, toda NF-e emitida por empresas no regime regular de tributação passa a exigir o destaque separado do CBS (Contribuição sobre Bens e Serviços, de 0,9%, federal) e do IBS (Imposto sobre Bens e Serviços, de 0,1% em 2026, estadual e municipal). A partir de agosto de 2026, os campos CST-IBS/CBS e cClassTrib — que classificam o tratamento tributário de cada item — tornam-se obrigatórios. Empresas que não atualizarem o layout da NF-e no ERP ou que classificarem incorretamente os itens terão notas rejeitadas pela SEFAZ ou sofrerão perda de crédito tributário. PIS e COFINS continuam em vigor paralelamente até 31 de dezembro de 2026.
+</AnswerCapsule>
+
+## O prazo que já está correndo: julho e agosto de 2026
+
+Se a sua empresa ainda não iniciou a adequação do sistema emissor de notas fiscais ao novo layout exigido pela Reforma Tributária, o tempo está se esgotando. Não se trata de uma mudança futura ou de um cenário hipotético: as datas de obrigatoriedade para os novos campos de IBS e CBS na NF-e foram fixadas em regulamentação publicada pela Receita Federal e pelo Comitê Gestor do IBS, com cronograma escalonado que já está em andamento.
+
+A Lei Complementar 214/2025 criou o arcabouço legal do IBS e da CBS, os dois tributos que, juntos, substituirão progressivamente o PIS, o COFINS, o IPI, o ICMS e o ISS ao longo do período de transição (2026–2032), com extinção plena prevista para 2033. O que muda imediatamente no cotidiano fiscal das empresas não é a alíquota final — que ficará em torno de 26,5% quando o regime pleno estiver em vigor — mas a forma como as notas fiscais precisam ser emitidas já neste segundo semestre de 2026.
+
+A obrigação não se limita a grandes contribuintes. Qualquer empresa que emita NF-e, NFC-e ou NFS-e e esteja no regime de tributação regular — Lucro Real, Lucro Presumido ou Lucro Arbitrado — precisa estar preparada. O Simples Nacional tem regras transitórias próprias, mas os destinatários das notas emitidas por empresas do regime regular já precisarão receber os campos corretos para aproveitar o crédito de IBS/CBS.
+
+## O que é IBS e CBS — a diferença que importa na nota fiscal
+
+Antes de entrar nos campos técnicos, é fundamental ter clareza sobre o que cada tributo representa, porque essa distinção afeta diretamente como os valores aparecem na nota fiscal e como os créditos são aproveitados.
+
+**CBS — Contribuição sobre Bens e Serviços:** tributo federal, que substitui o PIS e o COFINS. A alíquota no período de transição de 2026 é de 0,9% (equivalente à soma das alíquotas de PIS e COFINS no regime não cumulativo). A arrecadação da CBS é destinada à União. É administrada pela Receita Federal do Brasil.
+
+**IBS — Imposto sobre Bens e Serviços:** tributo subnacional, compartilhado entre estados e municípios, que substitui o ICMS e o ISS. A alíquota em 2026 é de apenas 0,1%, porque o ICMS e o ISS ainda estão em vigor neste período. A alíquota do IBS vai crescendo gradualmente à medida que as alíquotas do ICMS e do ISS são reduzidas, ano a ano, até 2032. É administrado pelo Comitê Gestor do IBS — um novo ente administrativo criado pela Reforma.
+
+Na nota fiscal, CBS e IBS precisam ser destacados **separadamente**, cada um com sua alíquota, base de cálculo e valor. Isso significa que o campo único de "PIS/COFINS" que existe hoje no layout da NF-e não serve para IBS e CBS — são campos novos, inseridos no layout 4.0.1 da NF-e.
+
+A distinção prática para o emitente: seu ERP precisa saber qual é a alíquota CBS e a alíquota IBS aplicável a cada item da nota. Para a maioria das operações no regime regular, as alíquotas de 2026 são 0,9% (CBS) e 0,1% (IBS). Mas há operações com alíquotas reduzidas, imunidades, isenções e diferimentos — e é aí que entra o campo cClassTrib, explicado mais adiante.
+
+## O cronograma de obrigatoriedade campo a campo
+
+A implementação dos campos de IBS/CBS na NF-e segue um cronograma escalonado. Confira as datas críticas:
+
+| Data | Obrigação | O que precisa estar funcionando |
+|------|-----------|--------------------------------|
+| Janeiro 2026 | Início do período de convivência IBS/CBS + PIS/COFINS | PIS/COFINS continuam; IBS/CBS começam a ser calculados e destacados em paralelo |
+| Julho 2026 | Campos básicos de IBS e CBS obrigatórios na NF-e | vCBS, vIBS, pCBS, pIBS e bases de cálculo por item destacados na nota |
+| Agosto 2026 | CST-IBS/CBS e cClassTrib obrigatórios por item | Classificação tributária de cada item da nota precisa estar parametrizada no ERP |
+| 31 dez. 2026 | Extinção do PIS e do COFINS | NF-e passa a ter apenas IBS e CBS; PIS/COFINS não são mais destacados |
+| Janeiro 2027 | EFD-IBS/CBS entra em vigor | Substitui o EFD-Contribuições; escrituração de créditos de IBS/CBS passa para a nova obrigação acessória |
+| 2027–2032 | Aumento gradual das alíquotas IBS + redução ICMS/ISS | Requer atualização das tabelas de alíquota no ERP a cada ano |
+| 2033 | Extinção do ICMS e do ISS | Regime pleno IBS/CBS em vigor; alíquota combinada estimada em ~26,5% |
+
+**O ponto crítico para agosto de 2026:** a partir deste mês, não basta lançar os valores de CBS e IBS na nota. Cada item precisa ter seu CST-IBS/CBS (Código de Situação Tributária) e seu cClassTrib (código de classificação tributária) preenchidos corretamente. Erros nesses campos não são meramente formais — eles determinam se o comprador tem ou não direito ao crédito.
+
+## O que parametrizar no ERP — checklist item a item
+
+A adequação ao layout 4.0.1 da NF-e não é uma atualização que o fornecedor do ERP faz automaticamente. Mesmo que o sistema já suporte o novo layout, a **parametrização item a item** é responsabilidade da empresa e, na prática, do contador ou consultor tributário que a assessora.
+
+Verifique cada ponto da lista abaixo com o responsável pelo seu ERP e pelo setor fiscal:
+
+| # | O que parametrizar | Onde fica no ERP | Risco se não feito |
+|---|-------------------|------------------|-------------------|
+| 1 | Atualização do ERP para layout NF-e 4.0.1 | Módulo fiscal / versão do software | Nota rejeitada pela SEFAZ |
+| 2 | Alíquota CBS por item (padrão 0,9% em 2026) | Cadastro de produto / tabela de tributos | Cálculo incorreto; crédito perdido |
+| 3 | Alíquota IBS por item (0,1% em 2026) | Cadastro de produto / tabela de tributos | Cálculo incorreto; penalidade |
+| 4 | CST-IBS/CBS por item | Cadastro de produto / regra fiscal | Classificação inválida; autuação |
+| 5 | cClassTrib por item | Cadastro de produto / regra fiscal | Perda de crédito do comprador |
+| 6 | Destaque separado CBS e IBS nos totais da NF-e | Configuração de impressão e XML | Nota em desconformidade |
+| 7 | Regras de redução de alíquota (se aplicável ao seu setor) | Tabela de exceções fiscais | Alíquota errada; autuação |
+| 8 | Tratamento de operações com imunidade ou isenção | Regra fiscal por NCM / CNAE | Crédito indevido ou crédito perdido |
+| 9 | Escrituração dos créditos de CBS/IBS nas entradas | Módulo de apuração / SPED | Crédito não aproveitado |
+| 10 | Preparação para EFD-IBS/CBS (vigência jan/2027) | Módulo SPED / exportação | Autuação por obrigação acessória |
+
+O maior gargalo operacional que temos observado nas empresas é o ponto 4 e 5: o CST-IBS/CBS e o cClassTrib precisam ser definidos **para cada item do cadastro de produtos**, e muitas empresas têm centenas ou milhares de SKUs. Não é possível parametrizar em lote sem antes fazer o mapeamento tributário item a item — tarefa que exige conhecimento da legislação e do setor de atividade da empresa.
+
+ERPs como TOTVS Protheus, SAP Business One, Linx ERP e Omie já disponibilizaram atualizações compatíveis com o layout 4.0.1. O problema não é a atualização do sistema — é a parametrização dos dados fiscais dentro dele.
+
+## O campo cClassTrib — o que é, como classificar, risco de erro
+
+O **cClassTrib** é o campo de classificação tributária do IBS/CBS inserido no layout NF-e 4.0.1. Ele indica, para cada item da nota fiscal, qual é o tratamento tributário aplicável dentro do novo sistema. É o equivalente moderno do CST do PIS/COFINS, mas com uma granularidade maior e consequências mais diretas sobre o crédito do comprador.
+
+Os principais códigos de cClassTrib incluem:
+
+- **Tributação normal:** item sujeito à alíquota padrão de IBS e CBS, sem reduções ou benefícios.
+- **Redução de alíquota:** itens da cesta básica nacional, medicamentos, insumos agropecuários e outros setores com alíquota reduzida por lei.
+- **Imunidade:** operações constitucionalmente imunes ao IBS/CBS (livros, jornais, templos, entidades filantrópicas etc.).
+- **Isenção:** operações isentas por lei complementar específica.
+- **Diferimento:** casos em que o pagamento do IBS/CBS é transferido para etapa posterior da cadeia.
+- **Regime específico:** setores com regras próprias (combustíveis, serviços financeiros, planos de saúde, imóveis).
+
+**Por que o cClassTrib importa tanto para o comprador?** Porque o crédito de IBS/CBS que o comprador pode aproveitar depende diretamente do que está declarado no cClassTrib da nota de entrada. Se o emitente classificar incorretamente um item como "imune" quando ele deveria ser "tributado normalmente", o comprador não conseguirá apropriar o crédito correspondente — mesmo que tenha pago o valor do IBS/CBS embutido no preço.
+
+**E para o emitente?** A classificação incorreta no cClassTrib configura emissão de nota fiscal com informação falsa ou incorreta, sujeita a penalidade de **1% a 2% do valor da operação**. Em uma empresa com faturamento mensal de R$ 2 milhões, um mês de notas com cClassTrib errado pode gerar autuação de R$ 20.000 a R$ 40.000 — fora a correção retroativa dos créditos do comprador.
+
+O mapeamento correto do cClassTrib exige cruzar o NCM do produto (ou CNAE do serviço) com a tabela de tratamentos tributários do IBS/CBS prevista na LC 214/2025 e nas regulamentações complementares do Comitê Gestor. Esse trabalho não pode ser feito no piloto automático — é necessária análise caso a caso, especialmente para empresas com mix diversificado de produtos ou que atuam em setores com regimes específicos.
+
+Para aprofundar o impacto da Reforma Tributária no modelo de negócio da sua empresa, veja também nosso artigo sobre [reforma tributária e o impacto para empresas em Brasília](/posts/reforma-tributaria-impacto-empresas-brasilia-2026).
+
+## Como funciona o crédito de IBS/CBS para o comprador
+
+Um dos pilares da Reforma Tributária é a não cumulatividade ampla: o IBS e a CBS são tributos sobre o valor adicionado em cada etapa da cadeia, e o comprador tem direito a se creditar dos valores destacados na nota de entrada para abater do IBS/CBS devido nas suas saídas.
+
+O mecanismo funciona assim, no regime regular:
+
+**1. Na entrada:** o comprador recebe a nota fiscal com CBS e IBS destacados. Os valores destacados geram crédito, desde que o item adquirido seja utilizado na produção ou venda de bens ou serviços tributados pelo IBS/CBS.
+
+**2. Na apuração:** o crédito de CBS e IBS apurado nas entradas é confrontado com o débito de CBS e IBS gerado pelas saídas. Se o crédito for maior que o débito, há saldo credor — que pode ser compensado em períodos futuros ou, em alguns casos, ressarcido.
+
+**3. Na escrituração:** em 2026 e 2027, o crédito de CBS é registrado no SPED Contribuições (enquanto ele ainda existe). A partir de janeiro de 2027, a escrituração migra para o EFD-IBS/CBS, a nova obrigação acessória que substitui o EFD-Contribuições.
+
+**Pontos de atenção para o comprador:**
+
+- O crédito só pode ser aproveitado se a nota de entrada estiver com os campos CBS, IBS, CST-IBS/CBS e cClassTrib corretamente preenchidos. Nota com campos incorretos = crédito contestável na fiscalização.
+- Compras de fornecedores do **Simples Nacional** não geram crédito pleno de IBS/CBS: há uma estimativa de crédito simplificado, calculada com base nas alíquotas do regime simplificado do fornecedor. Isso torna o fornecedor do Simples relativamente menos vantajoso para empresas do regime regular que precisam de crédito — um impacto que já é discutido no contexto do [planejamento tributário 2026](/posts/simples-nacional-ou-lucro-presumido-como-escolher).
+- O **split payment** — mecanismo de intercepção bancária automática que recolhe o IBS/CBS diretamente para o fisco no momento do pagamento — está em fase piloto em 2026 para grandes contribuintes. Para empresas de médio porte, a previsão é que o split payment passe a ser obrigatório a partir de 2027. Quando implementado, ele altera o fluxo de caixa da empresa: o valor do IBS/CBS não transita mais pela conta bancária da empresa vendedora. Para entender mais sobre o split payment, veja nosso artigo sobre [IBS, CBS e split payment em Brasília](/posts/reforma-tributaria-2026-ibs-cbs-split-payment-brasilia).
+- Empresas com histórico de créditos acumulados de PIS/COFINS devem avaliar o aproveitamento desses créditos antes de dezembro de 2026, quando PIS e COFINS são extintos. O tema é tratado em detalhe em nosso artigo sobre [recuperação de créditos de PIS e COFINS em 2026](/posts/recuperacao-creditos-pis-cofins-2026).
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, com foco em Planejamento Tributário e Auditoria para empresas de médio porte. Assessoramos CFOs e sócios na adequação à Reforma Tributária — da parametrização do ERP ao levantamento de créditos. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com o escritório →</a>
+</aside>
+
+<LeadForm
+  id="blog-ibs-cbs-nf-form"
+  eyebrow="Seu ERP está parametrizado para IBS/CBS?"
+  title="Receba um diagnóstico de adequação ao novo layout da NF-e"
+  description="Verificamos se os campos CBS, IBS, CST-IBS/CBS e cClassTrib estão corretamente configurados no seu sistema emissor — antes que a SEFAZ rejeite suas notas ou a fiscalização aponte inconsistências."
+  cta="Solicitar diagnóstico →"
+/>
+
+## NFS-e nacional em Brasília — especificidades para prestadores de serviços
+
+Empresas prestadoras de serviços sediadas em Brasília têm uma peculiaridade relevante: o Distrito Federal acumula competência tributária de estado **e** de município. Isso significa que, no contexto da Reforma Tributária, o IBS incidente sobre serviços prestados no DF tem uma estrutura diferente dos demais entes da federação.
+
+A **NFS-e nacional** — Nota Fiscal de Serviços eletrônica padronizada pela Receita Federal — tornou-se obrigatória a partir de janeiro de 2026 e já está integrada ao sistema de arrecadação do IBS municipal. Para prestadores de serviços no DF, os campos de IBS na NFS-e precisam refletir a alíquota combinada estadual + municipal, sob administração unificada do DF.
+
+**O que muda na prática para prestadores de serviços em Brasília:**
+
+- A NFS-e nacional substitui definitivamente as notas de serviços municipais anteriores. Sistemas que emitiam NFS-e pelo portal do GDF precisam estar migrados para o padrão nacional.
+- O campo cClassTrib na NFS-e nacional segue o mesmo padrão da NF-e 4.0.1 — a classificação tributária por serviço (conforme a Lista de Serviços do ISS, que transitoriamente ainda coexiste com o IBS em 2026) precisa ser mapeada.
+- Escritórios de contabilidade, consultorias, escritórios de advocacia, clínicas e demais prestadores de serviços intelectuais precisam verificar se o CNAE da empresa e a natureza do serviço prestado enquadram a operação em alíquota padrão, reduzida ou em regime específico.
+- O ISS continua sendo recolhido ao DF em 2026, paralelamente ao IBS. A extinção do ISS no DF seguirá o mesmo cronograma nacional de redução gradual (2027–2032).
+
+Para empresas que prestam serviços para órgãos do governo federal — situação comum em Brasília — há regras transitórias específicas sobre retenção de IBS/CBS que precisam ser avaliadas caso a caso, pois os órgãos públicos têm protocolo diferenciado de recolhimento na fonte durante o período de transição.
+
+<DimusHelp
+  title="Adequação à Reforma Tributária — como a Monumental pode ajudar"
+  items={[
+    "Parametrização do ERP: mapeamento dos campos CBS, IBS, CST-IBS/CBS e cClassTrib para o seu cadastro de produtos e serviços",
+    "Mapeamento NCM/cClassTrib: análise item a item do enquadramento tributário conforme a LC 214/2025 e regulamentações do Comitê Gestor",
+    "Crédito IBS/CBS: levantamento dos créditos aproveitáveis nas entradas e estruturação da apuração no novo regime",
+    "NFS-e Brasília: adequação da emissão de notas de serviços ao padrão nacional, com as especificidades do DF",
+  ]}
+/>
+
+## FAQ: as perguntas mais comuns sobre IBS/CBS nas notas fiscais
+
+**A partir de quando os campos IBS e CBS são obrigatórios na NF-e?**
+
+Os campos CBS (0,9% federal) e IBS (0,1% estadual/municipal) passam a ser exigidos em nota fiscal eletrônica a partir de julho de 2026 para os campos básicos de destaque — valores de CBS e IBS, alíquotas e bases de cálculo. A partir de agosto de 2026, tornam-se obrigatórios os campos CST-IBS/CBS e cClassTrib, que classificam o tratamento tributário de cada item. O PIS e o COFINS continuam existindo em paralelo até 31 de dezembro de 2026, quando são extintos. Durante 2026, portanto, a NF-e terá destaque simultâneo de PIS, COFINS, CBS e IBS — quatro tributos sobre o faturamento no mesmo documento fiscal.
+
+**O que é o campo cClassTrib e por que ele importa?**
+
+O cClassTrib é o campo de classificação tributária do IBS/CBS inserido no layout da NF-e 4.0.1. Ele identifica o tratamento fiscal de cada item: tributação normal, redução de alíquota, imunidade, isenção, diferimento ou regime específico. A relevância do campo é dupla: para o emitente, um cClassTrib errado pode gerar penalidade de 1% a 2% do valor da operação e caracterizar emissão de nota com informação incorreta; para o destinatário, um cClassTrib incorreto compromete o aproveitamento do crédito de IBS/CBS na escrituração fiscal, mesmo que o tributo tenha sido efetivamente pago no preço da mercadoria. O campo precisa ser preenchido corretamente para cada item do cadastro de produtos — não é possível usar um código genérico para toda a nota.
+
+**Quais sistemas ERP precisam ser atualizados para suportar IBS/CBS?**
+
+Qualquer ERP que emita NF-e, NFC-e ou NFS-e precisa suportar o novo layout 4.0.1. Os campos a parametrizar incluem: alíquota CBS por item (0,9% padrão para a maioria dos regimes em 2026), alíquota IBS por item (0,1% em 2026), CST-IBS/CBS por item, cClassTrib por item, e o destaque separado de cada tributo nos totais da nota. ERPs como TOTVS Protheus, SAP Business One, Linx, Omie e a maioria dos sistemas de pequeno porte já possuem atualizações disponíveis — o gargalo não é a atualização do software, é a parametrização item a item do cadastro fiscal. Empresas com centenas ou milhares de SKUs precisam de suporte especializado para fazer esse mapeamento dentro do prazo.
+
+**O que acontece se minha empresa emitir notas sem os campos IBS/CBS após o prazo?**
+
+A emissão de NF-e com layout incorreto após o prazo de obrigatoriedade resulta em nota fiscal passível de rejeição pela SEFAZ — o fisco pode negar a autorização da nota. Para notas que eventualmente passem por uma janela inicial de tolerância sem serem rejeitadas, a penalidade é de 1% do valor da operação para o emitente e perda do crédito de IBS/CBS para o destinatário. A penalidade por falta de destaque de tributo federal prevista na Lei 10.925/2004 também pode ser aplicada cumulativamente. O risco operacional é alto: notas rejeitadas pela SEFAZ travam a operação comercial da empresa, impedindo a entrega de mercadorias e o reconhecimento da receita.
+
+**Como funciona o crédito de IBS e CBS para empresas no regime regular?**
+
+No regime regular de IBS/CBS — equivalente ao regime não cumulativo do PIS/COFINS — o comprador tem direito ao crédito do IBS e do CBS destacados na nota fiscal de entrada, desde que o item seja utilizado na produção ou venda de bens ou serviços tributados. O crédito é aproveitado contra o IBS/CBS devido nas saídas do período. Para empresas que compram de fornecedores do Simples Nacional, que não destacam IBS/CBS na nota, o crédito é estimado com base nas alíquotas simplificadas daquele regime — o que pode ser inferior ao crédito que seria gerado em uma compra de fornecedor do regime regular. A escrituração dos créditos é feita no EFD-IBS/CBS, que substitui o EFD-Contribuições a partir de janeiro de 2027.
+
+<aside class="cta-block" style="background:#1A3C5E; color:#fff; padding:2rem; border-radius:6px; margin:2.5rem 0; text-align:center;">
+  <h3 style="color:#fff; margin-top:0;">Faltam semanas para os campos IBS/CBS serem obrigatórios</h3>
+  <p>A Monumental Contabilidade verifica se seu ERP está parametrizado corretamente e mapeia os itens por cClassTrib — antes que a SEFAZ rejeite suas notas.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block; background:#25D366; color:#fff; padding:0.75rem 1.75rem; border-radius:4px; font-weight:bold; text-decoration:none; margin-top:0.5rem;">Solicitar diagnóstico →</a>
+</aside>
+
+<aside class="author-bio" style="background:#F7F9FC; border:1px solid #E2E8F0; padding:1.5rem; border-radius:6px; margin:2rem 0; display:flex; gap:1rem; align-items:flex-start;">
+  <div>
+    <strong style="display:block; font-size:1.05rem;">Jocivane Brito</strong>
+    <span style="color:#64748B; font-size:0.9rem;">Tributarista | CRC-DF</span>
+    <p style="margin:0.5rem 0 0; font-size:0.95rem; color:#374151;">Especialista em Planejamento Tributário e Reforma Tributária, Jocivane Brito acompanha de perto a implementação da LC 214/2025 e assessora empresas de médio porte no Distrito Federal na adequação ao novo regime de IBS e CBS. Atua na Monumental Contabilidade com foco em auditoria fiscal e consultoria estratégica para CFOs e sócios.</p>
+  </div>
+</aside>

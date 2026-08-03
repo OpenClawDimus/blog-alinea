@@ -1,0 +1,246 @@
+---
+title: "Créditos de PIS/COFINS: A Janela que Fecha em Dezembro de 2026"
+description: "PIS e COFINS são extintos pela Reforma Tributária em dezembro de 2026. Empresas têm até lá para recuperar créditos acumulados — incluindo a extensão do Tema 69 ao ICMS-ST."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-30T16:00:00-03:00
+tags:
+  - "pis-cofins"
+  - "creditos-tributarios"
+  - "reforma-tributaria"
+  - "contabilidade-consultiva"
+  - "planejamento-tributario"
+featured: true
+coverImage: "covers/cover-recuperacao-creditos-pis-cofins.jpg"
+ogImage: "/og/recuperacao-creditos-pis-cofins.png"
+faq:
+  - q: "O que é o Tema 69 do STF e como ele gera crédito para minha empresa?"
+    a: "O Tema 69 do STF estabelece que o ICMS não integra a base de cálculo do PIS e da COFINS — a chamada 'tese do século'. O marco temporal para a tese é 15/03/2017. Empresas que recolheram PIS/COFINS com ICMS na base desde essa data têm direito à restituição ou compensação do excesso pago. O valor recuperável é a diferença entre o PIS/COFINS calculado com o ICMS incluído e o valor que deveria ter sido calculado com o ICMS excluído."
+  - q: "O PIS/COFINS realmente vai acabar em 2026?"
+    a: "Sim. A Reforma Tributária (Emenda Constitucional 132/2023 + Lei Complementar 214/2025) extingue o PIS e a COFINS em 31 de dezembro de 2026, substituindo-os pela CBS (Contribuição sobre Bens e Serviços). Créditos de PIS/COFINS gerados até dezembro de 2026 poderão ser compensados com CBS ou com outros tributos federais, mas o ambiente de escrituração (SPED/EFD-Contribuições) para geração desses créditos encerra em dezembro de 2026. Créditos não declarados até então podem ser perdidos definitivamente."
+  - q: "O prazo prescricional de 5 anos como afeta minha empresa agora?"
+    a: "O prazo prescricional para pedir restituição ou compensação de PIS/COFINS pago a maior é de 5 anos, contado da data do pagamento indevido. Para créditos gerados desde o marco do Tema 69 (março de 2021), o prazo de 5 anos vence em março de 2026 — esse lote já prescreveu. Créditos de abril de 2021 em diante ainda estão dentro do prazo. Com o fim do PIS/COFINS em dezembro de 2026, as empresas que não revisarem os créditos dos últimos 5 anos antes dessa data perdem definitivamente o direito à compensação."
+  - q: "A extensão do Tema 69 ao ICMS-ST foi confirmada juridicamente?"
+    a: "Sim. O TRF-6 reconheceu em 2026 que a tese do Tema 69 se estende ao ICMS-ST (substituição tributária). O entendimento é que o ICMS pago por substituição também não compõe a base de cálculo do PIS/COFINS. Essa decisão abre nova frente de recuperação para indústrias, distribuidoras e varejistas que recolhem ICMS-ST — especialmente relevante para setores como farmácia, combustíveis, alimentos e bebidas, onde a ST é intensa."
+  - q: "Quanto minha empresa pode recuperar na prática?"
+    a: "Depende do volume de NF de entrada/saída, do setor e da alíquota de ICMS praticada. Para uma empresa com faturamento de R$ 10M/ano no comércio, com ICMS médio de 12% na base, o crédito típico de PIS/COFINS excluindo ICMS gira entre R$ 80 mil e R$ 200 mil para os 5 anos anteriores. Empresas com ICMS-ST têm potencial adicional significativo. Um levantamento exato requer análise dos EFDs do período."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule
+  question="Sua empresa ainda tem créditos de PIS/COFINS a recuperar antes de dezembro de 2026?"
+  answer="Provavelmente sim — e o relógio está correndo. O PIS e a COFINS são extintos em 31 de dezembro de 2026 pela Reforma Tributária. Créditos não registrados até essa data, incluindo os gerados pela exclusão do ICMS da base (Tema 69 do STF) e pela nova frente do ICMS-ST, não poderão mais ser aproveitados. Ao mesmo tempo, o prazo prescricional de 5 anos elimina um mês de crédito a cada mês que passa. Este artigo mapeia o que ainda está no prazo, como calcular o potencial de recuperação e o que muda com o fim dos tributos."
+/>
+
+Existe um número que a maioria dos CFOs de empresas entre R$ 5 milhões e R$ 50 milhões de faturamento não conhece: o total de créditos tributários que sua empresa acumulou nos últimos 5 anos e nunca recuperou.
+
+Não é especulação. É a consequência direta de dois fatos concretos: a decisão do STF no Tema 69 — que desde 2017 permite excluir o ICMS da base de cálculo do PIS e da COFINS — e a inércia que impede a maioria das empresas de transformar esse direito em caixa. Para o comércio, a indústria e o setor de serviços tributados por ICMS, a soma dos últimos 5 anos raramente é inferior a seis dígitos.
+
+O problema é que essa janela fecha em dois momentos simultâneos: o prazo prescricional de 5 anos apaga um mês de crédito a cada mês que passa, e o fim do PIS e da COFINS em 31 de dezembro de 2026 — determinado pela Reforma Tributária — encerra definitivamente o ambiente de escrituração desses tributos. Créditos não registrados até lá não existem mais para fins tributários.
+
+---
+
+## O que é o Tema 69 do STF e por que ainda importa em 2026
+
+Em março de 2017, o Supremo Tribunal Federal concluiu o julgamento do Recurso Extraordinário 574.706, conhecido como "a tese do século". A decisão foi direta: o ICMS não integra a base de cálculo do PIS e da COFINS. O argumento técnico é que o ICMS nunca foi receita da empresa — ele transita pela contabilidade, mas pertence ao Estado desde o momento da emissão da nota. Incluí-lo na base dos tributos federais representava tributação sobre um valor que a empresa nunca teve.
+
+O impacto prático: toda empresa que desde março de 2017 calculou PIS e COFINS com o ICMS destacado na nota fiscal incluído na base pagou mais do que devia. A diferença — alíquota PIS/COFINS multiplicada pelo ICMS destacado, mês a mês — é um crédito recuperável por compensação ou restituição.
+
+O marco temporal fixado pelo STF é 15 de março de 2017. Créditos anteriores a essa data não são recuperáveis por essa via. Créditos a partir daí, dentro do prazo prescricional de 5 anos, estão disponíveis — mas o relógio não para.
+
+**O ponto que muitos contadores deixam passar:** a decisão do STF especifica que o ICMS a ser excluído é o ICMS destacado na nota fiscal de saída — não o ICMS efetivamente pago (que pode ser menor, após créditos de entradas). Essa distinção é relevante para o cálculo correto do crédito recuperável.
+
+Para uma empresa no regime não cumulativo (Lucro Real), as alíquotas envolvidas são PIS 1,65% e COFINS 7,6%, totalizando 9,25% sobre o ICMS destacado. Para empresas no regime cumulativo (Lucro Presumido), as alíquotas são PIS 0,65% e COFINS 3%, totalizando 3,65%. Sobre um volume expressivo de notas fiscais ao longo de 5 anos, o resultado é relevante.
+
+---
+
+## A extensão ao ICMS-ST — a nova frente de créditos que surgiu em 2026
+
+Se o Tema 69 já abria uma janela considerável para fabricantes e prestadores, a decisão do TRF-6 em 2026 abriu uma segunda frente que afeta diretamente distribuidoras e varejistas: a extensão da tese ao ICMS-ST, o ICMS recolhido por substituição tributária.
+
+No regime de substituição tributária, o fabricante ou importador recolhe o ICMS de toda a cadeia — o chamado ICMS-ST — na saída do produto. O destinatário (distribuidor, varejista) recebe a mercadoria com o ICMS-ST já embutido no preço, sem destaque explícito na nota fiscal como "ICMS da operação própria". Por isso, muitos escritórios simplesmente não incluíam esse valor na análise do Tema 69.
+
+O TRF-6 reconheceu que o ICMS-ST pago na entrada da mercadoria também não compõe a receita do adquirente — e, portanto, também não deveria ter integrado a base de cálculo do PIS e da COFINS. A decisão cria uma frente de recuperação adicional, de magnitude às vezes superior à do Tema 69 original, para empresas em setores com alta intensidade de substituição tributária.
+
+Os setores mais impactados são aqueles em que a ST é sistemática: farmácias e distribuidoras farmacêuticas, distribuidoras de combustíveis, bebidas, alimentos processados e autopeças. Uma distribuidora de bebidas, por exemplo, pode ter volumes de ICMS-ST que tornam esse crédito muito mais relevante do que a exclusão do ICMS próprio.
+
+**Ponto de atenção jurídico:** a extensão ao ICMS-ST ainda não foi pacificada no STJ ou STF. Está sendo deferida em mandados de segurança e ações anulatórias, mas há risco de reversão ou modulação temporal em decisão superior. A estratégia recomendada — e que a Monumental adota — é habilitar a compensação administrativa via PER/DCOMP enquanto a janela está aberta, com respaldo na decisão do TRF-6, e acompanhar o desenvolvimento jurisprudencial. Esperar pela pacificação pode significar encontrar o prazo prescricional ou o fim do PIS/COFINS como obstáculos intransponíveis.
+
+---
+
+## O calendário de prescrição — o que já foi perdido e o que ainda está no prazo
+
+O prazo prescricional de 5 anos é contado da data do pagamento indevido. Para cada mês de PIS/COFINS recolhido com ICMS na base, o prazo começa a correr a partir da data de pagamento daquele mês específico. Não há um único "prazo" — há um prazo por mês de apuração.
+
+A tabela abaixo mostra o status atual dos créditos gerados após o marco temporal do Tema 69:
+
+| Competência | Vencimento do prazo | Status em julho/2026 |
+|---|---|---|
+| Mar/2021 | Mar/2026 | Prescrito |
+| Abr/2021 | Abr/2026 | Prescrito |
+| Mai/2021 | Mai/2026 | Prescrito |
+| Jun/2021 | Jun/2026 | Prescrito |
+| Jul/2021 | Jul/2026 | **Prescrevendo em julho/2026** |
+| Ago/2021 | Ago/2026 | Ainda no prazo |
+| Set/2021 | Set/2026 | Ainda no prazo |
+| Out/2021 | Out/2026 | Ainda no prazo |
+| ... | ... | ... |
+| Dez/2026 | Dez/2031 | Ainda no prazo |
+
+A conclusão é simples e incômoda: cada mês que passa sem que o levantamento seja feito, um mês de crédito é perdido de forma irreversível. Não há prorrogação, não há exceção, não há recuperação posterior.
+
+A esse prazo se sobrepõe o limite estrutural do fim do PIS/COFINS em dezembro de 2026. Mesmo que créditos de 2022 e 2023 estejam tecnicamente dentro do prazo prescricional até 2027 ou 2028, o ambiente de escrituração (EFD-Contribuições) encerra com o último envio referente a dezembro de 2026, previsto para fevereiro de 2027. Créditos não registrados nesse sistema antes do encerramento não têm como ser aproveitados. Créditos já registrados e não compensados poderão ser usados para compensar CBS pelo prazo de 5 anos após a extinção — mas apenas os que estiverem formalizados.
+
+---
+
+## Quanto sua empresa pode recuperar — metodologia de cálculo
+
+O cálculo do crédito recuperável pelo Tema 69 segue uma lógica direta, aplicável a qualquer empresa.
+
+**Para o regime cumulativo (Lucro Presumido):**
+
+- PIS: 0,65% | COFINS: 3% | Total: 3,65%
+- Crédito mensal = 3,65% × ICMS destacado nas notas fiscais de saída do mês
+
+**Para o regime não cumulativo (Lucro Real):**
+
+- PIS: 1,65% | COFINS: 7,6% | Total: 9,25%
+- Crédito mensal = 9,25% × ICMS destacado nas notas fiscais de saída do mês
+
+**Exemplo para empresa de médio porte no Lucro Presumido:**
+
+Uma empresa de distribuição em Brasília com faturamento de R$ 8 milhões por ano, operando com ICMS médio de 12% nas vendas:
+
+- ICMS destacado anual estimado: R$ 8.000.000 × 12% = R$ 960.000
+- Crédito PIS/COFINS por ano: R$ 960.000 × 3,65% = **R$ 35.040/ano**
+- Crédito potencial para 5 anos de competências ainda no prazo: **R$ 175.200**
+
+Esse valor vai direto para compensação com PIS/COFINS corrente — ou, a partir de janeiro de 2027, com CBS. Para empresas com ICMS-ST relevante, o crédito adicional pode dobrar ou triplicar esse montante.
+
+**Para empresas no Lucro Real com faturamento maior**, a combinação de alíquotas mais elevadas (9,25%) e volume maior de notas torna o potencial substancialmente mais alto. Uma empresa com R$ 30 milhões de faturamento e ICMS médio de 18% pode estar olhando para créditos acima de R$ 1 milhão nos últimos 5 anos.
+
+O cálculo preciso exige os EFDs do período — não é possível estimar com segurança sem acesso aos registros de escrituração. Médias setoriais são ponto de partida, não base de compensação.
+
+---
+
+## O fim do PIS/COFINS em dezembro de 2026 — o que acontece com os créditos
+
+A Emenda Constitucional 132/2023 e a Lei Complementar 214/2025 definiram a extinção do PIS e da COFINS em 31 de dezembro de 2026. A substituição é a CBS — Contribuição sobre Bens e Serviços — com alíquota referência de 0,9% para a maioria das empresas no regime regular.
+
+Para os créditos de PIS/COFINS que existem até dezembro de 2026, o regime de transição prevê:
+
+1. **Créditos já registrados e aprovados em PER/DCOMP** até dezembro de 2026 podem ser compensados com CBS pelos 5 anos seguintes à extinção — ou seja, até dezembro de 2031.
+2. **Créditos existentes mas não registrados** até o encerramento do EFD-Contribuições (último envio em fevereiro de 2027, referente a dezembro de 2026) são definitivamente perdidos. Não há como protocolizar PER/DCOMP para um tributo extinto sem base de escrituração vigente.
+3. **Créditos em litígio** (mandados de segurança, ações anulatórias em andamento) continuam sendo processados até o julgamento final, independentemente do fim do tributo.
+
+A consequência prática é que dezembro de 2026 funciona como um prazo dual: não apenas o prazo prescricional correndo mês a mês, mas também o prazo de existência do próprio sistema de apuração. Empresas que iniciam o levantamento em outubro ou novembro de 2026 correm risco real de não concluir a retificação dos EFDs a tempo.
+
+Para aproveitar o máximo possível, o levantamento precisa começar agora — não no quarto trimestre de 2026.
+
+---
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, com foco em Planejamento Tributário e Auditoria para empresas de médio porte, holdings familiares e grupos empresariais. Sob responsabilidade técnica de Jocivane Brito (tributarista CRC-DF), o escritório aplica o conceito de Inteligência Tributária — uma abordagem proativa que identifica oportunidades e riscos antes que virem passivos. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com o escritório →</a>
+</aside>
+
+<LeadForm
+  id="blog-creditos-pis-cofins-form"
+  eyebrow="Sua empresa já levantou os créditos de PIS/COFINS dos últimos 5 anos?"
+  title="Diagnóstico de créditos tributários antes que o prazo feche"
+  sub="A Monumental Contabilidade analisa os EFDs da sua empresa, estima o potencial de recuperação e conduz o processo de compensação — antes que o fim do PIS/COFINS em dezembro de 2026 encerre essa janela definitivamente."
+  cta="Solicitar diagnóstico →"
+/>
+
+---
+
+## Como funciona o processo de recuperação na prática
+
+A recuperação de créditos de PIS/COFINS pelo Tema 69 não é um processo de litígio — é um processo administrativo. Para a maioria das empresas, não há necessidade de ação judicial. O caminho é:
+
+**Etapa 1 — Levantamento dos EFDs do período**
+
+O ponto de partida são os arquivos da Escrituração Fiscal Digital de Contribuições (EFD-Contribuições) dos meses em aberto. Esses arquivos registram as notas fiscais de saída com o ICMS destacado, base de cálculo do PIS/COFINS declarada e valores apurados. O levantamento identifica a diferença entre o que foi declarado (com ICMS na base) e o que deveria ter sido declarado (sem ICMS na base).
+
+**Etapa 2 — Análise do ICMS-ST nas entradas**
+
+Para empresas em setores com substituição tributária relevante, o levantamento inclui a análise dos documentos de entrada para identificar o ICMS-ST pago e os valores que podem ser adicionados ao crédito com base na extensão do TRF-6.
+
+**Etapa 3 — Retificação dos EFDs ou protocolização de PER/DCOMP**
+
+Com o cálculo concluído, há dois caminhos: retificar os EFDs do período para refletir a base correta (excluindo o ICMS) e protocolar PER/DCOMP na Receita Federal para compensação, ou protocolar PER/DCOMP diretamente com o cálculo da diferença, sem necessidade de retificação dos EFDs para todos os meses. A escolha depende do volume e da janela de tempo disponível.
+
+**Etapa 4 — Acompanhamento da compensação**
+
+O crédito habilitado por PER/DCOMP é compensado com PIS/COFINS corrente até dezembro de 2026 e, a partir de janeiro de 2027, com CBS. O processo tem prazo de resposta da Receita Federal e pode exigir documentação complementar — o que torna o acompanhamento por profissional especializado indispensável.
+
+<DimusHelp
+  title="Como a Monumental Contabilidade conduz a recuperação de créditos"
+  sub="Não estimamos — calculamos. O diagnóstico parte dos EFDs reais do período, não de médias de mercado."
+  items={[
+    "Levantamento dos EFDs de contribuições do período 2021-2026 para apuração do crédito real",
+    "Cálculo do ICMS destacado nas notas de saída e análise de ICMS-ST (decisão TRF-6/2026)",
+    "Retificação dos registros ou protocolização de PER/DCOMP na Receita Federal",
+    "Acompanhamento da compensação com PIS/COFINS corrente ou CBS futura até aprovação",
+  ]}
+/>
+
+---
+
+## Setores com maior potencial de recuperação
+
+Nem todos os setores têm o mesmo potencial de crédito. O volume recuperável depende da alíquota de ICMS praticada, da intensidade de ICMS-ST no setor e do regime tributário da empresa. Os setores com maior concentração de oportunidades são:
+
+**Distribuição e varejo de alimentos e bebidas:** alta intensidade de ICMS-ST em praticamente toda a cadeia. Distribuidoras de bebidas, por exemplo, operam com ICMS-ST que frequentemente supera o ICMS próprio — o que torna a extensão do TRF-6 particularmente relevante para esse segmento.
+
+**Farmácias e distribuidoras farmacêuticas:** o setor farmacêutico é um dos mais atingidos pelo ICMS-ST. Praticamente toda a cadeia de medicamentos opera sob substituição tributária, com valores de ST que podem representar parcela significativa do custo de aquisição.
+
+**Distribuidoras de combustíveis:** setor com uma das maiores alíquotas de ICMS do país e 100% de substituição tributária na cadeia. O potencial de crédito pelo ICMS-ST é elevado, mas exige análise técnica cuidadosa dado o regime específico do setor.
+
+**Indústria com ICMS relevante:** fabricantes de produtos com alíquotas de ICMS acima de 12% nas saídas têm crédito direto pelo Tema 69, sem necessidade de recorrer à extensão do ICMS-ST. Setores como eletroeletrônicos, vestuário e calçados se enquadram aqui.
+
+**Autopeças e distribuidoras do setor automotivo:** outro segmento com alta intensidade de ICMS-ST, especialmente em estados que adotam o regime de substituição para peças e acessórios.
+
+Para empresas de serviços tributadas pelo ICMS (como transportadoras), a análise do Tema 69 também é aplicável — o ICMS incidente sobre a prestação de serviços de transporte pode ter integrado indevidamente a base do PIS/COFINS.
+
+Empresas que faturam exclusivamente por ISS (prestadores de serviços municipais sem ICMS) têm potencial reduzido ou nulo via Tema 69, mas podem ter outras oportunidades de crédito que merecem análise separada.
+
+---
+
+## Perguntas de CFOs e controllers
+
+Nas reuniões de diagnóstico, cinco perguntas surgem com regularidade. As respostas completas estão no FAQ estruturado deste artigo — mas vale o resumo direto:
+
+**"O que é o Tema 69 do STF e como ele gera crédito para minha empresa?"** O STF decidiu em 2017 que o ICMS não integra a base do PIS/COFINS. Empresas que calcularam esses tributos com ICMS na base têm direito à diferença. O mecanismo é compensação administrativa — sem litigar.
+
+**"O PIS/COFINS realmente vai acabar em 2026?"** Sim. A Reforma Tributária (EC 132/2023 + LC 214/2025) extingue PIS e COFINS em 31 de dezembro de 2026. A CBS os substitui. Créditos não declarados até o encerramento do EFD-Contribuições (fevereiro de 2027, referente a dezembro de 2026) são perdidos definitivamente.
+
+**"O prazo prescricional de 5 anos como afeta minha empresa agora?"** Cada mês de crédito tem um prazo individual de 5 anos. Em julho de 2026, créditos de até junho de 2021 já prescreveram. A cada mês que passa, mais um mês é perdido. O levantamento precisa começar antes que o próximo vencimento chegue.
+
+**"A extensão do Tema 69 ao ICMS-ST foi confirmada juridicamente?"** O TRF-6 reconheceu a extensão em 2026. Está sendo deferida em mandados de segurança. Há risco de revisão em instância superior, mas a estratégia de habilitar a compensação administrativa enquanto a janela está aberta é tecnicamente defensável e recomendada para setores com alta intensidade de ST.
+
+**"Quanto minha empresa pode recuperar na prática?"** Depende do volume de notas, do ICMS praticado e do regime tributário. Para uma empresa com R$ 10M de faturamento no comércio, com ICMS médio de 12%, o crédito típico dos 5 anos gira entre R$ 80 mil e R$ 200 mil — antes de considerar o ICMS-ST. O número real exige análise dos EFDs. Estimativas sem os dados são ponto de partida, não base para compensação.
+
+---
+
+Para empresas que nunca fizeram essa revisão — e são a maioria —, a pergunta não é se há crédito. É quanto. E quanto tempo ainda há para recuperá-lo.
+
+A janela fecha em dezembro de 2026. O prazo prescricional elimina um mês a cada mês. O processo de levantamento, cálculo, retificação e protocolização de PER/DCOMP não é feito em semanas — é feito em meses, com os EFDs reais em mãos.
+
+Empresas que iniciam o diagnóstico agora ainda capturam o horizonte completo de créditos disponíveis. Empresas que aguardam o final do ano para agir encontrarão parte do período prescrita e tempo insuficiente para concluir o processo antes do encerramento do sistema.
+
+Veja também: [Como parcelar dívidas fiscais com a PGFN](/posts/parcelamento-divida-fiscal-brasilia-pgfn), [O que muda com a Reforma Tributária: IBS, CBS e split payment](/posts/reforma-tributaria-2026-ibs-cbs-split-payment-brasilia), [Simples Nacional ou Lucro Presumido — como escolher](/posts/simples-nacional-ou-lucro-presumido-como-escolher) e [Como trocar de contador sem perder histórico fiscal](/posts/como-trocar-de-contador-brasilia).
+
+<aside class="cta-block" style="background:#1A3C5E; color:#fff; padding:2rem; border-radius:6px; margin:2.5rem 0; text-align:center;">
+  <h3 style="color:#fff; margin-top:0;">Cada mês que passa, um mês de crédito prescreve</h3>
+  <p>Com o fim do PIS/COFINS em dezembro de 2026, essa é a última janela para recuperar créditos dos últimos 5 anos. A Monumental Contabilidade faz o diagnóstico com os seus EFDs reais e estima o valor recuperável antes de qualquer comprometimento.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block; background:#25D366; color:#fff; padding:0.75rem 1.75rem; border-radius:4px; font-weight:bold; text-decoration:none; margin-top:0.5rem;">Solicitar diagnóstico gratuito →</a>
+</aside>
+
+<aside class="author-bio" style="background:#F8F9FA; border-radius:6px; padding:1.25rem 1.5rem; margin:2rem 0;">
+  <strong>Jocivane Brito</strong> — Tributarista, CRC-DF | Monumental Contabilidade<br />
+  Tributarista com registro no CRC-DF e responsável técnica da Monumental Contabilidade, Jocivane Brito é especializada no planejamento tributário e recuperação de créditos para empresas de médio porte em Brasília-DF. Fundadora do conceito de Inteligência Tributária, atua na identificação de oportunidades fiscais que escritórios convencionais raramente mapeiam.
+</aside>

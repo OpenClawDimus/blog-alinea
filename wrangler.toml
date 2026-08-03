@@ -1,26 +1,9 @@
-name = "blog-dimus"
-compatibility_date = "2026-06-23"
+name = "blog-monumental"
+compatibility_date = "2026-07-29"
 pages_build_output_dir = "dist"
 
-# D1 — blog-tracking (KROB). Criado 2026-06-23, region ENAM.
-[[d1_databases]]
-binding = "DB"
-database_name = "blog-tracking"
-database_id = "71f19cdf-555b-46f3-9b13-b81eb1238e96"
-
-# Secrets/vars de runtime (setar via `wrangler pages secret put <NAME> --project-name blog-dimus`):
-#   META_PIXEL_ID           = 998136448049534  (dataset Dimus / BM_MotherShip 127525879630526; público, pode ser var)
-#   META_ACCESS_TOKEN       = gsm-get dimus-blog-meta-capi-token  (system-user EAA…, NUNCA commitar)
-#   META_TEST_EVENT_CODE    = <opcional, Events Manager — smoke do 1º lead>
-#   DASH_KEY                = <chave admin /admin>
-#   BLUEPRINT_SUPABASE_URL  = https://tllelzquwdfcjjlsurai.supabase.co  (central de leads = blueprint.dimus.com.br/admin)
-#   BLUEPRINT_SUPABASE_KEY  = <anon key — NÃO service_role. Usar anon + RLS policy em supabase/migrations/20260624_blog_rls_anon_insert.sql
-#                              que concede INSERT/UPDATE (on_conflict=email) ONLY WHERE ig_data_source='form_submitted' AND source='blog'.
-#                              service_role bypassa toda RLS e expõe projeto inteiro se a key vazar.>
-#   GHL_TOKEN               = gsm-get dimus-ghl-pit-token  (PIT da location Guilherme Ribeiro; CRM source of truth)
-#   GHL_LOCATION_ID         = 5t9LTZfC12mnSsesCuoD  (location "Guilherme Ribeiro")
-#   GHL_PIPELINE_ID         = zTeBzW1qD2UxnqB8aBQ6  (pipeline "BluePrint [Content]"; reservado p/ opportunities futuras)
-#   GA4_MEASUREMENT_ID      = G-Q6KH427C70
-#   WA_WEBHOOK_SECRET       = <token aleatório seguro — mesmo token usado na URL do webhook Evolution>
-# Build var (público, no ambiente de build CF Pages): PUBLIC_META_PIXEL_ID = 998136448049534
-# Lembrete (insight #17 dimus-usa): CF Pages só binda secret em NOVO deploy → após secret put, rebuild + redeploy.
+# Secrets/vars de runtime (setar via `wrangler pages secret put <NAME> --project-name blog-monumental`):
+#   GA4_MEASUREMENT_ID = G-715ZBSK42X  (mesmo GA4 do site principal monumentalcontabilidade.com.br)
+#   DASH_KEY           = <chave admin /admin>
+# Build var (público): PUBLIC_META_PIXEL_ID = (vazio — cliente não tem pixel ainda)
+# Lembrete: CF Pages só binda secret em NOVO deploy → após secret put, rebuild + redeploy.

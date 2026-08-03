@@ -1,0 +1,229 @@
+---
+title: "Juros sobre Capital Próprio em 2026: O Que Mudou com a Lei 14.789"
+description: "A Lei 14.789/2023 limitou a base de cálculo do JCP. O que ainda é dedutível em 2026, como calcular com a TJLP e quando a estratégia ainda compensa."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-30T14:00:00-03:00
+tags:
+  - "juros-sobre-capital-proprio"
+  - "jcp"
+  - "planejamento-tributario-empresa"
+  - "contabilidade-consultiva"
+  - "planejamento-tributario"
+featured: false
+coverImage: "covers/cover-juros-capital-proprio.jpg"
+ogImage: "/og/juros-capital-proprio.png"
+faq:
+  - q: "O que é JCP (Juros sobre Capital Próprio) e como funciona?"
+    a: "JCP (Juros sobre Capital Próprio) é uma remuneração que a empresa pode pagar aos sócios ou acionistas, calculada sobre o Patrimônio Líquido ajustado, à taxa TJLP (Taxa de Juros de Longo Prazo). Para a empresa, é dedutível do IRPJ e CSLL (reduz a base tributável). Para o sócio/acionista pessoa física, é tributado por IRRF de 15% na fonte — inferior à tabela progressiva do IRPF. Funciona como alternativa ou complemento ao dividendo: enquanto o dividendo é isento (ou 10% acima de R$50K pós-Lei 15.270), o JCP é sempre tributado a 15% IRRF mas é dedutível para a empresa."
+  - q: "O que a Lei 14.789/2023 mudou no cálculo do JCP?"
+    a: "A Lei 14.789/2023 proibiu que variações patrimoniais positivas ocorridas desde 1º de janeiro de 2023 entrem na base de cálculo do JCP. Antes, o JCP era calculado sobre o Patrimônio Líquido total — incluindo todos os aumentos de capital social, reservas de lucros e resultado do período. Com a nova lei, só entram na base as variações patrimoniais que já eram elegíveis em 31/12/2022 — os aumentos de 2023 em diante (novos aportes de capital, lucros gerados de 2023 em diante retidos como reserva) ficam de fora. Na prática, a base de cálculo do JCP se 'congela' nos valores de 2022 e vai encolhendo à medida que a empresa distribui lucros acumulados pré-2023."
+  - q: "Ainda vale a pena usar JCP em 2026?"
+    a: "Depende da empresa. Para empresas com grande base de PL pré-2022 (patrimônio líquido construído antes da vigência da nova lei) e que estão no Lucro Real, JCP ainda pode ser eficiente: a dedução reduz o IRPJ+CSLL em 34% sobre o valor pago, enquanto o sócio paga 15% IRRF. A diferença líquida a favor da empresa é de 19 centavos por real de JCP (34% - 15%). Para empresas recém-constituídas ou com PL majoritariamente formado após 2022, a base de cálculo é quase nula — o JCP perde sentido."
+  - q: "JCP pode ser distribuído em vez de dividendo?"
+    a: "JCP e dividendo são instrumentos diferentes mas complementares. O dividendo é isento de IR para o sócio (até R$ 50K/mês pós-Lei 15.270) mas não é dedutível para a empresa. O JCP é sempre tributado a 15% IRRF para o sócio mas é dedutível para a empresa (34% de benefício fiscal). A combinação ótima: usar JCP até o limite dedutível (50% do lucro do período ou 50% das reservas de lucros — o maior dos dois) e o restante como dividendo. Com a Lei 15.270/2025, dividendos acima de R$50K/mês passam a ter 10% IRRF — o diferencial do JCP ficou menor para retiradas muito altas."
+  - q: "Qual é o limite de JCP que pode ser deduzido e como é calculado?"
+    a: "O JCP é calculado sobre o Patrimônio Líquido ajustado elegível (pré-2023) × TJLP. A TJLP é fixada trimestralmente pelo BNDES — em 2026 está em torno de 7% a.a. O limite de dedutibilidade é o maior entre: 50% do lucro do período antes da dedução do JCP, ou 50% dos lucros acumulados e reservas de lucros (art. 9º, Lei 9.249/95, com limitações da Lei 14.789/2023). A empresa também pode capitalizar o JCP (em vez de pagar ao sócio) — nesse caso segue o mesmo tratamento tributário mas o sócio não recebe caixa, recebe aumento na participação."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule
+  question="O que mudou no JCP com a Lei 14.789/2023 e ainda vale a pena usar em 2026?"
+  answer="A Lei 14.789/2023 proibiu que variações patrimoniais positivas ocorridas a partir de 1º/01/2023 integrem a base de cálculo do JCP. Na prática, a base 'congelou' no Patrimônio Líquido de 31/12/2022 e vai sendo corroída à medida que os lucros pré-2023 são distribuídos. Para empresas no Lucro Real com patrimônio líquido relevante construído antes de 2023, JCP ainda gera benefício líquido de 19 centavos por real pago (dedução de 34% para a empresa menos 15% de IRRF do sócio). Para empresas novas ou com PL majoritariamente formado após 2022, a base elegível é irrisória — o instrumento perde eficiência. O ponto central de 2026 é o mapeamento correto do PL elegível: uma apuração errada expõe a empresa a glosa da dedução com multa de 75%."
+/>
+
+## JCP pós-Lei 14.789 — o que ainda funciona e o que foi bloqueado
+
+Os Juros sobre Capital Próprio sempre foram, desde sua criação pelo art. 9º da Lei 9.249/95, uma das poucas ferramentas de planejamento tributário legítimas para empresas no Lucro Real: permitiam deduzir do lucro tributável uma remuneração paga aos sócios, calculada sobre o Patrimônio Líquido à taxa TJLP. A reforma que a Lei 14.789/2023 trouxe não extinguiu o JCP, mas restringiu o que entra na base de cálculo de forma suficientemente severa para mudar completamente a análise de viabilidade para cada empresa.
+
+A pergunta prática de 2026 não é "JCP ainda existe?" — existe, e segue vigente com base legal intacta. A pergunta é: **qual é a base de PL elegível da minha empresa e qual benefício fiscal concreto o JCP ainda produz?** Para muitas empresas constituídas ou capitalizadas recentemente, a resposta é: nenhum benefício relevante. Para empresas com patrimônio líquido robusto construído antes de 2023, o JCP permanece como instrumento de primeira linha de remuneração de sócios.
+
+Este post percorre o que mudou tecnicamente, como calcular o JCP em 2026 com exemplo numérico completo, e quando ainda vale a pena — ou quando a energia é melhor direcionada para estruturar [dividendos e pró-labore de forma otimizada](/posts/simples-nacional-ou-lucro-presumido-como-escolher).
+
+---
+
+## O que é JCP e como funciona — conceito base
+
+O Juros sobre Capital Próprio é uma remuneração que a pessoa jurídica tributada pelo Lucro Real pode pagar (ou creditar) aos seus sócios ou acionistas. A lógica econômica é simples: assim como os juros pagos a credores externos são dedutíveis do lucro tributável, o JCP permite deduzir uma "remuneração teórica" pelo capital próprio que os sócios mantêm investido na empresa.
+
+A base de cálculo é o Patrimônio Líquido elegível multiplicado pela TJLP (Taxa de Juros de Longo Prazo), fixada trimestralmente pelo Conselho Monetário Nacional e divulgada pelo BNDES. Em 2026, a TJLP está em torno de **7,0% ao ano** — o que significa que cada R$ 1 milhão de PL elegível gera até R$ 70.000 de JCP dedutível por ano.
+
+Para a empresa, o JCP reduz a base do IRPJ e da CSLL. Como a alíquota combinada no Lucro Real é de 34% (IRPJ 15% + adicional 10% + CSLL 9%), cada real de JCP deduzido representa R$ 0,34 de imposto não pago. Para o sócio que recebe, incide IRRF de 15% na fonte — uma tributação fixa e definitiva, inferior às alíquotas progressivas do IRPF para rendimentos elevados.
+
+O instrumento não está disponível para empresas no Simples Nacional nem no Lucro Presumido. É exclusivo do Lucro Real.
+
+---
+
+## O que a Lei 14.789/2023 mudou — a "congelação" da base elegível
+
+Até 31/12/2022, a base de cálculo do JCP era o Patrimônio Líquido da empresa na sua integralidade: capital social integralizado, reservas de capital, lucros acumulados e reservas de lucros — tudo compunha a base sobre a qual a TJLP era aplicada.
+
+A Lei 14.789/2023 introduziu o art. 9º-A na Lei 9.249/95, estabelecendo que **variações patrimoniais positivas ocorridas a partir de 1º de janeiro de 2023 ficam excluídas da base de cálculo do JCP**. A vigência dessa restrição se aplica aos fatos geradores de IRPJ a partir de 1º de janeiro de 2024 (exercício fiscal 2023 em diante para apuração do IRPJ anual).
+
+O efeito prático é uma "congelação": a base elegível é o PL em 31/12/2022, e ela só pode ser reduzida — nunca aumentada — pelos eventos subsequentes. Especificamente:
+
+- **Aportes de capital feitos em 2023 em diante**: não entram na base elegível
+- **Lucros retidos como reserva de 2023 em diante**: não entram na base elegível
+- **Distribuição de lucros acumulados pré-2023**: reduz a base elegível (porque esses lucros saem do PL pré-2023)
+- **Prejuízos**: reduzem a base elegível normalmente
+- **Reavaliação de ativos**: tratamento específico, geralmente excluído
+
+A consequência de longo prazo: para empresas que acumulam lucros e não os distribuem, a base elegível vai encolhendo como proporção do PL total — o PL real cresce com os novos lucros (pós-2022), mas a base JCP permanece igual ou menor. Para empresas que distribuem os lucros pré-2022 regularmente, a base elegível diminui mais rapidamente ainda.
+
+---
+
+## O cálculo do JCP em 2026 — passo a passo com exemplo numérico
+
+O cálculo segue quatro passos:
+
+**1. Identificar o PL elegível (base JCP)**
+
+Levantamento do PL em 31/12/2022 ajustado pelas reduções permitidas (distribuições de lucros pré-2023, prejuízos) até a data de cálculo. Esse número deve estar documentado no controle contábil da empresa, segregado do PL total.
+
+**2. Aplicar a TJLP**
+
+Multiplicar o PL elegível pela TJLP acumulada do período. Para apuração anual de 2026: aproximadamente 7,0% (confirmar a TJLP trimestral vigente em cada período via BNDES).
+
+**3. Verificar o limite de dedutibilidade**
+
+O valor calculado no passo 2 só é integralmente dedutível se não ultrapassar o maior entre:
+- 50% do lucro do exercício (antes da dedução do JCP)
+- 50% dos lucros acumulados e reservas de lucros
+
+**4. Aplicar a alíquota e comparar o benefício**
+
+O JCP dedutível gera economia de 34% em IRPJ+CSLL para a empresa. O custo para o sócio é 15% de IRRF. Benefício líquido: 19%.
+
+**Exemplo numérico completo:**
+
+| Item | Valor |
+|---|---|
+| Lucro 2026 (antes do JCP) | R$ 2.000.000 |
+| PL elegível (pré-2023) | R$ 8.000.000 |
+| TJLP 2026 | 7,0% a.a. |
+| JCP máximo calculado | R$ 8.000.000 × 7% = **R$ 560.000** |
+| Limite 50% do lucro | R$ 2.000.000 × 50% = R$ 1.000.000 |
+| JCP dedutível (menor) | **R$ 560.000** |
+| Benefício empresa (34%) | R$ 560.000 × 34% = **R$ 190.400** |
+| Custo sócio (15% IRRF) | R$ 560.000 × 15% = **R$ 84.000** |
+| **Benefício líquido da operação** | **R$ 190.400 − R$ 84.000 = R$ 106.400** |
+
+Nesse cenário, o JCP gera R$ 106.400 de benefício líquido real — redução de custo tributário para o grupo empresa + sócio. Esse benefício só existe porque o PL elegível é substancial (R$ 8 milhões pré-2023). Uma empresa com PL elegível de R$ 500.000 geraria apenas R$ 35.000 de JCP e R$ 6.650 de benefício líquido — o que pode não justificar o custo administrativo do instrumento.
+
+---
+
+## JCP vs. dividendo vs. pró-labore — comparativo em 2026
+
+A decisão sobre qual instrumento usar para remunerar sócios em 2026 envolve três variáveis: carga tributária na empresa, carga tributária no sócio, e encargos previdenciários. A tabela abaixo sintetiza os três instrumentos para uma empresa no Lucro Real com sócio pessoa física:
+
+| Critério | JCP | Dividendo | Pró-labore |
+|---|---|---|---|
+| **Dedutível para empresa?** | Sim (34% de economia) | Não | Sim (como despesa de pessoal) |
+| **IRPJ/CSLL sobre o valor** | Não incide (deduzido) | Incide normalmente (lucro não reduzido) | Incide normalmente (deduzido do lucro) |
+| **Tributação sócio PF** | 15% IRRF (definitivo) | Isento até R$ 50K/mês; 10% IRRF acima (Lei 15.270) | Tabela progressiva IRPF (até 27,5%) |
+| **INSS sobre o valor** | Não | Não | Sim (contribuição patronal 20% + RAT + terceiros; e 11% do sócio até teto) |
+| **Regime permitido** | Lucro Real apenas | Todos | Todos (sócio com função) |
+| **Limite de uso** | PL elegível × TJLP; 50% do lucro | Lucro disponível | Sem limite legal (valor de mercado recomendado) |
+| **Risco fiscal principal** | Base elegível incorreta; cálculo de PL pré-2023 equivocado | Distribuição Disfarçada de Lucros (pró-labore acima do mercado) | DDL se acima do mercado; custo previdenciário elevado |
+| **Melhor uso** | Sócios com participação histórica elevada, empresa com PL pré-2022 robusto | Complemento após JCP, dentro do limite de isenção | Sócio que atua operacionalmente; INSS recolhido adequadamente |
+
+A combinação mais eficiente para a maioria das empresas no Lucro Real em 2026 é: **pró-labore no limite do teto do INSS + JCP até o limite elegível + dividendos no saldo restante dentro da faixa de isenção**. Acima da faixa de isenção de dividendos (R$ 50K/mês), a análise muda porque os 10% do dividendo ficam próximos dos 15% do JCP — mas o JCP ainda tem a vantagem da dedutibilidade para a empresa.
+
+Para aprofundar a discussão sobre qual regime tributário viabiliza cada instrumento, vale consultar a análise sobre [Simples Nacional ou Lucro Presumido](/posts/simples-nacional-ou-lucro-presumido-como-escolher).
+
+---
+
+## Quando JCP ainda compensa — e quando não compensa mais
+
+**JCP compensa quando:**
+
+- A empresa tem Lucro Real com PL elegível (pré-2023) elevado — regra prática: PL elegível acima de R$ 2 milhões justifica o uso regular
+- O lucro tributável é consistente, o que garante que o JCP será integralmente dedutível dentro do limite de 50%
+- Os sócios têm perfil de renda que torna o IRRF de 15% mais vantajoso do que a tabela progressiva (sócios com rendimentos tributáveis elevados)
+- A empresa tem estrutura contábil que permite segregar e documentar o PL elegível pré-2023 sem ambiguidade
+
+**JCP não compensa quando:**
+
+- A empresa foi constituída após 2022 ou realizou a maior parte de seu aporte de capital após 2023 — a base elegível é irrisória
+- O PL elegível já foi quase inteiramente erodido por distribuições de lucros pré-2023 nos últimos três anos
+- A empresa opera no Simples Nacional ou Lucro Presumido — o instrumento não está disponível
+- O custo administrativo de segregar e documentar o PL elegível pré-2023 supera o benefício fiscal calculado (comum em empresas menores)
+- A empresa está apurando prejuízo — o JCP não pode ser calculado sobre PL negativo e o benefício da dedução é diferido
+
+O erro mais comum é continuar calculando JCP com a base antiga (PL total) sem aplicar a restrição da Lei 14.789/2023. Uma glosa dessa dedução em auditoria gera IRPJ+CSLL sobre o valor indevidamente deduzido, acrescido de multa de ofício de 75% e juros SELIC — o passivo supera o benefício fiscal que a dedução gerou. Esse é exatamente o tipo de risco que uma contabilidade consultiva identifica antes de se materializar, como discutido em [recuperação de créditos de PIS/COFINS](/posts/recuperacao-creditos-pis-cofins-2026) — a lógica de verificar cada benefício antes de usá-lo é a mesma.
+
+---
+
+## JCP capitalizado — quando usar
+
+O JCP capitalizado é uma variante em que o valor apurado não é pago em caixa ao sócio, mas sim incorporado ao capital social da empresa — o sócio não recebe dinheiro, mas tem sua participação aumentada pelo valor capitalizado.
+
+O tratamento tributário do JCP capitalizado é idêntico ao do JCP pago: incide IRRF de 15% no momento da capitalização (não no momento de uma eventual distribuição futura), e a empresa mantém a dedutibilidade integral para fins de IRPJ e CSLL.
+
+O JCP capitalizado faz sentido em dois cenários: quando a empresa precisa fortalecer o capital próprio (capitalização via JCP é mais barata do que aporte externo, porque o diferencial fiscal cobre parte do custo); e quando o sócio não precisa de caixa imediato mas deseja aumentar sua participação societária sem novo aporte. O ponto de atenção: o sócio paga 15% de IRRF sem receber caixa para liquidar esse imposto — o planejamento de liquidez do sócio precisa considerar esse passivo.
+
+Para [holding familiar em Brasília](/posts/holding-familiar-brasilia-planejamento-patrimonial) que concentra participações em diversas empresas operacionais, o JCP capitalizado pode ser usado para transferir valor entre as camadas societárias com eficiência tributária — desde que a base elegível da holding esteja corretamente mapeada.
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, com foco em Planejamento Tributário e Contabilidade Consultiva para empresas de médio porte no Lucro Real, holdings familiares e grupos empresariais. Sob responsabilidade técnica de Jocivane Brito (tributarista CRC-DF), o escritório aplica o conceito de Inteligência Tributária — identificando o JCP elegível correto, estruturando a remuneração de sócios e mapeando riscos antes que se tornem passivos. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com o escritório →</a>
+</aside>
+
+<LeadForm
+  id="blog-jcp-form"
+  eyebrow="Sua empresa ainda usa JCP com a base correta pós-Lei 14.789?"
+  title="Diagnóstico de JCP e estrutura de remuneração de sócios"
+  sub="A Monumental Contabilidade mapeia o PL elegível pré-2023 da sua empresa, calcula o JCP correto para 2026 e estrutura a combinação ideal de JCP + dividendo + pró-labore para reduzir a carga tributária do grupo."
+  cta="Solicitar diagnóstico →"
+/>
+
+<DimusHelp
+  title="Como a Monumental Contabilidade estrutura o JCP em 2026"
+  sub="Cálculo correto do PL elegível, documentação da base pré-2023 e estruturação da remuneração — sem exposição a glosa de dedução."
+  items={[
+    "Levantamento e segregação do Patrimônio Líquido elegível (pré-2023) com documentação contábil robusta",
+    "Cálculo do JCP com TJLP trimestral correta e verificação dos limites de dedutibilidade (50% do lucro ou 50% das reservas)",
+    "Comparativo JCP × dividendo × pró-labore com carga tributária real do grupo empresa + sócios",
+    "Estruturação da política de remuneração anual e planejamento do IRRF a recolher antes do fechamento do balanço",
+  ]}
+/>
+
+---
+
+## Perguntas frequentes sobre JCP em 2026
+
+### O que é JCP (Juros sobre Capital Próprio) e como funciona?
+
+JCP é uma remuneração que a empresa pode pagar aos sócios ou acionistas, calculada sobre o Patrimônio Líquido ajustado à taxa TJLP. Para a empresa, é dedutível do IRPJ e CSLL — reduz a base tributável em até 34%. Para o sócio pessoa física, é tributado por IRRF de 15% na fonte. Funciona como alternativa ou complemento ao dividendo: o dividendo é isento até R$ 50K/mês (Lei 15.270), mas não é dedutível para a empresa; o JCP é sempre tributado a 15% IRRF mas gera dedução de 34% para a empresa — resultando em benefício líquido de 19% por real distribuído.
+
+### O que a Lei 14.789/2023 mudou no cálculo do JCP?
+
+A Lei 14.789/2023 proibiu que variações patrimoniais positivas ocorridas desde 1º de janeiro de 2023 entrem na base de cálculo do JCP. Antes, o JCP era calculado sobre o Patrimônio Líquido total. Com a nova lei, só entram na base as variações patrimoniais elegíveis em 31/12/2022. Novos aportes de capital e lucros retidos de 2023 em diante ficam de fora. A base se "congela" nos valores de 2022 e vai sendo reduzida à medida que a empresa distribui os lucros acumulados pré-2023.
+
+### Ainda vale a pena usar JCP em 2026?
+
+Depende do PL elegível da empresa. Para empresas com PL pré-2022 acima de R$ 2 milhões e que operam no Lucro Real, JCP ainda gera benefício líquido de 19% sobre o valor distribuído — economia real de impostos para o grupo empresa + sócio. Para empresas constituídas após 2022 ou com PL majoritariamente formado depois dessa data, a base elegível é quase nula e o instrumento perde relevância. O diagnóstico contábil do PL elegível é o passo zero antes de qualquer decisão.
+
+### JCP pode ser distribuído em vez de dividendo?
+
+JCP e dividendo são instrumentos complementares. A combinação ótima em 2026: usar JCP até o limite do PL elegível × TJLP, respeitando o teto de 50% do lucro ou 50% das reservas — o maior dos dois. O restante como dividendo, dentro do limite de isenção de R$ 50K/mês (Lei 15.270). Acima desse limite, dividendos têm 10% IRRF — ainda inferior ao JCP (15%), mas o JCP tem a vantagem adicional da dedutibilidade para a empresa. A decisão ótima depende do volume de retirada e da composição da renda de cada sócio.
+
+### Qual é o limite de JCP que pode ser deduzido e como é calculado?
+
+O JCP é calculado sobre o PL elegível (pré-2023) × TJLP. O limite de dedutibilidade é o maior entre: 50% do lucro do período (antes da dedução do JCP) ou 50% dos lucros acumulados e reservas de lucros. Exceder esse limite significa que o excedente não é dedutível — a empresa paga o JCP mas não deduz integralmente, reduzindo o benefício fiscal. O cálculo deve ser feito antes do fechamento do balanço anual: JCP declarado retroativamente após o encerramento do exercício não é dedutível.
+
+Para empresas que percebem que estão com [estrutura societária com risco de distribuição disfarçada de lucros](/posts/distribuicao-disfarcada-lucros-risco-fiscal), a regularização via JCP corretamente estruturado pode ser parte da solução — desde que a base elegível seja documentada adequadamente.
+
+<aside class="cta-block" style="background:#1A3C5E; color:#fff; padding:2rem; border-radius:6px; margin:2.5rem 0; text-align:center;">
+  <h3 style="color:#fff; margin-top:0;">Calcule o JCP correto para 2026 antes de fechar o balanço</h3>
+  <p>Uma base de JCP errada (usando PL pós-2022 indevidamente) expõe a empresa a glosa de dedução com multa de 75%. A Monumental Contabilidade faz o diagnóstico completo do PL elegível e estrutura a remuneração de sócios com segurança.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block; background:#25D366; color:#fff; padding:0.75rem 1.75rem; border-radius:4px; font-weight:bold; text-decoration:none; margin-top:0.5rem;">Solicitar diagnóstico de JCP →</a>
+</aside>
+
+<aside class="author-bio" style="background:#F8F9FA; border-radius:6px; padding:1.25rem 1.5rem; margin:2rem 0;">
+  <strong>Jocivane Brito</strong> — Tributarista, CRC-DF | Monumental Contabilidade<br />
+  Tributarista com registro no CRC-DF e responsável técnica da Monumental Contabilidade, Jocivane Brito é especializada em planejamento tributário e contabilidade consultiva para empresas de médio porte no Lucro Real, holdings familiares e grupos empresariais em Brasília-DF. Conduz regularmente diagnósticos de JCP, estruturação de remuneração de sócios e reorganizações societárias para adequação às normas da Receita Federal, incluindo as restrições introduzidas pela Lei 14.789/2023.
+</aside>

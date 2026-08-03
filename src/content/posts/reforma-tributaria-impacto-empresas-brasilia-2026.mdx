@@ -1,0 +1,231 @@
+---
+title: "Reforma Tributária 2026: Impacto Real nas Empresas de Brasília"
+description: "O que a Reforma Tributária muda na prática para empresas de médio porte em Brasília: CBS, IBS, split payment, NFS-e e o que fazer nos próximos 6 meses antes do regime pleno."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-30T18:00:00-03:00
+tags:
+  - "reforma-tributaria-2026"
+  - "ibs-cbs"
+  - "split-payment"
+  - "contabilidade-consultiva"
+  - "planejamento-tributario"
+featured: false
+coverImage: "covers/cover-reforma-tributaria-empresas-brasilia.jpg"
+ogImage: "/og/reforma-tributaria-empresas-brasilia.png"
+faq:
+  - q: "O que muda efetivamente nas obrigações fiscais de uma empresa em 2026 com a Reforma Tributária?"
+    a: "Em 2026, são três mudanças operacionais concretas: (1) desde janeiro de 2026, todas as NF-e devem destacar CBS (0,9%) e IBS (0,1%) como campos separados — erro de classificação gera perda de crédito e risco de autuação; (2) a partir de julho/agosto de 2026, os campos CST-IBS/CBS e cClassTrib se tornam obrigatórios no preenchimento dos documentos fiscais, exigindo parametrização correta no ERP; (3) o split payment começa em modo piloto para grandes contribuintes em 2026 — empresas médias devem monitorar o calendário de entrada obrigatória. O PIS e COFINS seguem em vigor até dezembro de 2026."
+  - q: "O que é o split payment e quando minha empresa será impactada?"
+    a: "Split payment é o mecanismo em que o pagamento de uma transação é interceptado pelo sistema bancário ou pela administradora de pagamentos, que recolhe automaticamente o IBS e CBS devidos e repassa apenas o líquido ao fornecedor. A empresa não precisa fazer nada — o recolhimento é automático. O impacto negativo é no fluxo de caixa: empresas que dependiam do 'float' do tributo entre o fato gerador e o prazo de pagamento deixam de ter esse dinheiro disponível. A entrada para empresas de médio porte está prevista para 2027, mas o planejamento de capital de giro deve começar agora."
+  - q: "A Reforma Tributária vai aumentar ou reduzir os impostos para a minha empresa?"
+    a: "Depende do setor, do regime atual e do volume de créditos que a empresa acumulará no novo sistema. O IBS e CBS são tributos não cumulativos, com direito a crédito em toda a cadeia de produção e distribuição — diferente do ISS (que não gerava crédito). Para prestadores de serviços no Simples Nacional, a transição para o ISSQN → IBS será gradual (2026-2032). Para empresas no Lucro Presumido com serviços tributados por ISS a 5%, a carga de IBS+CBS pode ser maior ou menor dependendo da cadeia de fornecedores e dos créditos disponíveis. Uma simulação com os dados reais da empresa é a única forma de saber o impacto líquido."
+  - q: "O que precisa ser ajustado no ERP da minha empresa por causa do IBS/CBS?"
+    a: "Os principais ajustes de sistema são: (1) parametrização dos campos CBS e IBS separados nas NF-e — tributação, CST e alíquotas específicas; (2) mapeamento dos itens por código NCM ou serviço com as alíquotas corretas de IBS/CBS (que variam por produto/serviço e por estado/município); (3) configuração do cClassTrib (campo de classificação tributária) para cada item; (4) integração da escrita fiscal com o novo layout do SPED para EFD-IBS/CBS. Empresas com ERP desatualizado ou parametrização manual têm risco elevado de erro no segundo semestre de 2026."
+  - q: "Empresas fornecedoras do governo federal em Brasília têm alguma particularidade na Reforma Tributária?"
+    a: "Sim. O governo federal tem imunidade tributária sobre IBS e CBS nas compras diretas — o que significa que o split payment funciona de forma diferente em contratos com o poder público. Para empresas fornecedoras do governo, a regra de crédito de IBS/CBS precisa ser analisada contrato a contrato. Além disso, os contratos existentes com cláusulas de reajuste tributário (art. 65, Lei 8.666/93) precisam ser revistos: a extinção do ISS e a criação do IBS podem ativar o direito ao reequilíbrio contratual, mas apenas se a cláusula foi redigida corretamente."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule q="O que a Reforma Tributária muda, na prática, para uma empresa de médio porte em Brasília em 2026?">
+
+As mudanças operacionais já vigentes em 2026 são três: (1) NF-e com campos separados de CBS (0,9%) e IBS (0,1%) desde janeiro — erros de parametrização geram perda de crédito; (2) campos CST-IBS/CBS e cClassTrib obrigatórios nos documentos fiscais a partir de julho/agosto — exige atualização de ERP; (3) split payment em piloto para grandes contribuintes — empresas médias entram a partir de 2027, mas o planejamento de capital de giro começa agora. O PIS e COFINS só são extintos em dezembro de 2026; até lá, as obrigações de ambos os sistemas rodam em paralelo.
+
+</AnswerCapsule>
+
+Nos últimos 12 meses, cada controller, CFO e sócio de empresa de médio porte em Brasília leu dezenas de artigos, assistiu a webinars e ouviu especialistas explicando a Reforma Tributária. A maioria saiu sabendo o que são CBS, IBS e split payment. Pouquíssimos saíram sabendo **o que precisa estar feito até dezembro de 2026** para que a empresa não seja autuada, não perca créditos acumulados e não tenha o fluxo de caixa comprometido quando o regime pleno chegar.
+
+Este artigo não explica a Reforma Tributária. Ele explica o que a Reforma Tributária muda **na sua operação**, no seu ERP, nos seus contratos e no seu capital de giro — especificamente para empresas de R$2M a R$30M que prestam serviços em Brasília-DF, incluindo consultoria, TI, engenharia, saúde e fornecedores do governo federal.
+
+---
+
+## O que já mudou em 2026 — CBS, IBS e as NF-e
+
+Desde janeiro de 2026, todas as Notas Fiscais Eletrônicas emitidas por contribuintes do Lucro Presumido e do Lucro Real devem conter campos específicos destacando dois novos tributos: a **CBS** (Contribuição sobre Bens e Serviços, de competência federal) com alíquota de 0,9%, e o **IBS** (Imposto sobre Bens e Serviços, de competência estadual e municipal) com alíquota de 0,1%.
+
+Esses valores coexistem com o PIS (0,65%) e a COFINS (3%) até dezembro de 2026, quando os tributos federais antigos são extintos. O período de convivência — tecnicamente chamado de "período de teste" pela LC 214/2025 — não é opcional nem decorativo. É a janela em que a Receita Federal e o Comitê Gestor do IBS calibram a apuração, os sistemas e os créditos antes da entrada em regime pleno.
+
+### Por que a parametrização do ERP é um ponto crítico agora
+
+O problema prático: a CBS e o IBS exigem campos novos nas NF-e que os ERPs antigos simplesmente não tinham. A Nota Técnica NT 2025.001 da SEFAZ especificou os novos campos — CST-IBS, CST-CBS e cClassTrib — que se tornam **obrigatórios nos documentos fiscais entre julho e agosto de 2026**.
+
+Uma empresa que emitiu NF-e corretamente em janeiro, fevereiro e março de 2026 pode estar vulnerável a partir de agosto se o ERP não tiver sido atualizado para preencher esses campos. Documento fiscal sem cClassTrib correto: risco de autuação e perda do direito a crédito de CBS no futuro.
+
+O efeito prático para serviços: cada tipo de serviço tem uma classificação de IBS/CBS que varia conforme o código do serviço, o estado e o município. Uma empresa de TI que presta serviços de desenvolvimento de software para clientes em Brasília, São Paulo e Recife, por exemplo, pode ter alíquotas de IBS diferentes por localidade — o que exige mapeamento item a item no ERP, não uma configuração genérica.
+
+---
+
+## O split payment — impacto no fluxo de caixa (linha do tempo)
+
+O split payment é, provavelmente, a mudança operacional mais subestimada da Reforma Tributária para empresas de médio porte. O nome é sofisticado, mas o conceito é simples: **no momento em que um cliente paga uma nota fiscal, o sistema bancário ou a administradora de pagamentos intercepta o valor correspondente ao IBS e CBS e recolhe diretamente ao fisco — sem que a empresa precise fazer nada**.
+
+O recolhimento automático resolve um problema estrutural do sistema tributário brasileiro (a inadimplência de tributos indiretos). Mas cria um problema de fluxo de caixa imediato para quem dependia do "float" — o uso do dinheiro do tributo entre o fato gerador e o prazo de recolhimento, que pode chegar a 25 dias no caso do PIS/COFINS mensal.
+
+### Linha do tempo do split payment
+
+| Período | Escopo | Impacto para empresas médias |
+|---|---|---|
+| 2026 (piloto) | Grandes contribuintes (receita >R$100M) e e-commerce | Monitorar; sem obrigação direta |
+| 2027 | Expansão progressiva para médias empresas | **Planejamento de capital de giro obrigatório** |
+| 2028 | Universalização para contribuintes do IBS/CBS | Float tributário eliminado para todos |
+| 2033 | Regime pleno — PIS/COFINS/ISS extintos | IBS/CBS com alíquota plena (~26,5%) |
+
+Uma empresa de consultoria que fatura R$8M/ano e tem margem líquida de 18% pode ter, hoje, entre R$40.000 e R$80.000 de "float" tributário rodando no seu caixa mensalmente (estimativa conservadora, considerando PIS, COFINS e ISS). Com o split payment, esse valor some — e não volta.
+
+Para empresas que operam com capital de giro apertado ou ciclo financeiro negativo, **a entrada no split payment em 2027 precisa estar modelada no planejamento financeiro de 2026**, não de 2027. A decisão sobre limite de crédito bancário, cheque especial e antecipação de recebíveis precisa incorporar esse cenário antes que ele se torne realidade.
+
+---
+
+## NFS-e nacional em Brasília — o que mudou para prestadores de serviços no DF
+
+A Lei Complementar 214/2025 instituiu a NFS-e (Nota Fiscal de Serviços Eletrônica) padrão nacional como obrigatória a partir de janeiro de 2026. Para prestadores de serviços em Brasília, a mudança prática é significativa — embora menos traumática do que em municípios que tinham sistemas próprios muito antigos.
+
+O Distrito Federal integrou o sistema SIAF-DF ao padrão federal da NFS-e. Isso significa que a NFS-e emitida em Brasília já puxa os campos de IBS (0,1%) automaticamente para o SIAF federal — o prestador de serviços ao GDF ou a órgãos federais não precisa emitir dois documentos.
+
+### O que isso muda na prática para prestadores no DF
+
+Empresas de engenharia, consultoria de TI e saúde ocupacional que prestam serviços em múltiplos municípios ganham uma vantagem operacional: **em vez de manter cadastro em cada sistema municipal (o que antes exigia gestão de múltiplas plataformas), agora há uma única NFS-e nacional**. O IBS municipal é recolhido pelo sistema centralizado, e o crédito fica registrado no Comitê Gestor.
+
+O ISS do Distrito Federal continua sendo cobrado normalmente durante o período de convivência (2026-2032). A alíquota padrão de 5% para serviços gerais em Brasília não muda — a extinção do ISS só ocorre em 2032. O que muda é que a NFS-e já traz os campos de IBS/CBS pré-preenchidos com as alíquotas do período de convivência.
+
+Para empresas com [contratos com fornecedores do governo federal em Brasília](/posts/fornecedores-governo-federal-brasilia-tributacao), há uma particularidade: o governo federal tem imunidade tributária sobre IBS e CBS, o que altera o tratamento fiscal da NFS-e nesses contratos. A NFS-e emitida para um órgão federal não destaca IBS de forma normal — esse ponto exige orientação técnica específica por tipo de contrato.
+
+---
+
+## O checklist de 6 pontos para empresas médias em 2026
+
+A diferença entre uma empresa que atravessa a transição sem surpresas e uma que acumula passivo tributário está, quase sempre, na execução de seis pontos operacionais que podem ser verificados agora. Este checklist é específico para empresas de R$2M a R$30M em Brasília no regime de Lucro Presumido ou Lucro Real:
+
+| # | Ponto de verificação | Prazo crítico | Status típico |
+|---|---|---|---|
+| 1 | ERP com campos CBS, IBS, CST-IBS/CBS e cClassTrib parametrizados | Ago/2026 | 60% das médias empresas ainda sem atualização |
+| 2 | Alíquotas de CBS/IBS mapeadas por NCM ou tipo de serviço | Ago/2026 | Mapeamento genérico não é suficiente |
+| 3 | EFD-Contribuições com segregação CBS/PIS/COFINS transmitida mensalmente | Jan-Dez/2026 | Transmissões incorretas geram multa |
+| 4 | Créditos de PIS/COFINS acumulados levantados e documentados | Dez/2026 | Créditos expiram com extinção dos tributos |
+| 5 | Contratos com cláusula de reequilíbrio tributário revisados | Ago/2026 | Maioria não tem cláusula válida para IBS |
+| 6 | Fluxo de caixa projetado com impacto do split payment (2027) | Dez/2026 | Raramente modelado com antecedência adequada |
+
+O item 4 merece atenção especial: créditos de PIS/COFINS acumulados que não forem aproveitados ou formalmente transferidos até dezembro de 2026 — quando os tributos são extintos — **podem ser perdidos permanentemente**. Empresas com operações de exportação, com créditos de imobilizado ou com saldos credores históricos precisam de levantamento urgente antes do prazo.
+
+---
+
+## Prestadores de serviços ao governo federal: as particularidades que ninguém explica
+
+Brasília tem uma característica única no Brasil: uma parcela significativa das empresas de médio porte tem como cliente principal o governo federal — ministérios, autarquias, fundações e empresas estatais. Para esse segmento, a Reforma Tributária tem implicações que vão além dos sistemas fiscais.
+
+### A questão da imunidade tributária e o split payment
+
+O governo federal tem imunidade recíproca sobre tributos estaduais e municipais — o que inclui o IBS, de competência estadual e municipal. Isso significa que **o split payment, no contexto de contratos com órgãos federais, funciona de forma diferente**: o mecanismo de retenção automática pelo sistema bancário não se aplica da mesma forma que em transações privadas, porque o tributo não incide sobre a transação em determinadas configurações.
+
+Isso não é necessariamente uma vantagem. A imunidade elimina a retenção automática, mas também pode eliminar o crédito de IBS para o fornecedor — dependendo da interpretação que o Comitê Gestor do IBS adotar para contratos com entes imunes. Até a publicação de regulamentação específica, a incerteza exige acompanhamento mensal.
+
+### A cláusula de reequilíbrio tributário
+
+Este é o ponto que mais passa despercebido nas empresas fornecedoras do governo federal de Brasília. A Lei 8.666/93 (art. 65, inciso II, alínea d) e a Lei 14.133/2021 (art. 135) asseguram o direito ao **reequilíbrio econômico-financeiro dos contratos** quando há alteração na legislação tributária que impacta o preço contratado.
+
+A extinção do ISS e sua substituição pelo IBS é exatamente o tipo de evento que pode ativar esse direito — mas apenas se duas condições forem satisfeitas: (1) a cláusula contratual foi redigida de forma que abrange mudanças na legislação tributária, e não apenas reajuste de preço; e (2) o pedido de reequilíbrio é formalizado **antes da extinção do ISS em 2032**, com comprovação do impacto.
+
+Contratos firmados antes de 2023 — portanto, antes da EC 132/2023 que aprovou a Reforma — podem ter cláusulas redigidas de forma genérica, que o órgão contratante pode rejeitar como insuficientes para ativar o reequilíbrio. A revisão dessas cláusulas, preferencialmente por aditamento antes do fim de 2026, é uma medida preventiva concreta que pode preservar dezenas ou centenas de milhares de reais em contratos de longo prazo.
+
+Para um detalhamento completo sobre o regime tributário de [fornecedores do governo federal em Brasília](/posts/fornecedores-governo-federal-brasilia-tributacao), incluindo as retenções na fonte vigentes e como emitir NFS-e para órgãos federais, consulte o guia específico no blog.
+
+---
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, com foco em Planejamento Tributário e Auditoria para empresas de médio porte, holdings familiares e grupos empresariais. Sob responsabilidade técnica de Jocivane Brito (tributarista CRC-DF), o escritório aplica o conceito de Inteligência Tributária — antecipando impactos antes que se tornem passivos. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com o escritório →</a>
+</aside>
+
+<LeadForm
+  id="blog-reforma-tributaria-empresas-form"
+  eyebrow="Sua empresa está operacionalmente pronta para o IBS/CBS?"
+  title="Diagnóstico de adequação à Reforma Tributária"
+  sub="A Monumental Contabilidade verifica se sua empresa está com ERP parametrizado, créditos levantados e contratos revisados para a transição tributária de 2026 — e apresenta o plano de adequação para os próximos 6 meses."
+  cta="Solicitar diagnóstico →"
+/>
+
+---
+
+## Como simular o impacto líquido do IBS/CBS na sua empresa
+
+A pergunta que todo CFO deveria estar fazendo — e que a maioria ainda não conseguiu responder com dados reais — é: **a carga tributária da minha empresa vai aumentar ou diminuir com o IBS/CBS em regime pleno?**
+
+A resposta não está nas alíquotas nominais. A alíquota estimada de referência do IBS+CBS em 2033 é de aproximadamente 26,5% — número que assusta qualquer prestador de serviços hoje tributado a 5% de ISS. Mas a comparação direta é enganosa por dois motivos:
+
+**1. O IBS/CBS é não cumulativo com crédito amplo.** Toda empresa que compra serviços, insumos ou tecnologia vai gerar crédito de IBS/CBS. Uma empresa de consultoria de TI que paga licenças de software, serviços de nuvem e subcontratação de desenvolvedores vai acumular crédito ao longo da cadeia — reduzindo o tributo efetivo a pagar. O ISS, por comparação, não gerava crédito nenhum.
+
+**2. O regime atual já tem cumulatividade oculta.** Empresas no Lucro Presumido pagam PIS/COFINS no regime cumulativo (3,65% sobre receita bruta sem crédito de insumos). Dependendo da cadeia de fornecedores, a CBS não cumulativa pode resultar em carga efetiva menor do que o PIS/COFINS cumulativo atual.
+
+A única forma de saber com precisão é fazer a simulação com os dados reais da empresa: faturamento por tipo de serviço, volume de compras tributadas, regime atual, cadeia de fornecedores e projeção de créditos. Esse levantamento — chamado de "diagnóstico de impacto do IBS/CBS" — é exatamente o que um escritório tributário com experiência na reforma deve entregar antes do fim de 2026.
+
+Para empresas que estão avaliando mudança de regime tributário em razão da Reforma, o post sobre [Simples Nacional ou Lucro Presumido — como escolher](/posts/simples-nacional-ou-lucro-presumido-como-escolher) traz os critérios de decisão específicos para o contexto de 2026.
+
+<DimusHelp
+  title="Como a Monumental Contabilidade conduz a adequação à Reforma Tributária"
+  sub="Da parametrização do ERP ao levantamento de créditos — cobrimos toda a transição para o regime IBS/CBS."
+  items={[
+    "Diagnóstico de parametrização de ERP para CBS, IBS, CST-IBS/CBS e cClassTrib",
+    "Levantamento de créditos de PIS/COFINS acumulados antes da extinção em dezembro de 2026",
+    "Revisão de contratos com cláusula de reequilíbrio tributário (fornecedores do governo)",
+    "Projeção de impacto do split payment no fluxo de caixa com cronograma de adequação",
+  ]}
+/>
+
+---
+
+## Cronograma completo de 2026 a 2033
+
+O volume de mudanças legislativas da Reforma é grande, mas o calendário está definido pela LC 214/2025. Abaixo, o que importa para uma empresa de médio porte em Brasília:
+
+| Data | Evento | Impacto operacional |
+|---|---|---|
+| Jan/2026 | CBS (0,9%) e IBS (0,1%) destacados na NF-e | ERP deve emitir com campos corretos |
+| Jul-Ago/2026 | CST-IBS/CBS e cClassTrib obrigatórios | Parametrização de ERP — deadline crítico |
+| Dez/2026 | Extinção do PIS e COFINS | CBS passa a ser o único tributo federal sobre valor adicionado |
+| 2027 | Split payment — expansão para médias empresas | Capital de giro precisa estar recalibrado |
+| 2028 | Universalização do split payment | Float tributário eliminado para todos os contribuintes |
+| 2029 | IBS estadual em operação plena | Créditos interestaduais passam pelo Comitê Gestor |
+| 2032 | Extinção total do ISS | IBS municipal substitui o ISS em todos os municípios |
+| 2033 | Regime pleno do IBS/CBS | Alíquota de referência ~26,5%; não cumulatividade completa |
+
+A leitura correta da tabela revela que **2026 é o ano da adequação operacional** — ERP, NFS-e, créditos de PIS/COFINS, contratos. Quem atravessar 2026 com esses pontos resolvidos terá 2027 para calibrar o fluxo de caixa para o split payment. Quem adiar terá os dois problemas ao mesmo tempo.
+
+Para uma análise detalhada do funcionamento do IBS, CBS e do split payment na Reforma, com os fundamentos jurídicos e comparações internacionais, veja o post [Reforma Tributária 2026: IBS, CBS e Split Payment explicados para Brasília](/posts/reforma-tributaria-2026-ibs-cbs-split-payment-brasilia).
+
+---
+
+## Perguntas de CFOs sobre a Reforma
+
+### O que muda efetivamente nas obrigações fiscais de uma empresa em 2026 com a Reforma Tributária?
+
+Em 2026, são três mudanças operacionais concretas: (1) desde janeiro de 2026, todas as NF-e devem destacar CBS (0,9%) e IBS (0,1%) como campos separados — erro de classificação gera perda de crédito e risco de autuação; (2) a partir de julho/agosto de 2026, os campos CST-IBS/CBS e cClassTrib se tornam obrigatórios no preenchimento dos documentos fiscais, exigindo parametrização correta no ERP; (3) o split payment começa em modo piloto para grandes contribuintes em 2026 — empresas médias devem monitorar o calendário de entrada obrigatória. O PIS e COFINS seguem em vigor até dezembro de 2026.
+
+### O que é o split payment e quando minha empresa será impactada?
+
+Split payment é o mecanismo em que o pagamento de uma transação é interceptado pelo sistema bancário ou pela administradora de pagamentos, que recolhe automaticamente o IBS e CBS devidos e repassa apenas o líquido ao fornecedor. A empresa não precisa fazer nada — o recolhimento é automático. O impacto negativo é no fluxo de caixa: empresas que dependiam do "float" do tributo entre o fato gerador e o prazo de pagamento deixam de ter esse dinheiro disponível. A entrada para empresas de médio porte está prevista para 2027, mas o planejamento de capital de giro deve começar agora.
+
+### A Reforma Tributária vai aumentar ou reduzir os impostos para a minha empresa?
+
+Depende do setor, do regime atual e do volume de créditos que a empresa acumulará no novo sistema. O IBS e CBS são tributos não cumulativos, com direito a crédito em toda a cadeia de produção e distribuição — diferente do ISS (que não gerava crédito). Para prestadores de serviços no Simples Nacional, a transição para o ISSQN → IBS será gradual (2026-2032). Para empresas no Lucro Presumido com serviços tributados por ISS a 5%, a carga de IBS+CBS pode ser maior ou menor dependendo da cadeia de fornecedores e dos créditos disponíveis. Uma simulação com os dados reais da empresa é a única forma de saber o impacto líquido.
+
+### O que precisa ser ajustado no ERP da minha empresa por causa do IBS/CBS?
+
+Os principais ajustes de sistema são: (1) parametrização dos campos CBS e IBS separados nas NF-e — tributação, CST e alíquotas específicas; (2) mapeamento dos itens por código NCM ou tipo de serviço com as alíquotas corretas de IBS/CBS — que variam por produto/serviço e por estado/município; (3) configuração do cClassTrib (campo de classificação tributária) para cada item; (4) integração da escrita fiscal com o novo layout do SPED para EFD-IBS/CBS. Empresas com ERP desatualizado ou parametrização manual têm risco elevado de erro a partir de agosto de 2026. Veja também como a Reforma afeta a [recuperação de créditos de PIS e COFINS](/posts/recuperacao-creditos-pis-cofins-2026) acumulados até dezembro.
+
+### Empresas fornecedoras do governo federal em Brasília têm alguma particularidade na Reforma Tributária?
+
+Sim. O governo federal tem imunidade tributária sobre IBS e CBS nas compras diretas — o que significa que o split payment funciona de forma diferente em contratos com o poder público. Para empresas fornecedoras do governo, a regra de crédito de IBS/CBS precisa ser analisada contrato a contrato. Além disso, os contratos existentes com cláusulas de reajuste tributário (art. 65, Lei 8.666/93) precisam ser revistos: a extinção do ISS e a criação do IBS podem ativar o direito ao reequilíbrio contratual, mas apenas se a cláusula foi redigida corretamente e o pedido for formalizado dentro do prazo.
+
+<aside class="cta-block" style="background:#1A3C5E; color:#fff; padding:2rem; border-radius:6px; margin:2.5rem 0; text-align:center;">
+  <h3 style="color:#fff; margin-top:0;">Faltam 5 meses para o fim do PIS/COFINS — sua empresa está pronta?</h3>
+  <p>A transição para o IBS/CBS exige ajustes operacionais, levantamento de créditos e revisão de contratos. A Monumental Contabilidade faz o diagnóstico completo e conduz sua empresa pela mudança sem surpresas.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block; background:#25D366; color:#fff; padding:0.75rem 1.75rem; border-radius:4px; font-weight:bold; text-decoration:none; margin-top:0.5rem;">Solicitar diagnóstico →</a>
+</aside>
+
+<aside class="author-bio" style="background:#F8F9FA; border-radius:6px; padding:1.25rem 1.5rem; margin:2rem 0;">
+  <strong>Jocivane Brito</strong> — Tributarista, CRC-DF | Monumental Contabilidade<br />
+  Tributarista com registro no CRC-DF e responsável técnica da Monumental Contabilidade, Jocivane Brito acompanha a implementação da Reforma Tributária e seus impactos operacionais para empresas de médio porte em Brasília-DF desde a promulgação da EC 132/2023. Assessora CFOs e sócios na adequação ao novo regime e na preservação de créditos tributários acumulados.
+</aside>

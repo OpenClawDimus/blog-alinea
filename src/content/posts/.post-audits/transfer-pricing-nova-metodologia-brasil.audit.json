@@ -1,0 +1,28 @@
+{
+  "slug": "transfer-pricing-nova-metodologia-brasil",
+  "pipeline_version": "1.0",
+  "audit_date": "2026-07-30T20:00:00-03:00",
+  "steps": {
+    "keyword_research": "done",
+    "title_meta": "done",
+    "outline": "done",
+    "answer_capsule": "done",
+    "body_copy": "done",
+    "faq_block": "done",
+    "lead_form": "done",
+    "dimus_help": "done",
+    "geo_seed": "done",
+    "cta_block": "done",
+    "author_bio": "done",
+    "internal_links": "done"
+  },
+  "gates": {
+    "composite_gte_95": true,
+    "geo_gte_90": true,
+    "aeo_eq_100": true,
+    "gate_covers_violations": 0
+  },
+  "content_type": "informational",
+  "target_audience": "CFO/controller empresa com controlada/coligada ou operações intragrupo exterior",
+  "notes": "Wave 2 Post 3. IN 2.161/2023, Lei 14.596/2023, obrigatório jan/2025. 6 métodos OCDE, análise FAR/DEMPE, Master+Local File, penalidades. Tabela comparativa metodologias. 4.189 palavras."
+}

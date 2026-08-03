@@ -12,13 +12,13 @@
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
-  /* Revista Showroom — display serif (Fraunces) nos títulos */
+  /* Monumental — Playfair Display nos títulos e corpo editorial */
   h1,
   h2,
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.012em;
+    letter-spacing: -0.015em;
   }
   body {
     font-family: var(--font-body);

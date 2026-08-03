@@ -1,28 +1,32 @@
 ---
-title: "Sobre o Blog Dimus"
-description: "Blog de marketing automotivo que mede resultado em carro vendido — sem parceria com portal, sem comissão de CRM, sem afiliado de ferramenta."
+title: "Jocivane Brito — Tributarista em Brasília"
+description: "Blog de contabilidade consultiva para empresas em Brasília-DF. Planejamento tributário, reforma tributária 2026 e gestão fiscal para PMEs e fornecedores do governo."
 ---
 
-Este blog é para o dono de revenda, o gerente comercial e o gerente de marketing que já cansou de relatório bonito e caixa fraco.
+Este blog é para o empresário, sócio e gestor financeiro que já cansou de pagar imposto a mais por falta de planejamento — e quer entender a matemática real do seu custo tributário.
 
-Se você já questionou um portal, uma agência ou um gestor de tráfego sobre o custo real por venda e recebeu uma planilha de leads como resposta — você está no lugar certo.
+Se você já perguntou ao seu contador sobre Lucro Presumido vs. Lucro Real e recebeu uma resposta genérica — você está no lugar certo.
 
 ## Para quem é
 
-- **Dono de revenda de seminovos** que acorda segunda preocupado com giro, não com CTR.
-- **Gerente comercial** que responde pelo resultado de venda, não pelo relatório de campanha.
-- **Gerente de marketing** que precisa de benchmark real para defender decisão de verba.
+- **Empresário de PME em Brasília-DF** que quer reduzir a carga tributária dentro da lei.
+- **Fornecedor do governo federal** que precisa entender retenções, SICAF e o impacto do split payment.
+- **Sócio e gestor financeiro** preparando sua empresa para a Reforma Tributária 2026.
 
 ## O que você encontra aqui
 
-Análises sobre o que realmente funciona no marketing automotivo brasileiro. Benchmarks reais de custo por venda. A matemática que ninguém no setor quer fazer em voz alta — porque ela expõe quem vive de métrica de vaidade.
+Análises sobre planejamento tributário real para empresas no DF. Cronogramas e impactos práticos da Reforma Tributária — IBS, CBS, split payment e o que muda para sua PME. A matemática que transforma obrigação tributária em vantagem competitiva.
 
-Sem parceria com portal. Sem comissão de CRM. Sem afiliado de ferramenta. Podemos falar a verdade porque não vendemos nenhum produto do setor.
+Sem conteúdo genérico. Sem fórmulas que não se aplicam ao contexto de Brasília. Cada artigo nasce de casos reais da nossa carteira de clientes.
+
+## Quem escreve
+
+**Jocivane Brito** é tributarista com atuação focada em contabilidade consultiva para empresas no Distrito Federal. Especialista em planejamento tributário para PMEs, fornecedores do governo federal e estruturação de holdings patrimoniais.
 
 ## Como usar
 
-Se você quer entender a matemática do seu marketing, comece pelos artigos de custo por venda e benchmark de atendimento.
+Se você quer entender o impacto da Reforma Tributária 2026 na sua empresa, comece pelo artigo sobre [IBS, CBS e Split Payment](/posts/reforma-tributaria-2026-ibs-cbs-split-payment-brasilia/).
 
-Se você quer conversar sobre como implementar isso na sua operação, o DimusHelp existe para isso:
+Se você quer conversar sobre planejamento tributário para a sua operação, a equipe da Monumental está disponível:
 
-— Equipe Dimus · [dimus.com.br](https://dimus.com.br)
+— Jocivane Brito · [monumentalcontabilidade.com.br](https://monumentalcontabilidade.com.br)

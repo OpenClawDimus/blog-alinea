@@ -1,0 +1,460 @@
+---
+title: "Fornecedores do Governo Federal em Brasília: Guia Tributário para Contratos com a União"
+description: "Fornecedores do governo federal em Brasília: guia tributário completo — retenções, empenho, SICAF e split payment 2026. Jocivane Brito, CRC-DF."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-28T08:00:00-03:00
+tags:
+  - "fornecedores-governo"
+  - "planejamento-tributario"
+  - "contabilidade-brasilia"
+  - "reforma-tributaria"
+featured: false
+coverImage: "covers/cover-fornecedores-governo-federal-tributacao.jpg"
+ogImage: "/og/fornecedores-governo-federal-tributacao.png"
+faq:
+  - q: "Fornecedor do Simples Nacional está sujeito à retenção na fonte pelos órgãos federais?"
+    a: "Sim, mas com limitações. Para empresas do Simples Nacional, apenas o IRPJ pode ser retido pelos órgãos federais — geralmente à alíquota de 1,5%. A retenção de PIS/Cofins e CSLL não se aplica ao Simples. O valor retido é descontado do DAS no mês subsequente. Exceção: atividades do Anexo IV (limpeza, vigilância, construção) têm regras específicas. Base legal: art. 3º da IN RFB 1.234/2012."
+  - q: "O ISS é cobrado nas notas fiscais emitidas para órgãos federais em Brasília?"
+    a: "Sim. Em Brasília, o ISS é de competência do Distrito Federal e incide normalmente sobre serviços prestados a órgãos federais. A alíquota varia de 2% a 5% conforme o tipo de serviço, com base na lista da LC 116/2003. O órgão federal atua como responsável tributário e retém o ISS diretamente no pagamento, recolhendo à Secretaria de Fazenda do DF."
+  - q: "Como recuperar os valores retidos na fonte pelo órgão público federal?"
+    a: "Os valores retidos (IRPJ, CSLL, PIS e Cofins) podem ser compensados com débitos do mesmo período via PER/DCOMP, no portal e-CAC da Receita Federal. Sem débitos para compensar, a restituição em dinheiro pode ser solicitada pelo mesmo sistema. O comprovante de retenção emitido pelo órgão (DIRF ou declaração avulsa) é o documento que ampara a compensação."
+  - q: "É necessário algum cadastro especial para emitir nota fiscal para o governo federal?"
+    a: "Não existe cadastro tributário especial para emissão de notas. O necessário é: CNPJ ativo, NFS-e habilitada na Secretaria de Fazenda do DF e regularidade no SICAF — Sistema de Cadastramento Unificado de Fornecedores. O SICAF é o requisito para participar de licitações e receber pagamentos da União."
+  - q: "O que muda para fornecedores do governo com a Reforma Tributária?"
+    a: "A CBS (contribuição federal) começa a ser cobrada progressivamente a partir de 2026; o IBS — de competência estadual e municipal — tem início previsto para 2029, conforme LC 214/2025. O principal impacto para fornecedores do governo federal é o split payment: o tributo será retido automaticamente pelo sistema bancário no momento do pagamento. Contratos com cláusulas de preço desatualizadas precisarão de revisão ou aditamento."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule q="Quais são as retenções tributárias para fornecedores do governo federal em Brasília?">
+
+Órgãos federais retêm IRPJ, CSLL, PIS e Cofins na fonte conforme a IN RFB 1.234/2012 — a alíquota total chega a 11,45% para serviços profissionais (TI, consultoria, engenharia). O ISS do Distrito Federal também é retido pelo órgão no momento do pagamento, à alíquota de 2% a 5% conforme o tipo de serviço. Para o Simples Nacional, apenas o IRPJ é retido (1,5%); PIS/Cofins e CSLL são isentos de retenção.
+
+</AnswerCapsule>
+
+Brasília concentra mais de 70% dos órgãos da administração pública federal do Brasil. Ministérios, autarquias, fundações públicas, agências reguladoras e empresas estatais têm sede na capital federal — e todos precisam contratar fornecedores locais para prestação de serviços, fornecimento de bens e execução de obras.
+
+Esse volume de contratos cria uma oportunidade real para empresas brasilienses. Mas também cria um campo minado tributário que poucos contadores — e ainda menos empresários — conhecem com profundidade.
+
+Prestar serviço para o governo federal não é igual a prestar serviço para uma empresa privada. As regras de emissão de nota fiscal são diferentes. As retenções na fonte são diferentes. O fluxo de pagamento é diferente. E, com a chegada da Reforma Tributária em 2026, o cenário está prestes a mudar ainda mais.
+
+Este guia foi preparado especificamente para PMEs de Brasília-DF que já são — ou pretendem se tornar — fornecedores do governo federal. Você vai entender o regime tributário aplicável, como emitir notas fiscais corretamente, quais retenções esperar, o que é a nota de empenho e como se preparar para as mudanças do split payment.
+
+---
+
+## Regime Tributário para Contratos com Órgãos Públicos
+
+Fornecedores do governo federal são empresas que prestam serviços, fornecem bens ou executam obras para ministérios, autarquias e fundações da União. Em Brasília, essas empresas enfrentam regime tributário específico: retenções na fonte de IRPJ, CSLL, PIS e Cofins reguladas pela IN RFB 1.234/2012, além do ISS do Distrito Federal — cujas regras diferem da contratação privada em pontos que impactam diretamente o fluxo de caixa.
+
+Antes de emitir qualquer nota fiscal para um órgão federal, o fornecedor precisa entender em qual regime tributário se enquadra — e como esse regime interage com as obrigações específicas dos contratos com a União.
+
+### Simples Nacional
+
+Empresas optantes pelo Simples Nacional que prestam serviços para órgãos federais estão sujeitas à retenção na fonte de IRPJ pelos órgãos pagadores, conforme a IN RFB 1.234/2012. Diferentemente de outros regimes tributários, o Simples Nacional é isento da retenção de CSLL, PIS e Cofins — apenas o IRPJ incide, geralmente à alíquota de 1,5%, conforme art. 3º da IN RFB 1.234/2012.
+
+O impacto prático: o fornecedor do Simples recebe o valor líquido após retenção. Esse montante retido pode ser compensado ou restituído posteriormente, mas exige controle contábil rigoroso. Sem esse controle, os créditos se perdem.
+
+Uma exceção relevante: empresas enquadradas no Anexo IV do Simples Nacional (serviços como limpeza, vigilância, obras e construção civil) têm regras de retenção específicas que diferem do tratamento geral.
+
+### Lucro Presumido
+
+O Lucro Presumido é o regime mais comum entre fornecedores do governo federal de médio porte em Brasília. Oferece previsibilidade de carga tributária e é geralmente mais favorável do que o Lucro Real para empresas com margens acima de 8% a 12%.
+
+Para prestadores de serviços profissionais — tecnologia, consultoria, engenharia — a alíquota presumida de IRPJ é de 32% sobre a receita bruta para fins de apuração, resultando em alíquota efetiva combinada de IRPJ mais CSLL em torno de 7,68% sobre o faturamento.
+
+### Lucro Real
+
+O Lucro Real é obrigatório para empresas com receita bruta anual acima de R$ 78 milhões. Para fornecedores menores, pode ser uma escolha estratégica quando os custos e despesas são elevados — reduzindo a base de cálculo do IRPJ e da CSLL.
+
+### ISS Municipal — Brasília e os Contratos Federais
+
+Um ponto de confusão frequente entre fornecedores: o ISS (Imposto Sobre Serviços) é de competência municipal, mas incide normalmente sobre serviços prestados a órgãos federais. Em Brasília, o ISS é administrado pelo Distrito Federal — não há município separado na capital federal.
+
+As alíquotas de ISS no DF variam de 2% a 5% conforme a lista de serviços da LC 116/2003. Serviços de tecnologia e informática estão sujeitos à alíquota de 2%. Serviços de consultoria e assessoria empresarial aplicam 5%.
+
+O local de incidência do ISS é, em regra, o município do estabelecimento prestador. Portanto, fornecedores sediados em Brasília recolhem ISS ao DF, ainda que o serviço seja prestado fisicamente em outro estado para um órgão federal.
+
+---
+
+## Nota Fiscal para Órgãos Públicos: Como Emitir Corretamente
+
+A emissão de nota fiscal para órgãos federais segue regras que, quando não respeitadas, resultam em glosa da nota, atraso no pagamento e, nos casos mais graves, impossibilidade de liquidação da despesa pelo órgão.
+
+### NF-e ou NFS-e?
+
+Para fornecimento de mercadorias, a Nota Fiscal Eletrônica (NF-e) é o documento obrigatório. Para prestação de serviços, a Nota Fiscal de Serviços Eletrônica (NFS-e) é emitida pelo portal da Secretaria de Fazenda do Distrito Federal. Empresas que fornecem tanto produtos quanto serviços podem precisar emitir ambos os documentos para o mesmo contrato.
+
+### Informações Obrigatórias na Nota para Órgão Federal
+
+Toda nota fiscal destinada a um órgão público federal deve conter:
+
+1. **CNPJ do órgão destinatário** — cada órgão tem seu próprio CNPJ registrado. Não confunda o CNPJ do Ministério com o CNPJ da autarquia vinculada; são entidades distintas.
+2. **Número do empenho** — o número da nota de empenho deve constar no campo de informações adicionais. Sem esse dado, o setor de liquidação não consegue vincular a nota ao processo orçamentário e o pagamento fica bloqueado.
+3. **Número do contrato ou processo administrativo** — quando aplicável, incluir o número do contrato formalizado.
+4. **Descrição detalhada do serviço** — a descrição deve corresponder exatamente ao objeto definido no contrato. Descrições genéricas como "prestação de serviços" são rejeitadas na liquidação.
+5. **Indicação dos valores sujeitos a retenção** — muitos sistemas de contabilidade pública exigem que o fornecedor discrimine os valores que serão retidos pelo órgão.
+
+### Passo a Passo: NFS-e em Brasília para Órgão Federal
+
+1. Acesse o portal NFS-e do Distrito Federal (nfse.df.gov.br)
+2. Informe o CNPJ do órgão federal como destinatário
+3. Selecione o serviço conforme a lista de serviços da LC 116/2003
+4. Informe o valor bruto da prestação
+5. No campo "Informações Adicionais", inclua: número do empenho, número do contrato e número do processo administrativo
+6. Confirme a alíquota de ISS aplicável (2% a 5% conforme o tipo de serviço)
+7. Emita e envie o arquivo XML ao setor de liquidação do órgão
+
+**Atenção**: órgãos federais geralmente exigem que a nota seja enviada tanto em formato PDF quanto em XML. Consulte sempre o manual do fornecedor do órgão contratante — cada ministério e autarquia tem seu protocolo específico de recebimento documental.
+
+---
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, especializado em Planejamento Tributário e Auditoria, Contabilidade Consultiva com Controladoria e Planejamento Patrimonial para empresas de médio porte, holdings familiares e empreendedores. Sob responsabilidade técnica de Jocivane Brito (tributarista CRC-DF) e Suzana Almeida, a Monumental oferece suporte completo para fornecedores do governo federal que buscam redução legal de carga tributária. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com um tributarista →</a>
+</aside>
+
+---
+
+## Retenções na Fonte: IRPJ, CSLL, PIS/Cofins e ISS
+
+As retenções na fonte realizadas pelos órgãos federais estão regulamentadas pela **IN RFB 1.234/2012** (com alterações posteriores), com base na **Lei 9.430/96**. Quando um órgão federal efetua pagamento a pessoa jurídica prestadora de serviços, é obrigado por lei a reter parcela dos tributos federais antes de transferir o valor ao fornecedor.
+
+### Tabela de Retenções — Percentuais por Tipo de Serviço
+
+<div style="overflow-x:auto; margin:1.5rem 0;">
+<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+<thead>
+<tr style="background:#1A3C5E; color:#fff;">
+<th style="padding:0.65rem 0.75rem; text-align:left;">Tipo de Serviço</th>
+<th style="padding:0.65rem 0.75rem; text-align:center;">IRPJ</th>
+<th style="padding:0.65rem 0.75rem; text-align:center;">CSLL</th>
+<th style="padding:0.65rem 0.75rem; text-align:center;">PIS</th>
+<th style="padding:0.65rem 0.75rem; text-align:center;">Cofins</th>
+<th style="padding:0.65rem 0.75rem; text-align:center;">Total Federal</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Serviços em geral</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,50%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">0,65%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;"><strong>6,15%</strong></td>
+</tr>
+<tr>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Serviços profissionais (TI, engenharia, consultoria, advocacia, medicina)</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">4,80%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">0,65%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;"><strong>11,45%</strong></td>
+</tr>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Limpeza, conservação, vigilância</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,20%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">0,65%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;"><strong>5,85%</strong></td>
+</tr>
+<tr>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Construção civil com fornecimento de mão de obra</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,20%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">0,65%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;"><strong>5,85%</strong></td>
+</tr>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Transporte de carga ou de passageiros</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,50%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">1,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">0,65%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;"><strong>6,15%</strong></td>
+</tr>
+<tr>
+<td style="padding:0.6rem 0.75rem;">Fornecimento de mão de obra</td>
+<td style="padding:0.6rem 0.75rem; text-align:center;">4,80%</td>
+<td style="padding:0.6rem 0.75rem; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; text-align:center;">0,65%</td>
+<td style="padding:0.6rem 0.75rem; text-align:center;">3,00%</td>
+<td style="padding:0.6rem 0.75rem; text-align:center;"><strong>11,45%</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+*Fonte: IN RFB 1.234/2012. Percentuais sujeitos a alterações legislativas — consultar sempre a norma vigente antes de precificar contratos.*
+
+**Simples Nacional — Regra Especial**: empresas optantes pelo Simples não estão sujeitas à retenção de PIS/Cofins e CSLL pelos órgãos federais. Apenas o IRPJ pode ser retido, na alíquota de 1,5% para a maioria dos serviços. O valor retido é descontado do DAS (guia do Simples) a recolher no período. A distinção está prevista no art. 3º da IN RFB 1.234/2012.
+
+### ISS nas Notas para Órgãos Federais
+
+O ISS segue regra própria: a retenção é realizada pelo órgão público quando este atua como responsável tributário, conforme o art. 6º da LC 116/2003. Para a maioria dos serviços prestados a órgãos sediados em Brasília, o local de incidência é o Distrito Federal.
+
+A alíquota de retenção de ISS no DF varia de 2% a 5% e deve ser destacada na nota fiscal. O órgão federal retém e recolhe diretamente à Secretaria de Fazenda do DF.
+
+### Como Compensar os Valores Retidos
+
+Os valores retidos a título de IRPJ, CSLL, PIS e Cofins podem ser:
+
+- **Compensados** com débitos do mesmo período de apuração, por meio de declaração de compensação eletrônica (PER/DCOMP) no portal e-CAC da Receita Federal
+- **Restituídos** via pedido eletrônico no sistema e-CAC, quando não houver débitos compensáveis no período
+
+Para o Simples Nacional, a retenção de IRPJ é abatida do valor do DAS a recolher no período subsequente.
+
+Manter controle rigoroso das retenções sofridas é fundamental para não perder esses créditos ao longo do ano. O comprovante de retenção emitido pelo órgão (DIRF ou declaração avulsa) é o documento que ampara a compensação junto à Receita Federal.
+
+---
+
+## Nota de Empenho: O Que É e Como Funciona na Prática
+
+A nota de empenho é, provavelmente, o conceito que mais confunde os fornecedores novatos no mercado público. Entender como ela funciona é tão importante quanto conhecer as tabelas de retenção.
+
+### O Que É a Nota de Empenho
+
+O empenho é o ato pelo qual a administração pública reserva — compromete — parte da dotação orçamentária para fazer frente a uma despesa futura. Está regulamentado pelo art. 58 da **Lei 4.320/1964**, a lei de finanças públicas do Brasil.
+
+Em termos diretos: o empenho não é um pagamento. É uma reserva de verba. O órgão está formalmente registrando: "tenho este valor alocado no orçamento e vou utilizá-lo para pagar este fornecedor."
+
+### O Ciclo Completo da Despesa Pública
+
+Para receber do governo federal, o fornecedor precisa conhecer e acompanhar as três fases obrigatórias do ciclo da despesa pública:
+
+**Fase 1 — Empenho (Reserva Orçamentária)**
+O setor de contabilidade do órgão emite a nota de empenho após o processo licitatório ou a formalização do contrato. A nota de empenho tem número próprio (por exemplo: 2026NE000342) e especifica o objeto contratado, o valor comprometido e o favorecido.
+
+**Fase 2 — Liquidação (Verificação do Direito do Credor)**
+Após a entrega do serviço ou do bem, o fornecedor apresenta a nota fiscal. O setor responsável verifica se o que foi entregue corresponde ao que foi contratado — qualidade, prazo e quantidade. Só após essa verificação a despesa é "liquidada" e o direito de crédito do fornecedor é reconhecido formalmente.
+
+**Fase 3 — Pagamento (Transferência Financeira)**
+Com a despesa liquidada, o setor financeiro efetua a transferência bancária. O prazo legal para pagamento após a liquidação é de até 30 dias, com base nas normas de responsabilidade fiscal. Atrasos além desse prazo geram direito à atualização monetária.
+
+### Modalidades de Empenho
+
+<div style="overflow-x:auto; margin:1.5rem 0;">
+<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+<thead>
+<tr style="background:#1A3C5E; color:#fff;">
+<th style="padding:0.65rem 0.75rem; text-align:left;">Modalidade</th>
+<th style="padding:0.65rem 0.75rem; text-align:left;">Quando se aplica</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;"><strong>Ordinário</strong></td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Valor exato da despesa é conhecido. Contratos pontuais, compras de valor definido.</td>
+</tr>
+<tr>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;"><strong>Global</strong></td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Contratos de execução parcelada, como serviços continuados mensais. O empenho inicial cobre o valor total; liberações ocorrem conforme a entrega.</td>
+</tr>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem;"><strong>Por estimativa</strong></td>
+<td style="padding:0.6rem 0.75rem;">Valor exato não é conhecido antecipadamente. Contratos de demanda variável (ex: fornecimento de combustível).</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+### Erros Que Custam Caro
+
+**Erro 1 — Emitir nota fiscal sem empenho**: a nota sem amparo de empenho emitido previamente não pode ser liquidada. O órgão não tem autorização orçamentária para processar o pagamento.
+
+**Erro 2 — Omitir o número do empenho na nota fiscal**: o setor de liquidação não consegue vincular a nota ao processo orçamentário. A nota fica pendente até que a informação seja incluída, o que pode exigir cancelamento e reemissão.
+
+**Erro 3 — Divergência de valor entre nota e saldo do empenho**: se o valor da nota superar o saldo disponível no empenho, o pagamento fica bloqueado até que um empenho complementar seja emitido — processo que pode levar semanas.
+
+**Erro 4 — Não acompanhar a fase de liquidação**: muitos fornecedores entregam o serviço, emitem a nota e ficam aguardando o pagamento cair na conta. Se houver pendência documental na liquidação, o processo pode ficar parado por meses sem qualquer comunicação proativa do órgão. O fornecedor precisa acompanhar ativamente o andamento.
+
+---
+
+## Cadastro SICAF: Como Habilitar sua Empresa para Contratos com o Governo Federal
+
+O SICAF — Sistema de Cadastramento Unificado de Fornecedores — é o pré-requisito para qualquer fornecedor do governo federal. Sem cadastro ativo e habilitado, a empresa não pode participar de licitações nem receber pagamentos da União, independentemente da qualidade do serviço prestado.
+
+### O Que é o SICAF
+
+O SICAF é a base de dados que centraliza as informações cadastrais e de habilitação jurídica, fiscal e econômico-financeira de todos os fornecedores do governo federal. Está integrado ao Portal ComprasGov.br — a plataforma oficial de compras da administração pública federal.
+
+### Documentos para Habilitação no SICAF
+
+<div style="overflow-x:auto; margin:1.5rem 0;">
+<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+<thead>
+<tr style="background:#1A3C5E; color:#fff;">
+<th style="padding:0.65rem 0.75rem; text-align:left;">Categoria</th>
+<th style="padding:0.65rem 0.75rem; text-align:left;">Documentos Exigidos</th>
+<th style="padding:0.65rem 0.75rem; text-align:center;">Validade</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Habilitação jurídica</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Contrato social + CNPJ ativo na Receita Federal</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">Enquanto CNPJ ativo</td>
+</tr>
+<tr>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Regularidade federal</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">CND Conjunta (Receita Federal + PGFN)</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">180 dias</td>
+</tr>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Regularidade previdenciária</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">CRF do INSS</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">180 dias</td>
+</tr>
+<tr>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">Regularidade trabalhista</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6;">CNDT — emitida pelo TSTonline</td>
+<td style="padding:0.6rem 0.75rem; border-bottom:1px solid #dee2e6; text-align:center;">180 dias</td>
+</tr>
+<tr style="background:#f8f9fa;">
+<td style="padding:0.6rem 0.75rem;">Regularidade do FGTS</td>
+<td style="padding:0.6rem 0.75rem;">Certificado de Regularidade do FGTS (Caixa)</td>
+<td style="padding:0.6rem 0.75rem; text-align:center;">180 dias</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+### Processo de Cadastro — Passo a Passo
+
+1. Acesse o Portal ComprasGov.br e crie o perfil de fornecedor da empresa
+2. Insira os dados cadastrais completos: CNPJ, dados dos sócios, endereço, atividade principal (CNAE)
+3. Faça o upload das certidões de regularidade — todas com validade vigente na data do envio
+4. Aguarde a validação pelo sistema — prazo padrão de 5 a 10 dias úteis
+5. Após aprovação, o cadastro fica ativo e pode ser consultado por qualquer órgão federal em tempo real
+
+### Renovação Anual Obrigatória
+
+O cadastro no SICAF exige renovação anual. As certidões de regularidade têm validade de 180 dias e precisam ser atualizadas no sistema antes do vencimento. Empresas com cadastro vencido são automaticamente suspensas de participar de licitações até a renovação. A base legal está integrada à **Lei 14.133/2021** (Nova Lei de Licitações e Contratos Administrativos).
+
+**Atenção para fornecedores em Brasília-DF**: irregularidades fiscais junto ao Distrito Federal — SEFAZ-DF — também bloqueiam o cadastro SICAF. É frequente que empresas percam contratos por pendência junto ao DF mesmo com regularidade federal em dia. O suporte de um tributarista especializado em Brasília é especialmente relevante para manter o cadastro limpo.
+
+---
+
+## Como o Split Payment vai Afetar Fornecedores do Governo a Partir de 2026
+
+A [Reforma Tributária](/reforma-tributaria-2026-ibs-cbs-split-payment-brasilia) aprovada pela **Emenda Constitucional 132/2023** representa a maior mudança no sistema fiscal brasileiro em décadas. Para fornecedores do governo federal, as implicações são diretas: a CBS (contribuição federal) começa a ser cobrada a partir de 2026, enquanto o IBS — de competência estadual e municipal — tem início previsto para 2029, conforme LC 214/2025.
+
+### O Que é o Split Payment
+
+O split payment é um mecanismo de recolhimento automático de tributos no momento do pagamento. Quando o tomador efetua a transferência ao prestador, o valor dos novos tributos (IBS e CBS) é retido e repassado diretamente ao fisco no mesmo ato, sem que o dinheiro transite pelo caixa do fornecedor.
+
+Para quem já fornece ao governo federal, o conceito é familiar: os órgãos federais já retêm tributos na fonte hoje. O split payment generaliza esse mecanismo para toda a cadeia econômica e o torna automatizado pelo sistema bancário.
+
+### O Que Muda para Fornecedores do Governo na Prática
+
+Hoje, os órgãos federais já atuam como agentes de retenção (IN RFB 1.234/2012). Com o split payment, esse mecanismo se torna:
+
+- **Automático**: o sistema bancário ou o sistema de pagamentos do governo reterá o IBS e a CBS no momento da transferência, sem ação manual do órgão
+- **Digital e rastreável**: cada operação gera registro eletrônico nos sistemas da Receita Federal e do Comitê Gestor do IBS
+- **Imediato**: não há prazo de recolhimento — o tributo é repassado ao fisco no mesmo instante do pagamento
+
+Para o fornecedor, os impactos concretos são:
+
+1. O valor disponível em conta imediatamente após o pagamento será o valor líquido (após retenção do IBS/CBS)
+2. O fluxo de caixa precisa ser recalibrado — especialmente para empresas que hoje dependem de prazo entre o recebimento bruto e o vencimento dos tributos
+3. A escrituração fiscal ficará mais simples, pois os créditos serão registrados automaticamente nos sistemas da Receita
+4. Contratos com prazo de vigência que cruzam o período de transição precisarão de cláusula de revisão de preços
+
+### O Que Fazer Agora
+
+1. **Mapeie contratos ativos** com vigência prevista além de 2026 e identifique quais cruzam o período de transição
+2. **Revise cláusulas de reajuste**: é preciso prever mecanismo de revisão de preços para acomodar a mudança de carga tributária durante a execução
+3. **Analise o enquadramento no IBS/CBS**: setores de saúde, educação e alimentos terão alíquotas reduzidas; verifique se algum de seus serviços se enquadra
+4. **Prepare a equipe financeira** para o novo fluxo de caixa com split automático — o impacto na gestão do capital de giro pode ser significativo
+
+---
+
+## Planejamento Tributário para Fornecedores: O Que a Monumental Recomenda
+
+Fornecer para o governo federal em Brasília é um negócio que, bem estruturado, pode ser altamente lucrativo. A carga tributária sobre contratos públicos é relevante — mas existe espaço legal para reduzi-la com planejamento adequado e antecipado.
+
+### 1. Escolha Correta do Regime Tributário
+
+A análise do regime tributário deve ser feita anualmente, antes do início de cada exercício fiscal. Para fornecedores do governo federal com faturamento entre R$ 1 milhão e R$ 10 milhões, o Lucro Presumido costuma ser mais favorável que o Simples Nacional — especialmente para serviços profissionais com margens elevadas.
+
+**Exemplo numérico concreto**: uma empresa de tecnologia da informação com R$ 3 milhões de receita anual no Simples Nacional (Anexo V) pagará percentual de tributos sobre a receita próximo de 17%. No Lucro Presumido, a carga efetiva para TI pode ficar entre 13% e 15%, dependendo da remuneração dos sócios e da distribuição de lucros. A diferença anual representa entre R$ 60 mil e R$ 120 mil em tributos pagos a mais — ou a menos.
+
+### 2. Recuperação Sistemática de Retenções
+
+Toda empresa que presta serviços a órgãos federais acumula créditos de IRPJ, CSLL, PIS e Cofins ao longo do ano. Muitas empresas não aproveitam esses créditos por falta de controle contábil sistemático.
+
+A recuperação via PER/DCOMP é um processo que deve ser executado **mensalmente**, não anualmente. Deixar para o final do ano significa perder liquidez ao longo de todo o exercício — um custo de carregamento desnecessário.
+
+### 3. Estruturação Societária Adequada
+
+Para fornecedores com múltiplos contratos federais, a criação de estrutura societária adequada pode reduzir a carga tributária de forma legal e sustentável. A holding patrimonial, combinada com empresa operacional, permite separar o patrimônio da operação e organizar a distribuição de resultados de forma mais eficiente.
+
+### 4. Revisão Tributária dos Contratos Antes da Assinatura
+
+A análise tributária deve ocorrer **antes** de assinar o contrato, não depois. O preço ofertado em uma licitação deve contemplar a carga tributária efetiva, incluindo as retenções na fonte, o ISS, os custos de recuperação de créditos e as provisões para o período de transição da Reforma Tributária.
+
+Uma licitação vencida com preço subestimado — que não considerou a retenção de 11,45% sobre o valor bruto para serviços profissionais — pode resultar em margem negativa durante a execução do contrato.
+
+---
+
+## Dúvidas Frequentes de Fornecedores do Governo Federal em Brasília
+
+### Fornecedor do Simples Nacional está sujeito à retenção na fonte pelos órgãos federais?
+
+Sim, mas com limitações importantes. Para empresas do Simples Nacional, apenas o IRPJ pode ser retido pelos órgãos federais — geralmente à alíquota de 1,5%. A retenção de PIS/Cofins e CSLL não se aplica ao Simples. O valor retido é descontado do DAS a recolher no mês subsequente. A exceção são as atividades do Anexo IV (limpeza, vigilância, construção), que têm regras específicas. Base legal: art. 3º da IN RFB 1.234/2012.
+
+### O ISS é cobrado nas notas fiscais emitidas para órgãos federais em Brasília?
+
+Sim. Em Brasília, o ISS é de competência do Distrito Federal e incide normalmente sobre serviços prestados a órgãos federais. A alíquota varia de 2% a 5% conforme o tipo de serviço, com base na lista da LC 116/2003. O órgão federal atua como responsável tributário e retém o ISS diretamente no pagamento, recolhendo à Secretaria de Fazenda do DF. O fornecedor deve destacar o valor do ISS na nota fiscal.
+
+### Como recuperar os valores retidos na fonte pelo órgão público federal?
+
+Os valores retidos (IRPJ, CSLL, PIS e Cofins) podem ser compensados com débitos do mesmo período via PER/DCOMP, preenchido no portal e-CAC da Receita Federal. Sem débitos para compensar, a restituição em dinheiro pode ser solicitada pelo mesmo sistema. O documento que ampara a compensação é o comprovante de retenção emitido pelo órgão (DIRF ou declaração avulsa). Mantenha esses comprovantes arquivados — sem eles, a recuperação fica inviabilizada.
+
+### É necessário algum cadastro especial para emitir nota fiscal para o governo federal?
+
+Não existe cadastro tributário especial para emissão de notas. O necessário é: CNPJ ativo, NFS-e habilitada na Secretaria de Fazenda do DF e regularidade no SICAF — Sistema de Cadastramento Unificado de Fornecedores. O SICAF é o requisito para participar de licitações e receber pagamentos da União. Irregularidade fiscal federal, estadual ou previdenciária impede a contratação com o governo até que a situação seja regularizada.
+
+### O que muda para fornecedores do governo com a Reforma Tributária?
+
+A CBS (contribuição federal) começa a ser cobrada progressivamente a partir de 2026; o IBS — de competência estadual e municipal — tem início previsto para 2029, conforme LC 214/2025. Para fornecedores do governo federal, o principal impacto é o split payment: o tributo será retido automaticamente pelo sistema bancário no momento do pagamento. Contratos com cláusulas de formação de preço não atualizadas precisarão de revisão ou aditamento. Setores específicos contarão com alíquotas reduzidas de IBS/CBS — vale verificar se a atividade se enquadra.
+
+---
+
+<LeadForm
+  id="blog-fornecedores-governo-form"
+  eyebrow="Sua empresa é fornecedora do governo federal?"
+  title="Saiba exatamente quanto sua empresa pode recuperar em retenções"
+  sub="Em uma consulta com Jocivane Brito (tributarista CRC-DF), você descobre quais retenções são devidas, quais podem ser compensadas via PER/DCOMP e como o split payment vai impactar o fluxo de caixa da sua empresa a partir de 2026."
+  cta="Falar com tributarista →"
+/>
+
+<DimusHelp
+  title="Como a Monumental Contabilidade atende fornecedores do governo"
+  sub="Especialistas em planejamento tributário para contratos com a União, autarquias e fundações públicas em Brasília-DF."
+  items={[
+    "Mapeamento das retenções aplicáveis ao seu CNAE e regime tributário",
+    "Compensação de créditos via PER/DCOMP — IRPJ, CSLL, PIS e Cofins",
+    "Revisão de contratos para inclusão de cláusulas de reequilíbrio tributário",
+    "Planejamento para o split payment 2026 e adequação do fluxo de caixa",
+  ]}
+/>
+
+## Sobre a Autora
+
+**Jocivane Brito** é tributarista registrada no CRC-DF, com atuação concentrada em planejamento tributário para empresas que operam com contratos públicos e privados. Com mais de 10 anos de experiência em Brasília-DF, assessora PMEs, holdings familiares e empreendedores na gestão fiscal estratégica. É responsável técnica pela Monumental Contabilidade e pelo conceito de Inteligência Tributária aplicado à análise fiscal de contratos com a União e ao planejamento patrimonial de médio e longo prazo.
+
+---
+
+## Consultoria Especializada para Fornecedores do Governo
+
+A Monumental Contabilidade atende fornecedores do governo federal em Brasília e em todo o território nacional. Se sua empresa presta serviços a ministérios, autarquias ou fundações públicas e você quer garantir que está pagando apenas o que deve — nem mais, nem menos —, fale com a nossa equipe.
+
+[**Falar com um tributarista via WhatsApp →**](https://wa.me/556120990889)
+
+*Monumental Contabilidade | Brasília-DF | Inteligência Tributária para PMEs e fornecedores do governo federal*
+*Jocivane Brito — CRC-DF | Suzana Almeida | +55 61 2099-0889*

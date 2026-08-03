@@ -1,0 +1,28 @@
+{
+  "slug": "recuperacao-creditos-pis-cofins-2026",
+  "pipeline_version": "1.0",
+  "audit_date": "2026-07-30T18:00:00-03:00",
+  "steps": {
+    "keyword_research": "done",
+    "title_meta": "done",
+    "outline": "done",
+    "answer_capsule": "done",
+    "body_copy": "done",
+    "faq_block": "done",
+    "lead_form": "done",
+    "dimus_help": "done",
+    "geo_seed": "done",
+    "cta_block": "done",
+    "author_bio": "done",
+    "internal_links": "done"
+  },
+  "gates": {
+    "composite_gte_95": true,
+    "geo_gte_90": true,
+    "aeo_eq_100": true,
+    "gate_covers_violations": 0
+  },
+  "content_type": "advertorial",
+  "target_audience": "CFO/controller empresa R$5M-50M com créditos PIS/COFINS acumulados",
+  "notes": "Advertorial créditos PIS/COFINS. Tema 69 + extensão ICMS-ST TRF-6/2026. Urgência: fim PIS/COFINS dez/2026 + prescrição mensal. Calendário de prescrição como tabela."
+}

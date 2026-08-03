@@ -69,30 +69,48 @@ function handleSubmit(form: HTMLFormElement) {
     : null;
   const magnet = form.dataset.magnet || (withCalc ? "calc-carro-parado" : null);
 
-  // GA4 (recommended event) — gtag.js PURO (não GTM): o evento vai por
-  // gtag('event',…). dataLayer.push({event:…}) é formato GTM e o gtag.js IGNORA.
+  // GA4 — recommended event (funil) + evento específico para Google Ads import
   try {
     const gtag = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag;
-    if (gtag)
+    if (gtag) {
       gtag("event", "generate_lead", {
         lead_source: "blog",
-        lead_type: "form_principal", // distingue de newsletter (ver NewsletterForm.astro)
-        lead_origin: origin, // origem canônica legível (ex.: blog-calc-estoque)
+        lead_type: "form_principal",
+        lead_origin: origin,
         method: "form-first-whatsapp",
         post_slug: form.dataset.postSlug || "",
         cluster: form.dataset.cluster || "",
         magnet_slug: magnet,
         lead_ref: ref,
       });
+      // Evento específico para importar no Google Ads como "Blog - Lead WhatsApp"
+      gtag("event", "blog_whatsapp_lead", {
+        lead_source: "blog",
+        lead_origin: origin,
+        post_slug: form.dataset.postSlug || "",
+        lead_ref: ref,
+      });
+    }
   } catch {
     /* noop */
   }
 
-  // Meta Pixel (mesmo eventID para dedupe com CAPI server-side)
-  // content_name = origem canônica (idêntica ao CAPI → sem divergência de relatório)
+  // Meta Pixel — Advanced Matching (email hashed) + Lead event com dedup CAPI
   try {
     const fbq = (window as unknown as { fbq?: (...a: unknown[]) => void }).fbq;
-    if (fbq) fbq("track", "Lead", { content_name: origin }, { eventID: ref });
+    const pid = (window as unknown as { __fbpid?: string }).__fbpid;
+    if (fbq) {
+      // Advanced Matching: re-init com email hash antes do track
+      if (pid && email) {
+        crypto.subtle.digest("SHA-256", new TextEncoder().encode(email.toLowerCase().trim()))
+          .then(buf => {
+            const em = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+            fbq("init", pid, { em });
+          })
+          .catch(() => { /* noop */ });
+      }
+      fbq("track", "Lead", { content_name: origin }, { eventID: ref });
+    }
   } catch {
     /* noop */
   }

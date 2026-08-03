@@ -1,0 +1,28 @@
+{
+  "slug": "holding-familiar-receita-federal-2026",
+  "pipeline_version": "1.0",
+  "audit_date": "2026-07-30T20:00:00-03:00",
+  "steps": {
+    "keyword_research": "done",
+    "title_meta": "done",
+    "outline": "done",
+    "answer_capsule": "done",
+    "body_copy": "done",
+    "faq_block": "done",
+    "lead_form": "done",
+    "dimus_help": "done",
+    "geo_seed": "done",
+    "cta_block": "done",
+    "author_bio": "done",
+    "internal_links": "done"
+  },
+  "gates": {
+    "composite_gte_95": true,
+    "geo_gte_90": true,
+    "aeo_eq_100": true,
+    "gate_covers_violations": 0
+  },
+  "content_type": "informational",
+  "target_audience": "Sócio/CFO com holding familiar — compliance e fiscalização 2026",
+  "notes": "Wave 2 Post 4. Ângulo compliance/fiscalização (distinto do post holding-familiar-brasilia-planejamento-patrimonial que é patrimonial). Lei 15.270/2025 dividendos, DDL aluguel intragrupo, escrituração obrigatória, obrigações acessórias ECD/ECF. 5 FAQs."
+}

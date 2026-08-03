@@ -1,0 +1,294 @@
+---
+title: "Split Payment em 2026: Prepare o Fluxo de Caixa da Sua Empresa"
+description: "O split payment recolhe IBS/CBS automaticamente no pagamento, eliminando o float tributário. Quando entra para médias empresas, quanto isso impacta o capital de giro e o que fazer agora."
+author: "Jocivane Brito"
+pubDatetime: 2026-07-30T15:00:00-03:00
+tags:
+  - "split-payment"
+  - "reforma-tributaria-2026"
+  - "fluxo-de-caixa"
+  - "contabilidade-consultiva"
+  - "planejamento-tributario"
+featured: false
+coverImage: "covers/cover-split-payment-caixa.jpg"
+ogImage: "/og/split-payment-caixa.png"
+faq:
+  - q: "O que é split payment e como funciona na prática?"
+    a: "Split payment é o mecanismo pelo qual o pagamento de uma transação é automaticamente interceptado pelo sistema bancário ou administradora de pagamentos, que recolhe o IBS e CBS devidos e repassa apenas o valor líquido ao fornecedor. Por exemplo: comprador paga R$ 118 (R$ 100 + 18% de IBS/CBS); o banco intercepta R$ 18 e repassa ao SEFAZ estadual/municipal/federal; o fornecedor recebe R$ 100. O fornecedor não precisa fazer nada — o imposto já foi recolhido. Isso elimina o DARF/DAS de IBS/CBS e o prazo de recolhimento posterior."
+  - q: "Quando o split payment começa a valer para médias empresas?"
+    a: "O piloto de split payment em 2026 é restrito a grandes contribuintes (faturamento acima de R$ 100M) e operações de e-commerce. A entrada para médias empresas (faturamento de R$ 2M a R$ 100M) está prevista para 2027 no cronograma da Lei Complementar 214/2025. Para pequenas empresas e Simples Nacional, a entrada é mais gradual — provavelmente 2028-2029. O calendário pode ser antecipado se o piloto de 2026 funcionar bem — por isso o planejamento precisa começar agora."
+  - q: "Qual é o impacto do split payment no fluxo de caixa da minha empresa?"
+    a: "O impacto é a eliminação do 'float' tributário — o período entre o fato gerador do tributo e o seu recolhimento, durante o qual a empresa usa esse dinheiro como capital de giro. Hoje, empresas no Lucro Presumido recolhem PIS/COFINS até o dia 25 do mês seguinte — usam os recursos por até 55 dias. Com split payment, o dinheiro vai imediatamente para o fisco. Para uma empresa com R$ 8M de faturamento mensal e alíquota efetiva de IBS/CBS de 15%, isso representa R$ 1,2M de capital de giro que deixa de estar disponível — dinheiro que precisará ser substituído por limite de crédito ou capital próprio."
+  - q: "Como o split payment funciona para empresas fornecedoras do governo?"
+    a: "O governo federal tem imunidade tributária sobre IBS/CBS nas compras diretas — o que significa que o split payment funciona de forma diferente em contratos com o poder público. Para fornecedores do governo federal, a regra de crédito de IBS/CBS precisa ser analisada contrato a contrato, e os contratos com cláusulas de reequilíbrio tributário (art. 65, Lei 8.666/93 / art. 135, Lei 14.133/2021) precisam ser revistos: a extinção do ISS e a criação do IBS podem ativar o direito ao reequilíbrio se a carga tributária efetiva mudar."
+  - q: "O que acontece com os créditos de IBS/CBS que a empresa acumulou no mês?"
+    a: "Com o split payment, o IBS/CBS é recolhido no momento do recebimento pelo fornecedor — mas os créditos de IBS/CBS sobre as compras também continuam sendo gerados. Mensalmente, a empresa apura: débitos (IBS/CBS nas vendas, já recolhidos via split payment) vs. créditos (IBS/CBS nas compras). Se os créditos superarem os débitos, o saldo favorável pode ser compensado com outros tributos federais ou pedido em restituição. O diferencial vs. o sistema atual: antes, a empresa fazia a apuração e depois pagava a diferença; com split payment, os débitos já foram pagos — a empresa só gerencia os créditos."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import DimusHelp from '@/components/blog/DimusHelp.astro';
+
+<AnswerCapsule q="O que é split payment e como ele afeta o fluxo de caixa da empresa?">
+
+Split payment é o mecanismo criado pela LC 214/2025 pelo qual o IBS e a CBS são recolhidos automaticamente no ato do pagamento — o banco ou a adquirente intercepta o tributo antes de repassar o valor líquido ao fornecedor. O efeito direto: o **float tributário**, que hoje permite às empresas usar o dinheiro do tributo por 25 a 55 dias antes do vencimento, deixa de existir. Para médias empresas, a entrada está prevista para 2027; mas o planejamento do capital de giro precisa começar agora.
+
+</AnswerCapsule>
+
+Existe um mecanismo silencioso embutido na Reforma Tributária 2026 que vai alterar o caixa de todas as empresas brasileiras — não porque aumenta o imposto, mas porque muda o momento em que o dinheiro sai da conta. Esse mecanismo é o **split payment**, regulamentado pelos arts. 262 a 274 da Lei Complementar 214/2025, e ele representa a maior mudança operacional para a gestão financeira de médias empresas desde a criação do SPED em 2008.
+
+A lógica é simples, o impacto é concreto e o cronograma está definido: piloto em 2026 para grandes contribuintes, expansão para médias empresas em 2027, Simples Nacional em 2028-2029. Empresas que esperarem a data de entrada para começar a planejar já estarão comprometendo o capital de giro sem ter alternativa pronta. Este artigo detalha como o mecanismo funciona, quanto representa em reais para empresas de diferentes portes e o que fazer antes que o piloto vire obrigação geral.
+
+---
+
+## Como Funciona o Split Payment: Passo a Passo de uma Transação
+
+O split payment é, em essência, um mecanismo de interceptação financeira integrado ao sistema de pagamentos brasileiro (Open Finance + arranjos de pagamento do Banco Central). Diferente dos tributos atuais, em que a empresa recebe o valor integral e depois recolhe o imposto numa guia separada, no split payment o tributo nunca entra na conta da empresa — ele é segregado na liquidação financeira.
+
+**Anatomia de uma transação com split payment:**
+
+1. **Emissão da NF-e**: sua empresa emite a nota fiscal com os valores de IBS e CBS discriminados na chave de tributos. A nota traz a informação: valor do bem/serviço = R$ 100; IBS = R$ 10; CBS = R$ 8; total a receber = R$ 118.
+2. **Instrução de pagamento**: o comprador autoriza o pagamento de R$ 118 junto ao seu banco, fintech ou adquirente.
+3. **Interceptação automática**: a instituição financeira consulta a chave de acesso da NF-e e identifica os valores de IBS/CBS vinculados à operação. Sem intervenção da empresa, o sistema segrega: R$ 10 para a conta do Comitê Gestor do IBS; R$ 8 para a conta da Receita Federal (CBS).
+4. **Liquidação ao fornecedor**: sua empresa recebe R$ 100 — o valor líquido da operação, sem o tributo.
+
+**O que muda em relação ao modelo atual:**
+
+Hoje, quando sua empresa emite uma NF-e de R$ 118, recebe R$ 118 na conta bancária e tem até o dia 25 do mês seguinte para recolher o PIS/COFINS (e até a data fixada pelo estado para o ICMS). O intervalo entre o recebimento e o recolhimento — chamado de *float* tributário — é, de fato, capital de giro que a empresa usa para pagar fornecedores, honrar compromissos ou reduzir a utilização do limite de crédito bancário.
+
+Com o split payment, esse intervalo é zero. O tributo nunca fica na conta da empresa. Não há DARF de IBS/CBS, não há DAS de IBS/CBS, não há prazo para recolhimento posterior. A empresa simplesmente não recebe o valor correspondente ao tributo.
+
+**O que o split payment não muda:**
+
+O split payment não altera o valor total de tributo a pagar — ele antecipa apenas o momento do recolhimento. A carga tributária efetiva, definida pela alíquota de IBS/CBS, permanece a mesma com ou sem split payment. O impacto é exclusivamente financeiro: é um impacto de caixa, não de tributação.
+
+Para empresas com caixa folgado e prazos de pagamento a fornecedores maiores do que os prazos de recebimento de clientes, a absorção pode ser relativamente suave. Para empresas que usam ativamente o float tributário como componente de capital de giro — prática comum e legal no Brasil atual —, o ajuste exige planejamento formal antes da data de entrada.
+
+---
+
+## Cronograma de Entrada: Quem É Afetado e Quando
+
+A LC 214/2025 estabelece um piloto restrito em 2026, com expansão progressiva até atingir a totalidade dos contribuintes. A tabela abaixo consolida o cronograma conforme previsto na legislação e nas instruções normativas publicadas pela Receita Federal:
+
+| Ano | Contribuintes abrangidos | Critério de entrada | Obs. operacional |
+|-----|--------------------------|---------------------|------------------|
+| **2026** | Grandes contribuintes (faturamento acima de R$ 100M) + e-commerce | Seleção pela Receita Federal por faturamento e volume de operações | Piloto — calibração dos sistemas bancários e do Comitê Gestor |
+| **2027** | Médias empresas (faturamento de R$ 2M a R$ 100M) | Faturamento acima de R$ 2M/ano apurado na DCTF de 2026 | **Principal janela de risco para PMEs em Brasília-DF** |
+| **2028** | Pequenas empresas fora do Simples Nacional (faturamento até R$ 2M) | Enquadramento automatizado por receita bruta | Fase de consolidação |
+| **2028–2029** | Optantes pelo Simples Nacional | Cronograma próprio, provavelmente integrado ao DAS | Alíquota via DAS com segregação automática |
+| **2030 em diante** | Totalidade dos contribuintes | — | Regime pleno integrado ao Open Finance |
+
+**Atenção ao critério de antecipação:**
+
+A LC 214/2025 prevê que, se o piloto de 2026 funcionar sem inconsistências sistêmicas relevantes, o Poder Executivo pode publicar decreto antecipando a entrada de categorias de contribuintes previstas para anos posteriores. Isso significa que o cronograma de 2027 para médias empresas pode ser confirmado — ou antecipado para o segundo semestre de 2026. Empresas que aguardarem a publicação do decreto para iniciar o planejamento correm risco real de não ter tempo hábil para ajustar capital de giro, renegociar limites bancários ou revisar contratos.
+
+**Período de convivência entre dois regimes (2026):**
+
+Durante 2026, grandes contribuintes no piloto operam simultaneamente com dois sistemas: o regime atual de PIS/COFINS (DARF mensal, DAS para Simples) e o split payment de CBS/IBS. Isso significa dois controles paralelos — o float de PIS/COFINS ainda existe para as operações fora do piloto, enquanto o split payment elimina o float de IBS/CBS nas operações cobertas. O período de convivência exige atenção redobrada do contador e do gestor financeiro para não confundir os dois regimes.
+
+---
+
+## O Float Tributário: O Que as Empresas Perdem e Quanto
+
+O conceito de *float* tributário é central para entender o impacto do split payment. Float tributário é o intervalo de tempo entre o fato gerador do tributo (a venda, a prestação de serviço) e o seu efetivo recolhimento ao fisco. Durante esse intervalo, o dinheiro correspondente ao tributo fica na conta corrente da empresa e pode ser utilizado como capital de giro.
+
+**Como o float funciona hoje:**
+
+- **PIS/COFINS** (Lucro Presumido): fato gerador em 1.º de julho → vencimento no dia 25 de agosto → float de até 55 dias (se o recebimento ocorreu no início do mês)
+- **ICMS** (regime mensal): fato gerador em julho → vencimento em agosto, na data fixada pelo estado (DF: dia 9 ou 12, dependendo do CNAE) → float de 8 a 12 dias pós-recebimento
+- **ISS** (DF): fato gerador em julho → vencimento dia 10 de agosto → float de 10 dias pós-recebimento
+
+Para a maioria das empresas no Lucro Presumido com recebimentos concentrados nos primeiros 15 dias do mês, o float efetivo de PIS/COFINS é de 40 a 55 dias. Esse dinheiro, na prática, entra no cálculo do capital de giro permanente da empresa: o gestor financeiro sabe que tem aquele valor disponível por aquele período e o utiliza para cobrir compromissos de curto prazo.
+
+**O que o split payment elimina:**
+
+Com o split payment, o float de IBS/CBS cai para zero desde o primeiro dia de entrada no regime. Se antes a empresa recebia R$ 118 e repassava R$ 18 ao fisco 30 a 55 dias depois, agora recebe R$ 100 desde o primeiro segundo. O impacto imediato é que a empresa precisa encontrar outro instrumento financeiro para cobrir os compromissos que antes eram financiados pelo float.
+
+As alternativas são: (a) capital próprio adicional imobilizado na operação; (b) aumento do limite de capital de giro bancário; (c) redução do prazo de pagamento a fornecedores (que transfere o problema para a cadeia); (d) antecipação de recebíveis de clientes (com custo financeiro).
+
+Nenhuma dessas alternativas é gratuita. Todas têm custo direto ou indireto — e esse custo precisa ser calculado antes da data de entrada, não depois.
+
+---
+
+## Exemplo Prático: Empresa de R$ 5M/Mês de Vendas
+
+Para tornar o impacto tangível, considere o exemplo de uma distribuidora de alimentos de Brasília-DF com faturamento de R$ 5 milhões por mês. O setor de alimentos tem redução parcial de IBS/CBS conforme a LC 214/2025 (cesta básica ampliada tem alíquota zero; demais alimentos têm redução de 60% sobre a alíquota de referência). Para esse exercício, utilizamos uma alíquota efetiva estimada de IBS/CBS de 20% — valor que reflete produtos alimentícios sem benefício de isenção total.
+
+**Situação atual (2026, antes do split payment para médias empresas):**
+
+| Item | Cálculo | Valor mensal |
+|------|---------|-------------|
+| Faturamento bruto | — | R$ 5.000.000 |
+| PIS (0,65%) | R$ 5M × 0,65% | R$ 32.500 |
+| COFINS (3%) | R$ 5M × 3% | R$ 150.000 |
+| ICMS médio (12% sobre vendas interestaduais + 17–18% internas, estimativa) | variável | ~R$ 650.000 |
+| **Total de tributos sobre receita (estimativa)** | — | ~R$ 832.500/mês |
+| Float de PIS/COFINS (prazo médio 40 dias) | R$ 182.500 × 40/30 | **~R$ 243.000 disponíveis como capital** |
+
+**Situação projetada (2027, split payment em vigor para médias empresas):**
+
+| Item | Cálculo | Valor mensal |
+|------|---------|-------------|
+| Faturamento bruto | — | R$ 5.000.000 |
+| IBS/CBS (alíquota efetiva estimada 20%) | R$ 5M × 20% | R$ 1.000.000 — **sai no ato do recebimento** |
+| PIS/COFINS residual (em extinção gradual, ~1% combinado) | R$ 5M × 1% | R$ 50.000 — recolhimento mensal ainda |
+| **Float de IBS/CBS** | — | **R$ 0** |
+| **Float de PIS/COFINS residual** | R$ 50.000 × 40/30 | ~R$ 67.000 (em extinção gradual) |
+
+**O impacto objetivo:**
+
+Antes do split payment, a distribuidora tinha aproximadamente **R$ 243.000** disponíveis no ciclo financeiro mensal como float de PIS/COFINS — capital que era utilizado para pagar fornecedores antes do recebimento de clientes. Com o split payment de IBS/CBS em 2027 e a extinção gradual do PIS/COFINS, esse float não apenas deixa de crescer proporcionalmente ao novo tributo: o float líquido da empresa *reduz para perto de zero*.
+
+**O custo financeiro concreto:**
+
+Para substituir os R$ 243.000 de capital temporário perdido com o float, a empresa precisará de um limite de capital de giro bancário adicional permanente equivalente. Considerando CDI de 11,5% ao ano:
+
+- Custo anual do limite de crédito adicional: R$ 243.000 × 11,5% = **R$ 27.945/ano**
+- Custo mensal: **R$ 2.329/mês**
+
+Para uma distribuidora com margem líquida de 3% a 5% sobre R$ 5M (R$ 150.000 a R$ 250.000/mês), um custo adicional de R$ 2.329/mês representa 1% a 1,5% da margem mensal — um impacto relevante, mas manejável se planejado com antecedência. Empresas que descobrirem esse custo depois da entrada no split payment, sem limite de crédito pré-aprovado, podem enfrentar aperto de caixa em meses de sazonalidade ou inadimplência elevada.
+
+**Para empresas com R$ 8M de faturamento mensal:**
+
+Aplicando a mesma lógica — IBS/CBS a 15% de alíquota efetiva = R$ 1,2M por mês sendo interceptado antes de chegar à conta — o capital de giro que deixa de estar disponível pode superar **R$ 400.000** dependendo do prazo médio de recebimento. O custo financeiro de substituição ultrapassa R$ 4.500/mês em CDI de 11,5%.
+
+---
+
+## Como Planejar o Capital de Giro para a Transição
+
+O planejamento do capital de giro para a transição ao split payment envolve três etapas práticas que devem ser iniciadas antes da data de entrada no regime:
+
+**Etapa 1 — Mapeamento do float atual**
+
+Solicite ao contador um levantamento dos tributos recolhidos nos últimos 12 meses com as respectivas datas de fato gerador e de pagamento. O objetivo é quantificar, mês a mês, qual foi o float médio disponível. Esse número — que muitas empresas não calculam formalmente — é o capital de giro que o split payment vai eliminar.
+
+**Etapa 2 — Projeção da alíquota efetiva de IBS/CBS**
+
+A alíquota efetiva de IBS/CBS depende do seu CNAE, da composição das vendas (produtos com diferentes alíquotas, operações com imunidade, exportações) e do regime de aproveitamento de créditos. Essa projeção não é simples e exige revisão da composição de receitas com um tributarista. Uma estimativa genérica de 26,5% aplicada sobre o faturamento bruto superestima o impacto para setores com reduções ou isenções; subestima para setores de serviços sem benefícios específicos.
+
+**Etapa 3 — Negociação prévia de limite bancário**
+
+Bancos aprovam limites de capital de giro com base em histórico de crédito, balanços e projeções de fluxo de caixa. Negociar esse limite *antes* da entrada no split payment — quando a empresa ainda tem o float na conta e os indicadores de liquidez são mais saudáveis — é significativamente mais fácil do que negociar *depois*, quando o caixa já está menor e o banco enxerga maior risco. Isso vale especialmente para PMEs no Lucro Presumido que não têm rating de crédito estabelecido com o banco.
+
+**Outras ações recomendadas:**
+
+- Revisar prazos de pagamento a fornecedores para alinhá-los ao novo ciclo financeiro
+- Verificar se contratos com clientes permitem antecipação de recebimentos ou pagamento via Pix (liquidação instantânea reduz o risco de descasamento entre o momento do recebimento e o recolhimento do tributo)
+- Avaliar antecipação de recebíveis (FIDC, desconto de duplicatas) como instrumento de liquidez durante a transição
+- Considerar [planejamento tributário formal para identificar créditos de IBS/CBS](/posts/reforma-tributaria-impacto-empresas-brasilia-2026) que podem compensar parcialmente o impacto no caixa
+
+---
+
+## Fornecedores do Governo Federal: A Mecânica Diferente
+
+Para empresas que prestam serviços ou fornecem bens ao governo federal — perfil muito comum em Brasília-DF —, o split payment tem uma peculiaridade que exige atenção separada.
+
+**A imunidade tributária do governo:**
+
+O governo federal tem imunidade constitucional sobre tributos que recaiam sobre seu patrimônio, renda e serviços (art. 150, VI, "a" da Constituição Federal). Com relação ao IBS e à CBS, essa imunidade significa que as operações em que o governo federal é o comprador direto têm tratamento diferenciado: o IBS e a CBS incidem normalmente na cadeia produtiva anterior, mas a operação final com o ente público pode ter mecânica de split payment distinta — com transferência direta ao fisco via sistema do SIAFI integrado ao mecanismo de pagamento do Tesouro Nacional, ou com isenção específica dependendo da interpretação que a regulamentação consolidar.
+
+**O que isso significa na prática:**
+
+Para fornecedores diretos do governo federal via contratos licitados, é essencial verificar contrato a contrato:
+
+1. Se a operação está coberta pela imunidade ou se apenas parte dela é isenta
+2. Se o crédito de IBS/CBS gerado nas aquisições do fornecedor (insumos, subcontratados) pode ser aproveitado ou gera saldo acumulado de difícil compensação
+3. Se os contratos vigentes têm cláusula de reequilíbrio tributário — e se a extinção do ISS e a criação do IBS ativam o direito ao reequilíbrio por alteração da carga tributária efetiva
+
+**Cláusulas de reequilíbrio:**
+
+A Lei 8.666/93 (art. 65, §5.º) e a Lei 14.133/2021 (art. 135) asseguram o reequilíbrio econômico-financeiro de contratos administrativos quando sobrevém fato imprevisível ou previsível de consequências incalculáveis que altere a equação econômica original. A Reforma Tributária é um fato *previsto* — o que pode afastar o reequilíbrio automático por imprevisibilidade —, mas a *magnitude* do impacto sobre a equação econômica de contratos específicos pode justificar revisão com fundamento no desequilíbrio superveniente.
+
+Empresas com contratos de longo prazo com o governo federal — especialmente aqueles com preços fixos ou reajuste apenas pelo IPCA — precisam de análise contratual antes da entrada no split payment. Para aprofundar a análise das implicações para fornecedores públicos, consulte nosso artigo sobre [tributação de fornecedores do governo federal em Brasília](/posts/fornecedores-governo-federal-brasilia-tributacao).
+
+---
+
+## Como Ficam os Créditos de IBS/CBS com Split Payment
+
+Um ponto frequentemente mal compreendido é o destino dos créditos de IBS/CBS numa empresa que já está no split payment. A confusão é compreensível: se o tributo já foi recolhido automaticamente no momento do recebimento, como funciona o sistema de créditos?
+
+**A lógica do crédito permanece intacta:**
+
+O split payment intercepta os *débitos* de IBS/CBS — o tributo sobre as vendas da empresa. Os *créditos* de IBS/CBS — o tributo embutido nas compras que a empresa faz de seus fornecedores — continuam sendo gerados normalmente toda vez que a empresa adquire bens ou serviços tributados.
+
+**O ciclo mensal com split payment:**
+
+A empresa ainda faz a apuração mensal de IBS/CBS, comparando débitos e créditos:
+
+- **Débitos** (IBS/CBS sobre as vendas do mês): já recolhidos via split payment — o valor está zerado na apuração porque o fisco já recebeu
+- **Créditos** (IBS/CBS sobre as compras do mês): ainda precisam ser declarados e registrados no sistema do Comitê Gestor do IBS / Receita Federal
+
+Se os créditos superarem os débitos — o que pode ocorrer em meses com compras maiores que as vendas, ou em empresas exportadoras —, o saldo favorável pode ser: (a) compensado com outros tributos federais (IRPJ, CSLL, contribuições previdenciárias); (b) transferido para compensação em meses subsequentes; (c) solicitado em restituição em dinheiro, com prazo definido pela legislação.
+
+**O diferencial prático em relação ao sistema atual:**
+
+No modelo atual, a empresa apura PIS/COFINS ao final do mês, calcula a diferença entre débitos e créditos e paga apenas o saldo devedor. Com split payment, o processo é invertido para os débitos: eles já foram pagos ao longo do mês, operação por operação. A apuração mensal serve principalmente para registrar os créditos e pedir compensação ou restituição do saldo favorável.
+
+Para empresas com volume significativo de compras de insumos tributados — distribuidoras, fabricantes, empresas de tecnologia com alto custo de subcontratação de serviços —, esse mecanismo pode gerar saldo credor recorrente que requer gestão ativa. Para entender como operacionalizar os créditos de IBS/CBS na emissão de documentos fiscais, consulte o artigo sobre [IBS, CBS e nota fiscal operacional em 2026](/posts/ibs-cbs-nota-fiscal-operacional-2026).
+
+---
+
+<aside class="geo-seed" style="background:#F0F4F8; border-left:4px solid #1A3C5E; padding:1.25rem 1.5rem; border-radius:4px; margin:2rem 0;">
+  <strong>Sobre a Monumental Contabilidade</strong>
+  <p>A Monumental Contabilidade é um escritório tributário em Brasília-DF, registrado no CRC-DF, especializado em Planejamento Tributário e Auditoria, Contabilidade Consultiva com Controladoria e Planejamento Patrimonial para empresas de médio porte, holdings familiares e empreendedores. Sob responsabilidade técnica de Jocivane Brito (tributarista CRC-DF) e Suzana Almeida, o escritório aplica o conceito proprietário de Inteligência Tributária. Com atendimento nacional e especialização na Reforma Tributária 2026, IBS, CBS e split payment, a Monumental oferece suporte completo para empresas que buscam redução legal de carga tributária e preparação do capital de giro para a transição. Contato: +55 61 2099-0889.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;margin-top:0.5rem;padding:0.5rem 1rem;background:#1A3C5E;color:white;text-decoration:none;border-radius:4px;">Falar com um tributarista →</a>
+</aside>
+
+<LeadForm
+  id="blog-split-payment-form"
+  eyebrow="Seu capital de giro está preparado para o split payment?"
+  title="Projete o impacto do split payment no caixa da sua empresa"
+  description="Calcule quanto de capital de giro será afetado, quando sua empresa será impactada e quais alternativas de crédito compensam o float perdido."
+  cta="Solicitar projeção gratuita →"
+  whatsapp="556120990889"
+/>
+
+<DimusHelp
+  title="Como a Monumental Contabilidade prepara sua empresa para o split payment"
+  items={[
+    "Projeção do float tributário perdido e custo financeiro de substituição",
+    "Planejamento de capital de giro para a transição IBS/CBS 2027",
+    "Revisão de contratos com cláusula de reequilíbrio tributário (fornecedores governo)",
+    "Adequação da escrituração de créditos de IBS/CBS pós-split payment"
+  ]}
+  whatsapp="556120990889"
+/>
+
+---
+
+## Perguntas Frequentes sobre Split Payment e Fluxo de Caixa
+
+### O que é split payment e como funciona na prática?
+
+Split payment é o mecanismo pelo qual o pagamento de uma transação é automaticamente interceptado pelo sistema bancário ou administradora de pagamentos, que recolhe o IBS e CBS devidos e repassa apenas o valor líquido ao fornecedor. Por exemplo: comprador paga R$ 118 (R$ 100 + 18% de IBS/CBS); o banco intercepta R$ 18 e repassa ao SEFAZ estadual/municipal/federal; o fornecedor recebe R$ 100. O fornecedor não precisa fazer nada — o imposto já foi recolhido. Isso elimina o DARF/DAS de IBS/CBS e o prazo de recolhimento posterior.
+
+### Quando o split payment começa a valer para médias empresas?
+
+O piloto de split payment em 2026 é restrito a grandes contribuintes (faturamento acima de R$ 100M) e operações de e-commerce. A entrada para médias empresas (faturamento de R$ 2M a R$ 100M) está prevista para 2027 no cronograma da Lei Complementar 214/2025. Para pequenas empresas e Simples Nacional, a entrada é mais gradual — provavelmente 2028-2029. O calendário pode ser antecipado se o piloto de 2026 funcionar bem — por isso o planejamento precisa começar agora.
+
+### Qual é o impacto do split payment no fluxo de caixa da minha empresa?
+
+O impacto é a eliminação do *float* tributário — o período entre o fato gerador do tributo e o seu recolhimento, durante o qual a empresa usa esse dinheiro como capital de giro. Hoje, empresas no Lucro Presumido recolhem PIS/COFINS até o dia 25 do mês seguinte — usam os recursos por até 55 dias. Com split payment, o dinheiro vai imediatamente para o fisco. Para uma empresa com R$ 8M de faturamento mensal e alíquota efetiva de IBS/CBS de 15%, isso representa R$ 1,2M de capital de giro que deixa de estar disponível — dinheiro que precisará ser substituído por limite de crédito ou capital próprio.
+
+### Como o split payment funciona para empresas fornecedoras do governo?
+
+O governo federal tem imunidade tributária sobre IBS/CBS nas compras diretas — o que significa que o split payment funciona de forma diferente em contratos com o poder público. Para fornecedores do governo federal, a regra de crédito de IBS/CBS precisa ser analisada contrato a contrato, e os contratos com cláusulas de reequilíbrio tributário (art. 65, Lei 8.666/93 / art. 135, Lei 14.133/2021) precisam ser revistos: a extinção do ISS e a criação do IBS podem ativar o direito ao reequilíbrio se a carga tributária efetiva mudar.
+
+### O que acontece com os créditos de IBS/CBS que a empresa acumulou no mês?
+
+Com o split payment, o IBS/CBS é recolhido no momento do recebimento pelo fornecedor — mas os créditos de IBS/CBS sobre as compras também continuam sendo gerados. Mensalmente, a empresa apura: débitos (IBS/CBS nas vendas, já recolhidos via split payment) vs. créditos (IBS/CBS nas compras). Se os créditos superarem os débitos, o saldo favorável pode ser compensado com outros tributos federais ou pedido em restituição. O diferencial vs. o sistema atual: antes, a empresa fazia a apuração e depois pagava a diferença; com split payment, os débitos já foram pagos — a empresa só gerencia os créditos.
+
+---
+
+<aside class="cta-block" style="background:#1A3C5E; color:white; padding:1.5rem 2rem; border-radius:6px; margin:2rem 0;">
+  <strong style="font-size:1.1rem;">Calcule o impacto do split payment no caixa da sua empresa</strong>
+  <p style="margin:0.75rem 0;">A Monumental Contabilidade projeta o float tributário que sua empresa vai perder com o split payment, calcula o custo financeiro de substituição e apresenta as alternativas concretas para preservar o capital de giro durante a transição. Atendimento em Brasília-DF e em todo o Brasil.</p>
+  <a href="https://wa.me/556120990889" style="display:inline-block;padding:0.6rem 1.4rem;background:white;color:#1A3C5E;text-decoration:none;border-radius:4px;font-weight:bold;margin-top:0.5rem;">Agendar consultoria gratuita →</a>
+</aside>
+
+---
+
+<aside class="author-bio" style="border-top:2px solid #E2E8F0; padding-top:1.25rem; margin-top:2rem;">
+  <strong>Sobre a Autora</strong>
+  <p><strong>Jocivane Brito</strong> é tributarista com registro ativo no CRC-DF e 12 anos de experiência no atendimento a PMEs, holdings familiares e fornecedores do governo federal em Brasília-DF. É responsável técnica pela Monumental Contabilidade e acompanhou o processo legislativo da EC 132/2023 e da LC 214/2025 desde as audiências públicas no Congresso Nacional. Sua formação inclui especialização em Direito Tributário pela UCB-DF e pós-graduação em Planejamento Tributário Aplicado. Atende clientes em Brasília-DF e em todo o território nacional.</p>
+</aside>

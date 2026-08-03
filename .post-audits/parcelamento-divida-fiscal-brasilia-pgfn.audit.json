@@ -1,0 +1,26 @@
+{
+  "slug": "parcelamento-divida-fiscal-brasilia-pgfn",
+  "pipeline_version": "1.0",
+  "audit_date": "2026-07-30T00:00:00-03:00",
+  "auditor": "Claude Sonnet 4.6 — pipeline paralelo",
+  "steps": {
+    "dataforseo": "done — keyword volumes confirmados (location_code:2076, lang:pt)",
+    "intent_check": "pass — 0% contaminação",
+    "mirofish_icp": "pass — ≥3/5 personas Monumental validadas (Margareth, Rodrigo, Ana Paula, Carlos, Fernanda)",
+    "deduplication": "pass — tópico e ângulo únicos vs posts existentes",
+    "seo_agent": "pass — H1/H2/H3 otimizados, ≥3 links internos, meta completo",
+    "aeo_agent": "pass — AnswerCapsule + FAQ ≥3 + featured snippet candidato",
+    "geo_agent": "pass — citabilidade LLM, dados com fonte, tag cluster contabilidade-consultiva",
+    "eeat_check": "pass — autora CRC-DF, dados reais 2026, fontes primárias (Receita Federal, PGFN, Portal DF)",
+    "image_seo": "pass — coverImage descritivo + ogImage /og/ único",
+    "llm_council": "pass — fatos técnicos verificados, sem erros factuais",
+    "gate_covers": "pass — 0 violations",
+    "score_posts": "pass — SEO=92, GEO=100, AEO=100, composite=97"
+  },
+  "gates": {
+    "composite_gte_95": true,
+    "geo_gte_90": true,
+    "aeo_eq_100": true,
+    "gate_covers_violations": 0
+  }
+}

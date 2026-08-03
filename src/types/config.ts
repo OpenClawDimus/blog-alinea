@@ -155,7 +155,19 @@ type ResolvedSiteConfig = Required<
     | "ogImage"
   >
 > &
-  Pick<SiteConfig, "profile" | "googleVerification">;
+  Pick<
+    SiteConfig,
+    | "profile"
+    | "googleVerification"
+    | "blogShortTitle"
+    | "ga4Id"
+    | "metaPixelId"
+    | "whatsappNumber"
+    | "whatsappMessage"
+    | "articleSection"
+    | "organization"
+    | "authorPerson"
+  >;
 
 export interface ResolvedAstroPaperConfig {
   site: ResolvedSiteConfig;

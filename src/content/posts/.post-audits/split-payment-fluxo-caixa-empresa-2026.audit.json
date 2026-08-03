@@ -1,0 +1,28 @@
+{
+  "slug": "split-payment-fluxo-caixa-empresa-2026",
+  "pipeline_version": "1.0",
+  "audit_date": "2026-07-30T20:30:00-03:00",
+  "steps": {
+    "keyword_research": "done",
+    "title_meta": "done",
+    "outline": "done",
+    "answer_capsule": "done",
+    "body_copy": "done",
+    "faq_block": "done",
+    "lead_form": "done",
+    "dimus_help": "done",
+    "geo_seed": "done",
+    "cta_block": "done",
+    "author_bio": "done",
+    "internal_links": "done"
+  },
+  "gates": {
+    "composite_gte_95": true,
+    "geo_gte_90": true,
+    "aeo_eq_100": true,
+    "gate_covers_violations": 0
+  },
+  "content_type": "informational",
+  "target_audience": "CFO/controller empresa R$2M-100M — planejamento de capital de giro pré-split payment",
+  "notes": "Wave 2 Post 7. LC 214/2025 split payment. Cronograma 2026 (grandes) → 2027 (médias) → 2028+ (Simples). Exemplo distribuidora R$5M/mês alíquota 20%, CDI 11,5%, custo adicional R$2.329/mês. Float eliminado 55 dias PIS/COFINS. Fornecedores governo: imunidade + cláusula reequilíbrio. 4.484 palavras."
+}

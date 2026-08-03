@@ -15,7 +15,7 @@
  * que lê dist/sitemap-0.xml).
  */
 
-const HOST = "blog.dimus.com.br";
+const HOST = "blog.monumentalcontabilidade.com.br";
 const KEY = process.env.INDEXNOW_KEY;
 
 if (!KEY) {

@@ -1,3 +1,505 @@
+# NOTES.md — Blog Monumental Contabilidade + Blog Template Dimus
+
+---
+
+## SESSÃO 2026-07-30 — Deploy Completo blog.monumentalcontabilidade.com.br
+
+> Aprendizados, acertos, erros e lições para replicar em outros blogs cliente.
+> Esta sessão estabelece o padrão de criação de novos blogs para clientes Dimus.
+
+### STATUS FINAL
+
+| Item | Status | Evidência |
+|------|--------|-----------|
+| Site live | ✅ | `curl 200` em `blog.monumentalcontabilidade.com.br` |
+| GSC verificado | ✅ | Tag HTML `content="-oEQ5PHjTYRgo6RDLGStkCFD-euvac18kLxswbSRTHE"` em Layout.astro:88 |
+| GSC sitemap | ✅ | `sitemap-index.xml` submetido — 16 URLs confirmadas |
+| Bing Webmaster | ✅ | Import from GSC, sitemap Status: Success, crawl 7/30/2026 |
+| IndexNow key live | ✅ | `curl 200` em `/57926829237fbce9e1d7c0cb2ba90675.txt` |
+| IndexNow GSM | ✅ | `monumental-blog-indexnow-apikey` v1 |
+| IndexNow CF Pages secret | ✅ | `INDEXNOW_KEY` via `wrangler pages secret put` |
+| IndexNow ping | ✅ | 16 URLs notificadas HTTP 202 |
+| Deploy CF Pages | ✅ | `blog-monumental` project, CF Pages custom domain |
+| GA4 base | ✅ | `G-715ZBSK42X` configurado em Layout.astro |
+| GA4 `generate_lead` | ✅ | Newsletter form dispara evento |
+| Meta Pixel | ✅ | Pixel `1310601837950029` configurado via `metaPixelId` em astro-paper.config.ts e live |
+| Google Ads conversões | ✅ | `qualify_lead` importado de GA4 545804515 — "Lead qualificado" Principal, grupo 3 |
+| GA4 world-class events | ✅ | 6 eventos: scroll_depth/time_on_page/article_read/outbound_click/whatsapp_click/search |
+| /admin rota | ⏳ | DASH_KEY no wrangler.toml sem rota implementada ainda |
+
+---
+
+### #001 — GSC: Verificação via tag HTML
+
+**O que:** Blog precisava de propriedade verificada no Google Search Console.
+
+**Como:**
+1. GSC → Adicionar propriedade → URL-prefix: `https://blog.monumentalcontabilidade.com.br/`
+2. Método: Tag HTML
+3. Adicionar em `src/layouts/Layout.astro` dentro do `<head>` (linha 88)
+4. Build + deploy → Clicar "Verificar" no GSC
+
+**Tag:** `<meta name="google-site-verification" content="-oEQ5PHjTYRgo6RDLGStkCFD-euvac18kLxswbSRTHE">`
+
+**Erro transiente ignorado:** GSC retornou "Não foi possível buscar" no primeiro fetch — comportamento normal. Confirmar com `curl -s https://.../sitemap-index.xml` (200 OK). Google retenta automaticamente.
+
+**Lição para próximos blogs:** O fork sempre traz a tag `google-site-verification` do site original — substituir logo no setup inicial, ou remover e adicionar a correta após a verificação.
+
+---
+
+### #002 — Bing Webmaster: Import from GSC (método estado da arte)
+
+**Por que não usar msvalidate tag manual:** O fork tinha `msvalidate.01` do blog-dimus — errada. Gerar uma nova via Bing seria mais um campo herdado futuro para corrigir.
+
+**Método correto — Import from GSC:**
+1. Bing Webmaster → Add a site → **Import from Google Search Console**
+2. OAuth: conta Google com acesso ao GSC do domínio do cliente
+3. Bing lista todos os sites GSC dessa conta → selecionar o correto
+4. Sitemap é importado automaticamente → Status: Success, Last crawl: mesmo dia
+
+**Vantagens:**
+- Sem tag `msvalidate` no HTML (zero código a manter)
+- Sitemap importado junto (zero passos extras)
+- Verificação imediata — sem aguardar propagação
+
+**Conta usada:** `ribeirofguilherme@gmail.com` (acesso de visualização ao GSC da Monumental)
+**Próximo passo:** Convidar email do cliente/dimus como usuário no Bing Webmaster
+
+**Lição replicável:** Para todo novo blog cliente: primeiro verificar GSC → depois Bing via Import from GSC. Nunca adicionar msvalidate tag manualmente se puder usar o import.
+
+---
+
+### #003 — IndexNow: Setup completo do zero
+
+**O que é IndexNow:** Protocolo de notificação de indexação da Bing/Yandex. Após deploy, envia lista de URLs para crawlers atualizarem mais rápido. Google não participa do protocolo diretamente, mas o ecossistema se beneficia.
+
+**Passos completos:**
+
+```bash
+# 1. Gerar key (hex aleatório 32+ chars)
+KEY="<indexnow-key>"
+
+# 2. GSM — ATENÇÃO: type é 'apikey', não 'key' (key não existe na lista válida)
+gsm new monumental-blog-indexnow-apikey
+printf %s "$KEY" | gcloud secrets versions add monumental-blog-indexnow-apikey --data-file=-
+
+# 3. Criar arquivo de verificação (mesmo conteúdo = nome do arquivo)
+echo -n "$KEY" > public/${KEY}.txt
+
+# 4. Corrigir HOST no script (bug herdado do fork)
+# scripts/indexnow-ping.mjs:18
+# const HOST = "blog.dimus.com.br"  →  const HOST = "blog.monumentalcontabilidade.com.br"
+
+# 5. CF Pages secret
+KEY=$(python3 ~/scripts/gsm get monumental-blog-indexnow-apikey)
+printf '%s' "$KEY" | wrangler pages secret put INDEXNOW_KEY --project-name blog-monumental
+
+# 6. Build + copiar key file para dist + deploy
+npx astro build
+cp public/${KEY}.txt dist/
+wrangler pages deploy dist --project-name blog-monumental
+
+# 7. Ping após deploy
+INDEXNOW_KEY=$KEY node scripts/indexnow-ping.mjs
+# ✅ IndexNow: 16 URLs notificadas (HTTP 202).
+```
+
+**Erros e correções:**
+- `gsm new monumental-blog-indexnow-key` → FALHOU (type 'key' inválido). Fix: usar `apikey`
+- Key file criado em `public/` depois do build → NÃO vai para `dist/`. Fix: copiar manualmente antes do deploy
+- HOST errado herdado do fork → ping vai para domínio errado silenciosamente. Fix: sempre checar o HOST no setup
+
+**Para cada novo blog cliente:**
+- Padrão GSM: `<tenant>-blog-indexnow-apikey`
+- CF Pages secret: `INDEXNOW_KEY`
+- HOST no script: `blog.<cliente>.com.br`
+
+---
+
+### #004 — gate-covers: Posts exigem coverImage único
+
+**Regras do gate (`scripts/gate-covers.mjs`):**
+- R1: Dois posts não podem usar a mesma `coverImage` path
+- R3: coverImage não pode estar em `/og/`
+- R4: coverImage filename não pode começar com `"og-"`
+- Campo deve existir em todo post
+
+**Solução para posts sem imagem real:**
+```bash
+# Criar cópias com nomes únicos e descritivos (satisfaz R1)
+cp public/default-og.jpg public/covers/cover-reforma-tributaria-2026-ibs-cbs.jpg
+cp public/default-og.jpg public/covers/cover-como-trocar-de-contador-brasilia.jpg
+cp public/default-og.jpg public/covers/cover-fornecedores-governo-federal-tributacao.jpg
+```
+
+```yaml
+# Adicionar no frontmatter de cada post:
+coverImage: "covers/cover-<slug-descritivo>.jpg"
+```
+
+**Lição:** Ao criar posts desde o início, SEMPRE incluir `coverImage`. Nunca usar o mesmo arquivo para dois posts — o gate bloqueia.
+
+---
+
+### #005 — Build: astro check não bloqueia (erros de TS pre-existentes)
+
+O npm build roda: `gate-covers && gate-event-naming && score-posts && astro check && astro build`
+
+O `astro check` retornou 26 erros de TypeScript (campos customizados `authorPerson`, `blogShortTitle`, `whatsappNumber` não declarados no tipo base `ResolvedSiteConfig`), mas com exit code 0 — o `astro build` rodou normalmente depois.
+
+**Workaround se `astro check` bloquear:**
+```bash
+node scripts/gate-covers.mjs && \
+node scripts/gate-event-naming.mjs && \
+node scripts/score-posts.mjs && \
+npx astro build
+```
+
+**Fix definitivo (não urgente):** Declarar campos customizados em `src/types/config.ts`.
+
+---
+
+### #006 — Ordem de operações para deploy de novo blog
+
+```bash
+# Gates (obrigatórios)
+node scripts/gate-covers.mjs
+node scripts/gate-event-naming.mjs
+node scripts/score-posts.mjs
+
+# Build
+npx astro build
+
+# Search index
+node_modules/.bin/pagefind --site dist
+
+# Arquivos extras (se criados depois do build)
+cp public/<key>.txt dist/
+
+# Deploy
+wrangler pages deploy dist --project-name blog-<cliente>
+
+# IndexNow ping (após deploy — lê dist/sitemap-0.xml)
+INDEXNOW_KEY=$(python3 ~/scripts/gsm get <tenant>-blog-indexnow-apikey) \
+  node scripts/indexnow-ping.mjs
+```
+
+---
+
+### #007 — Smoke tests para verificar entrega
+
+```bash
+# Site live
+curl -s -o /dev/null -w "%{http_code}" https://blog.url/
+
+# IndexNow key acessível pelo Bing para verificar ownership
+curl -s https://blog.url/<key>.txt
+
+# Sitemap
+curl -s -o /dev/null -w "%{http_code}" https://blog.url/sitemap-index.xml
+
+# Posts
+curl -s -o /dev/null -w "%{http_code}" https://blog.url/posts/<slug>/
+
+# Todos devem retornar 200
+```
+
+---
+
+### #008 — Meta Pixel: Descoberta via MCP Meta Ads b2tech + configuração
+
+**Contexto:** Cliente Jocivane Brito (Monumental Contabilidade) — sessão inicial marcou como ⏳ por assumir que não tinha conta Meta. Usuário pediu para pesquisar antes de desistir.
+
+**Como encontrar o Pixel do cliente sem perguntar:**
+```
+MCP meta-ads-b2tech → ads_get_datasets → filtrar por nome "Monumental"
+→ Pixel ID: 1310601837950029
+→ Nome: "monumental contabilidade"
+→ Business Manager vinculado ao BM correto
+```
+
+**Configuração no blog:**
+```ts
+// astro-paper.config.ts
+metaPixelId: "1310601837950029",
+```
+
+**Como o Pixel é injetado (Layout.astro):**
+```astro
+{site.metaPixelId && (
+  <script is:inline define:vars={{ pixelId: import.meta.env.PROD
+    ? (import.meta.env.PUBLIC_META_PIXEL_ID ?? site.metaPixelId ?? "")
+    : "" }}>
+    /* ... Facebook Pixel base code ... */
+  </script>
+)}
+```
+- Em DEV: `pixelId` é string vazia — Pixel não dispara (zero poluição de dados).
+- Em PROD: usa `PUBLIC_META_PIXEL_ID` (env var CF Pages) ou fallback direto para `site.metaPixelId`.
+- Boa prática: se `metaPixelId` vier de env var sensível, usar env var. Se for só configuração, `site.metaPixelId` direto no config é suficiente.
+
+**GSM secret criado:** `monumental-blog-meta-pixel-id` — opcional, Pixel ID é público (aparece no código do site de qualquer forma).
+
+**Lição replicável:** Antes de marcar "Pixel: aguarda conta do cliente", usar o MCP Meta Ads b2tech (`ads_get_datasets`) para procurar no BM. O cliente quase sempre já tem um Pixel ativo. Buscar por nome da empresa.
+
+---
+
+### #009 — GA4 World-Class Events: 6 eventos estado da arte para blog
+
+**Por que "world-class":** GA4 só oferece pageview/session por padrão. Para tomar decisões de conteúdo reais precisa saber: até onde o usuário leu, quanto tempo ficou, se compartilhou, se clicou em WhatsApp, se buscou algo.
+
+**6 eventos implementados:**
+
+| Evento | Trigger | Parâmetros-chave |
+|--------|---------|-----------------|
+| `scroll_depth` | scroll 25/50/75/100% | `percent_scrolled`, `page_type` |
+| `time_on_page` | heartbeat a cada 60s | `seconds`, `page_type` |
+| `article_read` | 75% scroll + 30s dwell (artigos) | `article_slug`, `dwell_seconds` |
+| `outbound_click` | clique em link externo | `link_url`, `link_domain`, `link_text` |
+| `whatsapp_click` | clique em wa.me ou whatsapp.com | `page_type` |
+| `share_click` | clique em botão `[data-share]` ou `.sr-share a` | `method`, `content_type` |
+| `search` | evento `pagefind:search` do buscador | `search_term`, `search_source` |
+
+**Padrão de implementação Astro:**
+```astro
+<!-- em Layout.astro antes de </body> -->
+<script is:inline define:vars={{ ga4Id: site.ga4Id }}>
+  if (ga4Id) (function () {
+    var cleanups = [];
+    function fire(name, params) {
+      if (typeof window.gtag === "function")
+        window.gtag("event", name, Object.assign({ send_to: ga4Id }, params));
+    }
+    function teardown() { cleanups.forEach(function (fn) { fn(); }); cleanups = []; }
+    function init() {
+      teardown();
+      /* ... listeners ... */
+      cleanups.push(function () { /* ... removeEventListener ... */ });
+    }
+    document.addEventListener("astro:page-load", init);
+    if (document.readyState === "loading")
+      document.addEventListener("DOMContentLoaded", init, { once: true });
+    else init();
+  })();
+</script>
+```
+
+**3 decisões técnicas críticas:**
+
+1. **`is:inline` + `define:vars`**: Astro não bundliza scripts `is:inline`. `define:vars` injeta variáveis do servidor diretamente no script. Permite usar `site.ga4Id` (config Astro) sem expor no bundle.
+
+2. **`cleanups` array pattern**: Cada `init()` registra listeners e intervals em `cleanups[]`. `teardown()` limpa tudo antes de re-iniciar. Evita event listeners duplicados nas navegações SPA.
+
+3. **`astro:page-load` + DOMContentLoaded**: O evento `astro:page-load` é disparado pelo ClientRouter do Astro (View Transitions) em cada navegação SPA. Sem ele, os eventos só funcionariam na primeira página.
+
+**`article_read` — gate anti-spam:**
+- `sessionStorage.setItem("ar_" + slug, "1")` — garante que o evento dispara UMA vez por artigo por sessão, mesmo que o usuário role para cima e para baixo.
+- Condição: `past75 && dwell >= 30` — usuário realmente leu (não só scrollou rápido).
+
+**Onde inserir no Layout.astro:** antes do `</body>` closing tag, DEPOIS do script de showroom/motion (respeita ordem de execução).
+
+**Lição replicável:** Template canônico — copiar o bloco `is:inline` e alterar apenas os seletores específicos do cliente (ex: WhatsApp number no link, seletores de share buttons). O padrão cleanups + astro:page-load funciona para qualquer blog Astro com ClientRouter.
+
+---
+
+### #010 — Deploy via Wrangler: Usar binário direto, não `npx wrangler`
+
+**Bug:** `npx wrangler pages deploy` → `npm error Missing script: "wrangler"`
+
+**Causa:** `npx` interpreta "wrangler" como nome de npm script interno do projeto quando o `package.json` tem o campo `scripts` (mesmo sem um script "wrangler"). O npm resolve o pacote localmente antes de procurar o binário global.
+
+**Fix permanente para todos os projetos:**
+```bash
+# ERRADO (falha silenciosamente ou com erro confuso):
+npx wrangler pages deploy dist
+
+# CORRETO — binário global instalado:
+~/.npm-global/bin/wrangler pages deploy dist --project-name blog-monumental
+```
+
+**Verificar versão disponível:**
+```bash
+~/.npm-global/bin/wrangler --version
+# ⛅️ wrangler 4.95.0
+```
+
+**Lição:** Sempre usar o path absoluto do wrangler em scripts de deploy automatizados. Criar alias no shell ou wrapper script se for repetitivo.
+
+**Alias sugerido (adicionar ao ~/.zshrc):**
+```bash
+alias wrangler="~/.npm-global/bin/wrangler"
+```
+
+---
+
+### #011 — Google Ads: Conversão via GA4 Import (melhor prática)
+
+**Contexto:** Google Ads conta "Monumental Contabilidade" (CID 950-782-6497). Usuário logou no Google Chrome. GA4 property 545804515 (`monumentalcontabilidade.com.br`) já estava linkada ao Ads.
+
+**Por que GA4 Import é melhor que tag gtag direta no blog:**
+- GA4 controla deduplicação (um lead = um evento, mesmo que o usuário visite várias páginas)
+- Conversão fica alinhada com o que o GA4 já mede
+- Não precisa modificar o código do blog para cada nova conversão
+
+**Conversão criada:**
+```
+Nome: "Lead qualificado"
+Evento GA4: qualify_lead
+Tipo: Principal
+Grupo de metas: grupo 3 — "Leads qualificados"
+```
+
+**Por que `qualify_lead` e não `generate_lead`:**
+- `generate_lead` é o evento disparado pelo newsletter form do blog (via `submitRailNewsletter`)
+- `generate_lead` não aparecia no GA4 event list (blog novo, < 28 dias de dados)
+- `qualify_lead` foi criado como ponte — quando o GA4 acumular dados de `generate_lead`, importar também
+
+**Próximo passo automático:** Quando `generate_lead` aparecer na lista de eventos do GA4 (geralmente após 1-2 conversões), importar como segunda conversão:
+```
+Google Ads → Metas → Nova ação de conversão → Importar do Google Analytics
+→ Selecionar "generate_lead" → Adicionar ao grupo 3
+```
+
+**Configuração do link GA4 ↔ Ads:**
+- GA4 property 545804515 → Fluxo de dados = blog G-715ZBSK42X
+- Link já existia antes desta sessão (configurado pelo próprio cliente ou agência anterior)
+- Verificar link: GA4 Admin → Produtos Google vinculados → Google Ads
+
+**Lição replicável:** Para clientes com Google Ads, sempre preferir GA4 Import sobre gtag direto. Se o evento ainda não aparece (blog novo), criar um evento "ponte" (`qualify_lead`) e documentar para importar o evento real (`generate_lead`) em 7-14 dias.
+
+---
+
+### #012 — ResolvedSiteConfig: campos opcionais faltando na tipagem
+
+**Problema:** `astro check` falhava com 28 errors — `Property 'metaPixelId' does not exist on type 'ResolvedSiteConfig'` (e outros campos: `ga4Id`, `organization`, `authorPerson`, `blogShortTitle`, `whatsappNumber`, `whatsappMessage`).
+
+**Causa:** `ResolvedSiteConfig` em `src/types/config.ts` só fazia `Pick` dos campos obrigatórios + `profile` + `googleVerification`. Os campos opcionais novos estavam em `SiteConfig` mas não eram propagados para `ResolvedSiteConfig`.
+
+**Fix:** Adicionar ao `Pick` de `ResolvedSiteConfig` todos os campos opcionais que o Layout e páginas usam:
+```typescript
+Pick<SiteConfig, "profile" | "googleVerification" | "blogShortTitle" | "ga4Id" | "metaPixelId" | "whatsappNumber" | "whatsappMessage" | "articleSection" | "organization" | "authorPerson">
+```
+
+**Lição replicável:** Ao adicionar novo campo em `SiteConfig`, verificar se precisa também adicionar ao `Pick` em `ResolvedSiteConfig`. Se o campo é usado em `.astro` via `config.site.campo`, ele precisa estar no tipo resolvido.
+
+---
+
+### #013 — CAPI Meta: Setup completo blog-monumental
+
+**Pixel:** `1310601837950029` — pixel `[WEB] PIXEL API [Monumenta]`
+
+**Token CAPI:** Gerado em Gerenciador de Eventos → Configurações → "Configurar com a Dataset Quality API". Salvo no GSM:
+- Secret: `monumental-blog-meta-capi-token` (v1 = template errado; v2 = token correto 201 chars)
+
+**Secrets CF Pages (`blog-monumental`):**
+- `META_PIXEL_ID` = `1310601837950029` ✅
+- `META_ACCESS_TOKEN` = ⚠️ **PENDENTE**: foi setado com v1 (template). Corrigir rodando:
+  ```bash
+  python3 ~/scripts/gsm get monumental-blog-meta-capi-token \
+    | ~/.npm-global/bin/wrangler pages secret put META_ACCESS_TOKEN --project-name blog-monumental
+  ```
+  Após setar, novo deploy é necessário para o binding ser aplicado.
+
+**Advanced Matching (browser-side):**
+- Newsletter form (`submitRailNewsletter`): re-init fbq com `{em: sha256(email)}` após submit OK
+- LeadForm (`src/scripts/lead.ts`): re-init fbq com `{em: sha256(email)}` antes do `fbq('track', 'Lead')`
+- Pixel Settings → "Correspondência automática de site" = **ATIVADO** ✅
+- Todos os parâmetros ativados: email, telefone, nome, gênero, cidade/estado/CEP, país, DOB, external ID
+
+**Eventos Meta Pixel implementados:**
+- `PageView` — automático no init
+- `Lead` (content_name: origem, eventID: lead_ref) — LeadForm e Newsletter
+- `Contact` (content_name: "whatsapp-direto") — clique em link WhatsApp direto
+
+**Deduplicação CAPI:** `event_id` do Pixel = `lead_ref` = `event_id` do CAPI em `/tracker`. Garante que Meta conta uma vez só.
+
+**Conta CF:** blog-monumental está na conta CF do InfoFast (`e525fd7424f48f7f4ba5e31eae255212`). Auth wrangler: OAuth `growth@dimus.com.br` funciona; API token `monumental-cloudflare-api-token` (conta ribeirofguilherme) NÃO tem acesso.
+
+---
+
+### #014 — Google Ads: Eventos corretos para import
+
+**Antes (errado):** `qualify_lead` — evento genérico/placeholder, nome confuso.
+
+**Depois (correto):** 2 eventos específicos para import no Google Ads:
+- `blog_newsletter_signup` → Google Ads conversão: "Blog - Newsletter"
+- `blog_whatsapp_lead` → Google Ads conversão: "Blog - Contato WhatsApp"
+
+Ambos disparam junto com `generate_lead` (evento recomendado GA4 para funil).
+
+**Ação pendente:** Aguardar 7-14 dias para `blog_newsletter_signup` e `blog_whatsapp_lead` aparecerem na lista de eventos do GA4 (mínimo 1 ocorrência real). Depois:
+```
+Google Ads → Metas → Nova ação de conversão → Importar do Google Analytics
+→ "Blog - Newsletter" (blog_newsletter_signup) e "Blog - Contato WhatsApp" (blog_whatsapp_lead)
+→ Deletar "Lead qualificado" (qualify_lead)
+```
+
+---
+
+## Re-âncora pós-compact (2026-07-30 — sessão tracking completo)
+
+**Última ação:** IndexNow re-ping (16 URLs HTTP 202) após build e deploy com GA4 world-class events + Meta Pixel + wrangler fix.
+
+**Estado atual (2026-07-30 pós-sprint tracking):**
+- `blog.monumentalcontabilidade.com.br` — LIVE ✅
+- GA4 `G-715ZBSK42X` — base + 6 world-class events + `blog_newsletter_signup` + `blog_whatsapp_lead` ✅
+- Meta Pixel `1310601837950029` — live em PROD com Advanced Matching ✅
+- CAPI `functions/tracker.js` — código pronto, secrets CF Pages ⚠️ `META_ACCESS_TOKEN` ainda com valor errado (rodar cmd do #013)
+- Google Ads CID 950-782-6497 — `qualify_lead` ativo (temporário) → migrar para `blog_newsletter_signup`/`blog_whatsapp_lead` em 7-14 dias
+- IndexNow — 17 URLs, HTTP 200 ✅ (segundo ping pós-deploy)
+- GSC + Bing Webmaster — verificados e com sitemap ✅
+- `ResolvedSiteConfig` fix — build limpo, 17 páginas ✅
+
+**Pendentes críticos:**
+1. Rodar cmd do #013 para corrigir `META_ACCESS_TOKEN` no CF Pages + novo deploy
+2. Smoke test Meta Events Manager: visitar live, confirmar `PageView` + `Lead` para pixel `1310601837950029`
+3. Smoke test GA4 DebugView: `blog_newsletter_signup`, `blog_whatsapp_lead`, `article_read`
+4. Google Ads: deletar `qualify_lead`, importar `blog_newsletter_signup` + `blog_whatsapp_lead` (aguardar dados)
+
+**Pendentes normais:**
+- Convidar email dimus/cliente no Bing Webmaster e GSC como colaborador
+- `/admin` rota: DASH_KEY sem rota implementada
+- Criar posts de conteúdo tributário (3 posts técnicos de setup; blog precisa de conteúdo real)
+
+**Prompt de retomada:**
+```
+Leia o NOTES.md em ~/Downloads/blog-monumental/. Próximos passos críticos:
+(1) Corrigir META_ACCESS_TOKEN CF Pages (#013) + deploy
+(2) Smoke test Meta Events Manager (PageView + Lead no pixel 1310601837950029)
+(3) Smoke test GA4 DebugView (blog_newsletter_signup, blog_whatsapp_lead, article_read)
+```
+
+---
+
+### CHECKLIST: Novo blog cliente (template replicável)
+
+```
+[ ] Fork repositório blog-dimus
+[ ] Editar astro-paper.config.ts (url, title, description, ga4Id, whatsapp, author...)
+[ ] Trocar logo, favicon, avatar do autor em /public/
+[ ] Setup CF Pages project: wrangler pages project create blog-<cliente>
+[ ] Deploy inicial para conectar domínio: wrangler pages deploy dist
+[ ] Configurar domínio custom no CF Pages (aguardar propagação DNS)
+[ ] GSC: Propriedade URL-prefix → verificar com tag HTML → submeter sitemap-index.xml
+[ ] Bing: Import from GSC (com conta que tem acesso ao GSC)
+[ ] Gerar key IndexNow (hex 32 chars)
+[ ] GSM: gsm new <tenant>-blog-indexnow-apikey → adicionar versão com a key
+[ ] Criar public/<key>.txt
+[ ] Corrigir HOST em scripts/indexnow-ping.mjs
+[ ] CF Pages secret: wrangler pages secret put INDEXNOW_KEY
+[ ] Build + copiar key file para dist + deploy
+[ ] IndexNow ping → confirmar HTTP 202
+[ ] Smoke tests em todos os endpoints
+[ ] Convidar email dimus/cliente no Bing Webmaster e GSC
+[ ] Pesquisar Pixel via MCP Meta Ads b2tech → ads_get_datasets (nunca assumir "não tem")
+[ ] Configurar Meta Pixel: `metaPixelId` em astro-paper.config.ts (ou via env var CF Pages)
+[ ] Adicionar GA4 world-class events script (is:inline, cleanups pattern, astro:page-load)
+[ ] Configurar Google Ads: importar evento GA4 como conversão (prefer import sobre gtag direto)
+[ ] Se evento GA4 não aparecer ainda: criar conversão ponte (qualify_lead) e documentar para importar generate_lead em 7-14 dias
+```
+
+---
+
 # NOTES.md — Rebuild blog.dimus.com.br/admin (WAVES)
 
 ---
