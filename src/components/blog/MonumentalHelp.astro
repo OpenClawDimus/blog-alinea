@@ -1,7 +1,7 @@
 ---
 /**
- * DimusHelp — GATE obrigatório. Todo post insere este bloco: o que a Dimus faz + como ajuda,
- * traduzido para a dor do ICP (carro vendido, não lead). CTA → WhatsApp.
+ * MonumentalHelp — bloco CTA obrigatório em todo post. Apresenta a Monumental Contabilidade e capta lead via formulário.
+ * 
  *
  * Props aceitas em dois estilos:
  *   Estilo legado : postSlug + cluster + variant
@@ -70,7 +70,7 @@ const intent =
   "Vim do blog da Monumental e quero entender como estruturar melhor o planejamento tributário da minha empresa.";
 ---
 
-<aside class="dimus-help not-prose" data-cluster={cluster}>
+<aside class="monumental-help not-prose" data-cluster={cluster}>
   <p class="dh-eyebrow">Monumental Contabilidade · Brasília-DF</p>
   <h3 class="dh-title">{copy.title}</h3>
   <p class="dh-body">{copy.body}</p>
@@ -109,7 +109,7 @@ const intent =
 </script>
 
 <style>
-  .dimus-help {
+  .monumental-help {
     margin: 2.75rem 0;
     padding: 1.6rem 1.5rem;
     border: 1px solid var(--hair-mag);
