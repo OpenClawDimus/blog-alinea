@@ -75,6 +75,8 @@ const getReadTime = (body: string | undefined) =>
   Math.ceil((body?.split(/\s+/).length ?? 800) / 220);
 
 const author = config.site.authorPerson?.name ?? config.site.author;
+const normImg = (p?: string) =>
+  p ? (p.startsWith('http') || p.startsWith('/') ? p : `/${p}`) : undefined;
 ---
 
 <Layout>
@@ -130,7 +132,7 @@ const author = config.site.authorPerson?.name ?? config.site.author;
           <div class="feat-img">
             {(featuredPost.data.coverImage || typeof featuredPost.data.ogImage === "string")
               ? <img
-                  src={featuredPost.data.coverImage ?? (typeof featuredPost.data.ogImage === "string" ? featuredPost.data.ogImage : undefined)}
+                  src={normImg(featuredPost.data.coverImage) ?? (typeof featuredPost.data.ogImage === "string" ? featuredPost.data.ogImage : undefined)}
                   alt={featuredPost.data.title}
                   loading="eager"
                   fetchpriority="high"

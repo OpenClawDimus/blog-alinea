@@ -108,25 +108,6 @@ const fmtDate = (d: Date) =>
   faq={faq}
   tags={tags}
 >
-  <!-- ── Topbar ── -->
-  <nav class="sr-topbar" aria-label="Navegação principal">
-    <div class="sr-topnav">
-      <a href="/posts" data-active={Astro.url.pathname.startsWith("/posts") ? "" : undefined}>Posts</a>
-      <a href="/tags">Tags</a>
-      <a href="/about">Sobre</a>
-    </div>
-    <a
-      href={getWhatsAppUrl(config)}
-      target="_blank"
-      rel="noopener"
-      class="sr-btn sr-btn-wa"
-      style="font-size:13px;padding:8px 18px"
-    >
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
-      WhatsApp
-    </a>
-  </nav>
-
   <!-- ── Back arrow ── -->
   <a href="/posts" class="sr-back-arrow">← Todos os posts</a>
 
@@ -134,7 +115,7 @@ const fmtDate = (d: Date) =>
   <div class="sr-post-cover">
     {(coverImage || typeof initOgImage === "string") ? (
       <img
-        src={coverImage ?? ogImageUrl}
+        src={(coverImage ? (coverImage.startsWith('/') || coverImage.startsWith('http') ? coverImage : `/${coverImage}`) : undefined) ?? ogImageUrl}
         alt={title}
         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top"
         loading="eager"
@@ -244,8 +225,8 @@ const fmtDate = (d: Date) =>
         <!-- Lead capture -->
         <div class="sr-solve">
           <p class="b">Newsletter</p>
-          <h4>Toda semana: o que o portal não te conta</h4>
-          <p>Marketing automotivo sem enrolação. Para dono e gerente de revenda.</p>
+          <h4>Toda semana: o que muda na sua carga tributária</h4>
+          <p>Reforma Tributária, planejamento fiscal e contabilidade consultiva. Para o empresário que decide com número.</p>
           <form id="post-nl-form" onsubmit="submitPostNewsletter(event)" style="display:flex;flex-direction:column;gap:8px">
             <div class="sr-field">
               <input type="text" name="nome" placeholder="Seu nome" autocomplete="given-name" required />
@@ -265,11 +246,34 @@ const fmtDate = (d: Date) =>
     </div>
 
     <!-- Tags row -->
-    <div style="margin-top:56px;padding-bottom:80px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+    <div style="margin-top:56px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
       <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Tags:</span>
       {tags.map(tag => (
         <a href={`/tags/${slugifyStr(tag)}`} class="sr-tag">{tag}</a>
       ))}
+    </div>
+
+    <!-- Author bio footer -->
+    <div class="sr-author-bio">
+      <img src="/jocivane-brito.jpg" alt="Jocivane Brito — Tributarista em Brasília" class="sr-author-bio-photo" />
+      <div class="sr-author-bio-body">
+        <p class="sr-author-bio-name">Jocivane Brito</p>
+        <p class="sr-author-bio-role">Tributarista · CRC-DF · Monumental Contabilidade</p>
+        <p class="sr-author-bio-text">
+          Especialista em planejamento tributário para PMEs, fornecedores do governo federal e estruturação de holdings
+          patrimoniais no Distrito Federal. Mais de 10 anos de atuação em contabilidade consultiva. Escreve sobre
+          Reforma Tributária 2026, Lucro Real, Lucro Presumido e estratégias fiscais para empresas em Brasília-DF.
+        </p>
+        <a
+          href={getWhatsAppUrl(config)}
+          target="_blank"
+          rel="noopener"
+          class="sr-author-bio-cta"
+          onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'author_bio_whatsapp'})}"
+        >
+          Falar com Jocivane pelo WhatsApp →
+        </a>
+      </div>
     </div>
   </div>
 

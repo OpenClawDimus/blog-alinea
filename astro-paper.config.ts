@@ -31,7 +31,7 @@ export default defineAstroPaperConfig({
       name: "Jocivane Brito",
       url: "https://monumentalcontabilidade.com.br",
       jobTitle: "Tributarista",
-      avatar: "jocivane-brito.png",
+      avatar: "jocivane-brito.jpg",
       sameAs: [
         "https://monumentalcontabilidade.com.br",
       ],

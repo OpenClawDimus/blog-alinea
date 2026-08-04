@@ -1,88 +1,436 @@
 ---
-import { getEntry, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import config from "@/config";
 import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 
-const about = await getEntry("pages", "about");
-if (!about) throw new Error("Missing src/content/pages/about.md");
-const { Content } = await render(about);
+const whatsAppUrl = getWhatsAppUrl(config);
+const title = "Sobre — Jocivane Brito e a Monumental Contabilidade";
+const description = "Jocivane Brito é tributarista em Brasília-DF especializado em planejamento tributário consultivo para PMEs, fornecedores do governo federal e holdings patrimoniais.";
 ---
 
-<Layout
-  title={`${about.data.title} | ${config.site.title}`}
-  description={about.data.description}
->
-  <nav class="sr-topbar" aria-label="Navegação principal">
-    <div class="sr-topnav">
-      <a href="/posts">Posts</a>
-      <a href="/tags">Tags</a>
-      <a href="/about" data-active="">Sobre</a>
-    </div>
-    <a
-      href={getWhatsAppUrl(config)}
-      target="_blank" rel="noopener"
-      class="sr-btn sr-btn-wa"
-      style="font-size:13px;padding:8px 18px"
-    >
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
-      WhatsApp
-    </a>
-  </nav>
+<Layout title={`${title} | ${config.site.title}`} description={description}>
 
-  <main class="sr-wrap sr-about-wrap">
-    <nav class="sr-crumb" aria-label="Breadcrumb" style="margin-bottom:32px">
+  <main class="about-page sr-wrap">
+
+    <!-- ── Breadcrumb ── -->
+    <nav class="sr-crumb" aria-label="Breadcrumb" style="margin-bottom:40px">
       <a href="/">Início</a>
       <span class="sep" aria-hidden="true">›</span>
       <span style="color:var(--ink-2)">Sobre</span>
     </nav>
 
-    <p class="sr-eyebrow" style="margin-bottom:0">Quem escreve</p>
-    <h1 class="sr-archive-title">{about.data.title}</h1>
+    <!-- ── Hero: Jocivane + título ── -->
+    <section class="about-hero">
+      <div class="about-hero-img-wrap">
+        <img
+          src="/jocivane-brito-bw.jpg"
+          alt="Jocivane Brito — Tributarista em Brasília-DF"
+          class="about-hero-img"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+      <div class="about-hero-copy">
+        <span class="blog-hd-eyebrow">Tributarista · Brasília-DF</span>
+        <h1 class="about-hero-title">Jocivane Brito</h1>
+        <p class="about-hero-sub">
+          Planejamento tributário consultivo para empresas que cansaram de pagar imposto a mais
+          por falta de estratégia.
+        </p>
+        <div class="about-credentials">
+          <span class="about-cred-badge">CRC-DF</span>
+          <span class="about-cred-badge">Tributarista</span>
+          <span class="about-cred-badge">Contabilidade Consultiva</span>
+        </div>
+        <a
+          href={whatsAppUrl}
+          target="_blank"
+          rel="noopener"
+          class="sr-btn"
+          style="margin-top:24px;display:inline-flex;gap:8px;align-items:center"
+          onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'about_hero_whatsapp'})}"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+          Falar com Jocivane
+        </a>
+      </div>
+    </section>
 
-    <div class="sr-about-prose app-prose">
-      <Content />
-    </div>
+    <!-- ── Quem é Jocivane ── -->
+    <section class="about-section sr-reveal">
+      <h2 class="about-section-title">Quem é Jocivane Brito</h2>
+      <div class="about-section-body">
+        <p>
+          Jocivane Brito é tributarista com mais de 10 anos de atuação em contabilidade consultiva
+          para empresas no Distrito Federal. Especialista em planejamento tributário para PMEs,
+          fornecedores do governo federal e estruturação de holdings patrimoniais.
+        </p>
+        <p>
+          Formado em Ciências Contábeis e registrado no CRC-DF, Jocivane atua na intersecção entre
+          a legislação tributária e a realidade operacional das empresas em Brasília — um contexto
+          único no Brasil, marcado pela concentração de fornecedores do setor público e pela
+          complexidade das retenções federais.
+        </p>
+        <p>
+          Sua abordagem é consultiva, não burocrática: cada análise parte dos números reais da empresa
+          para identificar regimes tributários mais vantajosos, oportunidades de recuperação de créditos
+          e estratégias de redução de carga fiscal dentro da lei.
+        </p>
+        <div class="about-expertise-grid">
+          <div class="about-expertise-item">
+            <span class="about-expertise-icon">📊</span>
+            <strong>Planejamento tributário</strong>
+            <span>Lucro Real, Lucro Presumido, Simples Nacional — análise e migração</span>
+          </div>
+          <div class="about-expertise-item">
+            <span class="about-expertise-icon">🏛️</span>
+            <strong>Fornecedores do governo</strong>
+            <span>Retenções federais, SICAF, split payment e impactos da Reforma Tributária</span>
+          </div>
+          <div class="about-expertise-item">
+            <span class="about-expertise-icon">🏠</span>
+            <strong>Holdings patrimoniais</strong>
+            <span>Estruturação, sucessão, JCP e proteção de patrimônio empresarial</span>
+          </div>
+          <div class="about-expertise-item">
+            <span class="about-expertise-icon">⚖️</span>
+            <strong>Reforma Tributária 2026</strong>
+            <span>IBS, CBS, split payment — impacto prático para PMEs em Brasília</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── O que é este blog ── -->
+    <section class="about-section sr-reveal">
+      <h2 class="about-section-title">O que é este blog</h2>
+      <div class="about-section-body">
+        <p>
+          Este blog existe para o empresário, sócio e gestor financeiro que já cansou de pagar imposto
+          a mais por falta de planejamento — e quer entender a matemática real do seu custo tributário.
+        </p>
+        <p>
+          Se você já perguntou ao seu contador sobre Lucro Presumido vs. Lucro Real e recebeu uma
+          resposta genérica, você está no lugar certo.
+        </p>
+        <div class="about-audience-list">
+          <p class="about-audience-title">Para quem é:</p>
+          <ul>
+            <li><strong>Empresário de PME em Brasília-DF</strong> que quer reduzir a carga tributária dentro da lei</li>
+            <li><strong>Fornecedor do governo federal</strong> que precisa entender retenções, SICAF e o impacto do split payment</li>
+            <li><strong>Sócio e gestor financeiro</strong> preparando sua empresa para a Reforma Tributária 2026</li>
+          </ul>
+        </div>
+        <p>
+          Cada artigo nasce de casos reais da carteira de clientes da Monumental. Sem conteúdo genérico.
+          Sem fórmulas que não se aplicam ao contexto de Brasília.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── O que é a Monumental ── -->
+    <section class="about-section sr-reveal">
+      <h2 class="about-section-title">O que é a Monumental Contabilidade</h2>
+      <div class="about-section-body">
+        <p>
+          A <strong>Monumental Contabilidade</strong> é um escritório tributário especializado em
+          contabilidade consultiva para empresas no Distrito Federal. Diferente do modelo tradicional
+          de escritório contábil — focado em obrigações fiscais e entregas ao fisco — a Monumental
+          atua como parceira estratégica do empresário.
+        </p>
+        <p>
+          Nosso trabalho começa onde a contabilidade padrão termina: na análise do impacto tributário
+          de cada decisão de negócio, na estruturação de operações para eficiência fiscal e no
+          planejamento de médio e longo prazo.
+        </p>
+        <div class="about-differentials">
+          <div class="about-diff-item">
+            <strong>Contabilidade consultiva</strong>
+            <span>Não apenas entregamos obrigações — analisamos o custo real de cada decisão fiscal</span>
+          </div>
+          <div class="about-diff-item">
+            <strong>Foco em Brasília-DF</strong>
+            <span>Conhecimento específico do ecossistema tributário do DF e fornecedores do setor público</span>
+          </div>
+          <div class="about-diff-item">
+            <strong>Casos reais, números reais</strong>
+            <span>Cada recomendação é baseada em análise dos dados reais da sua empresa</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Foto + CTA final ── -->
+    <section class="about-cta-section sr-reveal">
+      <div class="about-cta-inner">
+        <img
+          src="/jocivane-brito.jpg"
+          alt="Jocivane Brito"
+          class="about-cta-photo"
+        />
+        <div class="about-cta-copy">
+          <h2 class="about-cta-title">A primeira conversa é gratuita e sem compromisso</h2>
+          <p>
+            Se você quer entender quanto a sua empresa paga a mais de imposto — e se existe uma
+            oportunidade real de redução — agende uma conversa com Jocivane.
+          </p>
+          <p style="color:var(--ink-3);font-size:14px;margin-top:8px">
+            <strong style="color:var(--ink-2)">Monumental Contabilidade</strong> ·
+            Brasília-DF · <a href="https://monumentalcontabilidade.com.br" style="color:var(--gold)">monumentalcontabilidade.com.br</a>
+          </p>
+          <a
+            href={whatsAppUrl}
+            target="_blank"
+            rel="noopener"
+            class="sr-btn"
+            style="margin-top:20px;display:inline-flex;gap:8px;align-items:center;font-size:15px;padding:14px 28px"
+            onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'about_cta_whatsapp'})}"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+            Falar com Jocivane pelo WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
 </Layout>
 
 <style>
-.sr-about-wrap {
-  max-width: 760px;
+.about-page {
+  max-width: 860px;
+  padding-bottom: 100px;
 }
-.sr-about-prose {
-  font-family: var(--font-body);
+
+/* ── Hero ── */
+.about-hero {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 72px;
+}
+@media (max-width: 720px) {
+  .about-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+.about-hero-img-wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background: var(--navy, #282e69);
+  box-shadow: 0 24px 64px rgba(0,0,0,.5);
+}
+.about-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(20%);
+}
+.about-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  color: var(--ink-1);
+  margin: 8px 0 12px;
+}
+.about-hero-sub {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 46ch;
+  margin: 0 0 20px;
+}
+.about-credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.about-cred-badge {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold, #cfaf75);
+  border: 1px solid rgba(207,175,117,.3);
+  border-radius: 4px;
+  padding: 3px 10px;
+}
+
+/* ── Sections ── */
+.about-section {
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding: 56px 0;
+}
+.about-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink-1);
+  margin: 0 0 28px;
+}
+.about-section-body {
+  color: var(--ink-2);
   font-size: 16.5px;
   line-height: 1.72;
-  color: rgb(203, 196, 210);
 }
-.sr-about-prose h2 {
-  font-family: var(--font-display);
-  font-size: 22px;
+.about-section-body p {
+  margin: 0 0 18px;
+}
+.about-section-body strong {
+  color: var(--ink-1);
   font-weight: 600;
-  letter-spacing: -.025em;
-  line-height: 1.2;
-  margin: 40px 0 14px;
-  color: var(--ink);
 }
-.sr-about-prose p { margin: 0 0 18px; }
-.sr-about-prose strong { color: var(--ink); font-weight: 600; }
-.sr-about-prose ul { list-style: none; padding: 0; margin: 0 0 18px; }
-.sr-about-prose li {
-  padding-left: 20px;
+
+/* ── Expertise grid ── */
+.about-expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.about-expertise-item {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.about-expertise-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+.about-expertise-item strong {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-1);
+}
+.about-expertise-item span {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+/* ── Audience list ── */
+.about-audience-list {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-left: 3px solid var(--gold, #cfaf75);
+  border-radius: 0 8px 8px 0;
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.about-audience-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3) !important;
+  margin: 0 0 12px !important;
+}
+.about-audience-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.about-audience-list li {
+  font-size: 15px;
+  padding-left: 18px;
   position: relative;
-  margin-bottom: 8px;
+  color: var(--ink-2);
 }
-.sr-about-prose li::before {
+.about-audience-list li::before {
   content: '·';
   position: absolute;
   left: 0;
-  color: var(--magenta);
+  color: var(--gold, #cfaf75);
   font-weight: 700;
 }
-.sr-about-prose a {
-  color: var(--magenta);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+
+/* ── Differentials ── */
+.about-differentials {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 28px;
+}
+.about-diff-item {
+  display: flex;
+  gap: 16px;
+  align-items: start;
+  padding: 16px 20px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 10px;
+}
+.about-diff-item strong {
+  min-width: 200px;
+  font-size: 14px;
+  color: var(--ink-1) !important;
+  padding-top: 1px;
+}
+.about-diff-item span {
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .about-diff-item { flex-direction: column; gap: 6px; }
+  .about-diff-item strong { min-width: auto; }
+}
+
+/* ── CTA section ── */
+.about-cta-section {
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding: 56px 0 0;
+}
+.about-cta-inner {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 36px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(40,46,105,.5) 0%, rgba(10,12,24,.4) 100%);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 36px;
+}
+@media (max-width: 600px) {
+  .about-cta-inner { grid-template-columns: 1fr; }
+}
+.about-cta-photo {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid rgba(207,175,117,.3);
+}
+.about-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink-1);
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+.about-cta-copy p {
+  margin: 0 0 8px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.6;
 }
 </style>

@@ -15,25 +15,11 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 const { page } = Astro.props;
 
-const TAG_GRADIENT: Record<string, string> = {
-  "giro-de-estoque": "linear-gradient(135deg,#1a0d22 0%,#2d0f3d 45%,#4a1060 100%)",
-  "carro-parado":    "linear-gradient(135deg,#0d1a22 0%,#0f2d3d 45%,#103a4a 100%)",
-  "lead-fantasma":   "linear-gradient(135deg,#220d1a 0%,#3d0f2a 45%,#5a1040 100%)",
-  "seminovos":       "linear-gradient(135deg,#1a1a0d 0%,#2d2d0f 45%,#3d3010 100%)",
-  "gestao":          "linear-gradient(135deg,#0d220d 0%,#0f3d0f 45%,#103a10 100%)",
-  "aquisicao":       "linear-gradient(135deg,#22100d 0%,#3d1f0f 45%,#4a2010 100%)",
-  "atribuicao":      "linear-gradient(135deg,#0d1222 0%,#0f1e3d 45%,#102a4a 100%)",
-  "metricas":        "linear-gradient(135deg,#1a0d0d 0%,#3d1010 45%,#4a1212 100%)",
-  default:           "linear-gradient(135deg,#13101a 0%,#1e1528 45%,#2a1940 100%)",
-};
-const getGrad = (tags: string[]) =>
-  TAG_GRADIENT[tags[0]] ?? TAG_GRADIENT.default;
-
 const getReadTime = (body: string | undefined) =>
   Math.ceil((body?.split(/\s+/).length ?? 800) / 220);
 
-const NEW_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000;
-const isNew = (d: Date) => Date.now() - d.getTime() < NEW_THRESHOLD_MS;
+const author = config.site.authorPerson?.name ?? config.site.author;
+const whatsAppUrl = getWhatsAppUrl(config);
 ---
 
 <Layout title={`Posts | ${config.site.title}`}>
@@ -41,46 +27,114 @@ const isNew = (d: Date) => Date.now() - d.getTime() < NEW_THRESHOLD_MS;
     {page.url.prev && <link rel="prev" href={new URL(page.url.prev, Astro.site).href} />}
     {page.url.next && <link rel="next" href={new URL(page.url.next, Astro.site).href} />}
   </Fragment>
-  <nav class="sr-topbar" aria-label="Navegação principal">
-    <div class="sr-topnav">
-      <a href="/posts" data-active="">Posts</a>
-      <a href="/tags">Tags</a>
-      <a href="/about">Sobre</a>
-    </div>
-    <a
-      href={getWhatsAppUrl(config)}
-      target="_blank"
-      rel="noopener"
-      class="sr-btn sr-btn-wa"
-      style="font-size:13px;padding:8px 18px"
-    >
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
-      WhatsApp
-    </a>
-  </nav>
 
-  <main class="sr-wrap">
-    <p class="sr-eyebrow" style="margin-bottom:0">Arquivo</p>
-    <h1 class="sr-archive-title">Todos os artigos</h1>
+  <div class="blog-wrap">
 
-    <div class="sr-row3">
-      {page.data.map((post, idx) => (
-        <CutoutCard
-          href={`/posts/${post.id}/`}
-          gradient={getGrad(post.data.tags)}
-          tag={post.data.tags[0] ?? "análise"}
-          title={post.data.title}
-          date={post.data.pubDatetime}
-          ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
-          coverImage={post.data.coverImage}
-          readingTime={getReadTime(post.body)}
-          description={post.data.description}
-          eager={idx < 3}
-          isNew={isNew(post.data.pubDatetime)}
-        />
-      ))}
-    </div>
+    <!-- ── Sidebar ── -->
+    <aside class="blog-sidebar" aria-label="Filtros e categorias">
+      <span class="sb-label">Buscar</span>
+      <a href="/search" class="sb-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Buscar artigos…
+      </a>
 
-    {page.lastPage > 1 && <Pagination {page} />}
-  </main>
+      <span class="sb-label">Categorias</span>
+      <ul class="sb-cat-list">
+        <li><a href="/" class="sb-cat-item">Todas</a></li>
+        <li><a href="/tags/reforma-tributaria" class="sb-cat-item">Reforma Tributária</a></li>
+        <li><a href="/tags/planejamento-tributario" class="sb-cat-item">Planejamento Fiscal</a></li>
+        <li><a href="/tags/holding" class="sb-cat-item">Holdings</a></li>
+        <li><a href="/tags/simples-nacional" class="sb-cat-item">Simples Nacional</a></li>
+        <li><a href="/tags/abertura-empresa" class="sb-cat-item">Abertura de Empresa</a></li>
+        <li><a href="/tags/contabilidade-brasilia" class="sb-cat-item">Contabilidade Brasília</a></li>
+        <li><a href="/tags/fornecedores-governo" class="sb-cat-item">Fornecedores do Governo</a></li>
+      </ul>
+
+      <!-- Jocivane CTA card -->
+      <div class="sb-expert-card">
+        <img src="/jocivane-brito.jpg" alt="Jocivane Brito" class="sb-expert-photo" />
+        <div class="sb-expert-body">
+          <p class="sb-expert-name">Jocivane Brito</p>
+          <p class="sb-expert-role">Tributarista · Brasília-DF</p>
+          <p class="sb-expert-bio">Planejamento tributário consultivo para PMEs e fornecedores do governo federal.</p>
+          <a
+            href={whatsAppUrl}
+            target="_blank"
+            rel="noopener"
+            class="sb-expert-cta"
+            onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'archive_sidebar_whatsapp'})}"
+          >
+            Falar com Jocivane →
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ── -->
+    <main class="blog-main">
+      <header class="blog-hd sr-reveal" style="padding-bottom:0">
+        <span class="blog-hd-eyebrow">Arquivo</span>
+        <h1 class="blog-hd-title" style="font-size:clamp(28px,4vw,44px)">Todos os artigos</h1>
+        <p class="blog-hd-sub">
+          {page.total} publicações sobre tributação, planejamento fiscal e Reforma Tributária 2026.
+        </p>
+      </header>
+
+      <nav class="filter-bar" aria-label="Filtrar por tema" style="margin-top:28px">
+        <a href="/posts" class="filter-tab on">Todos</a>
+        <a href="/tags/reforma-tributaria" class="filter-tab">Reforma Tributária</a>
+        <a href="/tags/planejamento-tributario" class="filter-tab">Planejamento Fiscal</a>
+        <a href="/tags/holding" class="filter-tab">Holdings</a>
+        <a href="/tags/simples-nacional" class="filter-tab">Simples Nacional</a>
+      </nav>
+
+      <div class="post-grid" style="margin-top:32px">
+        {page.data.map((post, idx) => (
+          <CutoutCard
+            href={`/posts/${post.id}/`}
+            tag={post.data.tags[0] ?? "análise"}
+            title={post.data.title}
+            date={post.data.pubDatetime}
+            ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
+            coverImage={post.data.coverImage}
+            readingTime={getReadTime(post.body)}
+            description={post.data.description}
+            eager={idx < 3}
+            author={author}
+          />
+        ))}
+      </div>
+
+      {page.lastPage > 1 && (
+        <div style="margin-top:48px">
+          <Pagination {page} />
+        </div>
+      )}
+
+      <!-- Conversion strip -->
+      <section class="archive-cta sr-reveal" aria-label="Fale com especialista">
+        <div class="archive-cta-inner">
+          <img src="/jocivane-brito-bw.jpg" alt="Jocivane Brito" class="archive-cta-photo" />
+          <div class="archive-cta-copy">
+            <span class="archive-cta-eyebrow">Contabilidade Consultiva · Brasília-DF</span>
+            <h2 class="archive-cta-title">Quanto a sua empresa paga a mais de imposto?</h2>
+            <p class="archive-cta-body">
+              Jocivane Brito é tributarista especialista em planejamento fiscal para PMEs e fornecedores
+              do governo federal no DF. A primeira conversa é gratuita e sem compromisso.
+            </p>
+            <a
+              href={whatsAppUrl}
+              target="_blank"
+              rel="noopener"
+              class="archive-cta-btn"
+              onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'archive_footer_whatsapp'})}"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
+              Falar com Jocivane pelo WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 </Layout>
