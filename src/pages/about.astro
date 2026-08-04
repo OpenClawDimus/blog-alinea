@@ -19,7 +19,7 @@ const description = "Jocivane Brito é tributarista em Brasília-DF especializad
       <span style="color:var(--ink-2)">Sobre</span>
     </nav>
 
-    <!-- ── Hero: Jocivane + título ── -->
+    <!-- ── Hero: Jocivane + título + prova social ── -->
     <section class="about-hero">
       <div class="about-hero-img-wrap">
         <img
@@ -54,6 +54,61 @@ const description = "Jocivane Brito é tributarista em Brasília-DF especializad
           Falar com Jocivane
         </a>
       </div>
+
+      <!-- Col 3: Prova social / conversão -->
+      <aside class="about-proof-block">
+        <div class="about-proof-stats">
+          <div class="about-proof-stat">
+            <span class="about-proof-number">10+</span>
+            <span class="about-proof-label">anos de atuação</span>
+          </div>
+          <div class="about-proof-stat">
+            <span class="about-proof-number">DF</span>
+            <span class="about-proof-label">foco Brasília</span>
+          </div>
+          <div class="about-proof-stat">
+            <span class="about-proof-number">CRC</span>
+            <span class="about-proof-label">registrado</span>
+          </div>
+        </div>
+
+        <div class="about-proof-divider"></div>
+
+        <div class="about-proof-items">
+          <div class="about-proof-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Planejamento tributário para PMEs</span>
+          </div>
+          <div class="about-proof-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Fornecedores do governo federal</span>
+          </div>
+          <div class="about-proof-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Holdings patrimoniais</span>
+          </div>
+          <div class="about-proof-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Reforma Tributária 2026</span>
+          </div>
+        </div>
+
+        <div class="about-proof-divider"></div>
+
+        <div class="about-proof-cta">
+          <p class="about-proof-cta-label">Diagnóstico gratuito</p>
+          <p class="about-proof-cta-sub">Quanto sua empresa paga a mais de imposto?</p>
+          <a
+            href={whatsAppUrl}
+            target="_blank"
+            rel="noopener"
+            class="about-proof-cta-btn"
+            onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'about_proof_whatsapp'})}"
+          >
+            Agendar conversa gratuita
+          </a>
+        </div>
+      </aside>
     </section>
 
     <!-- ── Quem é Jocivane ── -->
@@ -198,17 +253,23 @@ const description = "Jocivane Brito é tributarista em Brasília-DF especializad
 
 <style>
 .about-page {
-  max-width: 860px;
+  max-width: none;
   padding-bottom: 100px;
 }
 
 /* ── Hero ── */
 .about-hero {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 260px 1fr 280px;
   gap: 48px;
   align-items: start;
   margin-bottom: 72px;
+}
+@media (max-width: 960px) {
+  .about-hero {
+    grid-template-columns: 260px 1fr;
+  }
+  .about-proof-block { display: none; }
 }
 @media (max-width: 720px) {
   .about-hero {
@@ -216,6 +277,95 @@ const description = "Jocivane Brito é tributarista em Brasília-DF especializad
     gap: 32px;
   }
 }
+
+/* ── Proof block (3rd hero column) ── */
+.about-proof-block {
+  background: rgba(207,175,117,.05);
+  border: 1px solid rgba(207,175,117,.18);
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 80px;
+}
+.about-proof-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.about-proof-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.about-proof-number {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gold, #cfaf75);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.about-proof-label {
+  font-size: 10px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+.about-proof-divider {
+  height: 1px;
+  background: rgba(255,255,255,.07);
+}
+.about-proof-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.about-proof-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+.about-proof-item svg {
+  flex-shrink: 0;
+  color: var(--gold, #cfaf75);
+  margin-top: 2px;
+}
+.about-proof-cta-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold, #cfaf75);
+  margin: 0 0 4px;
+}
+.about-proof-cta-sub {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.about-proof-cta-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--gold, #cfaf75);
+  color: #1a1624;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: opacity .15s;
+}
+.about-proof-cta-btn:hover { opacity: .88; }
 .about-hero-img-wrap {
   position: relative;
   border-radius: 16px;

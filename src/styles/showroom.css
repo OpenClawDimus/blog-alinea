@@ -1904,18 +1904,21 @@ body::after {
   .feat-overlay { padding: 20px 20px 18px; }
 }
 
-/* ── Dark override: inline author-bio boxes inside MDX prose ─────────── */
-.app-prose aside.author-bio,
-.app-prose .author-bio {
+/* ── Dark override: ALL inline aside/div boxes inside MDX prose ──────── */
+.app-prose aside,
+.app-prose .author-bio,
+.app-prose [style*="background:#F8F9FA"],
+.app-prose [style*="background: #F8F9FA"],
+.app-prose [style*="background:#f8f9fa"] {
   background: rgba(255,255,255,.05) !important;
   border: 1px solid rgba(255,255,255,.09) !important;
   color: rgb(203,196,210) !important;
 }
-.app-prose aside.author-bio *,
+.app-prose aside *,
 .app-prose .author-bio * {
   color: rgb(203,196,210) !important;
 }
-.app-prose aside.author-bio strong,
+.app-prose aside strong,
 .app-prose .author-bio strong {
   color: #fff !important;
 }
