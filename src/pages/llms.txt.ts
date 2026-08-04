@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ site }) => {
     "",
     `> ${config.site.description}`,
     "",
-    "Blog neutro-de-fornecedor para donos e gerentes do varejo automotivo brasileiro (revenda, seminovos, concessionária). Tese: marketing que mede carro vendido, não lead. A Dimus não vende portal nem CRM — mede venda real, gira estoque e reduz dependência de portal.",
+    "Blog de contabilidade consultiva para empresas em Brasília-DF. Foco em planejamento tributário estratégico, Reforma Tributária 2026 (IBS/CBS), regimes fiscais (Simples Nacional, Lucro Presumido, Lucro Real), holdings patrimoniais e fornecedores do setor público federal. Jocivane Brito é tributarista com atuação exclusiva no DF.",
     "",
     "## Posts",
     ...posts.map(p => {
@@ -28,8 +28,9 @@ export const GET: APIRoute = async ({ site }) => {
       return `- [${p.data.title}](${url}): ${p.data.description}`;
     }),
     "",
-    "## Sobre a Dimus",
-    `- [Site Dimus](${config.site.profile}): marketing automotivo orientado a carro vendido.`,
+    "## Sobre a Monumental Contabilidade",
+    `- [Site Monumental](${config.site.profile}): contabilidade consultiva em Brasília-DF — planejamento tributário, holdings e fornecedores do governo federal.`,
+    `- Autor: Jocivane Brito, tributarista CRC-DF, especialista em redução de carga tributária para PMEs no Distrito Federal.`,
     "",
   ];
 

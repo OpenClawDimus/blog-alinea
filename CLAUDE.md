@@ -2,16 +2,16 @@
 
 ### Title tag — padrão OBRIGATÓRIO em todos os posts:
 ```
-[Título do post com keyword principal] | Blog Dimus
+[Título do post com keyword principal] | Blog Monumental
 ```
 Implementado em `src/pages/posts/[...slug]/index.astro`:
 ```js
-title={`${title} | Blog Dimus`}
+title={`${title} | Blog Monumental`}
 ```
 
 ### Site title e description (astro-paper.config.ts):
 ```js
-title: "Blog Dimus — Marketing Automotivo"
+title: "Blog Monumental — Marketing Automotivo"
 description: "Blog de marketing automotivo para revendas de seminovos e concessionárias. Google Ads, Meta Ads, WhatsApp, CRM e como medir ROI real em carro vendido."
 ```
 
@@ -20,7 +20,7 @@ description: "Blog de marketing automotivo para revendas de seminovos e concessi
 - `description` do site com keywords: "marketing automotivo", "revendas de seminovos", "concessionárias"
 - `description` de cada post: benefício concreto + dado numérico, 130–160 chars
 - NUNCA editar `astro-paper.config.ts` ou `Layout.astro` sem garantir que o padrão se mantém
-- NUNCA remover o sufixo `| Blog Dimus` dos posts
+- NUNCA remover o sufixo `| Blog Monumental` dos posts
 
 ### Metadados estruturais — PADRÃO OBRIGATÓRIO (corrigido 2026-07-28)
 
@@ -31,7 +31,7 @@ description: "Blog de marketing automotivo para revendas de seminovos e concessi
 - **Cover image**: NUNCA usar `alt=""` ou `aria-hidden="true"` na cover do post — usar `alt={title}` para Google Images
 - **Home page**: DEVE ter `WebPage` no `@graph` do JSON-LD — já injetado via `<Fragment slot="head">` em `index.astro`
 
-### Transporte para novos blogs (Dimus OU clientes)
+### Transporte para novos blogs (clientes)
 
 Este repositório É o template. Para qualquer novo blog, **editar APENAS `astro-paper.config.ts`**:
 
@@ -86,7 +86,7 @@ O pré-commit hook (`scripts/gate-post-pipeline.mjs`) BLOQUEIA o commit automati
 6. AEO agent          → AnswerCapsule, FAQ PAA-aligned, featured snippet candidato
 7. GEO agent          → citabilidade LLM, dados com fonte, definições explícitas
 8. EEAT check         → Experience (dados reais), Expertise (autor), Authority (fontes), Trust
-9. Image SEO          → coverImage filename descritivo + alt text + OG 1200x630 padrão Dimus
+9. Image SEO          → coverImage filename descritivo + alt text + OG 1200x630 padrão Monumental
 10. LLM Council       → 5 advisors red team + peer review + chairman (bloqueante se factual error)
 11. gate-covers.mjs   → 0 violations
 12. score-posts.mjs   → composite ≥ 95, GEO ≥ 90, AEO = 100

@@ -34,7 +34,7 @@ export default {
     allPosts: "Todos os posts",
   },
   footer: {
-    copyright: "Dimus",
+    copyright: "Monumental Contabilidade",
     allRightsReserved: "Todos os direitos reservados.",
   },
   pages: {
