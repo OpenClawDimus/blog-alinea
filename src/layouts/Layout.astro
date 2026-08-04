@@ -5,7 +5,10 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import { getAssetPath } from "@/utils/withBase";
 import config from "@/config";
+import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 import "@/styles/global.css";
+
+const whatsAppUrl = getWhatsAppUrl(config);
 
 type Props = {
   title?: string;
@@ -197,63 +200,30 @@ const metaPixelHtml = metaPixelId
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground"
     style="overflow-x:hidden"
   >
-    <!-- Orb ambiente (profundidade, não decoração) -->
-    <div class="orb" aria-hidden="true"></div>
-
-    <!-- Leitura progress bar (atualizado por showroom-motion.js) -->
+    <!-- Reading progress bar -->
     <div class="sr-progress" id="sr-progress" aria-hidden="true"></div>
 
-    <!-- Shell: rail (esquerda sticky) + main (conteúdo) -->
-    <div class="sr-shell">
-      <!-- ── Rail ── -->
-      <aside class="sr-rail" aria-label="Navegação do blog">
-        <a href="/" class="sr-brand" aria-label="Monumental Contabilidade — Blog">
-          <img
-            src="/logo-monumental.svg"
-            alt="Monumental Contabilidade"
-            width="180"
-            height="36"
-            style="height:36px;width:auto;max-width:180px;object-fit:contain;flex-shrink:0"
-          />
+    <!-- Top navbar -->
+    <nav class="site-nav" id="site-nav">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo" aria-label="Monumental Contabilidade — Blog">
+          <img src="/logo-monumental.svg" alt="Monumental Contabilidade" height="28" style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:.92" />
         </a>
-
-        <nav aria-label="Clusters editoriais">
-          <p class="sr-rail-label" style="margin-bottom:10px">Clusters</p>
-          <ul class="sr-clusters" id="sr-clusters">
-            <li><a href="/tags/planejamento-tributario"><span>Planejamento Tributário</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/reforma-tributaria"><span>Reforma Tributária 2026</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/contabilidade-brasilia"><span>Contabilidade em Brasília</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/fornecedores-governo"><span>Fornecedores do Governo</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/simples-nacional"><span>Simples Nacional</span><span class="ct">→</span></a></li>
-            <li><a href="/tags/abertura-empresa"><span>Abertura de Empresa</span><span class="ct">→</span></a></li>
-            <li><a href="/posts"><span>Todos os artigos</span><span class="ct">→</span></a></li>
-          </ul>
-        </nav>
-
-        <!-- Newsletter widget no rail -->
-        <div class="sr-rail-bottom">
-          <h4>Toda semana na sua caixa</h4>
-          <p>Reforma Tributária, planejamento fiscal e contabilidade consultiva para empresas em Brasília.</p>
-          <form id="rail-nl-form" onsubmit="submitRailNewsletter(event)">
-            <div class="sr-field">
-              <input type="text" name="nome" placeholder="Seu nome" autocomplete="given-name" required />
-            </div>
-            <div class="sr-field">
-              <input type="email" name="email" placeholder="Seu e-mail" autocomplete="email" required />
-              <button type="submit" class="sr-btn-mini" aria-label="Inscrever">→</button>
-            </div>
-            <p id="rail-nl-msg" style="font-size:11.5px;color:var(--magenta);display:none;margin:4px 0 0;font-family:var(--font-mono)">
-              ✓ Inscrito!
-            </p>
-          </form>
+        <ul class="nav-links" role="list">
+          <li><a href="/posts" class="nav-a">Posts</a></li>
+          <li><a href="/tags" class="nav-a">Tags</a></li>
+          <li><a href="/about" class="nav-a">Sobre</a></li>
+        </ul>
+        <div class="nav-right">
+          <a href={whatsAppUrl} target="_blank" rel="noopener" class="nav-cta">
+            Falar com especialista
+          </a>
         </div>
-      </aside>
-
-      <!-- ── Main ── -->
-      <div class="sr-main">
-        <slot />
       </div>
-    </div>
+    </nav>
+
+    <!-- Page content -->
+    <slot />
 
     <script>
       import "@/scripts/theme";

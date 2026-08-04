@@ -3,97 +3,44 @@ import { humanizeTag } from "@/utils/humanizeTag";
 
 interface Props {
   href: string;
-  gradient: string;
   tag: string;
   title: string;
   date: Date;
   ogImage?: string | undefined;
   coverImage?: string | undefined;
-  tall?: boolean;
   readingTime?: number;
   description?: string;
-  /** Primeiras cartas acima do fold: eager loading para evitar flash de tela preta */
   eager?: boolean;
+  author?: string;
+  // Legacy props (ignored in new design)
+  gradient?: string;
+  tall?: boolean;
   isNew?: boolean;
 }
 
-const { href, gradient, tag, title, date, ogImage, coverImage, tall = false, readingTime, description, eager = false, isNew = false } = Astro.props;
+const { href, tag, title, date, ogImage, coverImage, readingTime, description, eager = false, author } = Astro.props;
 const cardImage = coverImage ?? (ogImage && ogImage !== '/default-og.jpg' ? ogImage : undefined);
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
-
-// Real path from cult-ui CutoutCorner (viewBox 0 0 200 200)
-// Concave notch is at top-left; rotate to change orientation
-const CP = "M0 200C155.996 199.961 200.029 156.308 200 0V200H0Z";
 ---
 
-<a href={href} class:list={["sr-cutcard sr-reveal", { "sr-cutcard--tall": tall }]}>
-
-  <div class="sr-cutcard__media" style={`background:${gradient}`} aria-hidden="true">
-    {cardImage && <img src={cardImage} alt="" loading={eager ? "eager" : "lazy"} decoding="async" onerror="this.style.display='none'" />}
-    {!cardImage && <div class="sr-cutcard__noise"></div>}
-    <div class="sr-cutcard__overlay"></div>
-    {isNew && <span class="sr-novo-badge" aria-label="Novo post">NOVO</span>}
-
-    {/* Inset label — bottom-left of media */}
-    <div class="sr-cutcard__inset">
-      {/* Above the inset at its left edge */}
-      <svg class="sr-cc sr-cc--inset-t" width="32" height="32" viewBox="0 0 200 200" aria-hidden="true">
-        <path d={CP} fill="currentColor" />
-      </svg>
-      <span class="sr-kicker">{humanizeTag(tag)}</span>
-      {/* Right of inset at its bottom */}
-      <svg class="sr-cc sr-cc--inset-r" width="32" height="32" viewBox="0 0 200 200" aria-hidden="true">
-        <path d={CP} fill="currentColor" />
-      </svg>
-    </div>
+<a href={href} class="post-card sr-reveal">
+  <div class="post-card-img">
+    {cardImage
+      ? <img src={cardImage} alt={title} loading={eager ? "eager" : "lazy"} decoding="async" onerror="this.parentElement.style.background='linear-gradient(135deg,#282e69 0%,#0a0c18 100%)'" />
+      : <div style="width:100%;height:100%;background:linear-gradient(135deg,#282e69 0%,#0a0c18 100%)" aria-hidden="true"></div>
+    }
   </div>
-
-  <div class="sr-cutcard__body">
-    <h3 class="sr-cutcard__title">{title}</h3>
-
-    {tall && description && (
-      <div class="sr-cutcard__desc-wrap">
-        <p class="sr-cutcard__desc">{description}</p>
-      </div>
-    )}
-
-    {readingTime && (
-      <div class="sr-cutcard__peek" aria-hidden="true">
-        <div class="sr-cutcard__peek-inner">
-          <div class="sr-peek-content">
-            <span class="sr-read-badge">⏱ {readingTime} min de leitura</span>
-          </div>
-        </div>
-      </div>
-    )}
-
-    <div class="sr-cutcard__footer">
-      <div class="sr-datastrip">
-        <time datetime={date.toISOString()}>{fmtDate(date)}</time>
-      </div>
-      <span class="sr-cutcard__cta">Ler análise →</span>
+  <div class="post-card-body">
+    <span class="post-card-cat">{humanizeTag(tag)}</span>
+    <h3 class="post-card-title">{title}</h3>
+    {description && <p class="post-card-excerpt">{description}</p>}
+    <div class="post-card-footer">
+      <span class="post-card-meta">
+        {author ? `${author} · ` : ""}{fmtDate(date)}{readingTime ? ` · ${readingTime} min` : ""}
+      </span>
+      <span class="post-card-link">Ler →</span>
     </div>
   </div>
 </a>
-
-<style>
-  .sr-novo-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: var(--magenta, #e040fb);
-    color: #fff;
-    font-family: var(--font-mono, monospace);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .1em;
-    line-height: 1;
-    padding: 4px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    pointer-events: none;
-    z-index: 4;
-  }
-</style>
