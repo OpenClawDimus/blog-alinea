@@ -113,7 +113,7 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
       <div class="about-expertise-list">
         <div class="about-el-item">
           <span class="about-el-area">Planejamento tributário</span>
-          <p class="about-el-desc">Análise e migração entre Lucro Real, Lucro Presumido e Simples Nacional. Cada regime tem uma aritmética própria - a empresa que não faz o cálculo deixa dinheiro na mesa todo mês.</p>
+          <p class="about-el-desc">Simples Nacional, Lucro Presumido, Lucro Real. A maioria das empresas entrou num regime e nunca mais reviu. Quando o faturamento muda, o regime certo muda junto. A pergunta que poucos fazem a tempo: o regime que escolhi há três anos ainda faz sentido para a empresa que tenho hoje?</p>
         </div>
         <div class="about-el-item">
           <span class="about-el-area">Fornecedores do governo federal</span>
@@ -194,22 +194,12 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
     <!-- ── CTA FINAL ── -->
     <section class="about-cta-section sr-reveal">
       <div class="about-cta-inner">
-        <img
-          src="/jocivane-brito.jpg"
-          alt="Jocivane Brito"
-          class="about-cta-photo"
-          loading="lazy"
-          decoding="async"
-        />
-        <div class="about-cta-copy">
-          <h2 class="about-cta-title">A primeira conversa não custa nada.</h2>
-          <p>
-            Mas pode revelar o que sua empresa está pagando a mais. Jocivane Brito atende
-            diretamente. Traga seus números. A análise é gratuita, o diagnóstico é seu.
-          </p>
-          <p class="about-cta-meta">
-            Monumental Contabilidade · Brasília-DF · <a href="https://monumentalcontabilidade.com.br">monumentalcontabilidade.com.br</a>
-          </p>
+        <h2 class="about-cta-title">A primeira conversa não custa nada.</h2>
+        <p class="about-cta-body">
+          Mas pode revelar o que sua empresa está pagando a mais. Jocivane Brito
+          atende diretamente. Traga seus números. A análise é gratuita, o diagnóstico é seu.
+        </p>
+        <div class="about-cta-row">
           <a
             href={whatsAppUrl}
             target="_blank"
@@ -220,6 +210,7 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
             Falar com Jocivane pelo WhatsApp
           </a>
+          <span class="about-cta-attr">Monumental Contabilidade · Brasília-DF · CRC-DF</span>
         </div>
       </div>
     </section>
@@ -475,54 +466,45 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
 ════════════════════════════════════ */
 .about-cta-section {
   border-top: 1px solid rgba(255,255,255,.07);
-  padding: 64px 0 0;
+  padding: 72px 0 0;
 }
 .about-cta-inner {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 40px;
-  align-items: start;
-}
-@media (max-width: 480px) {
-  .about-cta-inner { grid-template-columns: 1fr; gap: 24px; }
-}
-.about-cta-photo {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.1);
+  max-width: 640px;
 }
 .about-cta-title {
   font-family: var(--font-display);
-  font-size: clamp(22px, 3vw, 32px);
+  font-size: clamp(28px, 4vw, 44px);
   font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.1;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   color: var(--ink-1);
-  margin: 0 0 16px;
+  margin: 0 0 20px;
 }
-.about-cta-copy p {
-  font-size: 15.5px;
+.about-cta-body {
+  font-size: 16px;
   color: var(--ink-2);
-  line-height: 1.65;
-  margin: 0 0 12px;
+  line-height: 1.7;
+  margin: 0 0 32px;
   max-width: 52ch;
 }
-.about-cta-meta {
-  font-size: 13px;
-  color: var(--ink-3) !important;
-}
-.about-cta-meta a {
-  color: var(--gold, #cfaf75);
+.about-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 .about-cta-btn {
-  margin-top: 24px;
   display: inline-flex;
   gap: 8px;
   align-items: center;
   font-size: 15px;
   padding: 14px 28px;
+}
+.about-cta-attr {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: .1em;
 }
 </style>
