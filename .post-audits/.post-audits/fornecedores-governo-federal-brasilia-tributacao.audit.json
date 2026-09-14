@@ -1,0 +1,116 @@
+{
+  "slug": "fornecedores-governo-federal-brasilia-tributacao",
+  "audited_at": "2026-09-14T22:00:00-03:00",
+  "keyword": "fornecedor governo federal brasília tributação",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "keyword": "fornecedor governo federal brasília tributação",
+      "volume": 480,
+      "difficulty": 24,
+      "intent": "informational",
+      "serp_features": [
+        "people_also_ask",
+        "local_pack"
+      ],
+      "location_code": 2076,
+      "language_code": "pt"
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "note": "Intent informational — 0% contaminação temática confirmada"
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "personas_matched": 3,
+      "personas_total": 5,
+      "personas": [
+        "Margareth",
+        "Carlos",
+        "Ana"
+      ],
+      "note": "3/5 personas Monumental validaram o tópico como job-to-be-done real"
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "note": "Tópico e ângulo únicos — verificado via gate-dedup.mjs e comparação semântica com os outros 19 posts"
+    },
+    "seo_agent": {
+      "passed": true,
+      "h2_count": 8,
+      "internal_links": 5,
+      "desc_length": 152,
+      "desc_range_ok": true,
+      "keyword_in_h1": true,
+      "keyword_density_ok": true,
+      "note": "H1 com keyword principal, 8 H2s cobrindo entidades semânticas do cluster, 5 links internos (≥3 ✓), meta description 152 chars"
+    },
+    "aeo_agent": {
+      "passed": true,
+      "has_answer_capsule": true,
+      "faq_count": 5,
+      "faq_paa_aligned": true,
+      "featured_snippet_candidate": true,
+      "note": "AnswerCapsule presente, 5 FAQs alinhadas com People Also Ask, resposta direta nos primeiros 300 chars do corpo"
+    },
+    "geo_agent": {
+      "passed": true,
+      "citability": "high",
+      "has_sourced_data": true,
+      "has_explicit_definitions": true,
+      "llm_friendly_format": true,
+      "cluster_tag": true,
+      "note": "Dados com fonte (Receita Federal, legislação BR), definições explícitas, parágrafos curtos, tags de cluster contabilidade-consultiva/planejamento-tributario"
+    },
+    "eeat_check": {
+      "passed": true,
+      "experience": "dados de campo e casos reais de empresas em Brasília",
+      "expertise": "autor Jocivane Brito — CRC-DF, Monumental Contabilidade",
+      "authority": "fontes primárias BR: Receita Federal, STF, CARF, PGFN, STJ",
+      "trust": "sem conflito de interesse, links para fontes primárias funcionando",
+      "note": "IN RFB 1.234/2012 citada com artigos; alíquotas de retenção verificadas; ISS DF alíquotas corretas"
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "cover_path": "covers/cover-fornecedores-governo-federal-tributacao.jpg",
+      "filename_descriptive": true,
+      "not_in_og_dir": true,
+      "note": "coverImage \"covers/cover-fornecedores-governo-federal-tributacao.jpg\" — filename descritivo, não está em /og/, não começa com \"og-\""
+    },
+    "image_seo_og": {
+      "passed": true,
+      "og_path": "/og/fornecedores-governo-federal-tributacao.png",
+      "og_unique": true,
+      "og_format_ok": true,
+      "note": "ogImage \"/og/fornecedores-governo-federal-tributacao.png\" — path /og/ único, padrão visual Monumental 1200x630"
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "violations": 0,
+      "note": "gate-covers.mjs: 0 violações — sem duplicate coverImage, sem duplicate title, sem og- em cover, sem /og/ em cover"
+    },
+    "llm_council": {
+      "passed": true,
+      "advisors": [
+        "Contrarian",
+        "First Principles",
+        "Expansionist",
+        "Outsider",
+        "Executor"
+      ],
+      "council_verdict": "Único post do cluster abordando o ponto de intersecção entre split payment e contratos com a União. IN 1.234/2012 referenciada corretamente — alíquota de 11,45% para serviços profissionais verificada. Ângulo Brasília-DF com especificidade local (ISS DF) é diferencial competitivo alto.",
+      "factual_errors_found": 0,
+      "blocking_issues": 0
+    },
+    "score_gate": {
+      "passed": true,
+      "composite": 97,
+      "geo": 100,
+      "aeo": 100,
+      "composite_gte_95": true,
+      "geo_gte_90": true,
+      "aeo_eq_100": true,
+      "note": "score-posts.mjs — composite:97 GEO:100 AEO:100"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "slug": "reforma-tributaria-2026-ibs-cbs-split-payment-brasilia",
+  "audited_at": "2026-09-14T22:00:00-03:00",
+  "keyword": "reforma tributária 2026 IBS CBS split payment",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "keyword": "reforma tributária 2026 IBS CBS split payment",
+      "volume": 12100,
+      "difficulty": 22,
+      "intent": "informational",
+      "serp_features": [
+        "featured_snippet",
+        "people_also_ask",
+        "news",
+        "ai_overview"
+      ],
+      "location_code": 2076,
+      "language_code": "pt"
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "note": "Intent informational — 0% contaminação temática confirmada"
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "personas_matched": 5,
+      "personas_total": 5,
+      "personas": [
+        "Margareth",
+        "Carlos",
+        "Ana",
+        "Rodrigo",
+        "Fernanda"
+      ],
+      "note": "5/5 personas Monumental validaram o tópico como job-to-be-done real"
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "note": "Tópico e ângulo únicos — verificado via gate-dedup.mjs e comparação semântica com os outros 19 posts"
+    },
+    "seo_agent": {
+      "passed": true,
+      "h2_count": 8,
+      "internal_links": 5,
+      "desc_length": 145,
+      "desc_range_ok": true,
+      "keyword_in_h1": true,
+      "keyword_density_ok": true,
+      "note": "H1 com keyword principal, 8 H2s cobrindo entidades semânticas do cluster, 5 links internos (≥3 ✓), meta description 145 chars"
+    },
+    "aeo_agent": {
+      "passed": true,
+      "has_answer_capsule": true,
+      "faq_count": 5,
+      "faq_paa_aligned": true,
+      "featured_snippet_candidate": true,
+      "note": "AnswerCapsule presente, 5 FAQs alinhadas com People Also Ask, resposta direta nos primeiros 300 chars do corpo"
+    },
+    "geo_agent": {
+      "passed": true,
+      "citability": "high",
+      "has_sourced_data": true,
+      "has_explicit_definitions": true,
+      "llm_friendly_format": true,
+      "cluster_tag": true,
+      "note": "Dados com fonte (Receita Federal, legislação BR), definições explícitas, parágrafos curtos, tags de cluster contabilidade-consultiva/planejamento-tributario"
+    },
+    "eeat_check": {
+      "passed": true,
+      "experience": "dados de campo e casos reais de empresas em Brasília",
+      "expertise": "autor Jocivane Brito — CRC-DF, Monumental Contabilidade",
+      "authority": "fontes primárias BR: Receita Federal, STF, CARF, PGFN, STJ",
+      "trust": "sem conflito de interesse, links para fontes primárias funcionando",
+      "note": "EC 132/2023 e LC 214/2025 referenciadas; alíquotas de teste 0,1% IBS + 0,9% CBS verificadas; split payment agosto 2026 alinhado com cronograma oficial"
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "cover_path": "covers/cover-reforma-tributaria-2026-ibs-cbs.jpg",
+      "filename_descriptive": true,
+      "not_in_og_dir": true,
+      "note": "coverImage \"covers/cover-reforma-tributaria-2026-ibs-cbs.jpg\" — filename descritivo, não está em /og/, não começa com \"og-\""
+    },
+    "image_seo_og": {
+      "passed": true,
+      "og_path": "/og/reforma-tributaria-2026-ibs-cbs.png",
+      "og_unique": true,
+      "og_format_ok": true,
+      "note": "ogImage \"/og/reforma-tributaria-2026-ibs-cbs.png\" — path /og/ único, padrão visual Monumental 1200x630"
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "violations": 0,
+      "note": "gate-covers.mjs: 0 violações — sem duplicate coverImage, sem duplicate title, sem og- em cover, sem /og/ em cover"
+    },
+    "llm_council": {
+      "passed": true,
+      "advisors": [
+        "Contrarian",
+        "First Principles",
+        "Expansionist",
+        "Outsider",
+        "Executor"
+      ],
+      "council_verdict": "Post de maior volume de busca do blog — alta concorrência (dif. 22) mas ângulo PME Brasília é específico o suficiente. Faq totalmente alinhado com People Also Ask do Google Brasil (verificado via SERP). Advisor Expansionist sugeriu tabela de cronograma — já presente. Sem erros factuais.",
+      "factual_errors_found": 0,
+      "blocking_issues": 0
+    },
+    "score_gate": {
+      "passed": true,
+      "composite": 97,
+      "geo": 100,
+      "aeo": 100,
+      "composite_gte_95": true,
+      "geo_gte_90": true,
+      "aeo_eq_100": true,
+      "note": "score-posts.mjs — composite:97 GEO:100 AEO:100"
+    }
+  }
+}

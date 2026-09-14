@@ -1521,3 +1521,35 @@ URL: https://385c7a38.blog-monumental.pages.dev (12 posts: 9 informativos + 3 AD
 - META_ACCESS_TOKEN errado no CF Pages — requer rotação manual via wrangler secret
 - 3 posts pré-existentes legados abaixo de 95 — não foram tocados nesta sessão
 
+
+---
+
+## Sessão 2026-08-04 — DS Rebuild, Editorial Redesign, Brand Cleanup
+
+### #12 — About page: editorial redesign anti-slop
+- **Problema:** página /sobre era AI slop genérico com emojis, 3 CTAs duplicados, em-dashes, eyebrows em excesso
+- **Solução:** reescrita completa com taste-skill (VARIANCE:7/MOTION:3/DENSITY:2) — Emil Kowalski, proof col tipográfico, copy com voz real da Monumental
+- **Arquivos:** `src/pages/about.astro` (commits d71ccd4, 7234ec9, b9d234a)
+
+### #13 — Validação MiroFish + BoardAdvisory + BoardStory
+- **Gap crítico:** zero dado concreto em toda a página (nenhum % economia, valor recuperado, nº clientes)
+- **Holding copy** identificado como ponto mais forte — manter intacto
+- **CTA final** era percebido como informal (photo-circle) → rebrandado para grid 2-col editorial com logo SVG + foto portrait
+- **PENDENTE:** Jocivane deve fornecer 1 dado concreto + momento da virada (história fundador) para inserção futura
+
+### #14 — Brand cleanup: remoção completa Dimus
+- **Problema:** vários arquivos ainda referenciavam Dimus (copyright, llms.txt, favicon, WA number, DimusHelp)
+- **Soluções:**
+  - Favicon regenerado do SVG Monumental via ImageMagick (todos os tamanhos)
+  - H1 homepage: "Inteligência tributária para empresas em Brasília." (adicionado Brasília para SEO local)
+  - copyright footer: Dimus → Monumental Contabilidade
+  - llms.txt: reescrito para contabilidade/Brasília (era automotive/Dimus)
+  - lead.ts WA_NUMBER: 5567991992882 (MS) → 556120990889 (Monumental DF, DDD 61)
+  - DimusHelp.astro → MonumentalHelp.astro (20 posts MDX atualizados em batch)
+  - CalculatorCAC.astro deletado (não usado, contexto automotive)
+- **Arquivos:** bc00c11, 678389f
+
+### Pendentes para próxima sessão
+- Inserir dado concreto do Jocivane na about page (# clientes ou % economia)
+- Inserir história do fundador (momento da virada) na seção "A Monumental"
+- Variante names internas do MonumentalHelp ainda usam termos automotive (estoque, atribuicao, portal) — renomear quando conveniente

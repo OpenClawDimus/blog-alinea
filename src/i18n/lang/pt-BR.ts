@@ -34,7 +34,7 @@ export default {
     allPosts: "Todos os posts",
   },
   footer: {
-    copyright: "Monumental Contabilidade",
+    copyright: "Alínea Finanças",
     allRightsReserved: "Todos os direitos reservados.",
   },
   pages: {

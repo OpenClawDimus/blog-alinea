@@ -1,0 +1,189 @@
+---
+/**
+ * AlineaHelp — bloco CTA obrigatório em todo post. Apresenta a Alínea Finanças e capta lead via formulário.
+ *
+ * Props aceitas em dois estilos:
+ *   Estilo legado : postSlug + cluster + variant
+ *   Estilo MDX    : title + sub + items (override o copy do variant)
+ * postSlug é auto-derivado da URL se não for passado explicitamente.
+ */
+interface Props {
+  postSlug?: string;
+  cluster?: string;
+  variant?: "bpo-operacional" | "gestao-financeira" | "reforma-tributaria" | "fornecedores-gov" | "default";
+  // Override props (MDX style — sobrescrevem o copy do variant)
+  title?: string;
+  sub?: string;
+  items?: string[];
+}
+const {
+  postSlug: postSlugProp,
+  cluster = "",
+  variant = "default",
+  title: titleOverride,
+  sub: subOverride,
+} = Astro.props;
+
+// Auto-deriva slug da URL se não passado — evita post_slug vazio no D1.
+const postSlug =
+  postSlugProp ||
+  Astro.url.pathname.replace(/^\/posts\//, "").replace(/\/$/, "") ||
+  "";
+
+const variantCopy = {
+  "bpo-operacional": {
+    title: "Como a Alínea Finanças estrutura o BPO financeiro da sua empresa",
+    body: "Assumimos a operação financeira completa: contas a pagar e receber, conciliação bancária, DRE mensal e fluxo de caixa. Você foca no negócio; a gente cuida dos números com precisão e pontualidade.",
+  },
+  "gestao-financeira": {
+    title: "Como a Alínea calcula o custo real da sua gestão financeira",
+    body: "Mapeamos toda a estrutura financeira da empresa: regime tributário, folha, distribuição de lucros e capital de giro. O resultado é um diagnóstico concreto de onde sua empresa perde dinheiro — antes de qualquer mudança.",
+  },
+  "reforma-tributaria": {
+    title: "Como a Alínea posiciona sua empresa para a Reforma Tributária 2026",
+    body: "IBS, CBS e Split Payment mudam o fluxo de caixa de toda empresa. Mapeamos o impacto no seu negócio e ajustamos o planejamento antes que a mudança chegue na nota fiscal.",
+  },
+  "fornecedores-gov": {
+    title: "Como a Alínea atende fornecedores do Governo Federal em Brasília",
+    body: "Contabilidade consultiva especializada para empresas que prestam serviços ao governo. Da certidão negativa ao enquadramento correto de regime tributário, com foco em conformidade e redução legal de carga fiscal.",
+  },
+  default: {
+    title: "Como a Alínea Finanças pode ajudar sua empresa",
+    body: "BPO financeiro e contabilidade consultiva em Brasília-DF: gestão financeira terceirizada, planejamento tributário, abertura de empresa e acompanhamento mensal. Sem robô, com especialista dedicado.",
+  },
+}[variant];
+
+// MDX-style overrides têm prioridade sobre o copy do variant.
+const copy = {
+  title: titleOverride ?? variantCopy.title,
+  body: subOverride ?? variantCopy.body,
+};
+
+const gateCluster = variant === "default" ? "geral" : variant;
+const gateOrigin = "blog-gate-" + gateCluster;
+const intent =
+  "Vim do blog da Alínea Finanças e quero entender como estruturar melhor a gestão financeira e contábil da minha empresa.";
+---
+
+<aside class="alinea-help not-prose" data-cluster={cluster}>
+  <p class="dh-eyebrow">Alínea Finanças · Brasília-DF</p>
+  <h3 class="dh-title">{copy.title}</h3>
+  <p class="dh-body">{copy.body}</p>
+  <form
+    class="dh-form"
+    data-lead
+    data-idtag={gateOrigin}
+    data-post-slug={postSlug}
+    data-cluster={cluster || variant}
+    data-intent={intent}
+  >
+    <input name="nome" placeholder="Seu nome" autocomplete="name" required />
+    <input
+      name="email"
+      type="email"
+      inputmode="email"
+      placeholder="Seu melhor e-mail"
+      autocomplete="email"
+      required
+    />
+    <input
+      name="whatsapp"
+      type="tel"
+      inputmode="tel"
+      placeholder="WhatsApp com DDD"
+      autocomplete="tel"
+      required
+    />
+    <button type="submit" class="dh-cta">Falar com a Alínea →</button>
+  </form>
+  <p class="dh-fine">Deixe seu contato — retornamos no WhatsApp. Sem robô.</p>
+</aside>
+
+<script>
+  import "@/scripts/lead";
+</script>
+
+<style>
+  .alinea-help {
+    margin: 2.75rem 0;
+    padding: 1.6rem 1.5rem;
+    border: 1px solid var(--hair-mag);
+    border-left: 3px solid var(--magenta);
+    border-radius: 14px;
+    background: linear-gradient(
+      180deg,
+      var(--surface),
+      var(--bg-2)
+    );
+  }
+  .dh-eyebrow {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+  .dh-title {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .dh-body {
+    margin: 0 0 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .dh-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .dh-form input {
+    flex: 1 1 160px;
+    min-width: 0;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: var(--bg-2);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.92rem;
+    transition: border-color 0.18s var(--ease-s);
+  }
+  .dh-form input::placeholder {
+    color: var(--dim);
+  }
+  .dh-form input:focus {
+    outline: none;
+    border-color: var(--magenta);
+  }
+  .dh-cta {
+    flex: 1 1 100%;
+    padding: 0.7rem 1.1rem;
+    border-radius: 999px;
+    background: var(--magenta);
+    border: 1px solid var(--magenta);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.94rem;
+    cursor: pointer;
+    transition:
+      transform 0.18s var(--ease-s),
+      filter 0.18s var(--ease-s);
+  }
+  .dh-cta:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+  }
+  .dh-fine {
+    margin: 0.8rem 0 0;
+    font-size: 0.76rem;
+    color: var(--dim);
+  }
+</style>

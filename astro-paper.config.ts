@@ -2,50 +2,57 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://blog.monumentalcontabilidade.com.br/",
-    title: "Blog Monumental Contabilidade — Tributarista em Brasília",
+    url: "https://blog.alineafinancas.com.br/",
+    title: "Blog Alínea Finanças — BPO Financeiro em Brasília",
     description:
-      "Blog de contabilidade consultiva para empresas em Brasília-DF. Planejamento tributário, reforma tributária 2026, IBS, CBS, Simples Nacional, Lucro Presumido e gestão fiscal inteligente.",
-    author: "Jocivane Brito",
-    profile: "https://monumentalcontabilidade.com.br",
+      "Blog de BPO financeiro e contabilidade consultiva para empresas em Brasília-DF. Gestão financeira, planejamento tributário, reforma tributária 2026 e contabilidade para fornecedores do governo federal.",
+    author: "Alínea Finanças",
+    profile: "https://alineafinancas.com.br",
     ogImage: "default-og.png",
     lang: "pt-BR",
     timezone: "America/Sao_Paulo",
     dir: "ltr",
 
-    // ── Monumental Contabilidade — Brasília-DF ──
-    blogShortTitle: "Blog Monumental",
-    ga4Id: "G-715ZBSK42X",
-    metaPixelId: "1310601837950029",
-    whatsappNumber: "556120990889",
-    whatsappMessage: "Olá! Quero saber mais sobre contabilidade e planejamento tributário para minha empresa",
-    articleSection: "Contabilidade",
+    // ── Alínea Finanças — BPO Financeiro em Brasília-DF ──
+    blogShortTitle: "Blog Alínea",
+    ga4Id: "G-XXXXXXXXXX", // TODO: criar propriedade GA4 para blog.alineafinancas.com.br
+    metaPixelId: "TODO_PIXEL_ALINEA", // TODO: encontrar/criar pixel Meta para Alínea Finanças
+    whatsappNumber: "556130606757",
+    whatsappMessage: "Olá! Tenho interesse em BPO financeiro e gestão contábil para minha empresa em Brasília",
+    articleSection: "BPO Financeiro",
     organization: {
-      name: "Monumental Contabilidade",
-      logo: "logo-monumental.png",
+      name: "Alínea Finanças",
+      logo: "logo-alinea.png",
       sameAs: [
-        "https://monumentalcontabilidade.com.br",
+        "https://alineafinancas.com.br",
+        "https://instagram.com/alineafinancas",
       ],
     },
     authorPerson: {
-      name: "Jocivane Brito",
-      url: "https://monumentalcontabilidade.com.br",
-      jobTitle: "Tributarista",
-      avatar: "jocivane-brito.jpg",
+      name: "Alínea Finanças",
+      url: "https://alineafinancas.com.br",
+      jobTitle: "BPO Financeiro e Contabilidade Consultiva",
+      avatar: "logo-alinea.png",
       sameAs: [
-        "https://monumentalcontabilidade.com.br",
+        "https://alineafinancas.com.br",
+        "https://instagram.com/alineafinancas",
       ],
       knowsAbout: [
-        "planejamento tributário",
+        "BPO financeiro",
         "contabilidade consultiva",
+        "gestão financeira para empresas",
+        "planejamento tributário",
         "reforma tributária 2026",
-        "IBS e CBS",
+        "fornecedores do governo federal",
         "Simples Nacional",
         "Lucro Presumido",
-        "Lucro Real",
         "holding patrimonial",
-        "fornecedores governo federal",
+        "certidão negativa de débitos",
+        "regularização fiscal Brasília",
         "contabilidade empresarial Brasília",
+        "fluxo de caixa",
+        "MEI e microempreendedor Brasília",
+        "nota fiscal de serviço Brasília",
       ],
     },
   },
@@ -56,7 +63,7 @@ export default defineAstroPaperConfig({
   },
   features: {
     lightAndDarkMode: true,
-    dynamicOgImage: false, // A3: redesenhar OG dark-brand via satori (woff2/ttf fix). Por ora usa default-og.jpg estático.
+    dynamicOgImage: false,
     showArchives: true,
     showBackButton: true,
     editPost: {
@@ -65,7 +72,8 @@ export default defineAstroPaperConfig({
     search: "pagefind",
   },
   socials: [
-    { name: "mail", url: "mailto:contato@monumentalcontabilidade.com.br" },
+    { name: "mail", url: "mailto:contato@alineafinancas.com.br" },
+    { name: "instagram", url: "https://instagram.com/alineafinancas" },
   ],
   shareLinks: [
     { name: "whatsapp", url: "https://wa.me/?text=" },

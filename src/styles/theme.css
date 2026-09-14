@@ -1,7 +1,7 @@
 /* ============================================================
-   Monumental Contabilidade — design tokens
-   Navy + Gold. Light-first, dark mode via [data-theme=dark].
-   Mockup aprovado: monumental_blog_mockup.html (Navy + Gold DS).
+   Alínea Finanças — design tokens
+   Teal + Amber. Light-first, dark mode via [data-theme=dark].
+   Brand colors: #05364c (teal) + #bd772f (amber).
    ============================================================ */
 @theme inline {
   /* AstroPaper canonical tokens */
@@ -25,10 +25,10 @@
 
   /* Aliases de compatibilidade para componentes herdados */
   --color-magenta:      var(--navy);
-  --color-magenta-deep: #1e2255;
+  --color-magenta-deep: #0a2432;
   --color-pink:         var(--gold);
-  --color-hair-mag:     rgba(40, 46, 105, 0.12);
-  --color-hair-strong:  rgba(40, 46, 105, 0.25);
+  --color-hair-mag:     rgba(5, 54, 76, 0.12);
+  --color-hair-strong:  rgba(5, 54, 76, 0.25);
   --color-muted-old:    var(--ink-3);
 
   /* Fontes */
@@ -51,18 +51,18 @@
   --ink-2: #4a4a52;
   --ink-3: #8d8d8e;
 
-  --navy:    #282e69;
-  --gold:    #cfaf75;
-  --gold-bg: rgba(207, 175, 117, 0.12);
+  --navy:    #05364c;
+  --gold:    #bd772f;
+  --gold-bg: rgba(189, 119, 47, 0.12);
 
   /* Compat vars */
   --muted:        var(--ink-3);
   --dim:          #a8a5b4;
   --magenta:      var(--navy);
-  --magenta-deep: #1e2255;
+  --magenta-deep: #0a2432;
   --pink:         var(--gold);
-  --hair-mag:     rgba(40, 46, 105, 0.12);
-  --hair-strong:  rgba(40, 46, 105, 0.25);
+  --hair-mag:     rgba(5, 54, 76, 0.12);
+  --hair-strong:  rgba(5, 54, 76, 0.25);
 
   --ease:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-s: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -76,12 +76,12 @@
 
 /* ── Dark mode ──────────────────────────────────────────────── */
 [data-theme="dark"] {
-  --bg:       #131420;
-  --bg-2:     #1a1c2e;
-  --surface:  #1d1f32;
-  --surface-2:#232540;
+  --bg:       #0d1a1f;
+  --bg-2:     #132028;
+  --surface:  #162430;
+  --surface-2:#1c2e3a;
 
-  --hair: #262840;
+  --hair: #213543;
 
   --ink:   #e8e6e0;
   --ink-2: #a8a5b4;

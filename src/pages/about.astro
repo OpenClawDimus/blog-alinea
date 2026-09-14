@@ -4,8 +4,8 @@ import config from "@/config";
 import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
 
 const whatsAppUrl = getWhatsAppUrl(config);
-const title = "Sobre - Jocivane Brito e a Monumental Contabilidade";
-const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 10 anos de atuação em planejamento fiscal consultivo para PMEs, fornecedores do governo federal e holdings patrimoniais.";
+const title = "Sobre a Alínea Finanças — BPO Financeiro em Brasília-DF";
+const description = "A Alínea Finanças oferece BPO financeiro e contabilidade consultiva para empresas em Brasília-DF. Gestão financeira terceirizada, planejamento tributário e suporte para fornecedores do governo federal.";
 ---
 
 <Layout title={`${title} | ${config.site.title}`} description={description}>
@@ -21,12 +21,12 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
     <!-- ── HERO ── -->
     <section class="about-hero">
 
-      <!-- Col 1: Foto editorial -->
+      <!-- Col 1: Logo editorial -->
       <div class="about-hero-img-wrap">
         <img
-          src="/jocivane-brito-bw.jpg"
-          alt="Jocivane Brito - Tributarista em Brasília-DF"
-          class="about-hero-img"
+          src="/logo-alinea.png"
+          alt="Alínea Finanças — BPO Financeiro em Brasília-DF"
+          class="about-hero-logo"
           loading="eager"
           decoding="async"
         />
@@ -34,13 +34,13 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
 
       <!-- Col 2: Identidade + CTA -->
       <div class="about-hero-copy">
-        <h1 class="about-hero-title">Jocivane<br>Brito</h1>
+        <h1 class="about-hero-title">Alínea<br>Finanças</h1>
         <p class="about-hero-sub">
-          Tributarista com mais de 10 anos dedicados exclusivamente ao planejamento fiscal
-          para empresas em Brasília. Não o contador que entrega obrigações. O que aparece
-          quando a decisão custa caro.
+          BPO financeiro e contabilidade consultiva para empresas em Brasília-DF.
+          Não o contador que entrega obrigações. O parceiro que aparece quando a
+          decisão financeira custa caro.
         </p>
-        <p class="about-hero-cred">CRC-DF · Tributarista · Contabilidade Consultiva</p>
+        <p class="about-hero-cred">BPO Financeiro · Contabilidade Consultiva · Brasília-DF</p>
         <a
           href={whatsAppUrl}
           target="_blank"
@@ -49,19 +49,19 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
           onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'about_hero_whatsapp'})}"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
-          Falar com Jocivane
+          Falar com a Alínea
         </a>
       </div>
 
       <!-- Col 3: Prova numérica editorial -->
       <aside class="about-proof-col" aria-label="Dados de atuação">
         <div class="about-proof-fig">
-          <span class="about-proof-n">10+</span>
-          <span class="about-proof-u">anos de atuação</span>
-        </div>
-        <div class="about-proof-fig">
           <span class="about-proof-n">DF</span>
           <span class="about-proof-u">foco Brasília</span>
+        </div>
+        <div class="about-proof-fig">
+          <span class="about-proof-n">360°</span>
+          <span class="about-proof-u">BPO financeiro</span>
         </div>
         <div class="about-proof-fig">
           <span class="about-proof-n">CRC</span>
@@ -69,7 +69,7 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
         </div>
         <div class="about-proof-sep"></div>
         <p class="about-proof-areas">
-          Planejamento tributário · Fornecedores do governo federal · Holdings patrimoniais · Reforma Tributária 2026
+          BPO financeiro · Gestão financeira · Planejamento tributário · Reforma Tributária 2026 · Fornecedores do governo federal
         </p>
         <a
           href={whatsAppUrl}
@@ -84,27 +84,27 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
 
     </section>
 
-    <!-- ── QUEM É JOCIVANE ── -->
+    <!-- ── QUEM É A ALÍNEA ── -->
     <section class="about-section sr-reveal">
       <div class="about-section-grid">
-        <h2 class="about-section-title">Quem é<br>Jocivane Brito</h2>
+        <h2 class="about-section-title">Quem é<br>a Alínea Finanças</h2>
         <div class="about-section-body">
           <p>
-            A maioria das empresas paga mais imposto do que deveria. Não por desonestidade do
-            contador. Por falta de um olhar estratégico sobre a carga tributária. Jocivane Brito
-            existe para preencher exatamente esse espaço.
+            A maioria das empresas trata financeiro e contabilidade como obrigação. Paga o contador,
+            recebe as guias, assina o balanço. E não sabe ao certo se está pagando mais imposto do que
+            deveria — ou se a operação financeira consome mais tempo e custo do que vale.
           </p>
           <p>
-            Formado em Ciências Contábeis e registrado no CRC-DF, atua na intersecção entre
-            legislação tributária e realidade operacional das empresas em Brasília. Um contexto
-            único no Brasil: alta concentração de fornecedores do setor público, retenções federais
-            complexas, regimes diferenciados e agora a Reforma Tributária chegando.
+            A Alínea Finanças existe para preencher exatamente esse espaço. Somos especialistas em
+            BPO financeiro e contabilidade consultiva para PMEs em Brasília-DF — um contexto único
+            no Brasil: alta concentração de fornecedores do setor público, retenções federais complexas,
+            regimes diferenciados e agora a Reforma Tributária chegando em velocidade real.
           </p>
           <p>
-            Cada análise começa pelos números reais da empresa. Não por planilhas genéricas.
-            Qual o regime tributário atual? Qual o impacto de mudar? Existe crédito recuperável?
-            Há risco em como os lucros estão sendo distribuídos? Essas são as perguntas que
-            uma contabilidade consultiva responde.
+            Cada análise começa pelos números reais da empresa. Qual o regime tributário atual? O custo
+            real de terceirizar o financeiro? Existe crédito tributário recuperável? Como o split payment
+            vai afetar o seu fluxo de caixa? Essas são as perguntas que uma contabilidade consultiva
+            responde — e que um escritório de obrigações geralmente não pergunta.
           </p>
         </div>
       </div>
@@ -112,20 +112,20 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
       <!-- Expertise: tipográfica, sem emojis -->
       <div class="about-expertise-list">
         <div class="about-el-item">
+          <span class="about-el-area">BPO financeiro</span>
+          <p class="about-el-desc">Contas a pagar e receber, conciliação bancária, DRE mensal e fluxo de caixa gerenciados pela Alínea. Você foca no negócio; a gente cuida dos números com precisão e pontualidade.</p>
+        </div>
+        <div class="about-el-item">
           <span class="about-el-area">Planejamento tributário</span>
-          <p class="about-el-desc">Simples Nacional, Lucro Presumido, Lucro Real. A maioria das empresas entrou num regime e nunca mais reviu. Quando o faturamento muda, o regime certo muda junto. A pergunta que poucos fazem a tempo: o regime que escolhi há três anos ainda faz sentido para a empresa que tenho hoje?</p>
+          <p class="about-el-desc">Simples Nacional, Lucro Presumido, Lucro Real. A maioria das empresas entrou num regime e nunca mais reviu. Quando o faturamento muda, o regime certo muda junto. A Alínea faz essa análise com os seus números reais.</p>
         </div>
         <div class="about-el-item">
           <span class="about-el-area">Fornecedores do governo federal</span>
-          <p class="about-el-desc">Retenções na fonte, SICAF, split payment da Reforma. Empresas que faturam para a União precisam de atenção específica - os erros aqui geram passivos que aparecem anos depois.</p>
-        </div>
-        <div class="about-el-item">
-          <span class="about-el-area">Holdings patrimoniais</span>
-          <p class="about-el-desc">Estruturação, sucessão e proteção de patrimônio empresarial via holding. Uma ferramenta poderosa quando bem desenhada, cara quando feita sem planejamento.</p>
+          <p class="about-el-desc">Retenções na fonte, SICAF, split payment da Reforma. Empresas que faturam para a União precisam de atenção específica — os erros aqui geram passivos que aparecem anos depois.</p>
         </div>
         <div class="about-el-item">
           <span class="about-el-area">Reforma Tributária 2026</span>
-          <p class="about-el-desc">IBS, CBS e split payment chegam com impacto real no fluxo de caixa de quem fornece para o governo. As empresas que começaram a planejar agora chegam em 2027 sem surpresa.</p>
+          <p class="about-el-desc">IBS, CBS e split payment chegam com impacto real no fluxo de caixa de quem fornece para o governo. As empresas que começaram a planejar agora chegam em 2027 sem surpresa no caixa.</p>
         </div>
       </div>
     </section>
@@ -142,15 +142,15 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
           <p>
             Este blog existe para o empresário que já recebeu respostas vagas do contador,
             que já pagou a guia sem entender o que estava pagando, que já tomou uma decisão
-            de negócio sem saber o custo tributário dela. Cada artigo nasce de um caso real
-            da carteira de clientes da Monumental. Com números. Sem teoria genérica.
+            de negócio sem saber o custo tributário dela. Cada artigo nasce de casos reais
+            da carteira da Alínea. Com números. Sem teoria genérica.
           </p>
 
           <div class="about-audience-strip">
             <div class="about-aud-item">
               <span class="about-aud-label">Para quem</span>
               <strong>Empresário de PME em Brasília-DF</strong>
-              <p>que quer reduzir carga tributária dentro da lei, sem surpresa no próximo exercício</p>
+              <p>que quer gestão financeira profissional e redução de carga tributária dentro da lei</p>
             </div>
             <div class="about-aud-item">
               <span class="about-aud-label">Para quem</span>
@@ -167,25 +167,26 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
       </div>
     </section>
 
-    <!-- ── A MONUMENTAL ── -->
+    <!-- ── A ALÍNEA ── -->
     <section class="about-section sr-reveal">
       <div class="about-section-grid">
-        <h2 class="about-section-title">A Monumental Contabilidade</h2>
+        <h2 class="about-section-title">A Alínea Finanças</h2>
         <div class="about-section-body">
           <p>
-            A Monumental Contabilidade não é um escritório de obrigações. Escritórios de obrigações
+            A Alínea Finanças não é um escritório de obrigações. Escritórios de obrigações
             entregam o que a Receita Federal pede. Fazem isso bem. Mas param aí.
           </p>
           <p>
-            A Monumental começa onde a contabilidade padrão termina. Depois que as obrigações estão
+            A Alínea começa onde a contabilidade padrão termina. Depois que as obrigações estão
             cumpridas, existe uma pergunta que a maioria dos escritórios não faz: esse regime tributário
             ainda faz sentido para o tamanho que sua empresa tem hoje? Essa decisão tomada seis meses
-            atrás, qual foi o custo tributário dela? Essa distribuição de lucros está dentro da lei?
+            atrás, qual foi o custo tributário dela? O financeiro da empresa está consumindo horas do
+            dono que deveriam estar no negócio?
           </p>
           <p>
-            Atuação exclusiva em Brasília-DF. Foco nas particularidades do ecossistema tributário do
-            Distrito Federal, dos fornecedores do setor público e das empresas que operam no contexto
-            de um dos maiores mercados institucionais do Brasil.
+            Atuação exclusiva em Brasília-DF. Foco nas particularidades do ecossistema tributário e
+            financeiro do Distrito Federal, dos fornecedores do setor público e das empresas que operam
+            no contexto de um dos maiores mercados institucionais do Brasil.
           </p>
         </div>
       </div>
@@ -196,11 +197,12 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
       <div class="about-cta-inner">
         <!-- Col esquerda: logo + copy + btn -->
         <div class="about-cta-copy">
-          <img src="/logo-monumental.svg" alt="Monumental Contabilidade" class="about-cta-logo" />
+          <img src="/logo-alinea.png" alt="Alínea Finanças" class="about-cta-logo" />
           <h2 class="about-cta-title">A primeira conversa não custa nada.</h2>
           <p class="about-cta-body">
-            Mas pode revelar o que sua empresa está pagando a mais. Jocivane Brito
-            atende diretamente. Traga seus números. A análise é gratuita, o diagnóstico é seu.
+            Mas pode revelar o que sua empresa está pagando a mais — em impostos ou em operação
+            financeira ineficiente. A Alínea atende diretamente. Traga seus números. O diagnóstico
+            é gratuito e o resultado é seu.
           </p>
           <div class="about-cta-row">
             <a
@@ -211,16 +213,16 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
               onclick="if(typeof gtag!=='undefined'){gtag('event','generate_lead',{lead_source:'blog',lead_type:'about_final_whatsapp'})}"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.117 1.523 5.847L0 24l6.342-1.493A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.357-.213-3.768.888.944-3.669-.235-.376A9.818 9.818 0 1112 21.818z"/></svg>
-              Falar com Jocivane pelo WhatsApp
+              Falar com a Alínea pelo WhatsApp
             </a>
           </div>
-          <span class="about-cta-attr">Monumental Contabilidade · Brasília-DF · CRC-DF</span>
+          <span class="about-cta-attr">Alínea Finanças · BPO Financeiro · Brasília-DF</span>
         </div>
-        <!-- Col direita: foto editorial -->
+        <!-- Col direita: logo editorial -->
         <div class="about-cta-photo-wrap">
           <img
-            src="/jocivane-brito.jpg"
-            alt="Jocivane Brito — Tributarista"
+            src="/logo-alinea.png"
+            alt="Alínea Finanças"
             class="about-cta-photo"
             loading="lazy"
             decoding="async"
@@ -259,12 +261,17 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
 .about-hero-img-wrap {
   border-radius: 4px;
   overflow: hidden;
+  padding: 32px;
+  background: var(--navy, #05364c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   aspect-ratio: 3/4;
-  background: var(--navy, #282e69);
 }
-.about-hero-img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center top;
+.about-hero-logo {
+  width: 100%;
+  max-width: 160px;
+  object-fit: contain;
 }
 
 .about-hero-title {
@@ -288,7 +295,7 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
   font-size: 10.5px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--gold, #cfaf75);
+  color: var(--gold, #bd772f);
   margin: 0 0 28px;
 }
 .about-hero-cta {
@@ -343,7 +350,7 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
 .about-proof-link {
   font-family: var(--font-mono);
   font-size: 10.5px;
-  color: var(--gold, #cfaf75);
+  color: var(--gold, #bd772f);
   text-decoration: none;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -500,7 +507,6 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
   width: auto;
   margin-bottom: 32px;
   display: block;
-  filter: brightness(0) invert(1);
   opacity: .85;
 }
 .about-cta-title {
@@ -538,22 +544,17 @@ const description = "Jocivane Brito é tributarista em Brasília-DF com mais de 
   display: block;
 }
 .about-cta-photo-wrap {
-  position: relative;
-  overflow: hidden;
+  padding: 32px;
+  background: var(--navy, #05364c);
   border-radius: 4px;
-}
-.about-cta-photo-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(16,14,26,.6) 0%, transparent 50%);
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .about-cta-photo {
   width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  object-position: center top;
+  max-width: 200px;
+  object-fit: contain;
   display: block;
 }
 </style>

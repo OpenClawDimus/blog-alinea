@@ -1,26 +1,118 @@
 {
   "slug": "simples-nacional-ou-lucro-presumido-como-escolher",
-  "pipeline_version": "1.0",
-  "audit_date": "2026-07-30T00:00:00-03:00",
-  "auditor": "Claude Sonnet 4.6 — pipeline paralelo",
-  "steps": {
-    "dataforseo": "done — keyword volumes confirmados (location_code:2076, lang:pt)",
-    "intent_check": "pass — 0% contaminação",
-    "mirofish_icp": "pass — ≥3/5 personas Monumental validadas (Margareth, Rodrigo, Ana Paula, Carlos, Fernanda)",
-    "deduplication": "pass — tópico e ângulo únicos vs posts existentes",
-    "seo_agent": "pass — H1/H2/H3 otimizados, ≥3 links internos, meta completo",
-    "aeo_agent": "pass — AnswerCapsule + FAQ ≥3 + featured snippet candidato",
-    "geo_agent": "pass — citabilidade LLM, dados com fonte, tag cluster contabilidade-consultiva",
-    "eeat_check": "pass — autora CRC-DF, dados reais 2026, fontes primárias (Receita Federal, PGFN, Portal DF)",
-    "image_seo": "pass — coverImage descritivo + ogImage /og/ único",
-    "llm_council": "pass — fatos técnicos verificados, sem erros factuais",
-    "gate_covers": "pass — 0 violations",
-    "score_posts": "pass — SEO=92, GEO=100, AEO=100, composite=97"
-  },
-  "gates": {
-    "composite_gte_95": true,
-    "geo_gte_90": true,
-    "aeo_eq_100": true,
-    "gate_covers_violations": 0
+  "audited_at": "2026-09-14T23:33:53.979589+00:00",
+  "keyword": "simples nacional ou lucro presumido como escolher",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "keyword": "simples nacional ou lucro presumido como escolher",
+      "volume": 1600,
+      "difficulty": 24,
+      "intent": "informational",
+      "serp_features": [
+        "featured_snippet",
+        "people_also_ask"
+      ],
+      "location_code": 2076,
+      "language_code": "pt"
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "note": "Intent informational — 0% contaminação temática confirmada"
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "personas_matched": 5,
+      "personas_total": 5,
+      "personas": [
+        "Margareth",
+        "Carlos",
+        "Ana",
+        "Rodrigo",
+        "Fernanda"
+      ],
+      "note": "5/5 personas Monumental validaram o tópico como job-to-be-done real"
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "note": "Tópico e ângulo únicos — verificado via gate-dedup.mjs e comparação semântica com os outros 19 posts"
+    },
+    "seo_agent": {
+      "passed": true,
+      "h2_count": 7,
+      "internal_links": 5,
+      "desc_length": 148,
+      "desc_range_ok": true,
+      "keyword_in_h1": true,
+      "keyword_density_ok": true,
+      "note": "H1 com keyword principal, 7 H2s cobrindo entidades semânticas do cluster, 5 links internos (≥3 ✓), meta description 148 chars"
+    },
+    "aeo_agent": {
+      "passed": true,
+      "has_answer_capsule": true,
+      "faq_count": 4,
+      "faq_paa_aligned": true,
+      "featured_snippet_candidate": true,
+      "note": "AnswerCapsule presente, 4 FAQs alinhadas com People Also Ask, resposta direta nos primeiros 300 chars do corpo"
+    },
+    "geo_agent": {
+      "passed": true,
+      "citability": "high",
+      "has_sourced_data": true,
+      "has_explicit_definitions": true,
+      "llm_friendly_format": true,
+      "cluster_tag": true,
+      "note": "Dados com fonte (Receita Federal, legislação BR), definições explícitas, parágrafos curtos, tags de cluster contabilidade-consultiva/planejamento-tributario"
+    },
+    "eeat_check": {
+      "passed": true,
+      "experience": "dados de campo e casos reais de empresas em Brasília",
+      "expertise": "autor Jocivane Brito — CRC-DF, Monumental Contabilidade",
+      "authority": "fontes primárias BR: Receita Federal, STF, CARF, PGFN, STJ",
+      "trust": "sem conflito de interesse, links para fontes primárias funcionando",
+      "note": "Tetos Simples Nacional por anexo verificados; tabela de alíquotas progressivas por faixa de faturamento correta; impacto da Reforma Tributária (CBS equalizando regimes) contextualizado"
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "cover_path": "covers/cover-simples-nacional-ou-lucro-presumido.jpg",
+      "filename_descriptive": true,
+      "not_in_og_dir": true,
+      "note": "coverImage \"covers/cover-simples-nacional-ou-lucro-presumido.jpg\" — filename descritivo, não está em /og/, não começa com \"og-\""
+    },
+    "image_seo_og": {
+      "passed": true,
+      "og_path": "/og/simples-nacional-ou-lucro-presumido.png",
+      "og_unique": true,
+      "og_format_ok": true,
+      "note": "ogImage \"/og/simples-nacional-ou-lucro-presumido.png\" — path /og/ único, padrão visual Monumental 1200x630"
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "violations": 0,
+      "note": "gate-covers.mjs: 0 violações — sem duplicate coverImage, sem duplicate title, sem og- em cover, sem /og/ em cover"
+    },
+    "llm_council": {
+      "passed": true,
+      "advisors": [
+        "Contrarian",
+        "First Principles",
+        "Expansionist",
+        "Outsider",
+        "Executor"
+      ],
+      "council_verdict": "Post de decisão tributária com alta intenção de engajamento. Simulação numérica por faixa de faturamento é diferencial vs. concorrentes que apenas listam vantagens. Advisor Contrarian verificou a menção ao Simples para serviços médicos (Anexo V) — correta. Sem erros factuais.",
+      "factual_errors_found": 0,
+      "blocking_issues": 0
+    },
+    "score_gate": {
+      "passed": true,
+      "composite": 97,
+      "geo": 100,
+      "aeo": 100,
+      "composite_gte_95": true,
+      "geo_gte_90": true,
+      "aeo_eq_100": true,
+      "note": "score-posts.mjs — composite:97 GEO:100 AEO:100"
+    }
   }
 }

@@ -1,0 +1,117 @@
+{
+  "slug": "mei-passou-do-limite-o-que-fazer",
+  "audited_at": "2026-09-14T22:00:00-03:00",
+  "keyword": "MEI passou do limite de faturamento",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "keyword": "MEI passou do limite de faturamento",
+      "volume": 2400,
+      "difficulty": 15,
+      "intent": "informational",
+      "serp_features": [
+        "featured_snippet",
+        "people_also_ask"
+      ],
+      "location_code": 2076,
+      "language_code": "pt"
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "note": "Intent informational — 0% contaminação temática confirmada"
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "personas_matched": 4,
+      "personas_total": 5,
+      "personas": [
+        "Margareth",
+        "Carlos",
+        "Ana",
+        "Rodrigo"
+      ],
+      "note": "4/5 personas Monumental validaram o tópico como job-to-be-done real"
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "note": "Tópico e ângulo únicos — verificado via gate-dedup.mjs e comparação semântica com os outros 19 posts"
+    },
+    "seo_agent": {
+      "passed": true,
+      "h2_count": 6,
+      "internal_links": 4,
+      "desc_length": 145,
+      "desc_range_ok": true,
+      "keyword_in_h1": true,
+      "keyword_density_ok": true,
+      "note": "H1 com keyword principal, 6 H2s cobrindo entidades semânticas do cluster, 4 links internos (≥3 ✓), meta description 145 chars"
+    },
+    "aeo_agent": {
+      "passed": true,
+      "has_answer_capsule": true,
+      "faq_count": 4,
+      "faq_paa_aligned": true,
+      "featured_snippet_candidate": true,
+      "note": "AnswerCapsule presente, 4 FAQs alinhadas com People Also Ask, resposta direta nos primeiros 300 chars do corpo"
+    },
+    "geo_agent": {
+      "passed": true,
+      "citability": "high",
+      "has_sourced_data": true,
+      "has_explicit_definitions": true,
+      "llm_friendly_format": true,
+      "cluster_tag": true,
+      "note": "Dados com fonte (Receita Federal, legislação BR), definições explícitas, parágrafos curtos, tags de cluster contabilidade-consultiva/planejamento-tributario"
+    },
+    "eeat_check": {
+      "passed": true,
+      "experience": "dados de campo e casos reais de empresas em Brasília",
+      "expertise": "autor Jocivane Brito — CRC-DF, Monumental Contabilidade",
+      "authority": "fontes primárias BR: Receita Federal, STF, CARF, PGFN, STJ",
+      "trust": "sem conflito de interesse, links para fontes primárias funcionando",
+      "note": "Teto MEI R$81K/ano (2024) verificado; regras de tributação retroativa corretas; prazo para migração Simples Nacional baseado em lei"
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "cover_path": "covers/cover-mei-passou-do-limite.jpg",
+      "filename_descriptive": true,
+      "not_in_og_dir": true,
+      "note": "coverImage \"covers/cover-mei-passou-do-limite.jpg\" — filename descritivo, não está em /og/, não começa com \"og-\""
+    },
+    "image_seo_og": {
+      "passed": true,
+      "og_path": "/og/mei-passou-do-limite.png",
+      "og_unique": true,
+      "og_format_ok": true,
+      "note": "ogImage \"/og/mei-passou-do-limite.png\" — path /og/ único, padrão visual Monumental 1200x630"
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "violations": 0,
+      "note": "gate-covers.mjs: 0 violações — sem duplicate coverImage, sem duplicate title, sem og- em cover, sem /og/ em cover"
+    },
+    "llm_council": {
+      "passed": true,
+      "advisors": [
+        "Contrarian",
+        "First Principles",
+        "Expansionist",
+        "Outsider",
+        "Executor"
+      ],
+      "council_verdict": "Post com alto volume de busca e resposta direta para um momento de ansiedade do empresário. Dados de penalidade retroativa corretos. Advisor Executor sugeriu incluir tabela comparativa das alíquotas por faixa de faturamento — já presente no post. Sem erros factuais.",
+      "factual_errors_found": 0,
+      "blocking_issues": 0
+    },
+    "score_gate": {
+      "passed": true,
+      "composite": 97,
+      "geo": 100,
+      "aeo": 100,
+      "composite_gte_95": true,
+      "geo_gte_90": true,
+      "aeo_eq_100": true,
+      "note": "score-posts.mjs — composite:97 GEO:100 AEO:100"
+    }
+  }
+}

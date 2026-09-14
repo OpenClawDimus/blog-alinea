@@ -4,7 +4,7 @@
  * Dispara GA4 generate_lead + Meta Pixel Lead (eventID = lead_ref), POST /tracker
  * (sendBeacon → D1 + Meta CAPI + forward Supabase blueprint), depois abre o WhatsApp com [ID:ref].
  */
-const WA_NUMBER = "556120990889"; // Monumental Contabilidade — Brasília-DF
+const WA_NUMBER = "556130606757"; // Alínea Finanças — Brasília-DF
 
 const fmtBR = (n: number) => "R$ " + Math.round(n).toLocaleString("pt-BR");
 

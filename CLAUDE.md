@@ -1,31 +1,31 @@
-## ⛔ PADRÃO SEO DE SITE — LEIA ANTES DE QUALQUER MUDANÇA (corrigido 2026-07-28)
+## ⛔ PADRÃO SEO DE SITE — LEIA ANTES DE QUALQUER MUDANÇA
 
 ### Title tag — padrão OBRIGATÓRIO em todos os posts:
 ```
-[Título do post com keyword principal] | Blog Monumental
+[Título do post com keyword principal] | Blog Alínea
 ```
 Implementado em `src/pages/posts/[...slug]/index.astro`:
 ```js
-title={`${title} | Blog Monumental`}
+title={`${title} | Blog Alínea`}
 ```
 
 ### Site title e description (astro-paper.config.ts):
 ```js
-title: "Blog Monumental — Marketing Automotivo"
-description: "Blog de marketing automotivo para revendas de seminovos e concessionárias. Google Ads, Meta Ads, WhatsApp, CRM e como medir ROI real em carro vendido."
+title: "Blog Alínea Finanças — BPO Financeiro em Brasília"
+description: "Blog de BPO financeiro e contabilidade consultiva para empresas em Brasília-DF. Gestão financeira, planejamento tributário, reforma tributária 2026 e contabilidade para fornecedores do governo federal."
 ```
 
 **Regras invioláveis:**
 - `title` do site SEMPRE com keyword de nicho após `—`
-- `description` do site com keywords: "marketing automotivo", "revendas de seminovos", "concessionárias"
+- `description` do site com keywords: "BPO financeiro", "contabilidade consultiva", "Brasília-DF"
 - `description` de cada post: benefício concreto + dado numérico, 130–160 chars
 - NUNCA editar `astro-paper.config.ts` ou `Layout.astro` sem garantir que o padrão se mantém
-- NUNCA remover o sufixo `| Blog Monumental` dos posts
+- NUNCA remover o sufixo `| Blog Alínea` dos posts
 
-### Metadados estruturais — PADRÃO OBRIGATÓRIO (corrigido 2026-07-28)
+### Metadados estruturais — PADRÃO OBRIGATÓRIO
 
 - **`og:type`**: posts = `"article"` (via `ogType` prop em PostLayout); demais = `"website"`
-- **`article:section`**: todo post DEVE ter `<meta property="article:section" content="Marketing Automotivo">` — já injetado em PostLayout automaticamente via prop `tags`
+- **`article:section`**: todo post DEVE ter `<meta property="article:section" content="BPO Financeiro">` — já injetado em PostLayout automaticamente via prop `tags`
 - **`article:tag`**: uma `<meta property="article:tag">` por tag do post — gerado automaticamente pelo PostLayout
 - **`rel="prev"`/`rel="next"`**: páginas paginadas (`/posts/2`, `/posts/3`...) DEVEM ter esses links — já implementado em `[...page].astro`
 - **Cover image**: NUNCA usar `alt=""` ou `aria-hidden="true"` na cover do post — usar `alt={title}` para Google Images
@@ -47,7 +47,7 @@ site: {
   metaPixelId: "XXXXXXXXX",             // Pixel Meta do cliente (ou via env)
   whatsappNumber: "55XXXXXXXXXXX",      // número com DDD
   whatsappMessage: "Mensagem padrão",
-  articleSection: "Nicho do cliente",   // ex: "Decoração", "Saúde"
+  articleSection: "Nicho do cliente",   // ex: "BPO Financeiro", "Saúde"
   organization: {
     name: "Nome da Empresa",
     logo: "logo-cliente.png",           // arquivo em /public
@@ -79,14 +79,14 @@ O pré-commit hook (`scripts/gate-post-pipeline.mjs`) BLOQUEIA o commit automati
 
 ```
 1. DataForSEO SERP    → volume + intent + dificuldade + SERP features (location_code:2076, lang:pt)
-2. Intent check       → 0% contaminação (ex: "veículo apreendido" num post de gestão de pátio)
-3. MiroFish ICP       → ≥3/5 personas automotivas validam o tópico
+2. Intent check       → 0% contaminação (ex: "BPO pessoal" num post de BPO financeiro)
+3. MiroFish ICP       → ≥3/5 personas BPO/financeiro validam o tópico
 4. Deduplication      → tópico E ângulo diferentes de todos os posts existentes
 5. SEO agent          → H1/H2/H3, keyword density, entidades, internal links (≥3), image alt, meta
 6. AEO agent          → AnswerCapsule, FAQ PAA-aligned, featured snippet candidato
 7. GEO agent          → citabilidade LLM, dados com fonte, definições explícitas
 8. EEAT check         → Experience (dados reais), Expertise (autor), Authority (fontes), Trust
-9. Image SEO          → coverImage filename descritivo + alt text + OG 1200x630 padrão Monumental
+9. Image SEO          → coverImage filename descritivo + alt text + OG 1200x630 padrão Alínea
 10. LLM Council       → 5 advisors red team + peer review + chairman (bloqueante se factual error)
 11. gate-covers.mjs   → 0 violations
 12. score-posts.mjs   → composite ≥ 95, GEO ≥ 90, AEO = 100

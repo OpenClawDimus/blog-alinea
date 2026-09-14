@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ site }) => {
     "",
     `> ${config.site.description}`,
     "",
-    "Blog de contabilidade consultiva para empresas em Brasília-DF. Foco em planejamento tributário estratégico, Reforma Tributária 2026 (IBS/CBS), regimes fiscais (Simples Nacional, Lucro Presumido, Lucro Real), holdings patrimoniais e fornecedores do setor público federal. Jocivane Brito é tributarista com atuação exclusiva no DF.",
+    "Blog de BPO financeiro e contabilidade consultiva para empresas em Brasília-DF. Foco em gestão financeira terceirizada, planejamento tributário, Reforma Tributária 2026 (IBS/CBS/Split Payment), regimes fiscais (Simples Nacional, Lucro Presumido, Lucro Real) e fornecedores do setor público federal.",
     "",
     "## Posts",
     ...posts.map(p => {
@@ -28,9 +28,9 @@ export const GET: APIRoute = async ({ site }) => {
       return `- [${p.data.title}](${url}): ${p.data.description}`;
     }),
     "",
-    "## Sobre a Monumental Contabilidade",
-    `- [Site Monumental](${config.site.profile}): contabilidade consultiva em Brasília-DF — planejamento tributário, holdings e fornecedores do governo federal.`,
-    `- Autor: Jocivane Brito, tributarista CRC-DF, especialista em redução de carga tributária para PMEs no Distrito Federal.`,
+    "## Sobre a Alínea Finanças",
+    `- [Site Alínea](${config.site.profile}): BPO financeiro e contabilidade consultiva em Brasília-DF — gestão financeira, planejamento tributário e fornecedores do governo federal.`,
+    `- Especialistas em BPO financeiro para PMEs no Distrito Federal, com foco em regularização fiscal e redução legal de carga tributária.`,
     "",
   ];
 
