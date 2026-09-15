@@ -15,7 +15,7 @@ export default defineAstroPaperConfig({
 
     // ── Alínea Finanças — BPO Financeiro em Brasília-DF ──
     blogShortTitle: "Blog Alínea",
-    ga4Id: "G-XXXXXXXXXX", // TODO: criar propriedade GA4 para blog.alineafinancas.com.br
+    ga4Id: "G-RTGLWPF183",
     metaPixelId: "TODO_PIXEL_ALINEA", // TODO: encontrar/criar pixel Meta para Alínea Finanças
     whatsappNumber: "556130606757",
     whatsappMessage: "Olá! Tenho interesse em BPO financeiro e gestão contábil para minha empresa em Brasília",
