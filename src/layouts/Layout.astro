@@ -98,14 +98,12 @@ const metaPixelHtml = metaPixelId
     <link rel="canonical" href={canonicalURL} />
     {/* Remove generator tag — evita exposição de stack */}
 
-    <!-- Fonts — Revista Showroom -->
-    <Font
-      cssVariable="--font-hanken-grotesk"
-      preload={[{ subset: "latin", weight: 400, style: "normal" }]}
-    />
-    <Font
-      cssVariable="--font-fraunces"
-      preload={[{ subset: "latin", weight: 600, style: "normal" }]}
+    <!-- Fonts — Plus Jakarta Sans (display/app) + IBM Plex Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     />
     <Font cssVariable="--font-jetbrains-mono" />
 

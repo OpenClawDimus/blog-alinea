@@ -2,6 +2,8 @@
    Alínea Finanças — design tokens
    Teal + Amber. Light-first, dark mode via [data-theme=dark].
    Brand colors: #05364c (teal) + #bd772f (amber).
+   Tipografia: Plus Jakarta Sans (display) + IBM Plex Sans (body)
+   Identidade: data-driven BPO financeiro — fria, precisa, tech-forward.
    ============================================================ */
 @theme inline {
   /* AstroPaper canonical tokens */
@@ -13,7 +15,7 @@
   --color-muted-foreground:  var(--ink-3);
   --color-border:            var(--hair);
 
-  /* Paleta estendida Monumental */
+  /* Paleta estendida Alínea */
   --color-bg-2:      var(--bg-2);
   --color-surface:   var(--surface);
   --color-surface-2: var(--surface-2);
@@ -31,29 +33,29 @@
   --color-hair-strong:  rgba(5, 54, 76, 0.25);
   --color-muted-old:    var(--ink-3);
 
-  /* Fontes */
-  --font-app:     var(--font-hanken-grotesk);
-  --font-display: var(--font-fraunces);   /* Playfair Display */
-  --font-body:    var(--font-fraunces);   /* corpo editorial = serif */
+  /* Fontes — Plus Jakarta Sans (geométrico tech) + IBM Plex Sans (data/sistemas) */
+  --font-app:     'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:    'IBM Plex Sans', system-ui, sans-serif;
   --font-mono:    var(--font-jetbrains-mono);
 }
 
 /* ── Light mode (default) ──────────────────────────────────── */
 :root {
-  --bg:       #f9f8f4;
-  --bg-2:     #f2f0ea;
+  --bg:       #f5f7fa;
+  --bg-2:     #eef1f6;
   --surface:  #ffffff;
-  --surface-2:#ece9e1;
+  --surface-2:#e4e9f0;
 
-  --hair: #e8e6e0;
+  --hair: #d6dfe9;
 
-  --ink:   #1a1a1a;
-  --ink-2: #4a4a52;
-  --ink-3: #8d8d8e;
+  --ink:   #0f1923;
+  --ink-2: #3d5265;
+  --ink-3: #7a93a8;
 
   --navy:    #05364c;
   --gold:    #bd772f;
-  --gold-bg: rgba(189, 119, 47, 0.12);
+  --gold-bg: rgba(189, 119, 47, 0.10);
 
   /* Compat vars */
   --muted:        var(--ink-3);
@@ -76,19 +78,19 @@
 
 /* ── Dark mode ──────────────────────────────────────────────── */
 [data-theme="dark"] {
-  --bg:       #0d1a1f;
-  --bg-2:     #132028;
-  --surface:  #162430;
-  --surface-2:#1c2e3a;
+  --bg:       #06101a;
+  --bg-2:     #091824;
+  --surface:  #0d202e;
+  --surface-2:#122838;
 
-  --hair: #213543;
+  --hair: #1c3548;
 
-  --ink:   #e8e6e0;
-  --ink-2: #a8a5b4;
-  --ink-3: #6b6875;
+  --ink:   #e2eaf0;
+  --ink-2: #8aabbd;
+  --ink-3: #4d7085;
 
   --muted: var(--ink-3);
-  --dim:   #6b6875;
+  --dim:   #4d7085;
 
   --shadow-card: 0 1px 3px rgba(0,0,0,.25), 0 4px 12px rgba(0,0,0,.35);
   --shadow-md:   0 2px 6px rgba(0,0,0,.3),  0 8px 24px rgba(0,0,0,.45);
