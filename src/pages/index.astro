@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
-import CutoutCard from "@/components/blog/CutoutCard.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { humanizeTag } from "@/utils/humanizeTag";
 import config from "@/config";
@@ -93,134 +92,136 @@ const normImg = (p?: string) =>
     })} />
   </Fragment>
 
-  <div class="blog-wrap">
+  <div class="al-page" id="main-content" data-layout="index" data-home-path={homePath}>
 
-    <!-- ── Sidebar ── -->
-    <aside class="blog-sidebar" aria-label="Filtros e categorias">
-      <span class="sb-label">Buscar</span>
-      <a href="/search" class="sb-search">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        Buscar artigos…
-      </a>
+    <!-- ── Category pills (horizontal) ── -->
+    <nav class="al-pills" aria-label="Filtrar por tema">
+      <a href="/" class="al-pill al-pill--active">Todos</a>
+      <a href="/tags/reforma-tributaria" class="al-pill">Reforma Tributária</a>
+      <a href="/tags/planejamento-tributario" class="al-pill">Planejamento Fiscal</a>
+      <a href="/tags/holding" class="al-pill">Holdings</a>
+      <a href="/tags/simples-nacional" class="al-pill">Simples Nacional</a>
+      <a href="/tags/abertura-empresa" class="al-pill">Abertura de Empresa</a>
+      <a href="/tags/contabilidade-brasilia" class="al-pill">Brasília</a>
+    </nav>
 
-      <span class="sb-label">Categorias</span>
-      <ul class="sb-cat-list">
-        <li><a href="/" class="sb-cat-item" data-active="">Todas</a></li>
-        <li><a href="/tags/reforma-tributaria" class="sb-cat-item">Reforma Tributária</a></li>
-        <li><a href="/tags/planejamento-tributario" class="sb-cat-item">Planejamento Fiscal</a></li>
-        <li><a href="/tags/holding" class="sb-cat-item">Holdings</a></li>
-        <li><a href="/tags/simples-nacional" class="sb-cat-item">Simples Nacional</a></li>
-        <li><a href="/tags/abertura-empresa" class="sb-cat-item">Abertura de Empresa</a></li>
-        <li><a href="/tags/contabilidade-brasilia" class="sb-cat-item">Contabilidade Brasília</a></li>
-        <li><a href="/tags/fornecedores-governo" class="sb-cat-item">Fornecedores do Governo</a></li>
-      </ul>
-    </aside>
+    <!-- ── Blog header ── -->
+    <header class="al-hd sr-reveal">
+      <span class="al-hd-eyebrow">Blog Alínea Finanças</span>
+      <h1 class="al-hd-title">Gestão financeira e tributária<br/>para empresas em Brasília.</h1>
+      <p class="al-hd-sub">Para empresários de Brasília-DF que querem decisões financeiras baseadas em número, não em achismo.</p>
+    </header>
 
-    <!-- ── Main ── -->
-    <main id="main-content" data-layout="index" data-home-path={homePath} class="blog-main">
-
-      <!-- Blog header -->
-      <header class="blog-hd sr-reveal">
-        <span class="blog-hd-eyebrow">Blog ))) Alínea</span>
-        <h1 class="blog-hd-title">Gestão financeira e tributária para empresas em Brasília.</h1>
-        <p class="blog-hd-sub">Para empresários de Brasília-DF que querem decisões financeiras baseadas em número, não em achismo.</p>
-      </header>
-
-      <!-- Featured story -->
-      {featuredPost && (
-        <a href={`/posts/${featuredPost.id}/`} class="feat-story sr-reveal">
-          <div class="feat-img">
-            {(featuredPost.data.coverImage || typeof featuredPost.data.ogImage === "string")
-              ? <img
-                  src={normImg(featuredPost.data.coverImage) ?? (typeof featuredPost.data.ogImage === "string" ? featuredPost.data.ogImage : undefined)}
-                  alt={featuredPost.data.title}
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                />
-              : <div class="feat-img-fallback" aria-hidden="true"></div>
-            }
-          </div>
-          <div class="feat-overlay">
-            <div class="feat-overlay-inner">
-              <span class="feat-badge">Destaque</span>
-              <h2 class="feat-title">{featuredPost.data.title}</h2>
-              <p class="feat-excerpt">{featuredPost.data.description}</p>
-              <div class="feat-footer">
-                <span class="feat-author-name">{author}</span>
-                <span class="feat-time">{fmtDate(featuredPost.data.pubDatetime)} · {getReadTime(featuredPost.body)} min</span>
-                <span class="feat-read-btn">Ler artigo →</span>
-              </div>
+    <!-- ── Featured: 2-col grid (texto esquerda, imagem direita) ── -->
+    {featuredPost && (() => {
+      const featImg = normImg(featuredPost.data.coverImage) ?? (typeof featuredPost.data.ogImage === "string" ? featuredPost.data.ogImage : undefined);
+      return (
+        <a href={`/posts/${featuredPost.id}/`} class="al-hero sr-reveal">
+          <div class="al-hero-text">
+            <span class="al-hero-chip">Destaque</span>
+            <h2 class="al-hero-title">{featuredPost.data.title}</h2>
+            <p class="al-hero-desc">{featuredPost.data.description}</p>
+            <div class="al-hero-footer">
+              <span class="al-hero-meta">{fmtDate(featuredPost.data.pubDatetime)} · {getReadTime(featuredPost.body)} min</span>
+              <span class="al-hero-cta">Ler artigo →</span>
             </div>
           </div>
+          <div class="al-hero-img">
+            {featImg
+              ? <img src={featImg} alt={featuredPost.data.title} loading="eager" fetchpriority="high" decoding="async" />
+              : <div class="al-hero-img-fallback" aria-hidden="true"></div>
+            }
+          </div>
         </a>
-      )}
+      );
+    })()}
 
-      <!-- Filter bar -->
-      <nav class="filter-bar" aria-label="Filtrar por tema">
-        <a href="/" class="filter-tab on">Todos</a>
-        <a href="/tags/reforma-tributaria" class="filter-tab">Reforma Tributária</a>
-        <a href="/tags/planejamento-tributario" class="filter-tab">Planejamento Fiscal</a>
-        <a href="/tags/holding" class="filter-tab">Holdings</a>
-        <a href="/tags/simples-nacional" class="filter-tab">Simples Nacional</a>
-        <a href="/tags/abertura-empresa" class="filter-tab">Abertura de Empresa</a>
-      </nav>
+    <!-- ── Dados em destaque ── -->
+    <div class="al-stats sr-reveal">
+      <div class="al-stat">
+        <span class="al-stat-n">200+</span>
+        <span class="al-stat-l">Empresas atendidas</span>
+      </div>
+      <div class="al-stat">
+        <span class="al-stat-n">8 anos</span>
+        <span class="al-stat-l">No mercado financeiro</span>
+      </div>
+      <div class="al-stat">
+        <span class="al-stat-n">Brasília</span>
+        <span class="al-stat-l">Sede e área de atuação</span>
+      </div>
+    </div>
 
-      <!-- Post grid -->
-      {gridPosts.length > 0 && (
-        <div class="post-grid">
-          {gridPosts.map((post, i) => (
-            <CutoutCard
-              href={`/posts/${post.id}/`}
-              tag={post.data.tags[0] ?? "análise"}
-              title={post.data.title}
-              date={post.data.pubDatetime}
-              ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
-              coverImage={post.data.coverImage}
-              eager={i < 2}
-              readingTime={getReadTime(post.body)}
-              description={post.data.description}
-              author={author}
-            />
-          ))}
+    <!-- ── Section header ── -->
+    <div class="al-section-hd">
+      <span class="al-section-label">Artigos recentes</span>
+      <a href="/posts" class="al-section-link">Ver todos →</a>
+    </div>
+
+    <!-- ── Post list (fintech/data style) ── -->
+    {gridPosts.length > 0 && (
+      <div class="al-post-list">
+        {gridPosts.map((post, i) => {
+          const img = normImg(post.data.coverImage) ?? (typeof post.data.ogImage === "string" ? post.data.ogImage : undefined);
+          const tag = post.data.tags[0] ?? "análise";
+          return (
+            <a href={`/posts/${post.id}/`} class="al-post-item sr-reveal">
+              {img && (
+                <div class="al-post-thumb">
+                  <img src={img} alt={post.data.title} loading={i < 4 ? "eager" : "lazy"} decoding="async" />
+                </div>
+              )}
+              <div class="al-post-body">
+                <span class="al-post-chip">{humanizeTag(tag)}</span>
+                <h3 class="al-post-title">{post.data.title}</h3>
+                <p class="al-post-desc">{post.data.description}</p>
+                <div class="al-post-meta">
+                  <span>{fmtDate(post.data.pubDatetime)}</span>
+                  <span class="al-post-dot">·</span>
+                  <span>{getReadTime(post.body)} min</span>
+                </div>
+              </div>
+              <div class="al-post-arrow" aria-hidden="true">→</div>
+            </a>
+          );
+        })}
+      </div>
+    )}
+
+    <!-- ── Newsletter ── -->
+    <section class="sr-news-fold sr-reveal" aria-labelledby="nl-heading" style="margin-top:56px">
+      <p class="sr-eyebrow">Newsletter</p>
+      <h2 id="nl-heading">
+        Toda semana: o que muda na <em>sua carga tributária</em>
+      </h2>
+      <p>
+        Reforma Tributária, planejamento fiscal e contabilidade consultiva.
+        Direto para o sócio e gestor financeiro que toma decisão.
+      </p>
+      <form id="home-nl-form" onsubmit="submitHomeNewsletter(event)" style="display:flex;gap:10px;width:min(520px,100%)">
+        <div class="sr-field" style="flex:1">
+          <input type="text" name="nome" placeholder="Seu nome" required autocomplete="given-name" />
         </div>
-      )}
-
-      <!-- Newsletter -->
-      <section class="sr-news-fold sr-reveal" aria-labelledby="nl-heading" style="margin-top:56px">
-        <p class="sr-eyebrow">Newsletter</p>
-        <h2 id="nl-heading">
-          Toda semana: o que muda na <em>sua carga tributária</em>
-        </h2>
-        <p>
-          Reforma Tributária, planejamento fiscal e contabilidade consultiva.
-          Direto para o sócio e gestor financeiro que toma decisão.
-        </p>
-        <form id="home-nl-form" onsubmit="submitHomeNewsletter(event)" style="display:flex;gap:10px;width:min(520px,100%)">
-          <div class="sr-field" style="flex:1">
-            <input type="text" name="nome" placeholder="Seu nome" required autocomplete="given-name" />
-          </div>
-          <div class="sr-field" style="flex:1.5">
-            <input type="email" name="email" placeholder="Seu e-mail" required autocomplete="email" />
-          </div>
-          <button type="submit" class="sr-btn" style="white-space:nowrap;font-size:13px;padding:10px 20px">Quero →</button>
-        </form>
-        <p id="home-nl-msg" style="font-family:var(--font-mono);font-size:12px;color:var(--magenta);display:none;margin-top:10px">
-          ✓ Inscrito! Toda semana na sua caixa.
-        </p>
-        <p id="home-nl-err" style="font-family:var(--font-mono);font-size:12px;color:#e11;display:none;margin-top:10px">
-          Erro ao inscrever. Tente novamente.
-        </p>
-        <div class="sr-proof">
-          <span><b>100%</b> sem spam</span>
-          <span>·</span>
-          <span>Cancelar a qualquer momento</span>
-          <span>·</span>
-          <span><b>blog.alineafinancas.com.br</b></span>
+        <div class="sr-field" style="flex:1.5">
+          <input type="email" name="email" placeholder="Seu e-mail" required autocomplete="email" />
         </div>
-      </section>
+        <button type="submit" class="sr-btn" style="white-space:nowrap;font-size:13px;padding:10px 20px">Quero →</button>
+      </form>
+      <p id="home-nl-msg" style="font-family:var(--font-mono);font-size:12px;color:var(--magenta);display:none;margin-top:10px">
+        ✓ Inscrito! Toda semana na sua caixa.
+      </p>
+      <p id="home-nl-err" style="font-family:var(--font-mono);font-size:12px;color:#e11;display:none;margin-top:10px">
+        Erro ao inscrever. Tente novamente.
+      </p>
+      <div class="sr-proof">
+        <span><b>100%</b> sem spam</span>
+        <span>·</span>
+        <span>Cancelar a qualquer momento</span>
+        <span>·</span>
+        <span><b>blog.alineafinancas.com.br</b></span>
+      </div>
+    </section>
 
-    </main>
   </div>
 
   <script>
