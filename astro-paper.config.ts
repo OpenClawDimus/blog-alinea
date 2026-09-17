@@ -32,7 +32,7 @@ export default defineAstroPaperConfig({
       name: "Alínea Finanças",
       url: "https://alineafinancas.com.br",
       jobTitle: "BPO Financeiro e Contabilidade Consultiva",
-      avatar: "logo-alinea.png",
+      avatar: "suzana-avatar.jpg",
       sameAs: [
         "https://alineafinancas.com.br",
         "https://instagram.com/alineafinancas",

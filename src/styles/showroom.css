@@ -2154,9 +2154,30 @@ body::after {
 
 /* ── Page wrapper (single-column, no sidebar) ───────────────── */
 .al-page {
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 40px 28px 100px;
+}
+@media (min-width: 1180px) {
+  .al-page { max-width: 980px; }
+}
+@media (min-width: 1440px) {
+  .al-page { max-width: 1080px; padding: 48px 40px 120px; }
+  .al-hero { grid-template-columns: 1fr 420px; }
+}
+@media (min-width: 1800px) {
+  .al-page { max-width: 1200px; padding: 56px 48px 140px; }
+  .al-hero { grid-template-columns: 1fr 520px; }
+  .al-hd-title { font-size: 52px; }
+}
+
+/* ultrawide: subtle vertical accent so content feels anchored */
+@media (min-width: 1440px) {
+  .al-page {
+    border-left: 1px solid rgba(189,119,47,.08);
+    border-right: 1px solid rgba(189,119,47,.08);
+    border-radius: 0;
+  }
 }
 
 /* ── Category pills ─────────────────────────────────────────── */
