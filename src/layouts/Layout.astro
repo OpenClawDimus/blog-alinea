@@ -202,7 +202,7 @@ const metaPixelHtml = metaPixelId
     <div class="sr-progress" id="sr-progress" aria-hidden="true"></div>
 
     <!-- Top navbar -->
-    <nav class="site-nav" id="site-nav">
+    <nav class="site-nav" id="site-nav" style="position:relative">
       <div class="nav-inner">
         <a href="/" class="nav-logo" aria-label="Alínea Finanças — Blog">
           <img src="/logo-alinea.png" alt="Alínea Finanças" height="28" style="height:28px;width:auto;opacity:.92" />
@@ -221,6 +221,17 @@ const metaPixelHtml = metaPixelId
             Falar com especialista
           </a>
         </div>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu de navegação" aria-expanded="false" aria-controls="nav-drawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <!-- Mobile drawer -->
+      <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+        <ul role="list">
+          <li><a href="/posts" class="nav-a">Posts</a></li>
+          <li><a href="/tags" class="nav-a">Tags</a></li>
+          <li><a href="/about" class="nav-a">Sobre</a></li>
+        </ul>
       </div>
     </nav>
 
@@ -443,13 +454,35 @@ const metaPixelHtml = metaPixelId
         };
       }
 
+      // ── Hamburger toggle (P2 mobile fix) ────────────────────────
+      function initHamburger() {
+        const btn = document.getElementById("nav-hamburger") as HTMLButtonElement | null;
+        const drawer = document.getElementById("nav-drawer");
+        if (!btn || !drawer) return;
+        btn.addEventListener("click", () => {
+          const open = btn.getAttribute("aria-expanded") === "true";
+          btn.setAttribute("aria-expanded", String(!open));
+          drawer.setAttribute("aria-hidden", String(open));
+          drawer.classList.toggle("open", !open);
+        });
+        // Close drawer on navigation
+        drawer.querySelectorAll("a").forEach(a => {
+          a.addEventListener("click", () => {
+            btn.setAttribute("aria-expanded", "false");
+            drawer.setAttribute("aria-hidden", "true");
+            drawer.classList.remove("open");
+          });
+        });
+      }
+
       // Run on initial load and after every ViewTransition navigation.
       // DOMContentLoaded covers direct URL visits (astro:page-load fires too late for SSG).
-      document.addEventListener("astro:page-load", initShowroom);
+      document.addEventListener("astro:page-load", () => { initShowroom(); initHamburger(); });
       if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initShowroom, { once: true });
+        document.addEventListener("DOMContentLoaded", () => { initShowroom(); initHamburger(); }, { once: true });
       } else {
         initShowroom();
+        initHamburger();
       }
     </script>
 

@@ -1557,6 +1557,49 @@ body::after {
 }
 .nav-cta:hover { background: #343b8a; }
 
+/* ── Hamburger button (P2) ────────────────────────────────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-left: auto;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform .2s, opacity .2s;
+}
+.nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile nav drawer (P2) ──────────────────────────────────── */
+.nav-drawer {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--hair);
+  padding: 16px 20px 20px;
+  z-index: 99;
+}
+.nav-drawer.open { display: block; }
+.nav-drawer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.nav-drawer .nav-a { display: block; font-size: 15px; padding: 13px 12px; min-height: 44px; display: flex; align-items: center; }
+
 /* ── Blog page layout ─────────────────────────────────────────── */
 .blog-wrap {
   max-width: 1240px;
@@ -1889,13 +1932,25 @@ body::after {
 
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .blog-wrap { flex-direction: column; padding: 24px 20px 60px; gap: 28px; }
+  /* P1 — fix horizontal overflow from .blog-main intrinsic width */
+  .blog-wrap { flex-direction: column; padding: 24px 20px 60px; gap: 28px; align-items: stretch; }
+  .blog-main { width: 100%; max-width: 100%; }
   .blog-sidebar { width: 100%; position: static; }
   .sb-cat-list { flex-direction: row; flex-wrap: wrap; gap: 6px; }
   .sb-cat-item { border-left: none; border-bottom: 2px solid transparent; border-radius: 0; padding: 4px 8px; }
   .sb-cat-item[data-active] { border-bottom-color: var(--gold); border-left: none; background: transparent; }
+  /* P2 — hamburger visible, desktop nav links hidden */
   .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
   .nav-inner { padding: 0 20px; }
+  /* P3 — nav CTA minimum 44px tap target */
+  .nav-cta { padding: 12px 18px; font-size: 14px; min-height: 44px; }
+  /* P4 — logo & search button minimum tap targets */
+  .nav-logo { min-height: 44px; display: flex; align-items: center; padding: 8px 0; }
+  .nav-search-btn { min-width: 44px; min-height: 44px; justify-content: center; padding: 0 10px; }
+  /* P5 — category chips and filter tabs minimum 44px */
+  .sb-cat-item { padding: 11px 12px; min-height: 44px; display: inline-flex; align-items: center; }
+  .filter-tab { padding: 12px 14px; min-height: 44px; font-size: 14px; }
 }
 @media (max-width: 640px) {
   .post-grid { grid-template-columns: 1fr; }
@@ -2538,4 +2593,40 @@ body::after {
   .al-post-thumb { display: none; }
   .al-hd-title { font-size: 24px; }
   .nav-search-btn span { display: none; }
+}
+
+/* ── Mobile fixes — P6 tables, P8 small fonts ─────────────────── */
+/* P6 — scrollable tables in article prose */
+.sr-article table,
+.app-prose table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* P8 — minimum readable font sizes (WCAG 14px min) */
+.sb-label { font-size: 11px; }
+.al-post-meta { font-size: 12px; }
+.al-section-label { font-size: 12px; }
+
+/* P8 — breadcrumbs min font */
+.sr-breadcrumb,
+[aria-label="Breadcrumb"] a,
+[aria-label="Breadcrumb"] span { font-size: 13px; }
+
+/* P7 — newsletter form stacks on narrow screens */
+@media (max-width: 640px) {
+  form#home-nl-form,
+  form.nl-form {
+    flex-direction: column;
+  }
+  form#home-nl-form input,
+  form#home-nl-form button,
+  form.nl-form input,
+  form.nl-form button {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+  }
 }
