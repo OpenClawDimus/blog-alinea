@@ -143,8 +143,8 @@ function scoreAEO(fm, src) {
   if (hasComponent(src, 'AnswerCapsule')) s += 25;
   // LeadForm canônico (25pts)
   if (hasComponent(src, 'LeadForm')) s += 25;
-  // DimusHelp (25pts)
-  if (hasComponent(src, 'DimusHelp')) s += 25;
+  // AlineaHelp (era DimusHelp no blog-monumental) (25pts)
+  if (hasComponent(src, 'AlineaHelp') || hasComponent(src, 'DimusHelp')) s += 25;
   // FAQ schema (25pts)
   const faqN = countFAQ(src);
   if (faqN >= 2) s += 25;
@@ -185,7 +185,7 @@ async function main() {
       og_path: fm.ogImage || null,
       has_answer_capsule: hasComponent(src, 'AnswerCapsule'),
       has_lead_form: hasComponent(src, 'LeadForm'),
-      has_dimus_help: hasComponent(src, 'DimusHelp'),
+      has_alinea_help: hasComponent(src, 'AlineaHelp') || hasComponent(src, 'DimusHelp'),
       faq_count: faqN,
       seo,
       geo,

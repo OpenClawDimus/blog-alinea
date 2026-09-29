@@ -1,6 +1,6 @@
 {
   "slug": "recuperacao-creditos-pis-cofins-2026",
-  "audited_at": "2026-09-14T23:33:53.979589+00:00",
+  "audited_at": "2026-09-29T23:15:25.601630+00:00",
   "keyword": "recuperar créditos PIS COFINS 2026",
   "pipeline": {
     "dataforseo_serp": {
@@ -113,5 +113,6 @@
       "aeo_eq_100": true,
       "note": "score-posts.mjs — composite:97 GEO:100 AEO:100"
     }
-  }
+  },
+  "refresh_reason": "metadata-only fix: description/title length trimmed to SEO optimal range (120-160 / 40-70 chars). Content unchanged. Pipeline steps all passed."
 }
