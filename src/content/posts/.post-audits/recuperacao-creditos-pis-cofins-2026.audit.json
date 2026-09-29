@@ -24,5 +24,8 @@
   },
   "content_type": "advertorial",
   "target_audience": "CFO/controller empresa R$5M-50M com créditos PIS/COFINS acumulados",
-  "notes": "Advertorial créditos PIS/COFINS. Tema 69 + extensão ICMS-ST TRF-6/2026. Urgência: fim PIS/COFINS dez/2026 + prescrição mensal. Calendário de prescrição como tabela."
+  "notes": "Advertorial créditos PIS/COFINS. Tema 69 + extensão ICMS-ST TRF-6/2026. Urgência: fim PIS/COFINS dez/2026 + prescrição mensal. Calendário de prescrição como tabela.",
+  "audited_at": "2026-09-29T23:42:28.281Z",
+  "pub_date": "2026-09-21T08:00:00-03:00",
+  "refresh_reason": " | date-restructure-2026-09-29: pubDatetime updated from July 2026 to Aug-Sept 2026 staggered schedule."
 }

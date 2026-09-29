@@ -24,5 +24,8 @@
   },
   "content_type": "informational",
   "target_audience": "CFO/controller empresa R$2M-100M — planejamento de capital de giro pré-split payment",
-  "notes": "Wave 2 Post 7. LC 214/2025 split payment. Cronograma 2026 (grandes) → 2027 (médias) → 2028+ (Simples). Exemplo distribuidora R$5M/mês alíquota 20%, CDI 11,5%, custo adicional R$2.329/mês. Float eliminado 55 dias PIS/COFINS. Fornecedores governo: imunidade + cláusula reequilíbrio. 4.484 palavras."
+  "notes": "Wave 2 Post 7. LC 214/2025 split payment. Cronograma 2026 (grandes) → 2027 (médias) → 2028+ (Simples). Exemplo distribuidora R$5M/mês alíquota 20%, CDI 11,5%, custo adicional R$2.329/mês. Float eliminado 55 dias PIS/COFINS. Fornecedores governo: imunidade + cláusula reequilíbrio. 4.484 palavras.",
+  "audited_at": "2026-09-29T23:42:28.281Z",
+  "pub_date": "2026-09-15T08:00:00-03:00",
+  "refresh_reason": " | date-restructure-2026-09-29: pubDatetime updated from July 2026 to Aug-Sept 2026 staggered schedule."
 }

@@ -1,0 +1,185 @@
+---
+/**
+ * BPOSidebar — Sidebar de conversão BPO Financeiro para o right col dos posts.
+ * Integra com o sistema de lead.ts: GA4 generate_lead + Meta Pixel Lead + WhatsApp.
+ * idTag canônica: "blog-sidebar-bpo-<variant>" para segmentação por cluster.
+ */
+interface Props {
+  variant?: "bpo" | "dre" | "fluxo" | "tributario" | "precificacao" | "controladoria";
+  postSlug?: string;
+}
+
+const { variant = "bpo", postSlug: postSlugProp } = Astro.props;
+
+const derivedSlug = Astro.url.pathname.replace(/^\/posts\//, "").replace(/\/$/, "");
+const postSlug = postSlugProp ?? derivedSlug ?? "";
+const idTag = `blog-sidebar-bpo-${variant}`;
+
+const copies: Record<string, { eyebrow: string; title: string; body: string; cta: string; intent: string }> = {
+  bpo: {
+    eyebrow: "BPO Financeiro · Brasília-DF",
+    title: "Sua empresa ainda controla as finanças no Excel?",
+    body: "A Alínea Finanças assume toda a operação: DRE mensal, fluxo de caixa, conciliação e relatórios para decisão. Você cuida do negócio.",
+    cta: "Quero um diagnóstico gratuito →",
+    intent: "Vim do blog da Alínea Finanças e quero entender como o BPO financeiro pode ajudar minha empresa.",
+  },
+  dre: {
+    eyebrow: "Gestão Financeira · Brasília-DF",
+    title: "Quer um DRE real da sua empresa todo mês?",
+    body: "A Alínea Finanças entrega o demonstrativo de resultado já interpretado — o que melhorou, o que precisa de atenção e o que fazer.",
+    cta: "Quero o DRE todo mês →",
+    intent: "Li sobre DRE no blog da Alínea Finanças e quero entender como ter isso na minha empresa todo mês.",
+  },
+  fluxo: {
+    eyebrow: "Capital de Giro · Brasília-DF",
+    title: "Seu fluxo de caixa está faltando dinheiro todo mês?",
+    body: "Mapeamos sua necessidade de capital de giro e ajustamos o ciclo financeiro para você parar de correr atrás de caixa.",
+    cta: "Quero analisar meu fluxo →",
+    intent: "Li sobre fluxo de caixa no blog e quero um diagnóstico do capital de giro da minha empresa.",
+  },
+  tributario: {
+    eyebrow: "Planejamento Tributário · Brasília-DF",
+    title: "Sua empresa está pagando mais imposto do que deveria?",
+    body: "Revisamos regime tributário, distribuição de lucros e oportunidades legais de redução de carga fiscal para PMEs em Brasília-DF.",
+    cta: "Quero revisar meu regime →",
+    intent: "Li sobre planejamento tributário no blog e quero um diagnóstico do regime da minha empresa.",
+  },
+  precificacao: {
+    eyebrow: "Precificação · Brasília-DF",
+    title: "Você sabe quanto custa de verdade produzir o que vende?",
+    body: "Calculamos markup, margem real e ponto de equilíbrio com os seus números. Sem estimativa — com dados reais da sua operação.",
+    cta: "Quero calcular meu markup →",
+    intent: "Li sobre precificação no blog e quero entender o markup e margem reais da minha empresa.",
+  },
+  controladoria: {
+    eyebrow: "Controladoria · Brasília-DF",
+    title: "Sua empresa toma decisões com base em dados financeiros?",
+    body: "Implantamos controladoria consultiva: KPIs financeiros, orçamento, budget e análise de variância mensal para o gestor decidir com número.",
+    cta: "Quero estruturar minha controladoria →",
+    intent: "Li sobre controladoria no blog e quero entender como estruturar isso na minha empresa.",
+  },
+};
+
+const copy = copies[variant] ?? copies.bpo;
+---
+
+<div class="bpo-sidebar not-prose">
+  <p class="bpo-eyebrow">{copy.eyebrow}</p>
+  <h4 class="bpo-title">{copy.title}</h4>
+  <p class="bpo-body">{copy.body}</p>
+
+  <form
+    class="bpo-form"
+    data-lead
+    data-idtag={idTag}
+    data-post-slug={postSlug}
+    data-cluster="bpo-financeiro"
+    data-intent={copy.intent}
+  >
+    <!-- honeypot -->
+    <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+      style="position:absolute;opacity:0;height:0;width:0;pointer-events:none;z-index:-1;" />
+    <input name="nome" placeholder="Seu nome" autocomplete="name" required />
+    <input name="email" type="email" inputmode="email" placeholder="Seu melhor e-mail" autocomplete="email" required />
+    <input name="whatsapp" type="tel" inputmode="tel" placeholder="WhatsApp com DDD" autocomplete="tel" required />
+    <button type="submit" class="bpo-cta">{copy.cta}</button>
+  </form>
+
+  <p class="bpo-fine">Retornamos no WhatsApp em até 1 dia útil. Sem robô.</p>
+
+  <div class="bpo-trust">
+    <span>✓ BPO Financeiro</span>
+    <span>✓ CRC Ativo</span>
+    <span>✓ Brasília-DF</span>
+  </div>
+</div>
+
+<style>
+  .bpo-sidebar {
+    padding: 1.35rem 1.2rem;
+    border: 1px solid var(--hair-mag);
+    border-top: 3px solid var(--magenta);
+    border-radius: 14px;
+    background: linear-gradient(170deg, var(--surface) 60%, color-mix(in srgb, var(--magenta) 4%, var(--surface)));
+    margin-top: 1rem;
+  }
+  .bpo-eyebrow {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+  .bpo-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .bpo-body {
+    margin: 0 0 1rem;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .bpo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .bpo-form input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--hair);
+    border-radius: 9px;
+    background: var(--bg-2);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.875rem;
+    box-sizing: border-box;
+    transition: border-color 0.18s;
+  }
+  .bpo-form input::placeholder { color: var(--dim); }
+  .bpo-form input:focus { outline: none; border-color: var(--magenta); }
+  .bpo-cta {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: none;
+    border-radius: 9px;
+    background: var(--magenta);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    text-align: center;
+    transition: filter 0.18s, transform 0.18s;
+  }
+  .bpo-cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+  .bpo-fine {
+    margin: 0.7rem 0 0.8rem;
+    font-size: 0.72rem;
+    color: var(--dim);
+    line-height: 1.4;
+  }
+  .bpo-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
+  }
+  .bpo-trust span {
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+</style>
+
+<script>
+  import "@/scripts/lead";
+</script>

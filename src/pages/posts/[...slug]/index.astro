@@ -6,6 +6,7 @@ import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
 import config from "@/config";
 import { getWhatsAppUrl } from "@/utils/getWhatsAppUrl";
+import BPOSidebar from "@/components/blog/BPOSidebar.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -66,6 +67,16 @@ const {
 
 const { Content, headings } = await render(post);
 const h2Headings = headings.filter(h => h.depth === 2);
+
+// Determina o variant do BPOSidebar com base nas tags do post
+const tagArr = Array.isArray(tags) ? tags : (tags ? [tags] : []);
+const sidebarVariant = tagArr.includes("tributacao-brasilia") || tagArr.includes("planejamento-tributario")
+  ? "tributario"
+  : tagArr.includes("contabilidade-consultiva")
+  ? "controladoria"
+  : tagArr.includes("bpo-financeiro") || tagArr.includes("gestao-financeira")
+  ? "bpo"
+  : "bpo";
 
 let ogImageUrl: string | undefined;
 if (typeof initOgImage === "string") {
@@ -222,26 +233,8 @@ const fmtDate = (d: Date) =>
           </div>
         )}
 
-        <!-- Lead capture -->
-        <div class="sr-solve">
-          <p class="b">Newsletter</p>
-          <h4>Toda semana: o que muda na sua carga tributária</h4>
-          <p>Reforma Tributária, planejamento fiscal e contabilidade consultiva. Para o empresário que decide com número.</p>
-          <form id="post-nl-form" onsubmit="submitPostNewsletter(event)" style="display:flex;flex-direction:column;gap:8px">
-            <div class="sr-field">
-              <input type="text" name="nome" placeholder="Seu nome" autocomplete="given-name" required />
-            </div>
-            <div class="sr-field">
-              <input type="email" name="email" placeholder="Seu e-mail" autocomplete="email" required />
-            </div>
-            <button type="submit" class="sr-btn" style="width:100%;justify-content:center;font-size:13px;padding:10px 20px">
-              Quero receber →
-            </button>
-            <p id="post-nl-msg" style="font-size:11.5px;color:var(--magenta);display:none;font-family:var(--font-mono);margin:0">
-              ✓ Inscrito! Toda semana na sua caixa.
-            </p>
-          </form>
-        </div>
+        <!-- BPO Conversion Sidebar -->
+        <BPOSidebar variant={sidebarVariant} postSlug={post.id.replace(/\.mdx$/, '')} />
       </aside>
     </div>
 

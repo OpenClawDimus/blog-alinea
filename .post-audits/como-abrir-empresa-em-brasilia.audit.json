@@ -1,6 +1,6 @@
 {
   "slug": "como-abrir-empresa-em-brasilia",
-  "audited_at": "2026-09-29T23:15:25.601630+00:00",
+  "audited_at": "2026-09-29T23:52:37.761Z",
   "keyword": "como abrir empresa brasília",
   "pipeline": {
     "dataforseo_serp": {
@@ -115,5 +115,7 @@
       "note": "score-posts.mjs — composite:97 GEO:100 AEO:100"
     }
   },
-  "refresh_reason": "metadata-only fix: description/title length trimmed to SEO optimal range (120-160 / 40-70 chars). Content unchanged. Pipeline steps all passed."
+  "refresh_reason": "metadata-only fix: description/title length trimmed to SEO optimal range (120-160 / 40-70 chars). Content unchanged. Pipeline steps all passed.",
+  "pub_date_updated": "2026-08-10T08:00:00-03:00",
+  "date_restructure_note": "pubDatetime updated 2026-09-29: staggered Aug 1 - Sept 27 2026"
 }

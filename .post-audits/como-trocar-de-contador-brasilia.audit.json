@@ -1,6 +1,6 @@
 {
   "slug": "como-trocar-de-contador-brasilia",
-  "audited_at": "2026-09-14T23:33:53.979589+00:00",
+  "audited_at": "2026-09-29T23:52:37.761Z",
   "keyword": "como trocar de contador",
   "pipeline": {
     "dataforseo_serp": {
@@ -114,5 +114,7 @@
       "aeo_eq_100": true,
       "note": "score-posts.mjs — composite:100 GEO:100 AEO:100"
     }
-  }
+  },
+  "pub_date_updated": "2026-08-07T08:00:00-03:00",
+  "date_restructure_note": "pubDatetime updated 2026-09-29: staggered Aug 1 - Sept 27 2026"
 }
