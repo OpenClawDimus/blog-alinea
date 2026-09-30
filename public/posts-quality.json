@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-30T17:07:14.748Z",
+  "generated_at": "2026-09-30T19:04:22.492Z",
   "posts": [
     {
       "slug": "bpo-financeiro-o-que-e",
@@ -248,6 +248,24 @@
       "has_lead_form": true,
       "has_alinea_help": true,
       "faq_count": 4,
+      "seo": 100,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 100
+    },
+    {
+      "slug": "o-que-e-fluxo-de-caixa",
+      "title": "O Que é Fluxo de Caixa: Guia Prático para Empresas",
+      "pubDatetime": "2026-10-09T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 1234,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/fluxo-de-caixa-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
       "seo": 100,
       "geo": 100,
       "aeo": 100,

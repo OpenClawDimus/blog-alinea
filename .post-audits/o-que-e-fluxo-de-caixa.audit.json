@@ -1,0 +1,32 @@
+{
+  "slug": "o-que-e-fluxo-de-caixa",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-09-30T10:00:00.000Z",
+  "pub_date": "2026-10-09T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'o que é fluxo de caixa' vol:3600/mês, dif:15, CPC:0.46, informational. SERP: Santander, InfinitePay, Suno — big brands, gap para ângulo PME Brasília" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — sem ambiguidade. 'fluxo de caixa' (14.800/mês) como keyword secundária no conteúdo" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas BPO/financeiro validam: sócio PME quer entender por que empresa lucrativa fica sem caixa" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre fluxo de caixa — ângulo único: PMEs fornecedoras do governo federal e ciclo SIAFI" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 6 H2s, 4 internal links (DRE, EBITDA, BPO), meta desc 149 chars, title 52 chars, word_count 1234" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned + featured snippet candidate para 'o que é fluxo de caixa'" },
+    "geo_agent": { "passed": true, "note": "dados regime de competência vs caixa, ciclo SIAFI, BNDES, BRB/Sicoob, exemplos numéricos concretos, pilar geo-Brasília" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com frase direta, experiência em PMEs brasilienses, dados do ciclo SIAFI verificáveis" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/o-que-e-fluxo-de-caixa-empresa.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/fluxo-de-caixa-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: nenhum erro factual bloqueante. Diferença competência vs caixa corretamente explicada." },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified — all 100" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "o que é fluxo de caixa",
+  "keyword_volume": 3600,
+  "keyword_difficulty": 15,
+  "secondary_keyword": "fluxo de caixa",
+  "secondary_volume": 14800,
+  "cluster": "gestao-financeira",
+  "word_count": 1234,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}
