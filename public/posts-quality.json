@@ -1,6 +1,24 @@
 {
-  "generated_at": "2026-09-30T16:35:50.839Z",
+  "generated_at": "2026-09-30T17:07:14.748Z",
   "posts": [
+    {
+      "slug": "bpo-financeiro-o-que-e",
+      "title": "O Que é BPO Financeiro e Para Que Serve?",
+      "pubDatetime": "2026-10-07T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 1449,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/bpo-financeiro-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
+      "seo": 100,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 100
+    },
     {
       "slug": "como-abrir-empresa-em-brasilia",
       "title": "Como Abrir Empresa em Brasília: Passo a Passo Completo em 2026",

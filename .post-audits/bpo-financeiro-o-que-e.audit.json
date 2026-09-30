@@ -1,0 +1,29 @@
+{
+  "slug": "bpo-financeiro-o-que-e",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-09-30T01:30:00.000Z",
+  "pub_date": "2026-10-07T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'o que é bpo financeiro' vol:2400/mês, competition:19, CPC:0.56, high-commercial-intent" },
+    "serp_intent_clear": { "passed": true, "note": "0% contaminação — BPO financeiro = serviço de terceirização financeira" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas: gestor PME sobrecarregado com financeiro interno" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post cobre BPO financeiro como serviço" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 8 H2s, 4 internal links, meta desc 153 chars, title 41 chars" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned + featured snippet candidate" },
+    "geo_agent": { "passed": true, "note": "FENACON, ciclo gov federal DF, BRB/Caixa/Sicoob, Jocivane Brito CRC/DF" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF, dado FENACON 40%, custo CLT vs BPO" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: /images/covers/bpo-financeiro-o-que-e-servico.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/bpo-financeiro-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + chairman: nenhum erro factual bloqueante" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified after tag fix" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "o que é bpo financeiro",
+  "keyword_volume": 2400,
+  "cluster": "contabilidade-consultiva",
+  "word_count": 1449,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

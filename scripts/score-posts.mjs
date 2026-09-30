@@ -125,7 +125,7 @@ function scoreGEO(fm, src) {
   // Cluster tag canônica definida (20pts)
   const tags = fm.tags || [];
   const tagArr = Array.isArray(tags) ? tags : [tags];
-  const clusterTags = ['automotivo-metricas', 'ia-para-vendas', 'contabilidade-consultiva', 'tributacao-brasilia', 'planejamento-tributario'];
+  const clusterTags = ['automotivo-metricas', 'ia-para-vendas', 'contabilidade-consultiva', 'tributacao-brasilia', 'planejamento-tributario', 'bpo-financeiro', 'gestao-financeira'];
   if (tagArr.some(t => clusterTags.includes(t))) s += 20;
 
   // Word count ≥ 900 para conteúdo substantivo (15pts)
