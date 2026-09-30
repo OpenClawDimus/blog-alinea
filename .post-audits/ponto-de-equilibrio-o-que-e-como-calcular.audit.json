@@ -1,0 +1,29 @@
+{
+  "slug": "ponto-de-equilibrio-o-que-e-como-calcular",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-09-30T01:00:00.000Z",
+  "pub_date": "2026-10-05T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'ponto de equilíbrio' vol:9900/mês, competition:1, CPC:0.12, informational" },
+    "serp_intent_clear": { "passed": true, "note": "intenção financeira clara — break-even point, sem contaminação" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas: gestor PME precisa saber break-even para precificar" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post cobre ponto de equilíbrio" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 7 H2s, 4 internal links, meta desc 150 chars, title 44 chars" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned + featured snippet candidate" },
+    "geo_agent": { "passed": true, "note": "Lei 14.133/2021, NBC TG 01, BRB/Caixa/BNDES, fornecedores gov DF" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF, dado 60% PMEs sem PE calculado, CFC" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: /images/covers/ponto-de-equilibrio-calculo-empresa.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/ponto-de-equilibrio-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + chairman: nenhum erro factual bloqueante" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "ponto de equilíbrio",
+  "keyword_volume": 9900,
+  "cluster": "gestao-financeira",
+  "word_count": 1910,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}
