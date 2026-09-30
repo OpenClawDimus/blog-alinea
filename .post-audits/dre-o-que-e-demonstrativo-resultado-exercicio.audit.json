@@ -1,0 +1,29 @@
+{
+  "slug": "dre-o-que-e-demonstrativo-resultado-exercicio",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-09-29T23:59:00.000Z",
+  "pub_date": "2026-10-01T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'o que é dre' vol:8100/mês, dif:15, CPC:0.68, informational" },
+    "serp_intent_clear": { "passed": true, "note": "0% contaminação — DRE = Demonstrativo de Resultado sem ambiguidade" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas BPO/financeiro validam: sócio PME em Brasília quer entender DRE" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre DRE básico — ângulo único" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 7 H2s, 5 internal links, meta desc 146 chars, title 46 chars" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned + featured snippet candidate" },
+    "geo_agent": { "passed": true, "note": "dados NBC TG 26, Banco Central 2025, exemplos Brasília, pilar geo-DF" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF nomeado, dados de prática com PMEs, fonte normativa" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: /images/covers/dre-o-que-e-demonstrativo-resultado-empresa.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/dre-o-que-e-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: nenhum erro factual bloqueante" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "o que é dre",
+  "keyword_volume": 8100,
+  "cluster": "contabilidade-consultiva",
+  "word_count": 1735,
+  "internal_links": 5,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

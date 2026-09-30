@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T23:53:12.989Z",
+  "generated_at": "2026-09-30T00:10:53.656Z",
   "posts": [
     {
       "slug": "como-abrir-empresa-em-brasilia",
@@ -50,6 +50,24 @@
       "has_lead_form": true,
       "has_alinea_help": true,
       "faq_count": 5,
+      "seo": 100,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 100
+    },
+    {
+      "slug": "dre-o-que-e-demonstrativo-resultado-exercicio",
+      "title": "O Que é DRE: Guia Prático para o Dono de Empresa",
+      "pubDatetime": "2026-10-01T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 1735,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/dre-o-que-e-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
       "seo": 100,
       "geo": 100,
       "aeo": 100,
