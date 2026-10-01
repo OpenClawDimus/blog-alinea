@@ -1,0 +1,30 @@
+{
+  "slug": "como-reduzir-impostos-legalmente",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T11:00:00.000Z",
+  "pub_date": "2026-10-21T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'como reduzir impostos legalmente' vol:~2400/mês, comp:25, informational. SERP: Contabilizei, Sebrae, Receita Federal — gap para ângulo PME Brasília com 7 estratégias práticas e contexto contratos federais" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational/how-to — intent: aprender estratégias legais para pagar menos imposto; sem intent transacional direto" },
+    "mirofish_icp": { "passed": true, "note": "≥4/5 personas BPO/financeiro validam: sócio PME que paga muito imposto e quer saber se há alternativas legais — dor de altíssima frequência" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre redução legal de impostos — ângulo único: 7 estratégias práticas com cálculo de economia, ciclo de planejamento 4 etapas, retenção 4,65% contratos federais, ISS-DF 2%" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 9 H2s, internal links (regime-tributario, BPO, controladoria, fluxo-de-caixa), meta desc 153 chars, title 57 chars, word_count 1331" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned (é legal?, quanto economizar, pro labore, dedução despesas, dividendos isentos, reforma tributária) + exemplos numéricos concretos" },
+    "geo_agent": { "passed": true, "note": "Lei 9.249/95 art. 10 citada, IN RFB 1.234/2012, Lei 4.158/2008-DF, Decreto 5/1991 PAT, exemplos numéricos verificáveis (R$75.600/ano economia sócio), dados de alíquotas verificáveis" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com análise específica Brasília, Lei 9.249/95 verificável, IN RFB 1.234/2012 verificável, cálculos de exemplo com valores verificáveis" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/como-reduzir-impostos-legalmente.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/reduzir-impostos-legalmente-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: alíquotas IRPF e INSS verificadas, Lei 9.249/95 art. 10 correta, dedução despesas Lucro Real corretas, PAT Decreto 5/1991 verificado" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified — all 100, word_count:1331" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "como reduzir impostos legalmente",
+  "keyword_volume": 2400,
+  "keyword_difficulty": 25,
+  "cluster": "planejamento-tributario",
+  "word_count": 1331,
+  "internal_links": 5,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

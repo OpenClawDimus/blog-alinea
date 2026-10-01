@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-01T03:47:31.823Z",
+  "generated_at": "2026-10-01T03:54:56.068Z",
   "posts": [
     {
       "slug": "bpo-financeiro-o-que-e",
@@ -32,6 +32,24 @@
       "has_lead_form": true,
       "has_alinea_help": true,
       "faq_count": 5,
+      "seo": 100,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 100
+    },
+    {
+      "slug": "como-reduzir-impostos-legalmente",
+      "title": "Como Reduzir Impostos Legalmente: 7 Estratégias para PMEs",
+      "pubDatetime": "2026-10-21T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 1331,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/reduzir-impostos-legalmente-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
       "seo": 100,
       "geo": 100,
       "aeo": 100,
