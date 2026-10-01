@@ -1,0 +1,201 @@
+---
+title: "O Que é Markup: Como Calcular o Preço de Venda Certo"
+slug: o-que-e-markup
+description: Aprenda o que é markup, como calcular o índice de marcação e por que empresas em Brasília precificam errado e perdem margem sem saber.
+author: "Alínea Finanças"
+pubDatetime: 2026-10-11T08:00:00-03:00
+tags:
+  - contabilidade-consultiva
+  - gestao-financeira
+featured: false
+coverImage: "covers/o-que-e-markup-precificacao.jpg"
+ogImage: "/og/markup-preco-venda-brasilia.png"
+faq:
+  - q: "O que é markup?"
+    a: "Markup é um índice multiplicador aplicado sobre o custo de um produto ou serviço para determinar o preço de venda. Ele foi criado para cobrir, em uma única conta, todos os custos indiretos da operação (impostos, despesas fixas, despesas variáveis) e ainda garantir a margem de lucro desejada. A fórmula é: Markup = 100 ÷ [100 – (% impostos + % despesas fixas + % despesas variáveis + % margem de lucro)]."
+  - q: "Como calcular o markup?"
+    a: "Para calcular o markup: (1) some todos os percentuais que incidem sobre o faturamento — impostos (DAS/Simples Nacional, PIS, COFINS, ISS ou ICMS, IRPJ, CSLL), despesas fixas em % do faturamento (aluguel, salários/faturamento, internet) e margem de lucro desejada; (2) subtraia a soma de 100; (3) divida 100 pelo resultado. Exemplo: impostos 15% + despesas fixas 20% + margem 10% = 45%. Markup = 100 ÷ (100 – 45) = 100 ÷ 55 = 1,818. Para um custo de R$ 100, o preço de venda seria R$ 181,80."
+  - q: "Qual a diferença entre markup e margem de lucro?"
+    a: "Markup é calculado sobre o custo (preço de venda = custo × markup). Margem de lucro é calculada sobre o preço de venda (lucro ÷ preço de venda × 100). Um markup de 2,0 não significa 100% de margem — significa que o preço de venda é o dobro do custo, mas parte desse valor cobre impostos e despesas. A margem de lucro real é o que sobra depois de pagar tudo. Confundir markup com margem é um dos erros de precificação mais comuns em PMEs."
+  - q: "Qual deve ser o markup mínimo para não ter prejuízo?"
+    a: "O markup mínimo (ou markup de equilíbrio) é aquele que cobre exatamente os impostos, as despesas fixas e as despesas variáveis, sem lucro. Ele é calculado somando apenas impostos + despesas fixas + despesas variáveis (sem a margem de lucro) e aplicando a fórmula. Qualquer preço abaixo do markup mínimo gera prejuízo. Para o [ponto de equilíbrio financeiro](/posts/ponto-de-equilibrio-o-que-e-como-calcular/) da empresa, o markup precisa cobrir todos os custos fixos e variáveis do período."
+  - q: "Como o regime tributário afeta o markup?"
+    a: "O regime tributário muda diretamente a alíquota de impostos no cálculo do markup. No Simples Nacional, a alíquota varia de 4% a 19,5% sobre o faturamento dependendo do anexo e da receita acumulada. No Lucro Presumido, PIS+COFINS somam 3,65%, mais IRPJ+CSLL entre 3,2% e 9,6% sobre a receita, mais ISS ou ICMS. Uma empresa no Simples com alíquota de 10% precisa de um markup diferente de uma no Lucro Presumido com 15% de carga total. Revisar o markup toda vez que mudar de faixa ou regime é obrigatório."
+  - q: "O que inclui o markup para serviços de tecnologia prestados ao governo?"
+    a: "Para serviços de TI e consultoria ao governo federal em Brasília, o markup deve incluir: ISS do Distrito Federal (2% a 5% dependendo do serviço), PIS + COFINS (3,65% no regime cumulativo do Simples ou 9,25% no não-cumulativo), IRPJ + CSLL (se Lucro Real ou Presumido), custo do processo licitatório (horas de equipe para elaborar proposta), garantia contratual (caução ou seguro-garantia), e provisão para recebimento em prazo superior a 60 dias. Ignorar qualquer desses itens no markup é vender com prejuízo sem perceber."
+---
+
+import AnswerCapsule from '@/components/blog/AnswerCapsule.astro';
+import LeadForm from '@/components/blog/LeadForm.astro';
+import AlineaHelp from '@/components/blog/AlineaHelp.astro';
+
+Uma empresa vende um serviço de consultoria por R$ 5.000. O custo direto do profissional foi R$ 2.000. Parece ótimo — R$ 3.000 de lucro, certo?
+
+Errado. Depois de pagar ISS (5%), PIS e COFINS (3,65%), aluguel proporcional, o salário do administrativo que fez a proposta, e a provisão para o cliente que vai pagar em 60 dias, o lucro real pode ser negativo.
+
+Isso não é azar. É falta de markup correto.
+
+<AnswerCapsule question="O que é markup?">
+  Markup é um índice multiplicador aplicado sobre o custo de um produto ou serviço para calcular o preço de venda. Ele é calculado para cobrir, em uma conta só, todos os impostos, despesas fixas e despesas variáveis da operação — e ainda garantir a margem de lucro desejada. A fórmula: Markup = 100 ÷ [100 – (% impostos + % despesas fixas + % despesas variáveis + % margem)].
+</AnswerCapsule>
+
+## O Que é Markup
+
+Markup é o índice que transforma custo em preço de venda.
+
+A ideia é simples: em vez de calcular manualmente quanto vai em impostos, quanto vai em despesas, e quanto sobra de lucro para cada produto ou serviço vendido, você calcula o markup uma vez e aplica como multiplicador em todos os custos.
+
+**A fórmula do markup:**
+
+```
+Markup = 100 ÷ [100 – (% impostos + % despesas fixas + % despesas variáveis + % margem de lucro)]
+```
+
+**Exemplo de cálculo:**
+
+Uma empresa de serviços no Simples Nacional (alíquota 12,33%):
+- Impostos: 12,33%
+- Despesas fixas sobre faturamento: 18%
+- Despesas variáveis (comissões, embalagem): 5%
+- Margem de lucro desejada: 15%
+
+**Total a descontar: 12,33% + 18% + 5% + 15% = 50,33%**
+
+**Markup = 100 ÷ (100 – 50,33) = 100 ÷ 49,67 = 2,013**
+
+Para qualquer produto ou serviço com custo de R$ 100, o preço de venda mínimo para atingir a margem desejada é **R$ 201,30**.
+
+## Markup vs Margem de Lucro: A Confusão Que Gera Prejuízo
+
+Esta é a confusão mais cara que um gestor pode cometer.
+
+| Conceito | Base de cálculo | Fórmula | Exemplo |
+|---|---|---|---|
+| **Markup** | Sobre o custo | Preço = Custo × Markup | R$100 × 2,0 = R$200 |
+| **Margem** | Sobre o preço de venda | Margem = Lucro ÷ Preço | R$30 ÷ R$200 = 15% |
+
+**O erro clássico:** o gestor quer 50% de margem e aplica markup de 1,5 (multiplicando o custo por 1,5). O resultado é um markup que entrega margem bruta de 33%, não 50%.
+
+Para 50% de margem de lucro (considerando só o lucro, sem impostos e despesas), o markup seria:
+```
+Markup para 50% de margem = 100 ÷ (100 – 50) = 2,0
+```
+
+Mas se há impostos e despesas fixas de 30%, o markup para garantir 50% de lucro depois de tudo é:
+```
+Markup = 100 ÷ (100 – 80) = 5,0
+```
+
+Ou seja: o custo de R$ 100 precisaria ser vendido por R$ 500. Se a empresa cobra R$ 200, está operando com lucro negativo.
+
+## Como Calcular o Markup: Passo a Passo
+
+### Passo 1 — Mapear os impostos sobre o faturamento
+
+Os impostos variam conforme o regime tributário:
+
+**Simples Nacional:**
+- Alíquota efetiva do DAS (varia por anexo e faixa de faturamento): entre 4% e 19,5%
+- Consultar a tabela do Simples Nacional pelo CNAE da empresa
+
+**Lucro Presumido (serviços):**
+- PIS: 0,65% | COFINS: 3,00%
+- IRPJ: 4,80% (base presumida de 32% × 15%)
+- CSLL: 2,88% (base presumida de 32% × 9%)
+- ISS (DF): 2% a 5%
+- **Total aproximado: 13,33% a 16,33%**
+
+### Passo 2 — Calcular as despesas fixas em % do faturamento
+
+Divida as despesas fixas mensais pelo faturamento médio mensal:
+
+```
+% Despesas fixas = (Total despesas fixas mensais ÷ Faturamento médio mensal) × 100
+```
+
+Exemplo: R$ 18.000 em despesas fixas ÷ R$ 100.000 de faturamento = 18%
+
+### Passo 3 — Estimar as despesas variáveis
+
+Despesas que variam proporcionalmente com as vendas: comissões de vendedores, frete, embalagens, taxa de cartão. Calcule como % do faturamento com base no histórico.
+
+### Passo 4 — Definir a margem de lucro desejada
+
+Qual percentual do preço de venda deve ficar como lucro líquido após todos os custos e impostos? O EBITDA médio de PMEs de serviços saudáveis fica entre 10% e 25%.
+
+### Passo 5 — Aplicar a fórmula
+
+Com todos os percentuais mapeados, calcule o markup e aplique sobre cada custo direto.
+
+## Como o Regime Tributário Muda Tudo
+
+O regime tributário é a variável que mais impacta o markup — e que mais frequentemente fica desatualizado nas planilhas das empresas.
+
+**Cenário real:** empresa de serviços de TI em Brasília, Lucro Presumido, faturamento de R$ 1,2 milhão/ano.
+
+Situação 1 — Markup calculado com alíquota de 12% (desatualizado do período em que era Simples):
+```
+Markup = 100 ÷ (100 – 12 – 20 – 5 – 15) = 100 ÷ 48 = 2,083
+Preço de custo R$ 100 → Preço de venda R$ 208,33
+```
+
+Situação 2 — Markup correto com Lucro Presumido (16% de impostos):
+```
+Markup = 100 ÷ (100 – 16 – 20 – 5 – 15) = 100 ÷ 44 = 2,273
+Preço correto para custo R$ 100 → R$ 227,30
+```
+
+**Diferença:** R$ 18,97 a menos por unidade. Em 200 projetos por ano, isso equivale a quase R$ 4.000 de lucro perdido — sem perceber.
+
+Para entender como o regime tributário afeta outros indicadores do negócio, veja: [o que é DRE](/posts/dre-o-que-e-demonstrativo-resultado-exercicio/) e como receita, custos e impostos se relacionam.
+
+## Markup para Serviços ao Governo Federal em Brasília
+
+Empresas brasilienses que prestam serviços ao governo federal precisam de um markup específico — que a maioria dos templates genéricos não contempla.
+
+**Custos adicionais que entram no markup para contratos públicos:**
+
+1. **Custo do processo licitatório:** elaborar propostas técnicas e comerciais custa horas de equipe especializada. Em licitações de médio porte, estima-se entre 1% e 3% do valor do contrato
+2. **Garantia contratual:** contratos acima de R$ 100 mil (Lei 14.133/2021) exigem garantia de até 5% do valor — caução em dinheiro ou seguro-garantia (custo do seguro: ~0,5% a 1,5% ao ano)
+3. **Prazo de recebimento:** o governo paga em 30 a 90 dias após a liquidação da nota. O custo financeiro desse prazo precisa ser embutido no preço
+4. **Retenções na fonte:** contratos com órgãos federais têm retenção de 4,65% (PIS + COFINS + CSLL) sobre o pagamento, conforme IN RFB 1.234/2012
+
+**Jocivane Brito, CRC/DF**, especialista em precificação para contratos públicos na Alínea Finanças, explica: *"Empresas brasilienses vendem para o governo com markup calculado para o mercado privado. A diferença na carga tributária efetiva, somada ao custo do prazo de recebimento, pode representar 5% a 8% a mais no preço justo. É margem que a empresa está literalmente doando para o governo."*
+
+Para estruturar a precificação correta e integrá-la ao seu fluxo de caixa, o [BPO financeiro](/posts/bpo-financeiro-o-que-e/) da Alínea inclui revisão periódica do markup conforme mudanças de regime, faixa do Simples ou perfil de contratos.
+
+## Markup e Ponto de Equilíbrio: A Conexão
+
+O markup de equilíbrio (sem margem de lucro) é diretamente conectado ao [ponto de equilíbrio](/posts/ponto-de-equilibrio-o-que-e-como-calcular/) financeiro:
+
+- Markup de equilíbrio: cobre impostos + despesas fixas + despesas variáveis, sem lucro
+- Markup operacional: cobre tudo acima mais margem de contribuição
+- Markup alvo: cobre tudo acima mais margem de lucro líquido desejada
+
+Saber em qual markup a empresa está vendendo hoje vs. qual deveria estar vendendo é a diferença entre uma empresa que cresce com saúde e uma que fatura muito e lucra pouco.
+
+<LeadForm
+  headline="Sua empresa está cobrando o preço certo — ou financiando o cliente sem saber?"
+  description="Markup desatualizado é prejuízo silencioso. A Alínea Finanças revisa a precificação da sua empresa com base no regime tributário atual, despesas reais e margem saudável. Para PMEs em Brasília e entorno."
+  ctaText="Quero revisar minha precificação"
+/>
+
+## Perguntas Frequentes sobre Markup
+
+**Preciso recalcular o markup quando a empresa cresce de faixa no Simples Nacional?**
+
+Sim, obrigatoriamente. Cada faixa do Simples Nacional tem uma alíquota efetiva diferente. Se sua empresa estava pagando 10,5% de DAS e passou para 12,33% ao ultrapassar uma faixa de faturamento, o markup precisa ser recalculado para todos os produtos e serviços.
+
+**O markup serve para produtos e serviços?**
+
+Sim, para ambos. Para produtos, o custo base é o custo de aquisição ou produção. Para serviços, o custo base é o custo direto do serviço (hora técnica, materiais, deslocamento). A lógica do cálculo é a mesma — o que muda são os percentuais de impostos e despesas variáveis.
+
+**Como saber se meu markup atual está correto?**
+
+Compare o preço que você cobra hoje com o preço calculado pelo markup correto. Se o preço atual está abaixo, você está vendendo com margem menor do que imagina. Se está muito acima, pode estar perdendo clientes por preço enquanto poderia ajustar. A revisão do markup deve ser feita pelo menos anualmente — ou sempre que o regime tributário, as despesas fixas ou o mix de produtos mudar significativamente.
+
+**Posso aplicar markups diferentes para clientes ou contratos diferentes?**
+
+Sim. Clientes com prazo de pagamento maior, maior volume de desconto, ou perfil mais arriscado (governo com prazo longo vs. cliente privado à vista) justificam markups distintos. O importante é que cada pricing seja calculado conscientemente — não definido "pelo feeling" ou por comparação com concorrentes sem entender os próprios custos.
+
+<AlineaHelp variant="precificacao" />

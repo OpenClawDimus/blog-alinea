@@ -1,0 +1,30 @@
+{
+  "slug": "o-que-e-capital-de-giro",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T09:00:00.000Z",
+  "pub_date": "2026-10-17T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'o que é capital de giro' vol:590/mês, comp:14, informational. SERP: Sebrae, Omie — baixa competição, oportunidade de featured snippet" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — sem ambiguidade de intent" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas BPO/financeiro validam: sócio PME que cresce e fica sem caixa — dor central do capital de giro" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre capital de giro — ângulo único: ciclo SIAFI, NCG para contratos federais, fontes de crédito estruturadas" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 8 H2s, 5 internal links (fluxo-de-caixa, BPO, DRE, margem-de-contribuicao), meta desc 155 chars, title 53 chars, word_count 1220" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned + tabelas com fórmulas para featured snippet" },
+    "geo_agent": { "passed": true, "note": "Ciclo SIAFI, exemplos numéricos (R$750k NCG para R$300k/mês), taxas de antecipação verificáveis, índice de liquidez corrente, BNDES via BRB/Caixa" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com análise específica de NCG e custo de financiamento, dados verificáveis de mercado" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/o-que-e-capital-de-giro.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/capital-de-giro-pme-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: fórmulas de NCG verificadas, diferença capital de giro vs NCG vs saldo de tesouraria correta, taxas de crédito plausíveis" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified — all 100" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "o que é capital de giro",
+  "keyword_volume": 590,
+  "keyword_difficulty": 14,
+  "cluster": "gestao-financeira",
+  "word_count": 1220,
+  "internal_links": 5,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

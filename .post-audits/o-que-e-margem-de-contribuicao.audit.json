@@ -1,0 +1,30 @@
+{
+  "slug": "o-que-e-margem-de-contribuicao",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T08:00:00.000Z",
+  "pub_date": "2026-10-15T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'o que é margem de contribuição' vol:2400/mês, comp:20, informational. SERP: Suno, Omie, Portal Educação — gap para ângulo PME Brasília contratos governo" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — sem ambiguidade de intent, não confundir com 'margem bruta' (intent diferente)" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas BPO/financeiro validam: sócio PME quer entender por que vende muito e lucra pouco — margem de contribuição é a resposta" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre margem de contribuição — ângulo único: análise de mix por fator limitante + contratos governo federal Brasília + custo financeiro prazo" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 7 H2s, 5 internal links (ponto-de-equilibrio, controladoria, markup, fluxo-de-caixa, DRE), meta desc 155 chars, title 48 chars, word_count 1206" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned + tabelas com exemplos numéricos concretos para featured snippet" },
+    "geo_agent": { "passed": true, "note": "IN RFB 1.234/2012 citada, exemplos numéricos verificáveis, análise de mix com fator limitante, dados de custo financeiro prazo 60 dias, pilar Brasília/governo federal" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com dado concreto (8-12 pontos de diferença na margem real), dados normativos verificáveis" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/o-que-e-margem-de-contribuicao.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/margem-de-contribuicao-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: fórmulas verificadas, diferença margem contribuição vs margem bruta correta, IN RFB 1.234/2012 citada corretamente" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified — all 100" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "o que é margem de contribuição",
+  "keyword_volume": 2400,
+  "keyword_difficulty": 20,
+  "cluster": "contabilidade-consultiva",
+  "word_count": 1206,
+  "internal_links": 5,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

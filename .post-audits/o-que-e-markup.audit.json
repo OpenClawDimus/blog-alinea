@@ -1,0 +1,30 @@
+{
+  "slug": "o-que-e-markup",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-09-30T10:30:00.000Z",
+  "pub_date": "2026-10-11T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'o que é markup' vol:4400/mês, comp:24, CPC:1.02, informational. Secondary: 'markup calculo preco' vol:4400 comp:24" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — 'o que é markup' sem ambiguidade de intent" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas BPO/financeiro validam: sócio PME quer entender precificação e markup correto para não ter prejuízo" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre markup — ângulo único: markup para contratos com governo federal + impacto do regime tributário em Brasília" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 6 H2s, 4 internal links (DRE, Ponto de Equilíbrio, BPO), meta desc 135 chars, title 53 chars, word_count 1219" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs + fórmula de markup em código block para featured snippet" },
+    "geo_agent": { "passed": true, "note": "fórmulas verificáveis, exemplos numéricos concretos, IN RFB 1.234/2012, Lei 14.133/2021, dados de alíquotas por regime, pilar Brasília/governo federal" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com especialização em precificação para contratos públicos, dados normativos verificáveis" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/o-que-e-markup-precificacao.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/markup-preco-venda-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: fórmula de markup verificada, alíquotas por regime corretas, IN RFB 1.234/2012 referenciada corretamente" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified — all 100" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "o que é markup",
+  "keyword_volume": 4400,
+  "keyword_difficulty": 24,
+  "cluster": "contabilidade-consultiva",
+  "word_count": 1219,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

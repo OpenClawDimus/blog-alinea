@@ -1,0 +1,30 @@
+{
+  "slug": "o-que-e-controladoria",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-09-30T14:00:00.000Z",
+  "pub_date": "2026-10-13T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'o que é controladoria' vol:1600/mês, comp:1 (unicórnio SEO), informational. SERP: poucos concorrentes — unicórnio = oportunidade rara de rankear rápido sem competição" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — 'o que é controladoria' sem ambiguidade de intent, sem transacional contaminando" },
+    "mirofish_icp": { "passed": true, "note": "≥3/5 personas BPO/financeiro validam: sócio PME confunde controladoria com contabilidade — tópico diretamente relevante para conversão" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre controladoria — ângulo único: PMEs brasilienses com contratos governo federal, controller vs. CFO, custo de estruturação" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 7 H2s, 5 internal links (BPO, DRE, fluxo-de-caixa, ponto-de-equilibrio, markup), meta desc 141 chars, title 55 chars, word_count 1230" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned + featured snippet candidato 'o que é controladoria'" },
+    "geo_agent": { "passed": true, "note": "Lei 6.404/76, dados concretos de salário controller CLT, exemplos numéricos contingenciamento orçamentário DF, pilar Brasília/governo federal" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com 12 anos de experiência, frase direta sobre controladoria, referência Lei 6.404/76" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/o-que-e-controladoria-empresa.jpg" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/controladoria-pme-brasilia.png, único, rota /og/" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: diferença controller/CFO verificada, Lei 6.404/76 referenciada corretamente, faixas salariais plausíveis para Brasília/DF" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified — all 100" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "o que é controladoria",
+  "keyword_volume": 1600,
+  "keyword_difficulty": 1,
+  "cluster": "bpo-financeiro",
+  "word_count": 1230,
+  "internal_links": 5,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}
