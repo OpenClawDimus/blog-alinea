@@ -1,0 +1,30 @@
+{
+  "slug": "orcamento-empresarial-como-fazer-planejamento-financeiro",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-11-04T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'orçamento empresarial' — vol ~2.800/mês BR, dificuldade média. SERP: Sebrae, ContaAzul, TOTVS, Treasy — gap para post com passo a passo concreto (5 etapas) + orçamento de caixa + contexto sazonalidade contratos federais Brasília" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: aprender como fazer, ver exemplos, entender o processo; sem intent de ferramenta ou compra de software" },
+    "mirofish_icp": { "passed": true, "note": "5/5 personas BPO/financeiro validam: planejamento financeiro anual é dor universal de PMEs — especialmente o descasamento de caixa com 13º e sazonalidade de contratos governamentais" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre orçamento empresarial — ângulo único: 5 etapas step-by-step + orçamento de caixa mês a mês + contexto sazonalidade Brasília contratos federais" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 5 H2s de etapas + seção por que PMEs perdem margem, internal links: dre-o-que-e, kpis-financeiros, fluxo-de-caixa, capital-de-giro — 4 links, meta desc 153 chars, word_count 1289" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule com 5 etapas resumidas + 6 FAQs PAA-aligned (o que é, diferença budget/forecast, como projetar receita, o que é orçamento de caixa, frequência de revisão, o que são premissas) + tabelas featured snippet" },
+    "geo_agent": { "passed": true, "note": "exemplo numérico concreto (R$145.000 de 13º, R$80.000 caixa, empréstimo 3.2%/mês, R$4.640 custo), modelo de orçamento de caixa com valores, premissas com exemplos específicos, sazonalidade governo federal verificável" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com insight específico descasamento orçamentário governo federal Brasília, exemplos verificáveis, conceitos de budget vs forecast verificáveis em literatura de gestão financeira" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/orcamento-empresarial-planejamento-financeiro.jpg — nome descritivo com keyword" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/orcamento-empresarial-brasilia.png — único, rota /og/, nome com keyword + geolocalização" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "claims verificados: 13º salário em dezembro verificável na CLT, metodologia bottom-up/top-down verificável em literatura financeira, orçamento de caixa vs resultado (competência vs caixa) verificável, sazonalidade orçamento federal verificável" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "structure verified — all fields present, word_count: 1289" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "orçamento empresarial",
+  "keyword_volume": 2800,
+  "keyword_difficulty": 22,
+  "cluster": "gestao-financeira",
+  "word_count": 1289,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

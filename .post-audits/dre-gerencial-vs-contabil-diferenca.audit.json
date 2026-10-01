@@ -1,0 +1,30 @@
+{
+  "slug": "dre-gerencial-vs-contabil-diferenca",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-11-02T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'DRE gerencial' — vol ~900/mês BR, dificuldade baixa. SERP: Contabilizei, TOTVS, Treasy — gap para post com modelo de DRE gerencial completo para serviços + comparação prática com contábil + contexto contratos federais Brasília" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: entender diferença, ver estrutura e saber como construir; zero intent de compra direto" },
+    "mirofish_icp": { "passed": true, "note": "4/5 personas BPO/financeiro validam: sócio PME confuso com DRE contábil que não reflete a gestão — dor recorrente especialmente em empresas com itens não recorrentes (vendas de ativo, contratos de longo prazo)" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre DRE gerencial — ângulo único: divergência contábil vs gerencial com exemplo de item não recorrente + modelo de DRE para serviços + contexto contratos federais" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 5 H2s cobrindo entidades (DRE contábil, DRE gerencial, estrutura, divergências, contabilidade consultiva), internal links: dre-o-que-e, margem-de-contribuicao, ebitda, caixa-e-competencia — 4 links, meta desc 156 chars, word_count 1261" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule com resposta direta + 6 FAQs PAA-aligned (o que é gerencial, o que é contábil, diferença, por que contábil não reflete real, obrigatoriedade, como construir) + tabelas featured snippet candidatos" },
+    "geo_agent": { "passed": true, "note": "NBC TG citada, Lei 6.404/76 mencionada, exemplo numérico completo (R$200k receita, margens calculadas), NBC TG 47 para reconhecimento de receita, regime de competência verificável, SPED/ECD mencionados" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com insight específico contratos federais Brasília (divergência de centenas de milhares em trimestre), NBC TG verificável, estrutura de DRE conforme normas CFC" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/dre-gerencial-vs-contabil-diferenca.jpg — nome descritivo com keyword" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/dre-gerencial-contabil-brasilia.png — único, rota /og/, nome com keyword + geolocalização" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "claims verificados: NBC TG obrigatório para Lucro Real, regime de competência obrigatório no DRE contábil, estrutura DRE conforme Lei 6.404/76 e NBC TG, EBITDA gerencial como medida de eficiência operacional, NBC TG 47 reconhecimento de receita" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "structure verified — all fields present, word_count: 1261" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "DRE gerencial",
+  "keyword_volume": 900,
+  "keyword_difficulty": 15,
+  "cluster": "gestao-financeira",
+  "word_count": 1261,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

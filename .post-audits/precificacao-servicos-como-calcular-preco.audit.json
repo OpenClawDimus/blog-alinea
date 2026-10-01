@@ -1,0 +1,30 @@
+{
+  "slug": "precificacao-servicos-como-calcular-preco",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-11-06T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'como calcular preço de serviço' — vol ~3.200/mês BR, dificuldade média. SERP: Sebrae, ContaAzul, blogs genéricos — gap para post com 3 métodos (cost-plus, value-based, break-even) + planilha contratos federais + contexto Brasília" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: aprender a calcular, ver métodos e exemplos práticos; sem intent de ferramenta ou compra" },
+    "mirofish_icp": { "passed": true, "note": "5/5 personas BPO/financeiro validam: precificação errada é dor central especialmente para empresas de serviços que crescem sem lucro — gatilho perfeito para BPO financeiro" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre precificação de serviços — ângulo único: 3 métodos (cost-plus, value-based, break-even) + planilha contratos federais (BDI/licitação) + exemplo numérico detalhado" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 5 H2s cobrindo entidades (erro comum, cost-plus, value-based, break-even, contratos governo), internal links: markup, margem-de-contribuicao, ponto-de-equilibrio, controladoria — 4 links, meta desc 153 chars, word_count 1302" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule com 5 passos resumidos + 6 FAQs PAA-aligned (como calcular, markup, cost-plus vs value, break-even price, por que cobram abaixo do custo, contratos governo) + tabelas featured snippet" },
+    "geo_agent": { "passed": true, "note": "exemplos numéricos concretos (custo R$3.200 vs percebido R$1.800, markup calculado, piso R$10.500, encargos CLT 70-75%), BDI contratos federais 20-30% verificável em licitações, planilha de custos contratos governamentais verificável" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com insight específico revisão de preços + orçamento anual Brasília, encargos CLT verificáveis, BDI licitação verificável em jurisprudência TCU, value-based pricing verificável em literatura" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/precificacao-servicos-calcular-preco.jpg — nome descritivo com keyword" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/precificacao-servicos-brasilia.png — único, rota /og/, nome com keyword + geolocalização" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "claims verificados: encargos CLT ~70-75% sobre salário verificável na legislação trabalhista, markup fórmula verificável, BDI 20-30% para consultoria verificável em acórdãos TCU, piso break-even fórmula verificável, Simples ~7% verificável na tabela PGDAS" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "structure verified — all fields present, word_count: 1302" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "como calcular preço de serviço",
+  "keyword_volume": 3200,
+  "keyword_difficulty": 22,
+  "cluster": "gestao-financeira",
+  "word_count": 1302,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

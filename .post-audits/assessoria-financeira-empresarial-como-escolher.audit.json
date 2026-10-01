@@ -1,0 +1,30 @@
+{
+  "slug": "assessoria-financeira-empresarial-como-escolher",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-11-08T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'assessoria financeira empresarial' — informational, vol ~800/mês BR, comp baixa. SERP dominado por conteúdo genérico de assessoria de investimentos — gap para ângulo PME/BPO Brasília com critérios de seleção, entregáveis esperados e sinais de alerta" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: como escolher, o que avaliar, quais critérios para contratar assessoria financeira; sem contaminação de intent de investimento pessoal" },
+    "mirofish_icp": { "passed": true, "note": "5/5 personas BPO/financeiro validam: dor de 'não sei como avaliar se meu contador/BPO é bom' é universal em PMEs; ângulo Brasília com contratos federais diferencia do nacional" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre critérios de seleção de assessoria financeira — complementar ao post o-que-e-bpo-financeiro mas ângulo diferente (como escolher vs o que é)" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 5 H2s + H3s cobrindo entidades (escopo entregáveis, setor+regime, comunicação proativa, acesso profissional, controladoria integrada), internal links (bpo-financeiro, fluxo-de-caixa, capital-de-giro, regime-tributario, controladoria), meta desc 152 chars, title 58 chars, word_count ~1350" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned (o que é, diferença contabilidade, quando contratar, custo, controller vs BPO, como avaliar resultado) + tabela de entregáveis featured snippet" },
+    "geo_agent": { "passed": true, "note": "tabela de entregáveis com prazos verificáveis, valores de mercado R$1.500-R$10.000/mês verificáveis, perguntas concretas para avaliação do fornecedor, caso concreto (empresa comunicação, margem caindo 21→14%)" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com caso concreto (PMEs com contratos governamentais e gap de caixa), entregáveis concretos verificáveis, sinais de alerta baseados em práticas do mercado" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/assessoria-financeira-empresarial-escolher.jpg — nome descritivo com keyword" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/assessoria-financeira-brasilia-escolher.png, único, rota /og/, nome com keyword + geolocalização" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "entregáveis de BPO financeiro verificados contra padrões de mercado, valores de custo verificáveis, perguntas de avaliação consistentes com práticas de contratação B2B" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "estrutura verificada — 6 FAQs, AnswerCapsule, LeadForm, AlineaHelp, ≥5 internal links, word_count ~1350" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "assessoria financeira empresarial",
+  "keyword_volume": 800,
+  "keyword_difficulty": 13,
+  "cluster": "gestao-financeira",
+  "word_count": 1350,
+  "internal_links": 5,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

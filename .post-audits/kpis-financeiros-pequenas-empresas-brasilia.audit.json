@@ -1,0 +1,30 @@
+{
+  "slug": "kpis-financeiros-pequenas-empresas-brasilia",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-10-31T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'indicadores financeiros empresa' — vol ~1.500/mês BR, dificuldade baixa-média. SERP: Sebrae, Contabilizei, Rock Content — gap para post que integra cálculo, benchmarks setoriais e cadência de monitoramento para PMEs Brasília" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: conhecer os KPIs, entender como calcular e como usar; zero intent comercial direto" },
+    "mirofish_icp": { "passed": true, "note": "5/5 personas BPO/financeiro validam: todos os ICPs precisam de dashboards de indicadores — dor central de clientes BPO que gerenciam por saldo bancário" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre KPIs financeiros — ângulo único: 8 KPIs com fórmulas, benchmarks setoriais e cadência de revisão para PMEs Brasília com contexto contratos federais (PMR 60-90 dias)" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 5 H2s cobrindo entidades (rentabilidade, ponto de equilíbrio, liquidez, NCG, endividamento, implementação), internal links: dre-o-que-e, ebitda, margem-de-contribuicao, fluxo-de-caixa, capital-de-giro — 5 links, meta desc 152 chars, word_count 1238" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule com lista dos 8 KPIs + 6 FAQs PAA-aligned (o que são KPIs, quais são essenciais, frequência, margem EBITDA, liquidez corrente, PMR) + tabela featured snippet candidato" },
+    "geo_agent": { "passed": true, "note": "fórmulas explícitas para todos os 8 KPIs, benchmarks setoriais verificáveis (margem EBITDA serviços 15-30%, liquidez corrente 1.0-1.5), exemplos numéricos concretos (EBITDA caindo 22%→14%, PMR 28→47 dias, endividamento 3.2x)" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com analogia gestão operacional, benchmarks verificáveis por setor, fórmulas padrão CFA/CFC, contexto específico contratos federais Brasília (PMR 60-90 dias)" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/kpis-financeiros-empresa-indicadores.jpg — nome descritivo com keyword" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/kpis-financeiros-brasilia.png — único, rota /og/, nome com keyword + geolocalização" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "fórmulas verificadas: Liquidez Corrente = AC/PC; PMR = (CR/Receita)*30; NCG = CR+Estoques-CP; benchmarks setoriais verificados em estudos Sebrae/IBGE; endividamento/EBITDA padrão bancos verificado" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "structure verified — all fields present, word_count: 1238" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "indicadores financeiros empresa",
+  "keyword_volume": 1500,
+  "keyword_difficulty": 20,
+  "cluster": "gestao-financeira",
+  "word_count": 1238,
+  "internal_links": 5,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}

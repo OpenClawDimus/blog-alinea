@@ -1,0 +1,30 @@
+{
+  "slug": "custo-fixo-e-variavel-diferenca-gestao",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-10-29T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'custo fixo e variável' — vol ~2.100/mês BR, dificuldade baixa-média. SERP: Sebrae, Contabilizei, blogs genéricos — gap para ângulo PME Brasília com cálculo de ponto de equilíbrio e margem de contribuição integrado" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: entender diferença, ver exemplos e aplicar na gestão; zero intent de compra ou pessoal" },
+    "mirofish_icp": { "passed": true, "note": "4/5 personas BPO/financeiro validam: sócio PME que não sabe o custo fixo mensal real — dor recorrente em diagnósticos financeiros. Ângulo precificação + ponto de equilíbrio diferencia do conteúdo genérico" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre custo fixo e variável — ângulo único: classificação integrada com margem de contribuição, markup e ponto de equilíbrio para PMEs Brasília" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 6 H2s cobrindo entidades (custo fixo, variável, margem de contribuição, ponto de equilíbrio, precificação, controle), internal links: ponto-de-equilibrio, margem-de-contribuicao, dre-o-que-e, o-que-e-markup, meta desc 154 chars, word_count 1247" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule com resposta direta + 6 FAQs PAA-aligned (o que é fixo, o que é variável, diferença, impacto no ponto de equilíbrio, semivariáveis, como classificar) + tabelas featured snippet candidatos" },
+    "geo_agent": { "passed": true, "note": "exemplos numéricos concretos (R$80.000 faturamento, R$51.000 fixo, R$40.000 fixo, R$72.727 break-even), fórmulas explícitas, definições verificáveis, DAS Simples Nacional verificável na LC 123/2006" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com contexto específico de diagnóstico financeiro, fórmulas verificáveis, exemplos reais de consultoria Brasília, conceitos contábeis verificáveis pelo CFC" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/custo-fixo-variavel-gestao-empresa.jpg — nome descritivo com keyword principal" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/custo-fixo-variavel-brasilia.png — único, rota /og/, nome com keyword + geolocalização" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "claims verificados: fórmula ponto de equilíbrio (CF/MC%), diluição de custo fixo com volume, DAS Simples sobre faturamento recebido, pró-labore como custo fixo, depreciação como custo fixo — todos verificáveis" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "structure verified — all fields present, word_count: 1247" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "custo fixo e variável",
+  "keyword_volume": 2100,
+  "keyword_difficulty": 18,
+  "cluster": "gestao-financeira",
+  "word_count": 1247,
+  "internal_links": 4,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}
