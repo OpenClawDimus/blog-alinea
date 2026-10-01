@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-01T06:07:50.088Z",
+  "generated_at": "2026-10-01T06:29:46.524Z",
   "posts": [
     {
       "slug": "bpo-financeiro-o-que-e",
@@ -576,6 +576,78 @@
       "geo": 100,
       "aeo": 100,
       "composite": 100
+    },
+    {
+      "slug": "gestao-contas-a-receber-inadimplencia-empresa",
+      "title": "Contas a Receber: Como Gerir e Reduzir Inadimplência na Empresa",
+      "pubDatetime": "2026-10-27T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 1013,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/contas-a-receber-inadimplencia-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
+      "seo": 94,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 98
+    },
+    {
+      "slug": "kpis-financeiros-pequenas-empresas-brasilia",
+      "title": "KPIs Financeiros: Quais Indicadores Acompanhar na Sua Empresa",
+      "pubDatetime": "2026-10-31T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 971,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/kpis-financeiros-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
+      "seo": 94,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 98
+    },
+    {
+      "slug": "o-que-e-conciliacao-bancaria",
+      "title": "Conciliação Bancária: O Que É e Como Fazer Todo Mês",
+      "pubDatetime": "2026-10-25T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 994,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/conciliacao-bancaria-empresa-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
+      "seo": 94,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 98
+    },
+    {
+      "slug": "custo-fixo-e-variavel-diferenca-gestao",
+      "title": "Custo Fixo e Variável: Diferença, Exemplos e Como Controlar",
+      "pubDatetime": "2026-10-29T08:00:00-03:00",
+      "cluster": null,
+      "word_count": 1076,
+      "has_cover": true,
+      "has_unique_og": true,
+      "og_path": "/og/custo-fixo-variavel-brasilia.png",
+      "has_answer_capsule": true,
+      "has_lead_form": true,
+      "has_alinea_help": true,
+      "faq_count": 6,
+      "seo": 86,
+      "geo": 100,
+      "aeo": 100,
+      "composite": 95
     }
   ]
 }

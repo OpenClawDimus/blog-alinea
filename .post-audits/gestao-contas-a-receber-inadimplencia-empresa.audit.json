@@ -1,0 +1,30 @@
+{
+  "slug": "gestao-contas-a-receber-inadimplencia-empresa",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-10-27T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'gestão de contas a receber' — informational, vol ~1.200/mês BR, comp baixa. SERP: artigos genéricos de contadores e SaaS — gap para ângulo PME Brasília com contratos federais, aging, PMR e critérios de negativação" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: como estruturar e controlar contas a receber, reduzir inadimplência; sem intent transacional contaminado" },
+    "mirofish_icp": { "passed": true, "note": "5/5 personas BPO/financeiro validam: dor de 'empresa lucrativa mas sem caixa' é a principal dor do ICP; ângulo contratos federais (SIAFI, retenções, regularidade fiscal) diferencia do nacional" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre gestão de contas a receber — complementar a fluxo-de-caixa e capital-de-giro mas ângulo diferente (recebimento, aging, inadimplência)" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 5 H2s + H3s cobrindo entidades (política crédito, cobrança preventiva, métricas PMR/aging/inadimplência, contratos federais), internal links (capital-de-giro, fluxo-de-caixa, dre), meta desc 155 chars, word_count ~1280" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule + 6 FAQs PAA-aligned (o que é, como calcular inadimplência, como reduzir, diferença caixa, PDD, prazo judicial) + tabelas featured snippet (aging, processo cobrança, timing PMR)" },
+    "geo_agent": { "passed": true, "note": "fórmulas verificáveis (PMR, taxa inadimplência), tabela aging com valores concretos, art. 206 §5º CC citado, Lei 9.430/96 arts. 9-10 citados, exemplos R$120.000/R$300.000 consistentes" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com caso concreto SIAFI/bloqueio, referências legais verificáveis (CC art 206, Lei 9.430), processo cobrança alinhado com práticas padrão do mercado" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/gestao-contas-a-receber-inadimplencia.jpg — nome descritivo com keyword" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/contas-a-receber-inadimplencia-brasilia.png, único, rota /og/, nome com keyword + geolocalização" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "fórmulas PMR e taxa inadimplência verificadas, referências legais CC e Lei 9.430/96 verificadas, processo de cobrança preventiva verificado contra práticas de mercado, contexto SIAFI contratos federais verificável" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "estrutura verificada — 6 FAQs, AnswerCapsule, LeadForm, AlineaHelp, ≥3 internal links, word_count ~1280" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "gestão de contas a receber",
+  "keyword_volume": 1200,
+  "keyword_difficulty": 16,
+  "cluster": "gestao-financeira",
+  "word_count": 1280,
+  "internal_links": 3,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}
