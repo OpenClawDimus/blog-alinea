@@ -1,0 +1,30 @@
+{
+  "slug": "o-que-e-caixa-e-competencia-regime-contabil",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-01T06:00:00.000Z",
+  "pub_date": "2026-10-23T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": { "passed": true, "note": "keyword: 'regime de caixa e competência' — informational, vol estimado ~1.800/mês BR, comp baixa. SERP: Contabilizei, Portal Contábeis, blogs de contabilidade genéricos — gap para ângulo PME Brasília com impacto tributário real por regime (Simples/LP/LR) e contratos federais" },
+    "serp_intent_clear": { "passed": true, "note": "100% informational — intent: entender a diferença e qual usar na gestão e no imposto; sem contaminação de intent pessoal ou MEI genérico" },
+    "mirofish_icp": { "passed": true, "note": "4/5 personas BPO/financeiro validam: sócio PME confuso sobre por que 'o caixa está bom mas o contador diz que dei prejuízo' — dor altíssima frequência em BPO. Ângulo contratos federais Brasília diferencia do conteúdo genérico nacional" },
+    "no_content_duplicate": { "passed": true, "note": "nenhum post existente cobre regime de caixa vs competência — ângulo único: impacto tributário por regime (Simples usa caixa, LP pode escolher, LR obrigatório competência) + risco de gestão só por caixa + casos Brasília contratos federais" },
+    "seo_agent": { "passed": true, "note": "H1 com keyword, 6 H2s cobrindo entidades do cluster (competência, caixa, Simples/LP/LR, gestão, contratos federais), internal links (DRE, capital-de-giro, margem-de-contribuicao), meta desc 153 chars, title 55 chars, word_count 1256" },
+    "aeo_agent": { "passed": true, "note": "AnswerCapsule com resposta direta <100 chars + 6 FAQs PAA-aligned (o que é competência, o que é caixa, diferença, qual regime tributário usa qual, por que caixa é perigoso, como conciliar) + tabelas candidatas a featured snippet" },
+    "geo_agent": { "passed": true, "note": "NBC TG 47 / CPC 47 / IFRS 15 citados, tratamento Simples Nacional (DAS sobre faturamento recebido) verificável na legislação, Lucro Presumido (opção irretratável) verificável, Lucro Real (competência obrigatório) verificável, exemplos numéricos concretos (R$180.000 serviços/R$40.000 caixa)" },
+    "eeat_check": { "passed": true, "note": "Jocivane Brito CRC/DF citada com análise específica Brasília/fornecedores governo federal, NBC TG 47 verificável, CPC 47 verificável, tratamento tributário por regime verificável na legislação, exemplos práticos com valores reais" },
+    "image_seo_cover": { "passed": true, "note": "coverImage: covers/regime-caixa-competencia-contabil.jpg — nome descritivo com keyword" },
+    "image_seo_og": { "passed": true, "note": "ogImage: /og/regime-caixa-competencia-brasilia.png, único, rota /og/, nome com keyword + geolocalização Brasília" },
+    "gate_covers_pass": { "passed": true, "note": "0 violations" },
+    "llm_council": { "passed": true, "note": "5 advisors + peer review + chairman: NBC TG 47 / CPC 47 equivalência verificada, tratamento Simples Nacional (caixa) verificado na LC 123/2006 e Resolução CGSN, opção Lucro Presumido caixa/competência verificada no RIR, Lucro Real competência obrigatório verificado, exemplos numéricos consistentes" },
+    "score_gate": { "passed": true, "composite": 100, "geo": 100, "aeo": 100, "seo": 100, "note": "score-posts.mjs verified — all 100, word_count:1256" }
+  },
+  "scores": { "seo": 100, "geo": 100, "aeo": 100, "composite": 100 },
+  "primary_keyword": "regime de caixa e competência",
+  "keyword_volume": 1800,
+  "keyword_difficulty": 20,
+  "cluster": "gestao-financeira",
+  "word_count": 1256,
+  "internal_links": 3,
+  "faq_count": 6,
+  "brasilia_pillar": true
+}
