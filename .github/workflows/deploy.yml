@@ -9,7 +9,7 @@ on:
   # momento do build). Mesmo padrão dos outros blogs do SEO Agency.
   schedule:
     - cron: "20 13 * * *"  # 10:20 BRT
-    - cron: "0 18 * * *"   # 15:00 BRT
+    - cron: "20 18 * * *"  # 15:20 BRT (escalonado: evita pico de RAM com blog-dimus 18:00)
 
 jobs:
   deploy:
