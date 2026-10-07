@@ -5,6 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+  # Rebuild diário pra publicar posts agendados (Astro SSG só inclui pubDatetime passado no
+  # momento do build). Mesmo padrão dos outros blogs do SEO Agency.
+  schedule:
+    - cron: "20 13 * * *"  # 10:20 BRT
+    - cron: "20 18 * * *"  # 15:20 BRT (escalonado: evita pico de RAM com blog-dimus 18:00)
 
 jobs:
   deploy:
@@ -23,6 +28,7 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: "11.3.0"
+          dest: ${{ runner.temp }}/setup-pnpm
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -50,3 +56,21 @@ jobs:
         run: node scripts/indexnow-ping.mjs
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+
+      - name: "📣 Notify Studio (deploy succeeded)"
+        if: success()
+        run: |
+          curl -s --max-time 120 -X POST "${{ secrets.STUDIO_DEPLOY_NOTIFY_URL }}" \
+            -H "Content-Type: application/json" \
+            -H "X-Deploy-Secret: ${{ secrets.STUDIO_DEPLOY_SECRET }}" \
+            -d "{\"status\":\"success\",\"blog\":\"alinea\",\"trigger\":\"${{ github.event_name }}\",\"run_id\":${{ github.run_id }},\"ref\":\"${{ github.ref_name }}\"}" \
+            || echo "notify failed (non-blocking)"
+
+      - name: "📣 Notify Studio (deploy failed)"
+        if: failure()
+        run: |
+          curl -s --max-time 120 -X POST "${{ secrets.STUDIO_DEPLOY_NOTIFY_URL }}" \
+            -H "Content-Type: application/json" \
+            -H "X-Deploy-Secret: ${{ secrets.STUDIO_DEPLOY_SECRET }}" \
+            -d "{\"status\":\"failure\",\"blog\":\"alinea\",\"trigger\":\"${{ github.event_name }}\",\"run_id\":${{ github.run_id }},\"ref\":\"${{ github.ref_name }}\"}" \
+            || echo "notify failed (non-blocking)"
