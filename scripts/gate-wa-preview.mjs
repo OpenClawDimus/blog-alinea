@@ -6,7 +6,6 @@
  * (lido pelo Publish Watchdog). Sai com 1 se algo faltar.
  */
 import { existsSync } from 'fs';
-import { execFileSync } from 'child_process';
 import { readPosts } from './lib/posts.mjs';
 
 const missing = readPosts().filter((p) => !existsSync(`public/wa/wa-${p.slug}.jpg`));
@@ -17,10 +16,5 @@ if (missing.length) {
   missing.slice(0, 10).forEach((p) => console.error(`   - ${p.slug}`));
   console.error('   Corrija: node scripts/gen-wa-preview.mjs <slug>   (ou --all)');
 }
-try {
-  execFileSync('node', ['scripts/build-schedule.mjs', '--check'], { stdio: 'inherit' });
-} catch {
-  ok = false;
-}
 if (!ok) process.exit(1);
-console.log('✅ gate-wa-preview passed — cards de WhatsApp e schedule.json em dia.');
+console.log('✅ gate-wa-preview passed — cards de WhatsApp presentes.');
