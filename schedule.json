@@ -1,0 +1,287 @@
+{
+  "version": 1,
+  "blog": "Blog Alínea",
+  "siteUrl": "https://blog.alineafinancas.com.br/",
+  "posts": [
+    {
+      "slug": "fornecedores-governo-federal-brasilia-tributacao",
+      "title": "Fornecedores do Governo Federal em Brasília: Guia Tributário",
+      "pubDatetime": "2026-08-01T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/fornecedores-governo-federal-brasilia-tributacao/",
+      "preview": "public/wa/wa-fornecedores-governo-federal-brasilia-tributacao.jpg"
+    },
+    {
+      "slug": "reforma-tributaria-2026-ibs-cbs-split-payment-brasilia",
+      "title": "Reforma Tributária 2026: IBS, CBS e Split Payment para PMEs",
+      "pubDatetime": "2026-08-04T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/reforma-tributaria-2026-ibs-cbs-split-payment-brasilia/",
+      "preview": "public/wa/wa-reforma-tributaria-2026-ibs-cbs-split-payment-brasilia.jpg"
+    },
+    {
+      "slug": "como-trocar-de-contador-brasilia",
+      "title": "Como Trocar de Contador em Brasília sem Perder Seus Dados ou Histórico",
+      "pubDatetime": "2026-08-07T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/como-trocar-de-contador-brasilia/",
+      "preview": "public/wa/wa-como-trocar-de-contador-brasilia.jpg"
+    },
+    {
+      "slug": "como-abrir-empresa-em-brasilia",
+      "title": "Como Abrir Empresa em Brasília: Passo a Passo Completo em 2026",
+      "pubDatetime": "2026-08-10T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/como-abrir-empresa-em-brasilia/",
+      "preview": "public/wa/wa-como-abrir-empresa-em-brasilia.jpg"
+    },
+    {
+      "slug": "ibs-cbs-nota-fiscal-operacional-2026",
+      "title": "IBS e CBS nas Notas Fiscais: O Que Muda a Partir de Agosto de 2026",
+      "pubDatetime": "2026-08-13T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/ibs-cbs-nota-fiscal-operacional-2026/",
+      "preview": "public/wa/wa-ibs-cbs-nota-fiscal-operacional-2026.jpg"
+    },
+    {
+      "slug": "lucro-real-quando-migrar-lucro-presumido",
+      "title": "Lucro Real ou Lucro Presumido: Quando Vale Migrar de Regime?",
+      "pubDatetime": "2026-08-16T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/lucro-real-quando-migrar-lucro-presumido/",
+      "preview": "public/wa/wa-lucro-real-quando-migrar-lucro-presumido.jpg"
+    },
+    {
+      "slug": "simples-nacional-ou-lucro-presumido-como-escolher",
+      "title": "Simples Nacional ou Lucro Presumido: Como Escolher em 2026",
+      "pubDatetime": "2026-08-19T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/simples-nacional-ou-lucro-presumido-como-escolher/",
+      "preview": "public/wa/wa-simples-nacional-ou-lucro-presumido-como-escolher.jpg"
+    },
+    {
+      "slug": "mei-passou-do-limite-o-que-fazer",
+      "title": "MEI Passou do Limite de Faturamento: O Que Fazer em 2026",
+      "pubDatetime": "2026-08-22T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/mei-passou-do-limite-o-que-fazer/",
+      "preview": "public/wa/wa-mei-passou-do-limite-o-que-fazer.jpg"
+    },
+    {
+      "slug": "transfer-pricing-nova-metodologia-brasil",
+      "title": "Transfer Pricing no Brasil: A Nova Metodologia OCDE desde 2024",
+      "pubDatetime": "2026-08-25T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/transfer-pricing-nova-metodologia-brasil/",
+      "preview": "public/wa/wa-transfer-pricing-nova-metodologia-brasil.jpg"
+    },
+    {
+      "slug": "holding-familiar-receita-federal-2026",
+      "title": "Holding Familiar em 2026: O Que a Receita Federal Está Monitorando",
+      "pubDatetime": "2026-08-28T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/holding-familiar-receita-federal-2026/",
+      "preview": "public/wa/wa-holding-familiar-receita-federal-2026.jpg"
+    },
+    {
+      "slug": "parcelamento-divida-fiscal-brasilia-pgfn",
+      "title": "Como Parcelar Dívida com a Receita Federal em Brasília: PGFN 2026",
+      "pubDatetime": "2026-08-31T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/parcelamento-divida-fiscal-brasilia-pgfn/",
+      "preview": "public/wa/wa-parcelamento-divida-fiscal-brasilia-pgfn.jpg"
+    },
+    {
+      "slug": "holding-familiar-brasilia-planejamento-patrimonial",
+      "title": "Holding Familiar em Brasília: Como Funciona e Quando Vale a Pena",
+      "pubDatetime": "2026-09-03T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/holding-familiar-brasilia-planejamento-patrimonial/",
+      "preview": "public/wa/wa-holding-familiar-brasilia-planejamento-patrimonial.jpg"
+    },
+    {
+      "slug": "stock-options-tributacao-brasil-carf",
+      "title": "Stock Options no Brasil: Tributação Após as Decisões do CARF",
+      "pubDatetime": "2026-09-06T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/stock-options-tributacao-brasil-carf/",
+      "preview": "public/wa/wa-stock-options-tributacao-brasil-carf.jpg"
+    },
+    {
+      "slug": "juros-sobre-capital-proprio-lei-14789",
+      "title": "Juros sobre Capital Próprio em 2026: O Que Mudou com a Lei 14.789",
+      "pubDatetime": "2026-09-09T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/juros-sobre-capital-proprio-lei-14789/",
+      "preview": "public/wa/wa-juros-sobre-capital-proprio-lei-14789.jpg"
+    },
+    {
+      "slug": "planejamento-tributario-profissional-liberal-brasilia",
+      "title": "Planejamento Tributário para Médico e Advogado em Brasília",
+      "pubDatetime": "2026-09-12T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/planejamento-tributario-profissional-liberal-brasilia/",
+      "preview": "public/wa/wa-planejamento-tributario-profissional-liberal-brasilia.jpg"
+    },
+    {
+      "slug": "split-payment-fluxo-caixa-empresa-2026",
+      "title": "Split Payment em 2026: Prepare o Fluxo de Caixa da Sua Empresa",
+      "pubDatetime": "2026-09-15T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/split-payment-fluxo-caixa-empresa-2026/",
+      "preview": "public/wa/wa-split-payment-fluxo-caixa-empresa-2026.jpg"
+    },
+    {
+      "slug": "lucros-exterior-lei-14754-empresas-brasil",
+      "title": "Tributação de Lucros no Exterior: O Que Mudou com a Lei 14.754/2023",
+      "pubDatetime": "2026-09-18T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/lucros-exterior-lei-14754-empresas-brasil/",
+      "preview": "public/wa/wa-lucros-exterior-lei-14754-empresas-brasil.jpg"
+    },
+    {
+      "slug": "recuperacao-creditos-pis-cofins-2026",
+      "title": "Créditos de PIS/COFINS: A Janela que Fecha em Dezembro de 2026",
+      "pubDatetime": "2026-09-21T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/recuperacao-creditos-pis-cofins-2026/",
+      "preview": "public/wa/wa-recuperacao-creditos-pis-cofins-2026.jpg"
+    },
+    {
+      "slug": "distribuicao-disfarcada-lucros-risco-fiscal",
+      "title": "Distribuição Disfarçada de Lucros: Risco Real em 2026",
+      "pubDatetime": "2026-09-24T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/distribuicao-disfarcada-lucros-risco-fiscal/",
+      "preview": "public/wa/wa-distribuicao-disfarcada-lucros-risco-fiscal.jpg"
+    },
+    {
+      "slug": "reforma-tributaria-impacto-empresas-brasilia-2026",
+      "title": "Reforma Tributária 2026: Impacto Real nas Empresas de Brasília",
+      "pubDatetime": "2026-09-27T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/reforma-tributaria-impacto-empresas-brasilia-2026/",
+      "preview": "public/wa/wa-reforma-tributaria-impacto-empresas-brasilia-2026.jpg"
+    },
+    {
+      "slug": "dre-o-que-e-demonstrativo-resultado-exercicio",
+      "title": "O Que é DRE: Guia Prático para o Dono de Empresa",
+      "pubDatetime": "2026-10-01T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/dre-o-que-e-demonstrativo-resultado-exercicio/",
+      "preview": "public/wa/wa-dre-o-que-e-demonstrativo-resultado-exercicio.jpg"
+    },
+    {
+      "slug": "ebitda-o-que-e-como-calcular",
+      "title": "O Que é EBITDA: Guia Completo para Gestores de PME",
+      "pubDatetime": "2026-10-03T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/ebitda-o-que-e-como-calcular/",
+      "preview": "public/wa/wa-ebitda-o-que-e-como-calcular.jpg"
+    },
+    {
+      "slug": "ponto-de-equilibrio-o-que-e-como-calcular",
+      "title": "Ponto de Equilíbrio: O Que É e Como Calcular",
+      "pubDatetime": "2026-10-05T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/ponto-de-equilibrio-o-que-e-como-calcular/",
+      "preview": "public/wa/wa-ponto-de-equilibrio-o-que-e-como-calcular.jpg"
+    },
+    {
+      "slug": "bpo-financeiro-o-que-e",
+      "title": "O Que é BPO Financeiro e Para Que Serve?",
+      "pubDatetime": "2026-10-07T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/bpo-financeiro-o-que-e/",
+      "preview": "public/wa/wa-bpo-financeiro-o-que-e.jpg"
+    },
+    {
+      "slug": "o-que-e-fluxo-de-caixa",
+      "title": "O Que é Fluxo de Caixa: Guia Prático para Empresas",
+      "pubDatetime": "2026-10-09T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/o-que-e-fluxo-de-caixa/",
+      "preview": "public/wa/wa-o-que-e-fluxo-de-caixa.jpg"
+    },
+    {
+      "slug": "o-que-e-markup",
+      "title": "O Que é Markup: Como Calcular o Preço de Venda Certo",
+      "pubDatetime": "2026-10-11T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/o-que-e-markup/",
+      "preview": "public/wa/wa-o-que-e-markup.jpg"
+    },
+    {
+      "slug": "o-que-e-controladoria",
+      "title": "O Que é Controladoria: Função, Papel e Quando Contratar",
+      "pubDatetime": "2026-10-13T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/o-que-e-controladoria/",
+      "preview": "public/wa/wa-o-que-e-controladoria.jpg"
+    },
+    {
+      "slug": "o-que-e-margem-de-contribuicao",
+      "title": "O Que é Margem de Contribuição e Como Calcular",
+      "pubDatetime": "2026-10-15T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/o-que-e-margem-de-contribuicao/",
+      "preview": "public/wa/wa-o-que-e-margem-de-contribuicao.jpg"
+    },
+    {
+      "slug": "o-que-e-capital-de-giro",
+      "title": "O Que é Capital de Giro: Como Calcular e Gerenciar",
+      "pubDatetime": "2026-10-17T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/o-que-e-capital-de-giro/",
+      "preview": "public/wa/wa-o-que-e-capital-de-giro.jpg"
+    },
+    {
+      "slug": "regime-tributario-como-escolher",
+      "title": "Regime Tributário: Como Escolher o Certo para sua Empresa",
+      "pubDatetime": "2026-10-19T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/regime-tributario-como-escolher/",
+      "preview": "public/wa/wa-regime-tributario-como-escolher.jpg"
+    },
+    {
+      "slug": "como-reduzir-impostos-legalmente",
+      "title": "Como Reduzir Impostos Legalmente: 7 Estratégias para PMEs",
+      "pubDatetime": "2026-10-21T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/como-reduzir-impostos-legalmente/",
+      "preview": "public/wa/wa-como-reduzir-impostos-legalmente.jpg"
+    },
+    {
+      "slug": "o-que-e-caixa-e-competencia-regime-contabil",
+      "title": "Regime de Caixa vs Competência: Qual Usar na Sua Empresa",
+      "pubDatetime": "2026-10-23T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/o-que-e-caixa-e-competencia-regime-contabil/",
+      "preview": "public/wa/wa-o-que-e-caixa-e-competencia-regime-contabil.jpg"
+    },
+    {
+      "slug": "o-que-e-conciliacao-bancaria",
+      "title": "Conciliação Bancária: O Que É e Como Fazer Todo Mês",
+      "pubDatetime": "2026-10-25T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/o-que-e-conciliacao-bancaria/",
+      "preview": "public/wa/wa-o-que-e-conciliacao-bancaria.jpg"
+    },
+    {
+      "slug": "gestao-contas-a-receber-inadimplencia-empresa",
+      "title": "Contas a Receber: Como Gerir e Reduzir Inadimplência na Empresa",
+      "pubDatetime": "2026-10-27T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/gestao-contas-a-receber-inadimplencia-empresa/",
+      "preview": "public/wa/wa-gestao-contas-a-receber-inadimplencia-empresa.jpg"
+    },
+    {
+      "slug": "custo-fixo-e-variavel-diferenca-gestao",
+      "title": "Custo Fixo e Variável: Diferença, Exemplos e Como Controlar",
+      "pubDatetime": "2026-10-29T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/custo-fixo-e-variavel-diferenca-gestao/",
+      "preview": "public/wa/wa-custo-fixo-e-variavel-diferenca-gestao.jpg"
+    },
+    {
+      "slug": "kpis-financeiros-pequenas-empresas-brasilia",
+      "title": "KPIs Financeiros: Quais Indicadores Acompanhar na Sua Empresa",
+      "pubDatetime": "2026-10-31T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/kpis-financeiros-pequenas-empresas-brasilia/",
+      "preview": "public/wa/wa-kpis-financeiros-pequenas-empresas-brasilia.jpg"
+    },
+    {
+      "slug": "dre-gerencial-vs-contabil-diferenca",
+      "title": "DRE Gerencial vs DRE Contábil: Diferença na Prática",
+      "pubDatetime": "2026-11-02T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/dre-gerencial-vs-contabil-diferenca/",
+      "preview": "public/wa/wa-dre-gerencial-vs-contabil-diferenca.jpg"
+    },
+    {
+      "slug": "orcamento-empresarial-como-fazer-planejamento-financeiro",
+      "title": "Orçamento Empresarial: Como Fazer o Planejamento Financeiro Anual",
+      "pubDatetime": "2026-11-04T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/orcamento-empresarial-como-fazer-planejamento-financeiro/",
+      "preview": "public/wa/wa-orcamento-empresarial-como-fazer-planejamento-financeiro.jpg"
+    },
+    {
+      "slug": "precificacao-servicos-como-calcular-preco",
+      "title": "Precificação de Serviços: Como Calcular o Preço Certo e Não Perder Dinheiro",
+      "pubDatetime": "2026-11-06T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/precificacao-servicos-como-calcular-preco/",
+      "preview": "public/wa/wa-precificacao-servicos-como-calcular-preco.jpg"
+    },
+    {
+      "slug": "assessoria-financeira-empresarial-como-escolher",
+      "title": "Assessoria Financeira Empresarial: Como Escolher o Parceiro Certo",
+      "pubDatetime": "2026-11-08T08:00:00-03:00",
+      "url": "https://blog.alineafinancas.com.br/posts/assessoria-financeira-empresarial-como-escolher/",
+      "preview": "public/wa/wa-assessoria-financeira-empresarial-como-escolher.jpg"
+    }
+  ]
+}
