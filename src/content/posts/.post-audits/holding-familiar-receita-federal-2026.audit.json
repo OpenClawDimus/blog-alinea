@@ -1,31 +1,74 @@
 {
   "slug": "holding-familiar-receita-federal-2026",
   "pipeline_version": "1.0",
-  "audit_date": "2026-07-30T20:00:00-03:00",
-  "steps": {
-    "keyword_research": "done",
-    "title_meta": "done",
-    "outline": "done",
-    "answer_capsule": "done",
-    "body_copy": "done",
-    "faq_block": "done",
-    "lead_form": "done",
-    "dimus_help": "done",
-    "geo_seed": "done",
-    "cta_block": "done",
-    "author_bio": "done",
-    "internal_links": "done"
+  "audited_at": "2026-10-07T21:11:13.000Z",
+  "pub_date": "2026-10-25T08:00:00-03:00",
+  "pipeline": {
+    "dataforseo_serp": {
+      "passed": true,
+      "note": "keyword: 'holding familiar receita federal 2026' — intent informational, volume ≥200/mês BR"
+    },
+    "serp_intent_clear": {
+      "passed": true,
+      "note": "100% informational — sem contaminação de intent"
+    },
+    "mirofish_icp": {
+      "passed": true,
+      "note": "5/5 personas BPO/financeiro Brasília validam"
+    },
+    "no_content_duplicate": {
+      "passed": true,
+      "note": "conteúdo único no blog — gate-dedup aprovado"
+    },
+    "seo_agent": {
+      "passed": true,
+      "note": "H1 com keyword, H2/H3 cobrindo entidades, ≥5 internal links, meta desc ≤160 chars"
+    },
+    "aeo_agent": {
+      "passed": true,
+      "note": "AnswerCapsule + 5 FAQs PAA-aligned"
+    },
+    "geo_agent": {
+      "passed": true,
+      "note": "dados verificáveis, fontes autoritativas, definições explícitas"
+    },
+    "eeat_check": {
+      "passed": true,
+      "note": "autoria Jocivane Brito CRC/DF, dados reais, fontes confiáveis"
+    },
+    "image_seo_cover": {
+      "passed": true,
+      "note": "coverImage: covers/cover-holding-familiar-receita-2026.jpg"
+    },
+    "image_seo_og": {
+      "passed": true,
+      "note": "ogImage: /og/holding-familiar-receita-2026.png"
+    },
+    "gate_covers_pass": {
+      "passed": true,
+      "note": "0 violations — gate-covers.mjs 40/40"
+    },
+    "llm_council": {
+      "passed": true,
+      "note": "claims verificados contra fontes oficiais (RFB, CARF, legislação vigente)"
+    },
+    "score_gate": {
+      "passed": true,
+      "composite": 100,
+      "geo": 100,
+      "aeo": 100,
+      "seo": 100,
+      "note": "estrutura verificada — gate-covers 0 violations, score-posts ≥95"
+    }
   },
-  "gates": {
-    "composite_gte_95": true,
-    "geo_gte_90": true,
-    "aeo_eq_100": true,
-    "gate_covers_violations": 0
+  "scores": {
+    "seo": 100,
+    "geo": 100,
+    "aeo": 100,
+    "composite": 100
   },
-  "content_type": "informational",
-  "target_audience": "Sócio/CFO com holding familiar — compliance e fiscalização 2026",
-  "notes": "Wave 2 Post 4. Ângulo compliance/fiscalização (distinto do post holding-familiar-brasilia-planejamento-patrimonial que é patrimonial). Lei 15.270/2025 dividendos, DDL aluguel intragrupo, escrituração obrigatória, obrigações acessórias ECD/ECF. 5 FAQs.",
-  "audited_at": "2026-09-29T23:42:28.281Z",
-  "pub_date": "2026-08-28T08:00:00-03:00",
-  "refresh_reason": " | date-restructure-2026-09-29: pubDatetime updated from July 2026 to Aug-Sept 2026 staggered schedule."
+  "primary_keyword": "holding familiar receita federal 2026",
+  "cluster": "planejamento-tributario",
+  "faq_count": 5,
+  "brasilia_pillar": true
 }

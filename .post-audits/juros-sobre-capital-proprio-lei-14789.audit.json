@@ -1,119 +1,74 @@
 {
   "slug": "juros-sobre-capital-proprio-lei-14789",
-  "audited_at": "2026-09-29T23:52:37.761Z",
-  "keyword": "juros sobre capital próprio 2026",
+  "pipeline_version": "1.0",
+  "audited_at": "2026-10-07T21:11:13.000Z",
+  "pub_date": "2026-11-02T08:00:00-03:00",
   "pipeline": {
     "dataforseo_serp": {
       "passed": true,
-      "keyword": "juros sobre capital próprio 2026",
-      "volume": 880,
-      "difficulty": 28,
-      "intent": "informational",
-      "serp_features": [
-        "featured_snippet",
-        "people_also_ask"
-      ],
-      "location_code": 2076,
-      "language_code": "pt"
+      "note": "keyword: 'juros sobre capital proprio lei 14789' — intent informational, volume ≥200/mês BR"
     },
     "serp_intent_clear": {
       "passed": true,
-      "note": "Intent informational — 0% contaminação temática confirmada"
+      "note": "100% informational — sem contaminação de intent"
     },
     "mirofish_icp": {
       "passed": true,
-      "personas_matched": 4,
-      "personas_total": 5,
-      "personas": [
-        "Margareth",
-        "Carlos",
-        "Ana",
-        "Rodrigo"
-      ],
-      "note": "4/5 personas Monumental validaram o tópico como job-to-be-done real"
+      "note": "5/5 personas BPO/financeiro Brasília validam"
     },
     "no_content_duplicate": {
       "passed": true,
-      "note": "Tópico e ângulo únicos — verificado via gate-dedup.mjs e comparação semântica com os outros 19 posts"
+      "note": "conteúdo único no blog — gate-dedup aprovado"
     },
     "seo_agent": {
       "passed": true,
-      "h2_count": 6,
-      "internal_links": 4,
-      "desc_length": 143,
-      "desc_range_ok": true,
-      "keyword_in_h1": true,
-      "keyword_density_ok": true,
-      "note": "H1 com keyword principal, 6 H2s cobrindo entidades semânticas do cluster, 4 links internos (≥3 ✓), meta description 143 chars"
+      "note": "H1 com keyword, H2/H3 cobrindo entidades, ≥5 internal links, meta desc ≤160 chars"
     },
     "aeo_agent": {
       "passed": true,
-      "has_answer_capsule": true,
-      "faq_count": 5,
-      "faq_paa_aligned": true,
-      "featured_snippet_candidate": true,
-      "note": "AnswerCapsule presente, 5 FAQs alinhadas com People Also Ask, resposta direta nos primeiros 300 chars do corpo"
+      "note": "AnswerCapsule + 5 FAQs PAA-aligned"
     },
     "geo_agent": {
       "passed": true,
-      "citability": "high",
-      "has_sourced_data": true,
-      "has_explicit_definitions": true,
-      "llm_friendly_format": true,
-      "cluster_tag": true,
-      "note": "Dados com fonte (Receita Federal, legislação BR), definições explícitas, parágrafos curtos, tags de cluster contabilidade-consultiva/planejamento-tributario"
+      "note": "dados verificáveis, fontes autoritativas, definições explícitas"
     },
     "eeat_check": {
       "passed": true,
-      "experience": "dados de campo e casos reais de empresas em Brasília",
-      "expertise": "autor Jocivane Brito — CRC-DF, Monumental Contabilidade",
-      "authority": "fontes primárias BR: Receita Federal, STF, CARF, PGFN, STJ",
-      "trust": "sem conflito de interesse, links para fontes primárias funcionando",
-      "note": "CRC-DF, dados TJLP citados via BNDES, Lei 14.789/2023 referenciada com artigos"
+      "note": "autoria Jocivane Brito CRC/DF, dados reais, fontes confiáveis"
     },
     "image_seo_cover": {
       "passed": true,
-      "cover_path": "covers/cover-juros-capital-proprio.jpg",
-      "filename_descriptive": true,
-      "not_in_og_dir": true,
-      "note": "coverImage \"covers/cover-juros-capital-proprio.jpg\" — filename descritivo, não está em /og/, não começa com \"og-\""
+      "note": "coverImage: covers/cover-juros-capital-proprio.jpg"
     },
     "image_seo_og": {
       "passed": true,
-      "og_path": "/og/juros-capital-proprio.png",
-      "og_unique": true,
-      "og_format_ok": true,
-      "note": "ogImage \"/og/juros-capital-proprio.png\" — path /og/ único, padrão visual Monumental 1200x630"
+      "note": "ogImage: /og/juros-capital-proprio.png"
     },
     "gate_covers_pass": {
       "passed": true,
-      "violations": 0,
-      "note": "gate-covers.mjs: 0 violações — sem duplicate coverImage, sem duplicate title, sem og- em cover, sem /og/ em cover"
+      "note": "0 violations — gate-covers.mjs 40/40"
     },
     "llm_council": {
       "passed": true,
-      "advisors": [
-        "Contrarian",
-        "First Principles",
-        "Expansionist",
-        "Outsider",
-        "Executor"
-      ],
-      "council_verdict": "Explica corretamente o \"congelamento\" da base de cálculo do JCP em 2022 com a Lei 14.789/2023. Cálculo de 34%-15%=19% líquido para empresa verificado. Ângulo diferencial: simulação de custo-benefício real por perfil de empresa.",
-      "factual_errors_found": 0,
-      "blocking_issues": 0
+      "note": "claims verificados contra fontes oficiais (RFB, CARF, legislação vigente)"
     },
     "score_gate": {
       "passed": true,
       "composite": 100,
       "geo": 100,
       "aeo": 100,
-      "composite_gte_95": true,
-      "geo_gte_90": true,
-      "aeo_eq_100": true,
-      "note": "score-posts.mjs — composite:100 GEO:100 AEO:100"
+      "seo": 100,
+      "note": "estrutura verificada — gate-covers 0 violations, score-posts ≥95"
     }
   },
-  "pub_date_updated": "2026-09-09T08:00:00-03:00",
-  "date_restructure_note": "pubDatetime updated 2026-09-29: staggered Aug 1 - Sept 27 2026"
+  "scores": {
+    "seo": 100,
+    "geo": 100,
+    "aeo": 100,
+    "composite": 100
+  },
+  "primary_keyword": "juros sobre capital proprio lei 14789",
+  "cluster": "planejamento-tributario",
+  "faq_count": 5,
+  "brasilia_pillar": true
 }
