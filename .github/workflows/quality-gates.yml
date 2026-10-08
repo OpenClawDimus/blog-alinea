@@ -1,0 +1,53 @@
+name: Quality Gates
+
+# Verificação de qualidade dos posts NO SERVIDOR (runner self-hosted), sem depender de
+# nenhum computador pessoal estar ligado. Roda em todo push/PR que mexe em posts, imagens ou
+# scripts — inclusive commits feitos pelo módulo SEO. Falhou = o Publish Watchdog avisa no
+# WhatsApp ("Verificação de qualidade dos posts falhou"). Os gates não têm dependências npm.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/content/posts/**"
+      - "public/covers/**"
+      - "public/og/**"
+      - "public/wa/**"
+      - "scripts/**"
+      - "wa-brand.json"
+      - "astro-paper.config.ts"
+      - ".github/workflows/quality-gates.yml"
+  pull_request:
+    paths:
+      - "src/content/posts/**"
+      - "public/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+concurrency:
+  group: quality-gates-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gates:
+    name: Gates de posts, imagens e cards
+    runs-on: self-hosted
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Frontmatter YAML válido
+        run: node scripts/gate-frontmatter.mjs
+      - name: Props de componentes válidas (DimusHelp variant)
+        run: node scripts/gate-post-components.mjs
+      - name: Covers e OGs existem e têm tamanho válido
+        run: node scripts/gate-images.mjs
+      - name: Card de WhatsApp (1280x720, com cover real e título em dia)
+        run: node scripts/gate-wa-preview.mjs
+      - name: Covers no manifest (gen-cover)
+        run: node scripts/gate-covers.mjs
+      - name: Nomenclatura de eventos
+        run: node scripts/gate-event-naming.mjs

@@ -1,0 +1,57 @@
+---
+/**
+ * PostFaq — mostra o FAQ do frontmatter (`faq`) no HTML visível, UMA vez, no lugar certo.
+ *
+ * Por que (SEO/AEO): o schema FAQPage (JSON-LD) precisa corresponder a conteúdo visível na página;
+ * antes o FAQ só existia no JSON-LD. Perguntas em h3 + resposta em p (sempre abertas, sem JS) são
+ * indexáveis e citáveis por buscadores e LLMs.
+ *
+ * Posição: os posts têm "## Perguntas frequentes" logo antes do formulário. PostH2 troca esse H2 pelo
+ * bloco do FAQ (mesmo id → o índice lateral continua funcionando), sem título duplicado e sem editar
+ * os posts. Se o post não tiver esse H2, a página renderiza o bloco depois do artigo.
+ */
+interface Props {
+  faq?: { q: string; a: string }[];
+  id?: string;
+}
+const { faq, id = "perguntas-frequentes" } = Astro.props;
+---
+
+{faq && faq.length > 0 && (
+  <section class="post-faq" aria-labelledby={id} data-pagefind-body>
+    <h2 id={id}>Perguntas frequentes</h2>
+    {faq.map((item) => (
+      <div class="post-faq-item">
+        <h3>{item.q}</h3>
+        <p>{item.a}</p>
+      </div>
+    ))}
+  </section>
+)}
+
+<style>
+  .post-faq {
+    margin: 44px 0 8px;
+  }
+  .post-faq h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+  .post-faq-item h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 24px 0 8px;
+    color: var(--ink-2);
+  }
+  .post-faq-item p {
+    margin: 0;
+    line-height: 1.65;
+  }
+</style>

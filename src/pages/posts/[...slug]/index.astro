@@ -1,6 +1,8 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import PostLayout from "@/layouts/PostLayout.astro";
+import PostFaq from "@/components/ui/PostFaq.astro";
+import PostH2 from "@/components/ui/PostH2.astro";
 import { getPostSlug, getPostUrl } from "@/utils/getPostPaths";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
@@ -67,6 +69,9 @@ const {
 
 const { Content, headings } = await render(post);
 const h2Headings = headings.filter(h => h.depth === 2);
+// FAQ visível (SEO): se o post tem o H2 "Perguntas frequentes", PostH2 renderiza o FAQ nele; senão, depois do artigo.
+const hasFaqHeading = h2Headings.some(h => h.text.trim().toLowerCase() === "perguntas frequentes");
+(Astro.locals as { postFaq?: unknown }).postFaq = faq;
 
 // Determina o variant do BPOSidebar com base nas tags do post
 const tagArr = Array.isArray(tags) ? tags : (tags ? [tags] : []);
@@ -196,8 +201,10 @@ const fmtDate = (d: Date) =>
         )}
 
         <article id="article" class="app-prose">
-          <Content />
+          <Content components={{ h2: PostH2 }} />
         </article>
+
+        {!hasFaqHeading && <PostFaq faq={faq} />}
 
         <!-- Adjacent nav (post) -->
         {(prevPost || nextPost) && (

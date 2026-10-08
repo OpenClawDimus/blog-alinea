@@ -1,0 +1,15 @@
+---
+/**
+ * PostH2 — substitui o H2 dos posts. Se for "Perguntas frequentes" e o post tiver `faq` no
+ * frontmatter, renderiza o bloco do FAQ no lugar (sem título duplicado). Caso contrário, é um H2 normal.
+ * O `faq` chega via Astro.locals.postFaq (definido pela página do post antes de renderizar o conteúdo).
+ */
+import PostFaq from "./PostFaq.astro";
+const { id, ...rest } = Astro.props;
+const html = await Astro.slots.render("default");
+const text = html.replace(/<[^>]+>/g, "").trim().toLowerCase();
+const faq = (Astro.locals as { postFaq?: { q: string; a: string }[] }).postFaq;
+const swap = !!faq?.length && text === "perguntas frequentes";
+---
+
+{swap ? <PostFaq faq={faq} id={id} /> : <h2 id={id} {...rest} set:html={html} />}

@@ -1,1 +1,6 @@
-{"accent": "#FFFFFF", "accent2": "#8E99A8", "label": "NOVO POST"}
+{
+  "label": "NOVO POST",
+  "accent": "#F2E8DC",
+  "accent2": "#8E99A8",
+  "name": "Blog Alínea"
+}
