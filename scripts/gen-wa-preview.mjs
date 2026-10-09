@@ -17,7 +17,7 @@ import { readPosts, resolvePublicImage } from './lib/posts.mjs';
 import { loadBrand, renderCard, sha } from './lib/card.mjs';
 
 const W = 1280, H = 720;
-const { brand, host, brandHash } = loadBrand();
+const { brand, host, logoPath, brandHash } = loadBrand();
 
 const arg = process.argv[2];
 const force = process.argv.includes('--force');
@@ -35,7 +35,7 @@ for (const p of posts) {
   const out = `public/wa/wa-${p.slug}.jpg`;
   const cur = manifest[p.slug];
   if (!force && existsSync(out) && cur && cur.title === want.title && cur.cover === want.cover && cur.brand === want.brand) continue;
-  writeFileSync(out, await renderCard({ title: p.title, coverPath, W, H, brand, host }));
+  writeFileSync(out, await renderCard({ title: p.title, coverPath, W, H, brand, host, logoPath }));
   manifest[p.slug] = want;
   made++;
 }

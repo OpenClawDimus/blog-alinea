@@ -10,7 +10,7 @@ import { readPosts, resolvePublicImage } from './lib/posts.mjs';
 import { loadBrand, renderCard } from './lib/card.mjs';
 
 const arg = process.argv[2] ?? '--all';
-const { brand, host } = loadBrand();
+const { brand, host, logoPath } = loadBrand();
 let made = 0, skipped = 0, failed = 0;
 for (const p of readPosts().filter((x) => arg === '--all' || x.slug === arg)) {
   if (!p.ogImage || /^https?:/.test(p.ogImage)) continue;
@@ -18,7 +18,7 @@ for (const p of readPosts().filter((x) => arg === '--all' || x.slug === arg)) {
   if (existsSync(out)) { skipped++; continue; }
   const cover = resolvePublicImage(p.coverImage);
   if (!cover) { console.error(`❌ ${p.slug}: sem cover para gerar o OG`); failed++; continue; }
-  const jpg = await renderCard({ title: p.title, coverPath: cover, W: 1200, H: 630, brand, host, showLabel: false });
+  const jpg = await renderCard({ title: p.title, coverPath: cover, W: 1200, H: 630, brand, host, logoPath, showLabel: false });
   // o ogImage declarado costuma ser .png: converte mantendo o nome
   const sharp = (await import('sharp')).default;
   mkdirSync(dirname(out), { recursive: true });
