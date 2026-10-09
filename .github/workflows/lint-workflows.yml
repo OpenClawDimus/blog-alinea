@@ -1,0 +1,21 @@
+name: Lint Workflows
+
+# Regras obrigatorias (timeout, concurrency, self-hosted p/ infra local, cancel em PR).
+# So roda quando um workflow muda: custo ~zero de minutos.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'scripts/lint-workflows.sh'
+
+concurrency:
+  group: lint-workflows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/lint-workflows.sh
