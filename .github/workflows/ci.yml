@@ -12,6 +12,10 @@ on:
       - reopened
   workflow_call:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Code standards & build

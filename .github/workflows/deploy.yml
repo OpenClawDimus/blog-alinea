@@ -11,6 +11,10 @@ on:
     - cron: "20 13 * * *"  # 10:20 BRT
     - cron: "20 18 * * *"  # 15:20 BRT (escalonado: evita pico de RAM com blog-dimus 18:00)
 
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     name: Deploy to Cloudflare Pages
