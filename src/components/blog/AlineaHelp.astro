@@ -10,7 +10,7 @@
 interface Props {
   postSlug?: string;
   cluster?: string;
-  variant?: "bpo-operacional" | "gestao-financeira" | "reforma-tributaria" | "fornecedores-gov" | "default";
+  variant?: string;
   // Override props (MDX style — sobrescrevem o copy do variant)
   title?: string;
   sub?: string;
@@ -30,7 +30,7 @@ const postSlug =
   Astro.url.pathname.replace(/^\/posts\//, "").replace(/\/$/, "") ||
   "";
 
-const variantCopy = {
+const variantCopies = {
   "bpo-operacional": {
     title: "Como a Alínea Finanças estrutura o BPO financeiro da sua empresa",
     body: "Assumimos a operação financeira completa: contas a pagar e receber, conciliação bancária, DRE mensal e fluxo de caixa. Você foca no negócio; a gente cuida dos números com precisão e pontualidade.",
@@ -51,7 +51,8 @@ const variantCopy = {
     title: "Como a Alínea Finanças pode ajudar sua empresa",
     body: "BPO financeiro e contabilidade consultiva em Brasília-DF: gestão financeira terceirizada, planejamento tributário, abertura de empresa e acompanhamento mensal. Sem robô, com especialista dedicado.",
   },
-}[variant];
+};
+const variantCopy = variantCopies[variant as keyof typeof variantCopies] ?? variantCopies.default;
 
 // MDX-style overrides têm prioridade sobre o copy do variant.
 const copy = {
