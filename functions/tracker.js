@@ -438,7 +438,7 @@ export async function onRequestPost(context) {
         ghl_opportunity_id: ghlOpportunityId || '',
       },
     };
-    const fwdUrl = `${env.BLUEPRINT_SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/leads?on_conflict=email`;
+    const fwdUrl = `${env.BLUEPRINT_SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/rpc/blog_capture_lead`;
     context.waitUntil(
       fetch(fwdUrl, {
         method: 'POST',
@@ -446,9 +446,8 @@ export async function onRequestPost(context) {
           'Content-Type': 'application/json',
           apikey: env.BLUEPRINT_SUPABASE_KEY,
           Authorization: `Bearer ${env.BLUEPRINT_SUPABASE_KEY}`,
-          Prefer: 'resolution=merge-duplicates,return=minimal',
         },
-        body: JSON.stringify(supaLead),
+        body: JSON.stringify({ p: supaLead }),
       })
         .then(async (r) => {
           if (!r.ok) {
