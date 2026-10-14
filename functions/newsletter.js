@@ -204,30 +204,26 @@ export async function onRequestPost(context) {
   // ── Supabase forward (dados SoT) ─────────────────────────────────────────
   if (env.BLUEPRINT_SUPABASE_URL && env.BLUEPRINT_SUPABASE_KEY) {
     context.waitUntil(
-      fetch(`${env.BLUEPRINT_SUPABASE_URL}/rest/v1/leads?on_conflict=email`, {
+      fetch(`${env.BLUEPRINT_SUPABASE_URL}/rest/v1/rpc/blog_capture_lead`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           apikey: env.BLUEPRINT_SUPABASE_KEY,
           Authorization: 'Bearer ' + env.BLUEPRINT_SUPABASE_KEY,
-          Prefer: 'resolution=merge-duplicates',
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ p: {
           first_name: firstName,
           last_name: lastName,
           email: emailTrimmed,
-          phone: null,
+          phone: '',
           segment: 'blog-newsletter',
           landing_page: 'https://blog.dimus.com.br',
-          ig_data_source: 'form_submitted',
-          tags: ['newsletter', 'blog'],
-          source: 'blog-newsletter',
           custom_fields: {
             lead_origin: 'blog-newsletter-geral',
             mautic_contact_id: mauticContactId,
             ghl_contact_id: ghlContactId,
           },
-        }),
+        } }),
       }).catch((e) => console.error('[supabase-newsletter]', e && e.message))
     );
   }
